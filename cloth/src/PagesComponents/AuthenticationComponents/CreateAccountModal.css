@@ -1,0 +1,536 @@
+/* ==================================================
+   OVERLAY
+================================================== */
+
+.create-account-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px);
+}
+
+/* ==================================================
+   MODAL
+================================================== */
+
+.create-account-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 650px;
+
+  max-height: 90vh;
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  padding: 40px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+.create-account-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.create-account-modal::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.create-account-modal::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 20px;
+}
+
+/* ==================================================
+   CLOSE BUTTON
+================================================== */
+
+.create-account-close-btn {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  color: #666;
+
+  font-size: 18px;
+
+  transition: all 0.3s ease;
+}
+
+.create-account-close-btn:hover {
+  color: #000;
+  transform: rotate(90deg);
+}
+
+/* ==================================================
+   HEADER
+================================================== */
+
+.create-account-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.create-account-logo {
+  margin-bottom: 22px;
+}
+
+.create-account-logo h2 {
+  margin: 0;
+
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 4px;
+
+  color: #c49a4a;
+}
+
+.create-account-logo span {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 12px;
+  letter-spacing: 2px;
+
+  color: #b89555;
+}
+
+.create-account-header h3 {
+
+  margin-top: -18px;
+  font-size: 26px;
+  font-weight: 500;
+
+  color: #222;
+
+  font-family: serif;
+}
+.create-account-title-divider {
+  position: relative;
+
+  width: 100%;
+
+  margin-top: -14px;
+
+  text-align: center;
+}
+
+.create-account-title-divider::before {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  left: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: #e3e3e3;
+
+  transform: translateY(-50%);
+}
+
+.divider-diamond {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  background: #ffffff;
+
+  color: #c7a05a;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  z-index: 2;
+}
+
+.create-account-header p {
+  margin-top: -8px;
+
+  color: #262424;
+
+  font-size: 12px;
+}
+
+/* ==================================================
+   FORM
+================================================== */
+
+.create-account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: -18px;
+}
+
+/* ==================================================
+   FORM GROUP
+================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: -10px;
+}
+
+.form-group label {
+  display: block;
+
+  width: 100%;
+  margin-bottom: -8px;
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #222;
+}
+
+/* ==================================================
+   INPUT WRAPPER
+================================================== */
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper svg:first-child {
+  position: absolute;
+  left: 16px;
+
+  color: #000000;
+  font-size: 15px;
+}
+
+.input-wrapper input {
+  width: 100%;
+  height: 38px;
+
+   background: #ffffff !important;
+  color: #222222 !important;
+
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+
+  padding-left: 46px;
+  padding-right: 50px;
+
+  outline: none;
+
+  font-size: 15px;
+
+  transition: all 0.3s ease;
+}
+
+.input-wrapper input:focus {
+  border-color: #c49a4a;
+  box-shadow:
+    0 0 0 3px
+      rgba(196, 154, 74, 0.15);
+}
+
+.input-wrapper input::placeholder {
+  color: #9aa0a6 !important;
+
+}
+
+/* ==================================================
+   PASSWORD TOGGLE
+================================================== */
+
+.password-toggle {
+  position: absolute;
+  right: 34px;
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  color: #888;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: #000;
+}
+
+/* ==================================================
+   ERROR
+================================================== */
+
+.field-error {
+  color: #dc3545;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ==================================================
+   TERMS
+================================================== */
+
+.terms-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.terms-wrapper input {
+  margin-top: 3px;
+
+  width: 16px;
+  height: 16px;
+
+  cursor: pointer;
+}
+
+.terms-wrapper label {
+  font-size: 14px;
+  color: #666;
+
+  line-height: 1.6;
+}
+
+.terms-wrapper a {
+  color: #222;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* ==================================================
+   SUBMIT BUTTON
+================================================== */
+
+.create-account-submit-btn {
+  width: 100%;
+  height: 36px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #000;
+  color: #fff;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.create-account-submit-btn:hover {
+  background: #111;
+  transform: translateY(-2px);
+}
+
+.create-account-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ==================================================
+   OR DIVIDER
+================================================== */
+
+.or-divider {
+  position: relative;
+
+  text-align: center;
+
+  margin: -5px ;
+}
+
+.or-divider::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 1px;
+  background: #e5e5e5;
+}
+
+.or-divider span {
+  position: relative;
+
+  background: #fff;
+
+  padding: 0 16px;
+
+  color: #888;
+  font-size: 14px;
+}
+
+/* ==================================================
+   GOOGLE BUTTON
+================================================== */
+
+.google-btn {
+  width: 100%;
+  height: 36px;
+
+  border: 1px solid #dddddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.google-btn:hover {
+  border-color: #c49a4a;
+  transform: translateY(-2px);
+}
+
+/* ==================================================
+   SIGN IN
+================================================== */
+
+.signin-text {
+  text-align: center;
+
+  margin: -5px;
+
+  font-size: 14px;
+  color: #666;
+}
+
+.signin-text button {
+  border: none;
+  background: transparent;
+
+  color: #c49a4a;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  padding: 0;
+}
+
+.signin-text button:hover {
+  text-decoration: underline;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 768px) {
+  .create-account-overlay {
+    padding: 12px;
+  }
+
+  .create-account-modal {
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  .create-account-header h3 {
+    font-size: 32px;
+  }
+
+  .create-account-logo h2 {
+    font-size: 28px;
+  }
+
+  .input-wrapper input {
+    height: 52px;
+  }
+
+  .create-account-submit-btn {
+    height: 52px;
+  }
+
+  .google-btn {
+    height: 52px;
+  }
+}
+
+@media (max-width: 576px) {
+  .create-account-modal {
+    padding: 20px;
+  }
+
+  .create-account-header h3 {
+    font-size: 28px;
+  }
+
+  .create-account-header p {
+    font-size: 14px;
+  }
+
+  .create-account-logo h2 {
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .create-account-logo span {
+    font-size: 10px;
+  }
+
+  .form-group label {
+    font-size: 13px;
+  }
+
+  .input-wrapper input {
+    font-size: 14px;
+  }
+
+  .terms-wrapper label {
+    font-size: 13px;
+  }
+}

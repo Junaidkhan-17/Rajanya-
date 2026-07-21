@@ -1,0 +1,142 @@
+.virtual-studio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  justify-content: flex-end;
+
+  backdrop-filter: blur(10px);
+}
+
+.virtual-studio-drawer {
+  width: min(950px, 58vw);
+  height: 100vh;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.virtual-studio-wrapper {
+  padding: 40px;
+}
+
+.virtual-studio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.virtual-studio-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+  text-align: left;
+  font-family: "Newake";
+}
+
+.virtual-studio-header p {
+  margin-top: 5px;
+  font-size: 15px;
+  color: #8b8b8b;
+}
+
+.virtual-studio-header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.virtual-studio-token-pill {
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: #fff4e8;
+  border: 1px solid #f5e2d3;
+  font-weight: 600;
+  font-family: "Newake";
+}
+
+.virtual-studio-close-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #f7f7f7;
+  cursor: pointer;
+  font-size: 20px;
+  color: #000000;
+}
+
+.virtual-studio-stepper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 60px;
+}
+
+.virtual-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.virtual-step-circle {
+  width: 55px;
+  height: 55px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3f3f3;
+
+  font-weight: 700;
+}
+
+.virtual-step.active .virtual-step-circle {
+  background: #8b5cf6;
+  color: #fff;
+}
+
+.virtual-step span {
+  margin-top: 15px;
+  font-size: 15px;
+}
+
+.virtual-step.active span {
+  color: #8b5cf6;
+}
+
+.virtual-step-line {
+  width: 180px;
+  height: 2px;
+  background: #ececec;
+  margin: 0 30px;
+}
+
+.virtual-main-content {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 50px;
+
+  margin-top: 40px;
+}
+
+.virtual-left-section {
+  width: 100%;
+}
+
+.virtual-right-section {
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .virtual-main-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

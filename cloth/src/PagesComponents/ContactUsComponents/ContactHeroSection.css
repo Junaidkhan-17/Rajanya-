@@ -1,0 +1,255 @@
+/* ==========================================
+   CONTACT HERO SECTION
+========================================== */
+
+.contact-hero-section {
+  padding: 50px 0px 40px;
+  background: #f8f8f8;
+  width: 100%;
+}
+
+/* ==========================================
+   HERO BANNER
+========================================== */
+
+.contact-hero-banner {
+  position: relative;
+  width: 108%;
+  height: 420px;
+  margin-left: -45px;
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ==========================================
+   BACKGROUND IMAGE
+========================================== */
+
+.contact-hero-image {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition: transform 1.2s ease;
+  display: block;
+}
+
+.contact-hero-banner:hover .contact-hero-image {
+  transform: scale(1.05);
+}
+
+/* ==========================================
+   OVERLAY
+========================================== */
+
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.45)
+    );
+
+  z-index: 1;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.contact-hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+/* ==========================================
+   TITLE
+========================================== */
+
+.contact-hero-content h1 {
+
+
+  color: #ffffff;
+    margin-bottom: 170px;
+  font-size: 3.3rem;
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  line-height: 1.2;
+}
+
+/* ==========================================
+   BREADCRUMB
+========================================== */
+
+.contact-hero-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+.contact-hero-breadcrumb a {
+  color: rgba(255,255,255,0.92);
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  transition: all 0.35s ease;
+}
+
+.contact-hero-breadcrumb a:hover {
+  color: #d4af37;
+}
+
+.arrow {
+    margin-top: -28px;
+}
+
+.contact-hero-breadcrumb span {
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 30px;
+  font-size: 12px;
+
+  font-weight: 500;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+.contact-hero-current-page {
+  color: #ffffff !important;
+
+  font-weight: 700 !important;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 1400px) {
+
+  .contact-hero-banner {
+    height: 330px;
+  }
+
+}
+
+@media (max-width: 1200px) {
+
+  .contact-hero-banner {
+    height: 300px;
+  }
+
+  .contact-hero-content h1 {
+    font-size: 2.9rem;
+  }
+
+}
+
+@media (max-width: 992px) {
+
+  .contact-hero-section {
+    padding: 40px 0 60px;
+  }
+
+  .contact-hero-banner {
+    height: 270px;
+    border-radius: 22px;
+  }
+
+  .contact-hero-content h1 {
+    font-size: 2.4rem;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .contact-hero-section {
+    padding: 35px 0 50px;
+  }
+
+  .contact-hero-banner {
+    height: 220px;
+    border-radius: 18px;
+  }
+
+  .contact-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .contact-hero-breadcrumb {
+    gap: 8px;
+  }
+
+  .contact-hero-breadcrumb a,
+  .contact-hero-breadcrumb span {
+    font-size: 11px;
+  }
+
+}
+
+@media (max-width: 576px) {
+
+  .contact-hero-banner {
+    height: 180px;
+    border-radius: 14px;
+  }
+
+  .contact-hero-content {
+    padding: 15px;
+  }
+
+  .contact-hero-content h1 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .contact-hero-breadcrumb {
+    gap: 6px;
+  }
+
+  .contact-hero-breadcrumb a,
+  .contact-hero-breadcrumb span {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+  }
+
+}
+
+@media (max-width: 400px) {
+
+  .contact-hero-banner {
+    height: 160px;
+  }
+
+  .contact-hero-content h1 {
+    font-size: 1.4rem;
+  }
+
+}

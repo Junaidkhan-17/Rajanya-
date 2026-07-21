@@ -1,0 +1,7 @@
+.all-products-page-main {
+  width: 100%;
+  min-height: 100vh;
+  background: #f8f8f8;
+  overflow: hidden;
+  margin-top: -30px;
+}

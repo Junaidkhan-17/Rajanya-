@@ -1,0 +1,127 @@
+/* ==================================================
+   ALL PRODUCTS CATALOG SECTION
+================================================== */
+
+.all-products-catalog-main {
+  padding: 90px 70px;
+  background: #ffffff;
+  position: relative;
+}
+
+/* ==================================================
+   CATEGORY STRIP ROW
+================================================== */
+
+.all-products-catalog-row > .all-products-category-strip-main {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+/* ==================================================
+   ROW ALIGNMENT
+================================================== */
+
+.all-products-catalog-row {
+  align-items: flex-start;
+}
+
+/* ==================================================
+   SIDEBAR
+================================================== */
+
+.all-products-catalog-sidebar {
+  position: sticky;
+  top: 30px;
+}
+
+/* ==================================================
+   PRODUCT CONTENT
+================================================== */
+
+.all-products-catalog-content {
+  width: 100%;
+  min-width: 0;
+}
+
+/* ==================================================
+   DESKTOP
+================================================== */
+
+@media (min-width: 1200px) {
+  .all-products-catalog-sidebar {
+    padding-right: 30px;
+  }
+}
+
+/* ==================================================
+   LARGE LAPTOP
+================================================== */
+
+@media (max-width: 1400px) {
+  .all-products-catalog-main {
+    padding: 80px 50px;
+  }
+}
+
+/* ==================================================
+   LAPTOP
+================================================== */
+
+@media (max-width: 1200px) {
+  .all-products-catalog-main {
+    padding: 70px 40px;
+  }
+
+  .all-products-catalog-sidebar {
+    padding-right: 15px;
+  }
+}
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 992px) {
+  .all-products-catalog-main {
+    padding: 60px 25px;
+  }
+
+  .all-products-catalog-row > .all-products-category-strip-main {
+    margin-bottom: 35px;
+  }
+
+  .all-products-catalog-sidebar {
+    position: relative;
+    top: unset;
+    padding-right: 0;
+    margin-bottom: 40px;
+  }
+}
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 576px) {
+  .all-products-catalog-main {
+    padding: 50px 15px;
+  }
+
+  .all-products-catalog-row > .all-products-category-strip-main {
+    margin-bottom: 25px;
+  }
+
+  .all-products-catalog-sidebar {
+    margin-bottom: 30px;
+  }
+}
+
+/* ==================================================
+   SMALL MOBILE
+================================================== */
+
+@media (max-width: 375px) {
+  .all-products-catalog-main {
+    padding: 40px 12px;
+  }
+}

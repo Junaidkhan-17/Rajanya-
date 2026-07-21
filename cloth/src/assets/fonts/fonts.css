@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "Muthiara";
+  src: url("./Muthiara.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Willsyard";
+  src: url("./Willsyard.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Newake";
+  src: url("./NewakeFont.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}

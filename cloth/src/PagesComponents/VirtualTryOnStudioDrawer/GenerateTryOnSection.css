@@ -1,0 +1,119 @@
+.generate-try-on-card {
+  margin-top: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #f0f0f0;
+  border-radius: 28px;
+
+  padding: 30px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.04);
+}
+
+.generate-try-on-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 15px;
+}
+
+.generate-try-on-header h3 {
+  margin: 0;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  color: #1f2430;
+}
+
+.generate-token-pill {
+  background: #fff4e8;
+
+  color: #ff8c42;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.generate-try-on-card p {
+  color: #6c7280;
+  line-height: 1.7;
+
+  margin-bottom: 25px;
+}
+
+.generate-try-on-btn {
+  width: 100%;
+
+  border: none;
+  border-radius: 18px;
+
+  padding: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #ff7eb3,
+    #ff758c
+  );
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.generate-try-on-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+}
+
+.generate-try-on-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.generate-spinner {
+  animation: spin 1s linear infinite;
+}
+
+.generate-helper-text,
+.generate-error-text {
+  display: block;
+
+  margin-top: 15px;
+  text-align: center;
+}
+
+.generate-helper-text {
+  color: #8f8f8f;
+}
+
+.generate-error-text {
+  color: #e53935;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

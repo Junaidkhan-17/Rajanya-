@@ -1,0 +1,246 @@
+.trending-rental-collection-main {
+  padding: 100px 70px;
+  background: #f8f8f8;
+}
+
+/* Header */
+
+.trending-rental-collection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 60px;
+}
+
+.trending-rental-collection-title {
+  font-size: 58px;
+  font-weight: 700;
+  color: #0b0b0b;
+  margin-bottom: 5px;
+  font-family: "Newake";
+}
+
+.trending-rental-collection-title span {
+  font-size: 68px;
+  font-weight: 700;
+  color: #ffc800;
+  margin-bottom: 20px;
+  font-family: "Newake";
+ -webkit-text-stroke: 2px rgb(0, 0, 0);
+}
+
+.trending-rental-collection-description {
+  max-width: 620px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #6b6b6b;
+  margin-bottom: 5px;
+}
+
+.trending-rental-collection-see-all-btn {
+  border: none;
+  background: #030516;
+  color: white;
+  width: 160px;
+  height: 58px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.4s ease;
+}
+
+.trending-rental-collection-see-all-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 18px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Card */
+
+.trending-rental-card-main {
+  overflow: hidden;
+  background: white;
+  border-radius: 14px;
+  transition: all 0.45s ease;
+}
+
+.trending-rental-card-main:hover {
+  transform: translateY(-12px);
+  box-shadow: 0px 35px 60px rgba(0, 0, 0, 0.12);
+}
+
+.trending-rental-card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.trending-rental-card-image {
+  width: 100%;
+  height: 620px;
+  object-fit: cover;
+  transition: all 0.8s ease;
+}
+
+.trending-rental-card-main:hover .trending-rental-card-image {
+  transform: scale(1.08);
+}
+
+/* Luxury Overlay */
+
+.trending-rental-card-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.trending-rental-card-main:hover
+.trending-rental-card-overlay {
+  opacity: 1;
+}
+
+/* Content */
+
+.trending-rental-card-content {
+  padding: 28px;
+}
+
+.trending-rental-card-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 12px;
+  margin-left: -230px;
+}
+
+.trending-rental-card-content span {
+  font-size: 13px;
+  color: #000000;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-left: -330px;
+}
+
+.trending-rental-card-bottom {
+  margin-top: 25px;
+  border-top: 1px solid #ececec;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trending-rental-card-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trending-rental-card-price strong {
+  font-size: 28px;
+  color: #1c1c1c;
+}
+
+.trending-rental-card-price small {
+  color: #999;
+  text-decoration: line-through;
+}
+
+.trending-rental-card-btn {
+  width: 170px;
+  height: 52px;
+  border-radius: 14px;
+  border: none;
+  background: #020515;
+  color: white;
+  transition: all 0.4s ease;
+}
+
+.trending-rental-card-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 18px 35px rgba(0,0,0,.18);
+}
+
+/* Responsive */
+
+@media (max-width: 991px) {
+  .trending-rental-collection-main {
+    padding: 80px 25px;
+  }
+
+  .trending-rental-collection-header {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 42px;
+  }
+
+  .trending-rental-card-image {
+    height: 500px;
+  }
+}
+
+@media (max-width: 576px) {
+  .trending-rental-collection-title {
+    font-size: 34px;
+  }
+
+  .trending-rental-collection-description {
+    font-size: 15px;
+  }
+
+  .trending-rental-card-image {
+    height: 420px;
+  }
+
+  .trending-rental-card-bottom {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .trending-rental-card-btn {
+    width: 100%;
+  }
+}
+
+
+/* Video */
+
+.trending-rental-card-video {
+  width: 100%;
+  height: 590px;
+  object-fit: cover;
+  display: block;
+  transition: all 0.8s ease;
+}
+
+.trending-rental-card-main:hover .trending-rental-card-video {
+  transform: scale(1.08);
+}
+
+/* Content */
+
+.trending-rental-card-content {
+  padding: 28px;
+}
+
+.trending-rental-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.trending-rental-card-category {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #555;
+  text-align: left;
+  margin-bottom: 18px;
+}

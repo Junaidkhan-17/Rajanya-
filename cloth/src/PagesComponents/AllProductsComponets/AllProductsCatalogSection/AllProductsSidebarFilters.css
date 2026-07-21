@@ -1,0 +1,341 @@
+/* ==================================================
+   SIDEBAR WRAPPER
+================================================== */
+
+.all-products-sidebar-main {
+  width: 100%;
+  background: #ffffff;
+}
+
+/* ==================================================
+   FILTER BLOCK
+================================================== */
+
+.all-products-filter-block {
+  margin-bottom: 45px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid #ececec;
+}
+
+.all-products-filter-block:last-child {
+  border-bottom: none;
+}
+
+.all-products-filter-block h4 {
+  margin-bottom: 10px;
+}
+
+/* ==================================================
+   FILTER TITLE
+================================================== */
+
+.all-products-filter-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.all-products-filter-title-booked {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 20px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+/* ==================================================
+   PRICE FILTER
+================================================== */
+
+.all-products-price-slider {
+  width: 100%;
+  height: 6px;
+
+  border-radius: 50px;
+  outline: none;
+
+  cursor: pointer;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  background: #31565a;
+}
+
+.all-products-price-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  border: 2px solid #31565a;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.all-products-price-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.all-products-price-value {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: 500;
+margin-bottom: -20px;
+  color: #4b5563;
+}
+
+/* ==================================================
+   CHECKBOX FILTERS
+================================================== */
+
+.all-products-checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.all-products-checkbox-row input {
+  width: 18px;
+  height: 18px;
+
+  cursor: pointer;
+
+  accent-color: #ffffff;
+}
+/*  accent-color: #31565a;*/
+
+.all-products-checkbox-row span {
+  flex: 1;
+  text-align: left;
+  font-size: 17px;
+  color: #000000;
+
+}
+
+.all-products-checkbox-row small {
+  min-width: 30px;
+
+  height: 24px;
+
+  border-radius: 30px;
+
+  background: #f3f4f6;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #000000;
+}
+
+.all-products-filter-block {
+  text-align: left;
+}
+
+/* ==================================================
+   CLEAR FILTER BUTTON
+================================================== */
+
+.all-products-clear-filter-btn {
+  width: 100%;
+  height: 42px;
+
+  border: none;
+  border-radius: 2px;
+
+  background: #020617;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  transition: all 0.35s ease;
+}
+
+.all-products-clear-filter-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.15);
+}
+/* ==================================================
+   MOST BOOKED OUTFITS
+================================================== */
+
+.all-products-booked-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  margin-bottom: 24px;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.all-products-booked-item:last-child {
+  margin-bottom: 0;
+}
+
+.all-products-booked-item:hover {
+  transform: translateX(4px);
+}
+
+/* ==================================================
+   IMAGE
+================================================== */
+
+.all-products-booked-image {
+  width: 48px;
+  height: 70px;
+
+  object-fit: cover;
+
+  border-radius: 2px;
+
+  flex-shrink: 0;
+
+  transition: all 0.35s ease;
+}
+
+.all-products-booked-item:hover
+.all-products-booked-image {
+  transform: scale(1.04);
+}
+
+/* ==================================================
+   CONTENT
+================================================== */
+
+.all-products-booked-content {
+  flex: 1;
+  padding-top: 4px;
+}
+
+.all-products-booked-content h5 {
+  margin: -6px 0 5px 0;
+
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  color: #1f2b2a;
+
+  line-height: 1.3;
+}
+
+.all-products-booked-content p {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  color: #5b6665;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.all-products-booked-content p span {
+  font-size: 11px;
+  font-weight: 400;
+
+  color: #a0a0a0;
+
+  text-decoration: line-through;
+}
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.all-products-filter-title {
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #1f2b2a;
+
+  margin-bottom: 30px;
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 992px) {
+  .all-products-booked-item {
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .all-products-booked-image {
+    width: 42px;
+    height: 62px;
+  }
+
+  .all-products-booked-content h5 {
+    font-size: 13px;
+  }
+
+  .all-products-booked-content p {
+    font-size: 12px;
+  }
+}
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 1200px) {
+  .all-products-filter-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 992px) {
+  .all-products-sidebar-main {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .all-products-filter-block {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+  }
+
+  .all-products-checkbox-row span {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 576px) {
+  .all-products-filter-title {
+    font-size: 17px;
+  }
+
+  .all-products-clear-filter-btn {
+    height: 48px;
+  }
+}

@@ -1,0 +1,68 @@
+.product-details-rental-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.rental-section-title {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  color: #111111;
+
+  text-align: left;
+
+  width: 100%;
+}
+
+.rental-duration-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+.rental-duration-btn {
+  min-width: 100px;
+
+  padding: 12px 20px;
+
+  border: 1px solid #dddddd;
+
+  background: #ffffff;
+
+  color: #333333;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.rental-duration-btn:hover {
+  border-color: #111111;
+}
+
+.rental-duration-btn.active {
+  background: #111111;
+
+  border-color: #111111;
+
+  color: #ffffff;
+}
+
+@media (max-width: 576px) {
+  .rental-duration-btn {
+    width: 100%;
+  }
+}

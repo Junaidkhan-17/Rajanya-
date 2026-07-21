@@ -1,0 +1,143 @@
+/* ==========================================
+   ALL PRODUCTS HERO SECTION
+========================================== */
+
+.all-products-hero-main {
+  padding: 40px 70px 20px;
+  background: #f8f8f8;
+}
+
+/* ==========================================
+   HERO BANNER
+========================================== */
+
+.all-products-hero-banner {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.all-products-hero-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Luxury Overlay */
+
+.all-products-hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 0.504) 0%,
+    rgba(0, 0, 0, 0.295) 35%,
+    rgba(0, 0, 0, 0.134) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* ==========================================
+   HERO CONTENT
+========================================== */
+
+.all-products-hero-banner-content {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 5;
+}
+
+.all-products-hero-title {
+  font-size: 78px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: -92px;
+  font-family: "Muthiara";
+}
+
+.all-products-hero-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 82px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 1.2px;
+}
+
+.all-products-hero-breadcrumb span {
+  text-transform: uppercase;
+}
+
+
+
+@media (max-width: 768px) {
+  .all-products-hero-main {
+    padding: 30px 20px 15px;
+  }
+
+  .all-products-hero-banner {
+    height: 280px;
+    border-radius: 22px;
+  }
+
+  .all-products-hero-title {
+    font-size: 36px;
+  }
+
+  .all-products-category-strip {
+    margin-top: 35px;
+
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+
+    padding-bottom: 10px;
+
+    scrollbar-width: none;
+  }
+
+  .all-products-category-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .all-products-category-item {
+    min-width: max-content;
+  }
+}
+
+@media (max-width: 576px) {
+  .all-products-hero-banner {
+    height: 220px;
+  }
+
+  .all-products-hero-title {
+    font-size: 28px;
+  }
+
+  .all-products-hero-breadcrumb {
+    font-size: 10px;
+  }
+
+  .all-products-category-image-wrapper {
+    width: 55px;
+    height: 55px;
+  }
+
+  .all-products-category-content h4 {
+    font-size: 15px;
+  }
+
+  .all-products-category-content span {
+    font-size: 12px;
+  }
+}

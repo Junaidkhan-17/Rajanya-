@@ -1,0 +1,1437 @@
+ ==================================================
+ENTERPRISE FRONTEND-FIRST DEVELOPMENT RULES
+===========================================
+
+IMPORTANT:
+
+This project will be developed in two phases.
+
+PHASE 1:
+Frontend Development
+
+PHASE 2:
+Backend Development
+
+While building frontend components, always assume backend APIs already exist.
+
+Never create temporary frontend architecture that requires future refactoring.
+
+All components must be designed so backend integration can be connected later with minimal code changes.
+
+==================================================
+FULLY FUNCTIONAL UI REQUIREMENTS
+================================
+
+Every visible UI element must be functional.
+
+No static UI.
+
+No fake interactions.
+
+No placeholder actions.
+
+Every:
+
+✔ Button
+✔ Input
+✔ Search Box
+✔ Dropdown
+✔ Select
+✔ Filter
+✔ Checkbox
+✔ Radio Button
+✔ Toggle
+✔ Pagination Button
+✔ Modal
+✔ Drawer
+✔ Tab
+✔ Accordion
+✔ Product Card Action
+✔ Wishlist Action
+✔ Cart Action
+✔ Quick View Action
+✔ Navigation Item
+
+must contain complete frontend logic.
+
+Even before backend integration.
+
+==================================================
+SEARCH REQUIREMENTS
+===================
+
+Search must always work.
+
+Support:
+
+✔ Product Search
+✔ Category Search
+✔ Vendor Search
+✔ User Search
+✔ Order Search
+✔ Blog Search
+
+Search must instantly update state.
+
+Search state must be managed through Context API.
+
+Search must work together with:
+
+• Filters
+• Sorting
+• Pagination
+
+==================================================
+FILTER REQUIREMENTS
+===================
+
+Filters must always be functional.
+
+Support:
+
+✔ Category Filter
+✔ Price Filter
+✔ Availability Filter
+✔ Status Filter
+✔ Color Filter
+✔ Size Filter
+✔ Rating Filter
+✔ Date Filter
+✔ Vendor Filter
+
+Filters must update:
+
+• Product Grid
+• Product Counts
+• Pagination
+• Analytics
+• Dashboard Metrics
+
+Filters must work together simultaneously.
+
+==================================================
+SORTING REQUIREMENTS
+====================
+
+Sorting must always work.
+
+Support:
+
+✔ Newest
+✔ Oldest
+✔ Popular
+✔ Featured
+✔ Price Low To High
+✔ Price High To Low
+✔ Highest Rated
+
+Sorting must integrate with:
+
+Search
+Filters
+Pagination
+
+==================================================
+PAGINATION REQUIREMENTS
+=======================
+
+Pagination must always work.
+
+Support:
+
+✔ Current Page
+✔ Previous
+✔ Next
+✔ First
+✔ Last
+✔ Dynamic Page Numbers
+
+Pagination state must be stored in Context API.
+
+Pagination must automatically update after:
+
+Search
+Filter
+Sorting
+
+==================================================
+FORM ARCHITECTURE RULES
+=======================
+
+All forms must use:
+
+React Hook Form
+
+Support:
+
+✔ Validation
+✔ Error Handling
+✔ Loading States
+✔ Success States
+✔ Toast Notifications
+
+Never use uncontrolled forms.
+
+Every form must be backend-ready.
+
+==================================================
+SERVICE LAYER ARCHITECTURE
+==========================
+
+Always prepare API-ready service architecture.
+
+Structure:
+
+services/
+
+authService.js
+productService.js
+userService.js
+vendorService.js
+orderService.js
+wishlistService.js
+cartService.js
+analyticsService.js
+
+Components must never call APIs directly.
+
+Always use Service Layer.
+
+==================================================
+PRODUCT MANAGEMENT READINESS
+============================
+
+Product architecture must support:
+
+✔ Create Product
+✔ Edit Product
+✔ Delete Product
+✔ Archive Product
+✔ Activate Product
+✔ Deactivate Product
+✔ Product Variants
+✔ Product Sizes
+✔ Product Colors
+✔ Product Images
+✔ Product Videos
+
+Prepare for Admin and Vendor Product Management.
+
+==================================================
+ADMIN DASHBOARD READINESS
+=========================
+
+Admin must eventually manage:
+
+✔ Users
+✔ Vendors
+✔ Products
+✔ Categories
+✔ Orders
+✔ Payments
+✔ Coupons
+✔ Reviews
+✔ Notifications
+✔ CMS Content
+✔ Analytics
+
+Design all data structures accordingly.
+
+==================================================
+VENDOR DASHBOARD READINESS
+==========================
+
+Vendor must eventually manage:
+
+✔ Inventory
+✔ Products
+✔ Orders
+✔ Customers
+✔ Analytics
+
+Design frontend architecture accordingly.
+
+==================================================
+DATA MODEL REQUIREMENTS
+=======================
+
+Never create unrealistic frontend data.
+
+Use backend-ready structures.
+
+Example Product Model:
+
+{
+_id: "",
+name: "",
+slug: "",
+description: "",
+category: "",
+brand: "",
+images: [],
+videos: [],
+sizes: [],
+colors: [],
+rentalPrice: 0,
+originalPrice: 0,
+stock: 0,
+rating: 0,
+reviewsCount: 0,
+status: "active",
+createdAt: "",
+updatedAt: ""
+}
+
+All frontend data must be structured for MongoDB compatibility.
+
+==================================================
+LOADING STATE REQUIREMENTS
+==========================
+
+Every section must support:
+
+✔ Loading State
+✔ Empty State
+✔ Error State
+✔ Success State
+
+Never display blank UI.
+
+==================================================
+REUSABLE COMPONENT RULES
+========================
+
+Always prefer reusable components.
+
+Examples:
+
+ProductCard
+FilterDropdown
+SearchInput
+Pagination
+Modal
+Drawer
+Button
+Input
+Select
+
+Avoid duplicated code.
+
+==================================================
+CONTEXT API STATE MANAGEMENT RULES
+==================================
+
+All business-critical state must be managed through:
+
+✔ Context API
+✔ Reducer
+
+Avoid excessive local state.
+
+Context must control:
+
+Products
+Wishlist
+Cart
+Filters
+Search
+Pagination
+User Data
+Notifications
+Analytics
+
+==================================================
+BACKEND INTEGRATION GUARANTEE
+=============================
+
+Every component generated must be designed so:
+
+Frontend
+↓
+Context API
+↓
+Reducer
+↓
+Service Layer
+↓
+Axios
+↓
+REST API
+↓
+Node.js
+↓
+Express.js
+↓
+MongoDB
+
+can be connected without major refactoring.
+
+==================================================
+PRODUCTION CODE REQUIREMENTS
+============================
+
+Generate code as if the project is being prepared for production deployment.
+
+Avoid:
+
+✖ Demo Logic
+✖ Temporary Structures
+✖ Static Architecture
+✖ Backend Blocking Patterns
+
+Prioritize:
+
+✔ Scalability
+✔ Maintainability
+✔ Reusability
+✔ Backend Compatibility
+✔ Enterprise Architecture
+✔ Long-Term Growth
+
+==================================================
+ENTERPRISE FRONTEND-FIRST DEVELOPMENT RULES
+===========================================
+
+IMPORTANT:
+
+This project will be developed in two phases.
+
+PHASE 1:
+Frontend Development
+
+PHASE 2:
+Backend Development
+
+While building frontend components, always assume backend APIs already exist.
+
+Never create temporary frontend architecture that requires future refactoring.
+
+All components must be designed so backend integration can be connected later with minimal code changes.
+
+==================================================
+FULLY FUNCTIONAL UI REQUIREMENTS
+================================
+
+Every visible UI element must be functional.
+
+No static UI.
+
+No fake interactions.
+
+No placeholder actions.
+
+Every:
+
+✔ Button
+✔ Input
+✔ Search Box
+✔ Dropdown
+✔ Select
+✔ Filter
+✔ Checkbox
+✔ Radio Button
+✔ Toggle
+✔ Pagination Button
+✔ Modal
+✔ Drawer
+✔ Tab
+✔ Accordion
+✔ Product Card Action
+✔ Wishlist Action
+✔ Cart Action
+✔ Quick View Action
+✔ Navigation Item
+
+must contain complete frontend logic.
+
+Even before backend integration.
+
+==================================================
+SEARCH REQUIREMENTS
+===================
+
+Search must always work.
+
+Support:
+
+✔ Product Search
+✔ Category Search
+✔ Vendor Search
+✔ User Search
+✔ Order Search
+✔ Blog Search
+
+Search must instantly update state.
+
+Search state must be managed through Context API.
+
+Search must work together with:
+
+• Filters
+• Sorting
+• Pagination
+
+==================================================
+FILTER REQUIREMENTS
+===================
+
+Filters must always be functional.
+
+Support:
+
+✔ Category Filter
+✔ Price Filter
+✔ Availability Filter
+✔ Status Filter
+✔ Color Filter
+✔ Size Filter
+✔ Rating Filter
+✔ Date Filter
+✔ Vendor Filter
+
+Filters must update:
+
+• Product Grid
+• Product Counts
+• Pagination
+• Analytics
+• Dashboard Metrics
+
+Filters must work together simultaneously.
+
+==================================================
+SORTING REQUIREMENTS
+====================
+
+Sorting must always work.
+
+Support:
+
+✔ Newest
+✔ Oldest
+✔ Popular
+✔ Featured
+✔ Price Low To High
+✔ Price High To Low
+✔ Highest Rated
+
+Sorting must integrate with:
+
+Search
+Filters
+Pagination
+
+==================================================
+PAGINATION REQUIREMENTS
+=======================
+
+Pagination must always work.
+
+Support:
+
+✔ Current Page
+✔ Previous
+✔ Next
+✔ First
+✔ Last
+✔ Dynamic Page Numbers
+
+Pagination state must be stored in Context API.
+
+Pagination must automatically update after:
+
+Search
+Filter
+Sorting
+
+==================================================
+FORM ARCHITECTURE RULES
+=======================
+
+All forms must use:
+
+React Hook Form
+
+Support:
+
+✔ Validation
+✔ Error Handling
+✔ Loading States
+✔ Success States
+✔ Toast Notifications
+
+Never use uncontrolled forms.
+
+Every form must be backend-ready.
+
+==================================================
+SERVICE LAYER ARCHITECTURE
+==========================
+
+Always prepare API-ready service architecture.
+
+Structure:
+
+services/
+
+authService.js
+productService.js
+userService.js
+vendorService.js
+orderService.js
+wishlistService.js
+cartService.js
+analyticsService.js
+
+Components must never call APIs directly.
+
+Always use Service Layer.
+
+==================================================
+PRODUCT MANAGEMENT READINESS
+============================
+
+Product architecture must support:
+
+✔ Create Product
+✔ Edit Product
+✔ Delete Product
+✔ Archive Product
+✔ Activate Product
+✔ Deactivate Product
+✔ Product Variants
+✔ Product Sizes
+✔ Product Colors
+✔ Product Images
+✔ Product Videos
+
+Prepare for Admin and Vendor Product Management.
+
+==================================================
+ADMIN DASHBOARD READINESS
+=========================
+
+Admin must eventually manage:
+
+✔ Users
+✔ Vendors
+✔ Products
+✔ Categories
+✔ Orders
+✔ Payments
+✔ Coupons
+✔ Reviews
+✔ Notifications
+✔ CMS Content
+✔ Analytics
+
+Design all data structures accordingly.
+
+==================================================
+VENDOR DASHBOARD READINESS
+==========================
+
+Vendor must eventually manage:
+
+✔ Inventory
+✔ Products
+✔ Orders
+✔ Customers
+✔ Analytics
+
+Design frontend architecture accordingly.
+
+==================================================
+DATA MODEL REQUIREMENTS
+=======================
+
+Never create unrealistic frontend data.
+
+Use backend-ready structures.
+
+Example Product Model:
+
+{
+_id: "",
+name: "",
+slug: "",
+description: "",
+category: "",
+brand: "",
+images: [],
+videos: [],
+sizes: [],
+colors: [],
+rentalPrice: 0,
+originalPrice: 0,
+stock: 0,
+rating: 0,
+reviewsCount: 0,
+status: "active",
+createdAt: "",
+updatedAt: ""
+}
+
+All frontend data must be structured for MongoDB compatibility.
+
+==================================================
+LOADING STATE REQUIREMENTS
+==========================
+
+Every section must support:
+
+✔ Loading State
+✔ Empty State
+✔ Error State
+✔ Success State
+
+Never display blank UI.
+
+==================================================
+REUSABLE COMPONENT RULES
+========================
+
+Always prefer reusable components.
+
+Examples:
+
+ProductCard
+FilterDropdown
+SearchInput
+Pagination
+Modal
+Drawer
+Button
+Input
+Select
+
+Avoid duplicated code.
+
+==================================================
+CONTEXT API STATE MANAGEMENT RULES
+==================================
+
+All business-critical state must be managed through:
+
+✔ Context API
+✔ Reducer
+
+Avoid excessive local state.
+
+Context must control:
+
+Products
+Wishlist
+Cart
+Filters
+Search
+Pagination
+User Data
+Notifications
+Analytics
+
+==================================================
+BACKEND INTEGRATION GUARANTEE
+=============================
+
+Every component generated must be designed so:
+
+Frontend
+↓
+Context API
+↓
+Reducer
+↓
+Service Layer
+↓
+Axios
+↓
+REST API
+↓
+Node.js
+↓
+Express.js
+↓
+MongoDB
+
+can be connected without major refactoring.
+
+==================================================
+PRODUCTION CODE REQUIREMENTS
+============================
+
+Generate code as if the project is being prepared for production deployment.
+
+Avoid:
+
+✖ Demo Logic
+✖ Temporary Structures
+✖ Static Architecture
+✖ Backend Blocking Patterns
+
+Prioritize:
+
+✔ Scalability
+✔ Maintainability
+✔ Reusability
+✔ Backend Compatibility
+✔ Enterprise Architecture
+✔ Long-Term Growth
+
+==================================================
+ALL PRODUCTS PAGE ENTERPRISE EXTENSION
+======================================
+
+IMPORTANT:
+
+This section extends all previous instructions.
+
+Do not override previous instructions.
+
+Apply these rules in addition to all existing requirements.
+
+==================================================
+ALL PRODUCTS PAGE MASTER REQUIREMENTS
+=====================================
+
+The All Products Page must be developed as a fully functional frontend module from Day One.
+
+Never generate static product grids.
+
+Never generate non-functional filters.
+
+Never generate non-functional search systems.
+
+Never generate non-functional pagination.
+
+Every interaction must work before backend integration.
+
+==================================================
+ALL PRODUCTS PAGE COMPONENT STRUCTURE
+=====================================
+
+Create reusable architecture.
+
+PagesComponents/
+
+AllProductsComponents/
+
+AllProductsHeroSection
+
+AllProductsCatalogSection
+
+AllProductsSidebarFilters
+
+AllProductsSortBar
+
+AllProductsProductGrid
+
+AllProductsProductCard
+
+AllProductsPagination
+
+RecommendedProductsSection
+
+RecentlyViewedProductsSection
+
+NewsletterSection
+
+Every component must be reusable.
+
+==================================================
+PRODUCT GRID REQUIREMENTS
+=========================
+
+Product Grid must support:
+
+✔ Dynamic Rendering
+
+✔ Search Updates
+
+✔ Filter Updates
+
+✔ Sorting Updates
+
+✔ Pagination Updates
+
+✔ Loading State
+
+✔ Empty State
+
+✔ Error State
+
+✔ Success State
+
+Grid updates must happen instantly.
+
+==================================================
+PRODUCT CARD REQUIREMENTS
+=========================
+
+Every Product Card must support:
+
+✔ Wishlist Button
+
+✔ Compare Button
+
+✔ Quick View Button
+
+✔ Share Button
+
+✔ Product Details Navigation
+
+✔ Book For Rent Button
+
+All actions must contain complete frontend state management.
+
+Prepare all actions for backend integration.
+
+==================================================
+SEARCH REQUIREMENTS
+===================
+
+Search must always work.
+
+Support:
+
+✔ Product Name Search
+
+✔ Category Search
+
+✔ Material Search
+
+✔ Tag Search
+
+Search must instantly update:
+
+Product Grid
+
+Product Count
+
+Pagination
+
+Analytics
+
+Search must work together with:
+
+Filters
+
+Sorting
+
+Pagination
+
+Search state must be managed through Context API.
+
+==================================================
+FILTER REQUIREMENTS
+===================
+
+Filters must always work.
+
+Support:
+
+✔ Category Filter
+
+✔ Material Filter
+
+✔ Color Filter
+
+✔ Size Filter
+
+✔ Price Range Filter
+
+✔ Rating Filter
+
+✔ Availability Filter
+
+✔ Featured Filter
+
+Filters must update:
+
+Product Grid
+
+Product Count
+
+Pagination
+
+Analytics
+
+Dashboard Metrics
+
+Filters must work simultaneously.
+
+==================================================
+SORTING REQUIREMENTS
+====================
+
+Sorting must always work.
+
+Support:
+
+✔ Default
+
+✔ Newest
+
+✔ Oldest
+
+✔ Popular
+
+✔ Featured
+
+✔ Price Low To High
+
+✔ Price High To Low
+
+✔ Highest Rated
+
+Sorting must integrate with:
+
+Search
+
+Filters
+
+Pagination
+
+==================================================
+PAGINATION REQUIREMENTS
+=======================
+
+Pagination must always work.
+
+Support:
+
+✔ Current Page
+
+✔ Previous
+
+✔ Next
+
+✔ First
+
+✔ Last
+
+✔ Dynamic Page Numbers
+
+✔ Mobile Pagination
+
+Pagination state must be stored in Context API.
+
+Pagination must automatically update after:
+
+Search
+
+Filters
+
+Sorting
+
+Pagination must automatically reset to page 1 after:
+
+Search Changes
+
+Filter Changes
+
+Sort Changes
+
+==================================================
+PRODUCT CONTEXT API REQUIREMENTS
+================================
+
+Create:
+
+ProductLiveDataContext.jsx
+
+Include:
+
+✔ Context
+
+✔ Reducer
+
+✔ Provider
+
+✔ Custom Hook
+
+Support:
+
+✔ Products
+
+✔ Filtered Products
+
+✔ Search
+
+✔ Filters
+
+✔ Sorting
+
+✔ Pagination
+
+✔ Wishlist
+
+✔ Compare
+
+✔ Recently Viewed
+
+✔ Analytics
+
+✔ Loading
+
+✔ Error Handling
+
+Avoid excessive local state.
+
+==================================================
+PRODUCT REDUCER REQUIREMENTS
+============================
+
+Support:
+
+SET_PRODUCTS
+
+SET_FILTERS
+
+SET_SEARCH
+
+SET_SORT
+
+SET_PAGE
+
+NEXT_PAGE
+
+PREVIOUS_PAGE
+
+FIRST_PAGE
+
+LAST_PAGE
+
+ADD_TO_WISHLIST
+
+REMOVE_FROM_WISHLIST
+
+ADD_TO_COMPARE
+
+REMOVE_FROM_COMPARE
+
+ADD_TO_RECENTLY_VIEWED
+
+SET_LOADING
+
+SET_ERROR
+
+CLEAR_FILTERS
+
+==================================================
+SERVICE LAYER REQUIREMENTS
+==========================
+
+Create:
+
+productService.js
+
+wishlistService.js
+
+cartService.js
+
+analyticsService.js
+
+recommendationService.js
+
+Components must never directly call APIs.
+
+Always use Service Layer.
+
+Prepare for future Axios integration.
+
+==================================================
+RENTAL PLATFORM REQUIREMENTS
+============================
+
+Product architecture must support:
+
+✔ Rental Pricing
+
+✔ Original Pricing
+
+✔ Security Deposit
+
+✔ Rental Duration
+
+✔ Booking Availability
+
+✔ Inventory Tracking
+
+✔ Vendor Ownership
+
+✔ Delivery Availability
+
+✔ Return Availability
+
+✔ Rental Status
+
+==================================================
+AI TRY-ON READINESS REQUIREMENTS
+================================
+
+Product architecture must support:
+
+✔ Product Images
+
+✔ Product Videos
+
+✔ Outfit Overlay Assets
+
+✔ Garment Metadata
+
+✔ AI Mapping Assets
+
+✔ Try-On Asset References
+
+✔ Pose Mapping Assets
+
+✔ AI Recommendation Metadata
+
+Prepare all product data models for future AI Virtual Try-On integration.
+
+==================================================
+PRODUCT MANAGEMENT READINESS
+============================
+
+Frontend architecture must support:
+
+✔ Create Product
+
+✔ Edit Product
+
+✔ Delete Product
+
+✔ Archive Product
+
+✔ Activate Product
+
+✔ Deactivate Product
+
+✔ Duplicate Product
+
+✔ Bulk Product Actions
+
+✔ Product Images
+
+✔ Product Videos
+
+✔ Product Variants
+
+✔ Product Sizes
+
+✔ Product Colors
+
+✔ Product Inventory
+
+==================================================
+MONGODB READY PRODUCT MODEL
+===========================
+
+{
+_id: "",
+
+name: "",
+
+slug: "",
+
+description: "",
+
+shortDescription: "",
+
+category: "",
+
+subCategory: "",
+
+brand: "",
+
+material: "",
+
+tags: [],
+
+colors: [],
+
+sizes: [],
+
+images: [],
+
+videos: [],
+
+rentalPrice: 0,
+
+originalPrice: 0,
+
+securityDeposit: 0,
+
+stock: 0,
+
+rating: 0,
+
+reviewsCount: 0,
+
+bookingCount: 0,
+
+featured: false,
+
+availabilityStatus: "available",
+
+vendorId: "",
+
+seoTitle: "",
+
+seoDescription: "",
+
+createdAt: "",
+
+updatedAt: ""
+}
+
+==================================================
+LOADING STATE REQUIREMENTS
+==========================
+
+Every product section must support:
+
+✔ Skeleton Loader
+
+✔ Loading State
+
+✔ Empty State
+
+✔ Error State
+
+✔ Success State
+
+Never display blank UI.
+
+==================================================
+RESPONSIVENESS REQUIREMENTS
+===========================
+
+Support:
+
+1920px
+
+1600px
+
+1440px
+
+1366px
+
+1200px
+
+1024px
+
+768px
+
+576px
+
+480px
+
+375px
+
+Nothing should:
+
+✖ Overflow
+
+✖ Break
+
+✖ Overlap
+
+✖ Hide Unexpectedly
+
+Filters, Search, Sorting and Pagination must remain usable on every screen size.
+
+==================================================
+OUTPUT REQUIREMENTS FOR ALL PRODUCTS PAGE
+=========================================
+
+Whenever generating All Products Page components always provide:
+
+1. UI Analysis
+
+2. Component Breakdown
+
+3. Folder Placement
+
+4. JSX Component
+
+5. CSS File
+
+6. Imports
+
+7. Context Integration
+
+8. Reducer Integration
+
+9. Service Layer Integration
+
+10. Search Logic
+
+11. Filter Logic
+
+12. Sorting Logic
+
+13. Pagination Logic
+
+14. Loading State
+
+15. Empty State
+
+16. Error State
+
+17. Responsive Design
+
+18. Backend Readiness Notes
+
+19. Performance Notes
+
+20. Production Notes
+
+==================================================
+FINAL RULE
+==========
+
+Never generate static UI.
+
+Never generate placeholder functionality.
+
+Never generate frontend code that requires major future refactoring.
+
+Generate production-ready frontend architecture that can connect directly to:
+
+Frontend
+↓
+Context API
+↓
+Reducer
+↓
+Service Layer
+↓
+Axios
+↓
+REST API
+↓
+Node.js
+↓
+Express.js
+↓
+MongoDB
+
+without major architectural changes.
+
+All All Products Page components must be:
+
+✔ Functional
+
+✔ Responsive
+
+✔ Backend Ready
+
+✔ Context API Connected
+
+✔ Reducer Driven
+
+✔ Service Layer Ready
+
+✔ Production Ready

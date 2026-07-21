@@ -1,0 +1,240 @@
+/* ========================================
+   FASHION PROCESS SECTION
+======================================== */
+
+.fashion-process-main {
+  padding: 90px 0 70px;
+  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========================================
+   HEADING
+======================================== */
+
+.fashion-process-heading-wrapper {
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.fashion-process-title {
+  font-family: "Newake";
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.fashion-process-title span {
+  font-family: "Newake";
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #ffd500;
+  margin-bottom: 12px;
+  -webkit-text-stroke: 2px rgb(0, 0, 0);
+}
+
+.fashion-process-subtitle {
+  font-size: 16px;
+  font-weight: 400;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ========================================
+   PROCESS CARD
+======================================== */
+
+.fashion-process-card {
+  text-align: center;
+  padding: 20px 25px;
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.fashion-process-card:hover {
+  transform: translateY(-10px);
+}
+
+/* ========================================
+   ICON BOX
+======================================== */
+
+.fashion-process-icon-box {
+  width: 68px;
+  height: 68px;
+  border-radius: 14px;
+  margin: 0 auto 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.fashion-process-icon-box i {
+  font-size: 28px;
+  color: #111827;
+  transition: all 0.4s ease;
+}
+
+/* Purple */
+
+.fashion-process-icon-purple {
+  background: #e7ecff;
+}
+
+/* Lavender */
+
+.fashion-process-icon-lavender {
+  background: #efe1ff;
+}
+
+/* Blue */
+
+.fashion-process-icon-blue {
+  background: #cdefff;
+}
+
+/* Hover */
+
+.fashion-process-card:hover .fashion-process-icon-box {
+  transform: scale(1.1) rotate(6deg);
+}
+
+.fashion-process-card:hover .fashion-process-icon-box i {
+  transform: scale(1.15);
+}
+
+/* ========================================
+   TITLE
+======================================== */
+
+.fashion-process-card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #202124;
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+/* ========================================
+   DESCRIPTION
+======================================== */
+
+.fashion-process-card-description {
+  max-width: 280px;
+  margin: 0 auto;
+
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+
+  color: #6b7280;
+}
+
+/* ========================================
+   PREMIUM GLOW EFFECT
+======================================== */
+
+.fashion-process-icon-box::before {
+  content: "";
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+
+  opacity: 0;
+  transition: all 0.4s ease;
+
+  background: radial-gradient(
+    circle,
+    rgba(139, 92, 246, 0.15) 0%,
+    rgba(139, 92, 246, 0) 70%
+  );
+}
+
+.fashion-process-card:hover .fashion-process-icon-box::before {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 1200px) {
+  .fashion-process-title {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 992px) {
+  .fashion-process-main {
+    padding: 80px 0 60px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 70px;
+  }
+
+  .fashion-process-title {
+    font-size: 42px;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .fashion-process-title {
+    font-size: 34px;
+  }
+
+  .fashion-process-subtitle {
+    font-size: 14px;
+    padding: 0 15px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 20px;
+  }
+
+  .fashion-process-card-description {
+    font-size: 14px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 55px;
+  }
+}
+
+@media (max-width: 576px) {
+  .fashion-process-main {
+    padding: 70px 0 40px;
+  }
+
+  .fashion-process-title {
+    font-size: 28px;
+  }
+
+  .fashion-process-icon-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 24px;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 40px;
+  }
+}

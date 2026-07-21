@@ -1,0 +1,120 @@
+/* =====================================================
+   PRODUCT DETAILS PAGE
+===================================================== */
+
+.product-details-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  overflow-x: hidden;
+}
+
+/* =====================================================
+   GLOBAL SECTION SPACING
+===================================================== */
+
+.product-details-page section {
+  position: relative;
+  width: 100%;
+}
+
+/* =====================================================
+   CONTAINER ENHANCEMENT
+===================================================== */
+
+.product-details-page .container {
+  max-width: 1440px;
+}
+
+/* =====================================================
+   IMAGE SAFETY
+===================================================== */
+
+.product-details-page img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =====================================================
+   BUTTON RESET
+===================================================== */
+
+.product-details-page button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* =====================================================
+   LINK RESET
+===================================================== */
+
+.product-details-page a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =====================================================
+   SCROLL BEHAVIOR
+===================================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* =====================================================
+   LARGE DESKTOP
+===================================================== */
+
+@media (min-width: 1600px) {
+  .product-details-page .container {
+    max-width: 1500px;
+  }
+}
+
+/* =====================================================
+   LAPTOP
+===================================================== */
+
+@media (max-width: 1366px) {
+  .product-details-page .container {
+    max-width: 1280px;
+  }
+}
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 991px) {
+  .product-details-page {
+    overflow-x: hidden;
+  }
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 576px) {
+  .product-details-page {
+    min-height: auto;
+  }
+
+  .product-details-page .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media (max-width: 375px) {
+  .product-details-page .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}

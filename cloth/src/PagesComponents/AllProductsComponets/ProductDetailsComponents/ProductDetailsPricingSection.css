@@ -1,0 +1,97 @@
+.product-details-pricing-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: -20px;
+  gap: 14px;
+
+  width: 100%;
+}
+
+.product-pricing-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 14px;
+}
+
+.product-original-price {
+  font-size: 24px;
+
+  color: #d24d4d;
+
+  text-decoration: line-through;
+
+  font-weight: 400;
+}
+
+.product-rental-price {
+  font-size: 48px;
+
+  font-weight: 500;
+
+  color: #111111;
+
+  line-height: 1;
+}
+
+.product-rental-label {
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+
+  color: #333232;
+}
+
+.product-discount-badge {
+  padding: 6px 12px;
+
+  border-radius: 30px;
+
+  background: #eef9f0;
+
+  color: #0d8b3f;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 1px;
+}
+
+.product-security-deposit {
+  font-size: 15px;
+
+  color: #666666;
+}
+
+.product-security-deposit span {
+  margin-left: 6px;
+
+  font-weight: 600;
+
+  color: #111111;
+}
+
+@media (max-width: 768px) {
+  .product-rental-price {
+    font-size: 38px;
+  }
+
+  .product-original-price {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-pricing-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .product-rental-price {
+    font-size: 32px;
+  }
+}

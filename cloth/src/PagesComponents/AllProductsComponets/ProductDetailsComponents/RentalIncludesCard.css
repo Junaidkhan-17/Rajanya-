@@ -1,0 +1,74 @@
+.rental-includes-card {
+  margin-top: 5px;
+  padding: 32px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebebeb;
+
+  border-radius: 4px;
+}
+
+.rental-includes-header {
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  text-align: left;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.rental-includes-header h5 {
+  margin: 0;
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: #222222;
+}
+
+.rental-includes-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  );
+  gap: 30px 60px;
+}
+
+.rental-includes-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.rental-includes-item svg {
+  flex-shrink: 0;
+  color: #c7a461;
+}
+
+.rental-includes-item span {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #2c2c2c;
+}
+
+@media (max-width: 768px) {
+  .rental-includes-card {
+    padding: 24px;
+  }
+
+  .rental-includes-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rental-includes-card {
+    padding: 20px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.92rem;
+  }
+}

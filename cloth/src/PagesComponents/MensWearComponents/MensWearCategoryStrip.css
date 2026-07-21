@@ -1,0 +1,116 @@
+/* ==========================================
+   CATEGORY STRIP
+========================================== */
+
+.mens-category-strip-section {
+  padding: 40px 0;
+  background: #ffffff;
+}
+
+.mens-category-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   CATEGORY ITEM
+========================================== */
+
+.mens-category-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 14px 18px;
+
+  border: 1px solid #ececec;
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition: all 0.35s ease;
+}
+
+.mens-category-item:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 15px 30px
+    rgba(0, 0, 0, 0.08);
+}
+
+.mens-category-active {
+  border-color: #31565a;
+  background: #31565a;
+}
+
+.mens-category-active h4,
+.mens-category-active span {
+  color: #ffffff;
+}
+
+/* ==========================================
+   IMAGE
+========================================== */
+
+.mens-category-image-wrapper {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  flex-shrink: 0;
+}
+
+.mens-category-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.mens-category-content h4 {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.mens-category-content span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .mens-category-strip {
+    justify-content: flex-start;
+
+    overflow-x: auto;
+    flex-wrap: nowrap;
+
+    padding-bottom: 10px;
+  }
+
+  .mens-category-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mens-category-item {
+    min-width: max-content;
+  }
+}

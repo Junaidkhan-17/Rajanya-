@@ -1,0 +1,66 @@
+.product-details-actions-section {
+  width: 100%;
+
+  display: flex;
+
+  gap: 16px;
+
+  margin-top: 20px;
+}
+
+.virtual-try-on-btn {
+  flex: 1;
+
+  height: 60px;
+
+  border: none;
+
+  background: #111111;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.book-rent-btn {
+  flex: 1;
+
+  height: 60px;
+
+  border: 1px solid #111111;
+
+  background: #ffffff;
+
+  color: #111111;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+}
+
+.wishlist-btn {
+  width: 60px;
+
+  height: 60px;
+  color:#111111;
+  border: 1px solid #dddddd;
+
+  background: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+.wishlist-btn-active {
+  background: #c8a96b;
+  color: #ffffff;
+}

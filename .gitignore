@@ -1,0 +1,25 @@
+# Auto-generated folders
+.postman/
+.snapshots/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Node modules (extra safety)
+**/node_modules/
+
+# Build folders
+**/dist/
+**/build/
+
+# IDE files
+.vscode/
+.idea/

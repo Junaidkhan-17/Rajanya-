@@ -1,0 +1,152 @@
+.product-details-info-section {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  text-align: left;
+}
+
+.product-details-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  width: 100%;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  color: #8f8f8f;
+}
+
+.product-details-breadcrumb a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s ease;
+}
+
+.product-details-breadcrumb a:hover {
+  color: #111111;
+}
+
+.active-product {
+  color: #111111;
+  font-weight: 700;
+}
+
+.product-details-category {
+  width: 100%;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  color: #b58b3c;
+}
+
+.product-details-title {
+  width: 100%;
+
+  margin: 0;
+
+  font-size: clamp(42px, 4vw, 72px);
+
+  font-weight: 600;
+
+  line-height: 1.1;
+
+  color: #1c1c1c;
+
+  text-align: left;
+
+  word-break: break-word;
+}
+
+.product-details-rating {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  flex-wrap: wrap;
+}
+
+.product-details-stars {
+  display: flex;
+  gap: 4px;
+
+  color: #d8aa4c;
+
+  flex-shrink: 0;
+}
+
+.product-details-rating-text {
+  font-size: 14px;
+  color: #666666;
+}
+
+.product-details-description {
+  width: 100%;
+
+  margin: 0;
+
+  font-size: 17px;
+  line-height: 1.9;
+
+  color: #555555;
+
+  text-align: left;
+
+  word-break: break-word;
+}
+
+@media (max-width: 1200px) {
+  .product-details-top-section {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 992px) {
+  .product-details-top-section {
+    grid-template-columns: 1fr;
+  }
+
+  .product-details-title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-details-title {
+    font-size: 36px;
+  }
+
+  .product-details-description {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-details-title {
+    font-size: 30px;
+  }
+
+  .product-details-rating {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

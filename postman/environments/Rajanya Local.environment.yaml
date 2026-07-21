@@ -1,0 +1,10 @@
+name: Rajanya Local
+values:
+  - key: baseUrl
+    value: ''
+  - key: adminToken
+    secret: true
+  - key: customerToken
+    secret: true
+  - key: customer2Token
+    secret: true

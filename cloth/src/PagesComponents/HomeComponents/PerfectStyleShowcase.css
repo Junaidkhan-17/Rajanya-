@@ -1,0 +1,139 @@
+.perfect-style-showcase-main {
+  padding: 80px 0;
+}
+
+.perfect-style-showcase-wrapper {
+  background: #02030f;
+  border-radius: 28px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 20px;
+}
+
+.perfect-style-showcase-title {
+  color: #ffffff;
+  font-size: 48px;
+  font-family: "Newake";
+  margin-bottom: 8px;
+  margin-left: -30px;
+}
+
+.perfect-style-showcase-title span {
+  color: #ffffff;
+  font-size: 60px;
+  font-family: "Newake";
+  margin-bottom: 8px;
+  color: #ffd500;
+  -webkit-text-stroke: 1px rgb(255, 255, 255);
+}
+
+.perfect-style-showcase-description {
+  color: rgba(255,255,255,0.75);
+  line-height: 1.8;
+  max-width: 600px;
+  margin-bottom: 35px;
+}
+
+.perfect-style-showcase-right {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.perfect-style-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.perfect-style-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.perfect-style-image {
+  width: 100%;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.perfect-style-image-wrapper:hover .perfect-style-image {
+  transform: scale(1.08);
+}
+
+/* Right → Center Overlay */
+
+.perfect-style-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.perfect-style-image-wrapper:hover::before {
+  opacity: 1;
+}
+
+.perfect-style-category-card {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+
+  z-index: 5;
+
+  background: #ffffff;
+  border-radius: 14px;
+
+  padding: 14px 18px;
+  min-width: 130px;
+
+  transition: all 0.35s ease;
+}
+
+.perfect-style-category-card h5 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.perfect-style-category-card span {
+  font-size: 13px;
+  color: #667085;
+}
+
+.perfect-style-image-wrapper:hover
+.perfect-style-category-card {
+  transform: translateY(-4px);
+}
+
+/* Responsive */
+
+@media (max-width: 1200px) {
+
+  .perfect-style-showcase-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .perfect-style-showcase-wrapper {
+    padding: 24px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 34px;
+  }
+
+  .perfect-style-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+}

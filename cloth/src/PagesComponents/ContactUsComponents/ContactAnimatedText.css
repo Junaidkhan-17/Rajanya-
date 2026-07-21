@@ -1,0 +1,51 @@
+.contact-hero-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -110px;
+}
+
+.contact-hero-svg {
+  width: 100%;
+  height: 120px;
+  overflow: visible;
+}
+
+.contact-text-base {
+  fill: transparent;
+  stroke: #ffae00;
+  stroke-width: 2;
+
+  font-size: 240px;
+  font-family: "Muthiara";
+}
+
+.contact-text-light {
+  fill: rgba(255, 217, 0, 0.963);
+
+  stroke: #ffffff;
+  stroke-width: 6;
+
+  stroke-linecap: round;
+
+  stroke-dasharray: 60 2000;
+  stroke-dashoffset: 0;
+
+
+
+  font-size: 240px;
+  font-family: "Muthiara";
+
+  animation: moveLight 5s linear infinite;
+}
+
+@keyframes moveLight {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -2000;
+  }
+}

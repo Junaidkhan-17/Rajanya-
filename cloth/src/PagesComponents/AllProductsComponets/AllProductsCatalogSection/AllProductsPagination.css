@@ -1,0 +1,113 @@
+/* ==========================================
+   PAGINATION WRAPPER
+========================================== */
+
+.all-products-pagination-main {
+  margin-top: 60px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+/* ==========================================
+   PAGE NUMBERS
+========================================== */
+
+.all-products-pagination-pages {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.all-products-pagination-btn,
+.all-products-pagination-number {
+  min-width: 46px;
+  height: 46px;
+
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #374151;
+
+  transition: all 0.3s ease;
+}
+
+/* Hover */
+
+.all-products-pagination-btn:hover,
+.all-products-pagination-number:hover {
+  border-color: #31565a;
+  color: #31565a;
+
+  transform: translateY(-2px);
+}
+
+/* Active */
+
+.all-products-pagination-active {
+  background: #31565a;
+  border-color: #31565a;
+  color: #ffffff;
+}
+
+/* Disabled */
+
+.all-products-pagination-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.all-products-pagination-btn:disabled:hover {
+  transform: none;
+  border-color: #e5e7eb;
+  color: #374151;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .all-products-pagination-main {
+    gap: 8px;
+  }
+
+  .all-products-pagination-btn,
+  .all-products-pagination-number {
+    min-width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 576px) {
+  .all-products-pagination-main {
+    margin-top: 40px;
+  }
+
+  .all-products-pagination-btn,
+  .all-products-pagination-number {
+    min-width: 38px;
+    height: 38px;
+
+    font-size: 13px;
+  }
+}
