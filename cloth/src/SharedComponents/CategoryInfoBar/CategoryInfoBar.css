@@ -1,102 +1,656 @@
+/* =========================================================
+   CATEGORY INFO BAR
+========================================================= */
+
 .category-info-bar-main {
+  position: fixed;
+
+  top: 70px;
+  left: 0;
+
+  z-index: 998;
+
   width: 100%;
   height: 56px;
-  background: #ffffff;
+
   display: flex;
   align-items: center;
-  position: fixed;
-  top:  70px;
-  left: 0;
-  z-index: 998;
+
+  background: #ffffff;
+
   box-sizing: border-box;
+
+  overflow: hidden;
+
+  border-bottom: 1px solid #f0f0f0;
+
+  /*
+   * Prevent the fixed bar itself from
+   * creating page-level horizontal overflow.
+   */
+  isolation: isolate;
 }
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .category-info-bar-content {
   display: flex;
+
   align-items: center;
   justify-content: space-between;
+
   width: 100%;
   min-width: 0;
+  height: 100%;
+
+  box-sizing: border-box;
 }
+
+/* =========================================================
+   CATEGORY NAVIGATION
+========================================================= */
 
 .category-info-bar-categories {
   display: flex;
+
   align-items: center;
+
   gap: 40px;
+
   min-width: 0;
+  max-width: 100%;
+  height: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  /*
+   * Smooth native touch scrolling.
+   */
+  scroll-behavior: smooth;
+
+  -webkit-overflow-scrolling: touch;
+
+  /*
+   * Hide scrollbar while preserving
+   * horizontal touch/trackpad scrolling.
+   */
+  scrollbar-width: none;
+
+  overscroll-behavior-x: contain;
+
+  /*
+   * Important for flex children.
+   */
+  flex: 1 1 auto;
 }
+
+.category-info-bar-categories::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
+   CATEGORY LINK
+========================================================= */
 
 .category-info-bar-link {
-  display: flex;
+  display: inline-flex;
+
   align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: #505050;
-  transition: all 0.3s ease;
+
   flex: 0 0 auto;
+
+  gap: 10px;
+
+  min-height: 44px;
+
+  padding: 6px 2px;
+
+  text-decoration: none;
+
+  color: #505050;
+
   white-space: nowrap;
+
+  box-sizing: border-box;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
-.category-info-bar-link:hover {
-  color: #0f766e;
-  transform: translateY(-2px);
+/* =========================================================
+   HOVER
+========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  .category-info-bar-link:hover {
+    color: #0f766e;
+
+    transform: translateY(-2px);
+  }
 }
+
+/* =========================================================
+   ACTIVE NAV LINK
+========================================================= */
+
+.category-info-bar-link.active {
+  color: #0f766e;
+}
+
+.category-info-bar-link.active
+  .category-info-bar-link-text {
+  font-weight: 600;
+}
+
+/* =========================================================
+   CATEGORY ICON
+========================================================= */
 
 .category-info-bar-link-icon {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 24px;
+  height: 24px;
+
   font-size: 18px;
+
+  line-height: 1;
+
+  text-align: center;
 }
 
+/* =========================================================
+   CATEGORY TEXT
+========================================================= */
+
 .category-info-bar-link-text {
+  display: block;
+
   font-size: 15px;
+
+  line-height: 1.2;
+
   font-weight: 500;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.3s ease,
+    font-weight 0.3s ease;
 }
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.category-info-bar-link:focus-visible {
+  outline: 2px solid #0f766e;
+
+  outline-offset: 3px;
+
+  border-radius: 4px;
+}
+
+/* =========================================================
+   CONTACT INFORMATION
+========================================================= */
 
 .category-info-bar-contact {
   display: flex;
+
   align-items: center;
+
+  flex: 0 0 auto;
+
   gap: 40px;
+
+  margin-left: 30px;
+
+  height: 100%;
 }
+
+/* =========================================================
+   CONTACT ITEM
+========================================================= */
 
 .category-info-bar-contact-item {
   display: flex;
+
   align-items: center;
+
   gap: 14px;
+
+  flex: 0 0 auto;
 }
 
+/* =========================================================
+   CONTACT ICON
+========================================================= */
+
 .category-info-bar-contact-icon {
-  width: 38px;
-  height: 38px;
-  border: 1px solid #e5e7eb;
-  border-radius: 50%;
   display: flex;
+
   align-items: center;
   justify-content: center;
+
+  flex: 0 0 auto;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 50%;
+
   color: #6b7280;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+}
+
+.category-info-bar-contact-icon i {
+  font-size: 15px;
+
+  line-height: 1;
+}
+
+/* =========================================================
+   CONTACT DETAILS
+========================================================= */
+
+.category-info-bar-contact-details {
+  min-width: 0;
 }
 
 .category-info-bar-contact-item h6 {
   margin: 0;
+
+  color: #222222;
+
   font-size: 14px;
+
+  line-height: 1.2;
+
   font-weight: 700;
-  color: #222;
 }
 
 .category-info-bar-contact-item p {
-  margin: 0;
+  margin: 2px 0 0;
+
+  color: #777777;
+
   font-size: 13px;
-  color: #777;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
 }
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+========================================================= */
+
+@media (min-width: 1440px) {
+  .category-info-bar-main {
+    height: 58px;
+  }
+
+  .category-info-bar-categories {
+    gap: 42px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 15px;
+  }
+
+  .category-info-bar-contact {
+    gap: 44px;
+  }
+}
+
+/* =========================================================
+   DESKTOP
+   <= 1439px
+========================================================= */
+
+@media (max-width: 1439px) {
+  .category-info-bar-categories {
+    gap: 32px;
+  }
+
+  .category-info-bar-contact {
+    gap: 28px;
+
+    margin-left: 24px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   <= 1200px
+========================================================= */
 
 @media (max-width: 1200px) {
   .category-info-bar-contact {
     display: none;
   }
+
+  .category-info-bar-categories {
+    width: 100%;
+
+    flex: 1 1 100%;
+
+    justify-content: flex-start;
+
+    gap: 30px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 14px;
+  }
 }
 
+/* =========================================================
+   TABLET
+   <= 992px
+========================================================= */
+
 @media (max-width: 992px) {
+  .category-info-bar-main {
+    top: 70px;
+
+    height: 54px;
+  }
+
+  .category-info-bar-content {
+    width: 100%;
+  }
+
   .category-info-bar-categories {
+    width: 100%;
+
+    gap: 24px;
+
+    padding:
+      0 2px;
+
+    /*
+     * Intentional horizontal navigation
+     * on tablet.
+     */
     overflow-x: auto;
-    gap: 25px;
-    padding-bottom: 5px;
+
+    overflow-y: hidden;
+
+    scroll-snap-type: x proximity;
+  }
+
+  .category-info-bar-link {
+    min-height: 44px;
+
+    gap: 8px;
+
+    padding:
+      5px 2px;
+
+    scroll-snap-align: start;
+  }
+
+  .category-info-bar-link-icon {
+    width: 22px;
+    height: 22px;
+
+    font-size: 17px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL TABLET
+   <= 768px
+========================================================= */
+
+@media (max-width: 768px) {
+  .category-info-bar-main {
+    top: 70px;
+
+    height: 52px;
+  }
+
+  .category-info-bar-categories {
+    gap: 20px;
+
+    padding:
+      0 4px;
+  }
+
+  .category-info-bar-link {
+    min-height: 44px;
+
+    gap: 7px;
+  }
+
+  .category-info-bar-link-icon {
+    width: 21px;
+    height: 21px;
+
+    font-size: 16px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 13.5px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   <= 576px
+========================================================= */
+
+@media (max-width: 576px) {
+  .category-info-bar-main {
+    top: 70px;
+
+    height: 50px;
+
+    border-bottom-color: #eeeeee;
+
+    /*
+     * Ensure the fixed bar itself never
+     * extends beyond the viewport.
+     */
+    max-width: 100vw;
+  }
+
+  .category-info-bar-content {
+    width: 100%;
+
+    padding: 0;
+  }
+
+  .category-info-bar-categories {
+    width: 100%;
+
+    max-width: 100%;
+
+    gap: 18px;
+
+    padding:
+      0 4px;
+
+    /*
+     * Native touch scrolling.
+     */
+    overflow-x: auto;
+
+    overflow-y: hidden;
+
+    touch-action: pan-x;
+
+    scroll-snap-type: x proximity;
+
+    overscroll-behavior-x: contain;
+  }
+
+  .category-info-bar-link {
+    min-height: 44px;
+
+    gap: 7px;
+
+    padding:
+      3px 1px;
+
+    scroll-snap-align: start;
+
+    /*
+     * Prevent accidental text selection
+     * while swiping the category row.
+     */
+    user-select: none;
+
+    -webkit-user-select: none;
+  }
+
+  .category-info-bar-link-icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 15px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 13px;
+
+    font-weight: 500;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   <= 430px
+========================================================= */
+
+@media (max-width: 430px) {
+  .category-info-bar-main {
+    height: 48px;
+  }
+
+  .category-info-bar-categories {
+    gap: 16px;
+
+    padding:
+      0 3px;
+  }
+
+  .category-info-bar-link {
+    gap: 6px;
+
+    min-height: 44px;
+  }
+
+  .category-info-bar-link-icon {
+    width: 19px;
+    height: 19px;
+
+    font-size: 14px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 12.5px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   <= 375px
+========================================================= */
+
+@media (max-width: 375px) {
+  .category-info-bar-main {
+    height: 46px;
+  }
+
+  .category-info-bar-categories {
+    gap: 14px;
+
+    padding:
+      0 2px;
+  }
+
+  .category-info-bar-link {
+    gap: 5px;
+
+    min-height: 42px;
+  }
+
+  .category-info-bar-link-icon {
+    width: 18px;
+    height: 18px;
+
+    font-size: 13px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   <= 320px
+========================================================= */
+
+@media (max-width: 320px) {
+  .category-info-bar-main {
+    height: 44px;
+  }
+
+  .category-info-bar-categories {
+    gap: 12px;
+  }
+
+  .category-info-bar-link {
+    gap: 5px;
+
+    min-height: 42px;
+  }
+
+  .category-info-bar-link-icon {
+    width: 17px;
+    height: 17px;
+
+    font-size: 12px;
+  }
+
+  .category-info-bar-link-text {
+    font-size: 11.5px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .category-info-bar-link {
+    transition: none;
+  }
+
+  .category-info-bar-categories {
+    scroll-behavior: auto;
   }
 }

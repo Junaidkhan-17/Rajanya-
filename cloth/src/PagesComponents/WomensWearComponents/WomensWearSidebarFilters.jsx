@@ -1,13 +1,14 @@
 import "./WomensWearSidebarFilters.css";
 
+//import {useWomensWear,WOMENS_WEAR_ACTIONS,} from "../../contexts/WomensWearContext";
 import {
-  useWomensWear,
-  WOMENS_WEAR_ACTIONS,
-} from "../../contexts/WomensWearContext";
+  useProductLiveData,
+  PRODUCT_ACTIONS,
+} from "../../contexts/ProductLiveDataContext";
 
 const WomensWearSidebarFilters = () => {
-  const { state, dispatch } =
-    useWomensWear();
+  //const { state, dispatch } = useWomensWear();
+  const { state, dispatch } = useProductLiveData();
 
   /* ===========================
      PRICE FILTER
@@ -15,7 +16,7 @@ const WomensWearSidebarFilters = () => {
 
   const handlePriceChange = (e) => {
     dispatch({
-      type: WOMENS_WEAR_ACTIONS.SET_FILTERS,
+      type: PRODUCT_ACTIONS.SET_FILTERS,
       payload: {
         priceRange: [0, Number(e.target.value)],
       },
@@ -43,7 +44,7 @@ const WomensWearSidebarFilters = () => {
           ];
 
     dispatch({
-      type: WOMENS_WEAR_ACTIONS.SET_FILTERS,
+      type: PRODUCT_ACTIONS.SET_FILTERS,
       payload: {
         materials: updatedMaterials,
       },
@@ -129,10 +130,9 @@ const WomensWearSidebarFilters = () => {
             <small>
               {
                 state.products.filter(
-                  (product) =>
-                    product.material ===
-                    material
-                ).length
+  (product) =>
+    product.materials?.includes(material)
+).length
               }
             </small>
           </label>
@@ -153,12 +153,14 @@ const WomensWearSidebarFilters = () => {
               className="womens-booked-item"
             >
               <img
-                src={
-                  product.images?.[0]
-                }
-                alt={product.name}
-                className="womens-booked-image"
-              />
+  src={
+    product.mainImage ||
+    product.thumbnailImage ||
+    product.galleryImages?.[0]
+  }
+  alt={product.name}
+  className="womens-booked-image"
+/>
 
               <div className="womens-booked-content">
                 <h5>
@@ -183,7 +185,7 @@ const WomensWearSidebarFilters = () => {
         className="womens-clear-filter-btn"
         onClick={() =>
           dispatch({
-            type: WOMENS_WEAR_ACTIONS.CLEAR_FILTERS,
+            type: PRODUCT_ACTIONS.CLEAR_FILTERS,
           })
         }
       >

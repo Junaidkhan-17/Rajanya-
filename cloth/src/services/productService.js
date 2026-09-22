@@ -9,6 +9,18 @@ export const getAllProducts = async () => {
   return response.data;
 };
 
+// ==========================================
+// GET PRODUCTS WITH PAGINATION / FILTERS
+// ==========================================
+
+export const getProducts = async (params = {}) => {
+  const response = await api.get("/products", {
+    params,
+  });
+
+  return response.data;
+};
+
 /* ==========================================
    GET FEATURED PRODUCTS
 ========================================== */
@@ -50,9 +62,7 @@ export const getProductBySlug = async (slug) => {
 ========================================== */
 
 export const getRelatedProducts = async (productId) => {
-  const response = await api.get(
-    `/products/related/${productId}`
-  );
+  const response = await api.get(`/products/related/${productId}`);
 
   return response.data;
 };

@@ -1,6 +1,6 @@
 import "./WomensWear.css";
-
-import { WomensWearProvider } from "../../contexts/WomensWearContext";
+import { useEffect } from "react";
+//import { WomensWearProvider } from "../../contexts/WomensWearContext";
 
 import WomensWearHeroSection from "../../PagesComponents/WomensWearComponents/WomensWearHeroSection";
 import WomensWearSidebarFilters from "../../PagesComponents/WomensWearComponents/WomensWearSidebarFilters";
@@ -9,18 +9,35 @@ import WomensWearCategoryStrip from "../../PagesComponents/WomensWearComponents/
 import AllProductsProductCard from "../../PagesComponents/AllProductsComponets/AllProductsCatalogSection/AllProductsProductCard";
 import AllProductsPagination from "../../PagesComponents/AllProductsComponets/AllProductsCatalogSection/AllProductsPagination";
 
+//import { useWomensWear,WOMENS_WEAR_ACTIONS,} from "../../contexts/WomensWearContext";
 import {
-  useWomensWear,
-  WOMENS_WEAR_ACTIONS,
-} from "../../contexts/WomensWearContext";
+  useProductLiveData,
+  PRODUCT_ACTIONS,
+} from "../../contexts/ProductLiveDataContext";
 
+//const WomensWearContent = () => {const {state,dispatch,paginatedProducts,totalPages,} = useWomensWear();
 const WomensWearContent = () => {
-  const {
+const {
   state,
   dispatch,
   paginatedProducts,
   totalPages,
-} = useWomensWear();
+} = useProductLiveData();
+
+useEffect(() => {
+  dispatch({
+    type: PRODUCT_ACTIONS.SET_COLLECTION_TYPE,
+    payload: "women",
+  });
+
+  return () => {
+    dispatch({
+      type: PRODUCT_ACTIONS.SET_COLLECTION_TYPE,
+      payload: "all",
+    });
+  };
+}, [dispatch]);
+
 console.log("Current Page:", state.currentPage);
 console.log("Total Pages:", totalPages);
 console.log(
@@ -68,7 +85,7 @@ console.log(
   state={state}
   dispatch={dispatch}
   totalPages={totalPages}
-  actions={WOMENS_WEAR_ACTIONS}
+  actions={PRODUCT_ACTIONS}
 />
           </div>
 
@@ -78,13 +95,8 @@ console.log(
     </main>
   );
 };
-
 const WomensWear = () => {
-  return (
-    <WomensWearProvider>
-      <WomensWearContent />
-    </WomensWearProvider>
-  );
+  return <WomensWearContent />;
 };
 
 export default WomensWear;

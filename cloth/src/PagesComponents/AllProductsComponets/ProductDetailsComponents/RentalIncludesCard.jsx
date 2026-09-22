@@ -1,17 +1,15 @@
 import "./RentalIncludesCard.css";
+
 import { CheckCircle2 } from "lucide-react";
 
-const RentalIncludesCard = ({
-  product,
-}) => {
-  const rentalIncludes =
-    product?.rentalIncludes || [
-      "Dry Cleaning Included",
-      "Free Alteration Support",
-      "Damage Protection",
-      "Delivery & Pickup Available",
-    ];
+const RENTAL_INCLUDES = [
+  "Dry Cleaning Included",
+  "Free Alteration Support",
+  "Damage Protection",
+  "Delivery & Pickup Available",
+];
 
+const RentalIncludesCard = () => {
   return (
     <div className="rental-includes-card">
       <div className="rental-includes-header">
@@ -19,18 +17,12 @@ const RentalIncludesCard = ({
       </div>
 
       <div className="rental-includes-grid">
-        {rentalIncludes.map(
-          (item, index) => (
-            <div
-              key={index}
-              className="rental-includes-item"
-            >
-              <CheckCircle2 size={18} />
-
-              <span>{item}</span>
-            </div>
-          )
-        )}
+        {RENTAL_INCLUDES.map((item, index) => (
+          <div key={index} className="rental-includes-item">
+            <CheckCircle2 size={18} />
+            <span>{item}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

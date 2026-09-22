@@ -4,8 +4,7 @@ import { ChevronRight } from "lucide-react";
 import womenhero from "../../assets/womenimage/womenhero.png";
 import WomenAnimatedText from "./WomenAnimatedText";
 
-
-function womensWearHeroSection() {
+function WomensWearHeroSection() {
   return (
     <section className="womens-wear-hero-main">
       <div className="container-fluid">
@@ -17,7 +16,7 @@ function womensWearHeroSection() {
         >
           <img
             src={womenhero}
-            alt="womens Wear"
+            alt="Women's Wear"
             className="womens-wear-hero-banner-image"
           />
 
@@ -47,7 +46,11 @@ function womensWearHeroSection() {
             >
               <span>HOME</span>
 
-              <ChevronRight size={12} />
+              <ChevronRight
+                size={12}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
 
               <span>WOMEN'S WEAR</span>
             </motion.div>
@@ -58,4 +61,4 @@ function womensWearHeroSection() {
   );
 }
 
-export default womensWearHeroSection;
+export default WomensWearHeroSection;

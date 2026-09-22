@@ -1,12 +1,20 @@
-.rajanya-footer-main {
-  background: #eef3f3;
-  padding: 20px 80px 0px ;
+/* =========================================================
+   RAJANYA FOOTER
+   Desktop Design Preserved
+   Responsive Enhancements
+========================================================= */
 
+.rajanya-footer-main {
+  width: 100%;
+  background: #eef3f3;
+  padding: 20px 80px 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* ==========================
-   TOP
-========================== */
+/* =========================================================
+   TOP CONTACT ROW
+========================================================= */
 
 .rajanya-footer-top-row {
   display: flex;
@@ -16,56 +24,86 @@
   margin-bottom: -50px;
 }
 
+.rajanya-footer-intro {
+  min-width: 0;
+}
+
 .rajanya-footer-intro h3 {
   font-size: 22px;
   font-weight: 700;
   color: #111;
   margin-bottom: 5px;
-  margin-left: -50px;
+  margin-left: -60px;
+  font-family: "Barlow", sans-serif;
+  line-height: 1.2;
 }
 
 .rajanya-footer-intro p {
-  color: #5f6767;
+  color: #292929;
   font-size: 14px;
+  font-family: "Barlow", sans-serif;
+  margin-bottom: 0;
+  line-height: 1.5;
 }
 
 .rajanya-footer-contact-group {
   display: flex;
   gap: 30px;
+  min-width: 0;
 }
 
 .rajanya-footer-contact-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 15px;
   font-size: 15px;
-    align-items: flex-start;
   text-align: left;
+  font-family: "Barlow", sans-serif;
+  min-width: 0;
 }
-.rajanya-footer-contact-item h6 {
 
+.rajanya-footer-contact-text {
+  min-width: 0;
+}
+
+.rajanya-footer-contact-item h6 {
+  font-family: "Barlow", sans-serif;
   font-size: 15px;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.rajanya-footer-contact-item p {
+  margin-bottom: 0;
+  line-height: 1.4;
+  white-space: nowrap;
 }
 
 .rajanya-footer-icon {
   width: 42px;
   height: 42px;
+  min-width: 42px;
   border: 1px solid #d7dddd;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #445050;
-  transition: .3s;
+  transition: transform 0.3s ease;
+}
+
+.rajanya-footer-icon i {
+  font-size: 17px;
+  line-height: 1;
 }
 
 .rajanya-footer-contact-item:hover .rajanya-footer-icon {
   transform: scale(1.1);
 }
 
-/* ==========================
-DIVIDER
-========================== */
+/* =========================================================
+   DIVIDER
+========================================================= */
 
 .rajanya-footer-divider {
   height: 1px;
@@ -73,9 +111,9 @@ DIVIDER
   margin: 50px 0;
 }
 
-/* ==========================
-LINKS
-========================== */
+/* =========================================================
+   LINKS
+========================================================= */
 
 .rajanya-footer-links-row {
   display: grid;
@@ -84,11 +122,12 @@ LINKS
 }
 
 .rajanya-footer-column {
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
   margin-bottom: -40px;
+  min-width: 0;
 }
 
 .rajanya-footer-column h4 {
@@ -98,14 +137,23 @@ LINKS
   color: #111;
   width: 100%;
   text-align: left;
+  font-family: "Barlow", sans-serif;
+  line-height: 1.15;
 }
 
 .rajanya-footer-column a {
   display: block;
-  color: #556060;
+  width: fit-content;
+  max-width: 100%;
+  color: #282929;
   margin-bottom: 4px;
   text-decoration: none;
-  transition: .3s;
+  transition:
+    color 0.3s ease,
+    padding-left 0.3s ease;
+  font-weight: 500;
+  font-family: "Barlow", sans-serif;
+  line-height: 1.5;
 }
 
 .rajanya-footer-column a:hover {
@@ -113,31 +161,45 @@ LINKS
   padding-left: 8px;
 }
 
-/* ==========================
-BOTTOM
-========================== */
+/* =========================================================
+   BOTTOM
+========================================================= */
 
 .rajanya-footer-bottom-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 30px;
   margin-top: -30px;
 }
 
 .rajanya-footer-copyright {
-  color: #4d5555;
+  color: #222222;
   font-size: 16px;
+  font-weight: 500;
+  font-family: "Barlow", sans-serif;
+  white-space: nowrap;
 }
 
 .rajanya-footer-socials {
   display: flex;
+  align-items: center;
   gap: 25px;
 }
 
 .rajanya-footer-socials a {
-  color: #4d5555;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2b2b2b;
   font-size: 18px;
-  transition: .3s;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
+  font-family: "Barlow", sans-serif;
+  text-decoration: none;
 }
 
 .rajanya-footer-socials a:hover {
@@ -147,60 +209,537 @@ BOTTOM
 
 .rajanya-footer-policy-links {
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 30px;
+  font-family: "Barlow", sans-serif;
 }
 
 .rajanya-footer-policy-links a {
   text-decoration: none;
-  color: #4d5555;
-  transition: .3s;
+  color: #1d1d1d;
+  transition: color 0.3s ease;
+  font-family: "Barlow", sans-serif;
+  white-space: nowrap;
 }
 
 .rajanya-footer-policy-links a:hover {
   color: #000;
 }
 
-/* ==========================
-RESPONSIVE
-========================== */
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+========================================================= */
 
-@media (max-width: 1200px) {
-  .rajanya-footer-top-row {
-    flex-direction: column;
-  }
-
-  .rajanya-footer-contact-group {
-    flex-wrap: wrap;
+@media (min-width: 1440px) {
+  .rajanya-footer-main {
+    padding-left: 80px;
+    padding-right: 80px;
   }
 }
 
-@media (max-width: 992px) {
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+========================================================= */
+
+@media (max-width: 1439px) {
+  .rajanya-footer-main {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+
+  .rajanya-footer-top-row {
+    gap: 35px;
+  }
+
+  .rajanya-footer-contact-group {
+    gap: 22px;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 24px;
+  }
+
   .rajanya-footer-links-row {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+  }
+
+  .rajanya-footer-policy-links {
+    gap: 22px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+========================================================= */
+
+@media (max-width: 1199px) {
+  .rajanya-footer-main {
+    padding: 30px 45px 0;
+  }
+
+  .rajanya-footer-top-row {
+    flex-direction: column;
+    gap: 28px;
+    margin-bottom: 0;
+  }
+
+  /*
+    The original desktop negative intro margin is preserved
+    above 1200px but neutralized here to prevent clipping.
+  */
+  .rajanya-footer-intro h3 {
+    margin-left: 0;
+  }
+
+  .rajanya-footer-contact-group {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 25px 35px;
+  }
+
+  .rajanya-footer-contact-item {
+    flex: 1 1 220px;
+  }
+
+  .rajanya-footer-divider {
+    margin: 40px 0;
+  }
+
+  .rajanya-footer-column {
+    margin-bottom: 0;
+  }
+
+  .rajanya-footer-bottom-row {
+    margin-top: 0;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px - 991px
+========================================================= */
+
+@media (max-width: 991px) {
+  .rajanya-footer-main {
+    padding: 50px 30px 25px;
+  }
+
+  .rajanya-footer-top-row {
+    gap: 30px;
+  }
+
+  .rajanya-footer-intro h3 {
+    font-size: 22px;
+  }
+
+  .rajanya-footer-intro p {
+    font-size: 14px;
+  }
+
+  .rajanya-footer-contact-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 25px;
+  }
+
+  .rajanya-footer-contact-item {
+    flex: none;
+  }
+
+  .rajanya-footer-links-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px 35px;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 24px;
   }
 
   .rajanya-footer-bottom-row {
     flex-direction: column;
+    justify-content: center;
     gap: 25px;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .rajanya-footer-copyright {
+    white-space: normal;
+    text-align: center;
+  }
+
+  .rajanya-footer-socials {
+    justify-content: center;
+  }
+
+  .rajanya-footer-policy-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 25px;
   }
 }
 
-@media (max-width: 768px) {
+/* =========================================================
+   SMALL TABLET
+   576px - 767px
+========================================================= */
+
+@media (max-width: 767px) {
   .rajanya-footer-main {
-    padding: 50px 25px;
+    padding: 55px 25px 25px;
+  }
+
+  .rajanya-footer-top-row {
+    gap: 28px;
+  }
+
+  .rajanya-footer-contact-group {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .rajanya-footer-contact-item {
+    width: 100%;
+  }
+
+  .rajanya-footer-divider {
+    margin: 38px 0;
   }
 
   .rajanya-footer-links-row {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
-  .rajanya-footer-contact-group {
-    flex-direction: column;
-    gap: 25px;
+  .rajanya-footer-column {
+    margin-bottom: 0;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 23px;
+    margin-bottom: 13px;
+  }
+
+  .rajanya-footer-column a {
+    margin-bottom: 6px;
+  }
+
+  .rajanya-footer-bottom-row {
+    gap: 22px;
+  }
+
+  .rajanya-footer-socials {
+    gap: 20px;
   }
 
   .rajanya-footer-policy-links {
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 10px 20px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   480px - 575px
+========================================================= */
+
+@media (max-width: 575px) {
+  .rajanya-footer-main {
+    padding: 50px 18px 22px;
+  }
+
+  .rajanya-footer-top-row {
+    gap: 25px;
+  }
+
+  .rajanya-footer-intro h3 {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+
+  .rajanya-footer-intro p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .rajanya-footer-contact-group {
+    gap: 20px;
+  }
+
+  .rajanya-footer-contact-item {
+    gap: 13px;
+    font-size: 14px;
+  }
+
+  .rajanya-footer-contact-item h6 {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+
+  .rajanya-footer-contact-item p {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .rajanya-footer-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .rajanya-footer-icon i {
+    font-size: 16px;
+  }
+
+  .rajanya-footer-divider {
+    margin: 34px 0;
+  }
+
+  .rajanya-footer-links-row {
+    gap: 27px;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .rajanya-footer-column a {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .rajanya-footer-socials {
+    gap: 17px;
+  }
+
+  .rajanya-footer-socials a {
+    width: 30px;
+    height: 30px;
+    font-size: 17px;
+  }
+
+  .rajanya-footer-policy-links {
+    width: 100%;
+    gap: 9px 18px;
+  }
+
+  .rajanya-footer-policy-links a {
+    font-size: 13px;
+  }
+
+  .rajanya-footer-copyright {
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 479px
+========================================================= */
+
+@media (max-width: 479px) {
+  .rajanya-footer-main {
+    padding: 45px 15px 20px;
+  }
+
+  .rajanya-footer-intro h3 {
+    font-size: 20px;
+  }
+
+  .rajanya-footer-intro p {
+    font-size: 13px;
+  }
+
+  .rajanya-footer-contact-item {
+    gap: 12px;
+  }
+
+  .rajanya-footer-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .rajanya-footer-contact-item h6 {
+    font-size: 13px;
+  }
+
+  .rajanya-footer-contact-item p {
+    font-size: 12px;
+  }
+
+  .rajanya-footer-divider {
+    margin: 30px 0;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 21px;
+  }
+
+  .rajanya-footer-column a {
+    font-size: 13px;
+  }
+
+  .rajanya-footer-socials {
+    gap: 14px;
+  }
+
+  .rajanya-footer-socials a {
+    width: 29px;
+    height: 29px;
+    font-size: 16px;
+  }
+
+  .rajanya-footer-policy-links {
+    gap: 8px 15px;
+  }
+
+  .rajanya-footer-policy-links a {
+    font-size: 12px;
+  }
+
+  .rajanya-footer-copyright {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+========================================================= */
+
+@media (max-width: 374px) {
+  .rajanya-footer-main {
+    padding: 40px 12px 18px;
+  }
+
+  .rajanya-footer-top-row {
+    gap: 22px;
+  }
+
+  .rajanya-footer-intro h3 {
+    font-size: 19px;
+  }
+
+  .rajanya-footer-intro p {
+    font-size: 12px;
+  }
+
+  .rajanya-footer-contact-group {
+    gap: 18px;
+  }
+
+  .rajanya-footer-contact-item {
+    gap: 10px;
+  }
+
+  .rajanya-footer-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .rajanya-footer-icon i {
+    font-size: 15px;
+  }
+
+  .rajanya-footer-contact-item h6 {
+    font-size: 12px;
+  }
+
+  .rajanya-footer-contact-item p {
+    font-size: 11px;
+  }
+
+  .rajanya-footer-divider {
+    margin: 27px 0;
+  }
+
+  .rajanya-footer-links-row {
+    gap: 24px;
+  }
+
+  .rajanya-footer-column h4 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .rajanya-footer-column a {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .rajanya-footer-bottom-row {
+    gap: 18px;
+  }
+
+  .rajanya-footer-socials {
+    gap: 11px;
+  }
+
+  .rajanya-footer-socials a {
+    width: 28px;
+    height: 28px;
+    font-size: 15px;
+  }
+
+  .rajanya-footer-policy-links {
+    gap: 7px 12px;
+  }
+
+  .rajanya-footer-policy-links a {
+    font-size: 11px;
+  }
+
+  .rajanya-footer-copyright {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   Preserve desktop hover, avoid sticky hover on mobile
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .rajanya-footer-contact-item:hover .rajanya-footer-icon {
+    transform: none;
+  }
+
+  .rajanya-footer-contact-item:active .rajanya-footer-icon {
+    transform: scale(1.06);
+  }
+
+  .rajanya-footer-column a:hover {
+    padding-left: 0;
+  }
+
+  .rajanya-footer-column a:active {
+    padding-left: 5px;
+  }
+
+  .rajanya-footer-socials a:hover {
+    transform: none;
+  }
+
+  .rajanya-footer-socials a:active {
+    transform: translateY(-2px) scale(1.08);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .rajanya-footer-icon,
+  .rajanya-footer-column a,
+  .rajanya-footer-socials a {
+    transition: none;
   }
 }

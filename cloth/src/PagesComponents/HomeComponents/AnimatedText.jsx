@@ -6,6 +6,8 @@ function AnimatedText() {
       <svg
         viewBox="0 0 1200 250"
         className="hero-svg"
+        role="img"
+        aria-label="Occasion wear"
       >
         <text
           x="50%"

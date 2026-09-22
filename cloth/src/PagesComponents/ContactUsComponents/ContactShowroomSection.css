@@ -17,18 +17,20 @@
 
 .contact-showroom-heading {
   margin-bottom: 35px;
-     text-align: left;
+  text-align: left;
+  font-family: "Barlow";
 }
 
 .contact-showroom-heading span {
     color: #ffd500;
-      -webkit-text-stroke: 2px rgb(0, 0, 0);
+    -webkit-text-stroke: 2px rgb(0, 0, 0);
+    font-family: "Barlow";
 }
 
 .contact-showroom-heading h2 {
   margin-bottom: 2px;
    text-align: left;
-  font-family: "Newake";
+  font-family: "Barlow";
   font-size: 2.5rem;
   font-weight: 700;
   line-height: 1.2;
@@ -40,11 +42,11 @@
   max-width: 650px;
    text-align: left;
   margin: 0;
-
+  font-family: "Barlow";
   font-size: 1.1rem;
-  line-height: 1.8;
+  line-height: 1.3;
 
-  color: #666666;
+  color: #282828;
 }
 
 /* ===================================================
@@ -101,6 +103,7 @@
 .contact-showroom-card {
   position: relative;
   text-align: left;
+    font-family: "Barlow";
 }
 
 .contact-showroom-card::after {
@@ -120,23 +123,23 @@
 
 .contact-showroom-card span {
   display: block;
-
-  margin-bottom: 12px;
+  font-family: "Barlow";
+  margin-bottom: 8px;
 
   font-size: 15px;
   font-weight: 600;
 
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 
   text-transform: uppercase;
 
-  color: #9b9b9b;
+  color: #202020;
 }
 
 
 .contact-showroom-card h4 {
   margin-bottom: 8px;
-
+  font-family: "Barlow";
   font-size: 0.8rem;
   font-weight: 600;
 
@@ -145,12 +148,12 @@
 
 .contact-showroom-card p {
   margin: 0;
-
-  color: #555555;
+  font-family: "Barlow";
+  color: #1f1f1f;
 
   font-size: 0.7rem;
 
-  line-height: 1.7;
+  line-height: 1.3;
 }
 
 .contact-showroom-card a {
@@ -158,7 +161,7 @@
 
   margin-bottom: 8px;
 
-  color: #555555;
+  color: #1d1c1c;
 
   text-decoration: none;
 
@@ -174,29 +177,30 @@
 .contact-showroom-card-phone {
   position: relative;
   text-align: left;
+  font-family: "Barlow";
 }
 
 .contact-showroom-card-phone-one {
   display: block;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
   font-size: 15px;
   font-weight: 600;
-
-  letter-spacing: 2px;
+  font-family: "Barlow";
+  letter-spacing: 1px;
 
   text-transform: uppercase;
 
-  color: #9b9b9b;
+  color: #181818;
 }
 
 .contact-showroom-card-phone a {
   display: block;
-
+  font-family: "Barlow";
   margin-bottom: 8px;
 
-  color: #555555;
+  color: #252525;
 
   text-decoration: none;
 
@@ -210,31 +214,32 @@
 }
 
 .contact-showroom-card-email {
-      position: relative;
+  position: relative;
   text-align: left;
+  font-family: "Barlow";
 }
 
 .contact-showroom-card-email-one {
   display: block;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
   font-size: 15px;
   font-weight: 600;
 
-  letter-spacing: 2px;
-
+  letter-spacing: 1px;
+  font-family: "Barlow";
   text-transform: uppercase;
 
-  color: #9b9b9b;
+  color: #1f1f1f;
 }
 
 .contact-showroom-card-email a {
   display: block;
-
+  font-family: "Barlow";
   margin-bottom: 8px;
 
-  color: #555555;
+  color: #1a1a1a;
 
   text-decoration: none;
 

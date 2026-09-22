@@ -14,20 +14,25 @@ const CategoryInfoBar = () => {
       transition={{ duration: 0.6 }}
     >
       <div className="container">
-
         <div className="category-info-bar-content">
+          {/* ==========================================
+              CATEGORIES
+          ========================================== */}
 
-          {/* Categories */}
-
-          <div className="category-info-bar-categories">
-
+          <nav
+            className="category-info-bar-categories"
+            aria-label="Fashion categories"
+          >
             {categoryLinks.map((item) => (
               <NavLink
                 key={item.id}
                 to={item.path}
                 className="category-info-bar-link"
               >
-                <span className="category-info-bar-link-icon">
+                <span
+                  className="category-info-bar-link-icon"
+                  aria-hidden="true"
+                >
                   {item.icon}
                 </span>
 
@@ -36,43 +41,46 @@ const CategoryInfoBar = () => {
                 </span>
               </NavLink>
             ))}
+          </nav>
 
-          </div>
-
-          {/* Contact Info */}
+          {/* ==========================================
+              CONTACT INFORMATION
+          ========================================== */}
 
           <div className="category-info-bar-contact">
+            {/* Address */}
 
             <div className="category-info-bar-contact-item">
-
-              <div className="category-info-bar-contact-icon">
-                <i className="bi bi-geo-alt"></i>
+              <div
+                className="category-info-bar-contact-icon"
+                aria-hidden="true"
+              >
+                <i className="bi bi-geo-alt" />
               </div>
 
-              <div>
+              <div className="category-info-bar-contact-details">
                 <h6>Address:</h6>
                 <p>Nagpur, Maharashtra</p>
               </div>
-
             </div>
 
-            <div className="category-info-bar-contact-item">
+            {/* Phone */}
 
-              <div className="category-info-bar-contact-icon">
-                <i className="bi bi-telephone"></i>
+            <div className="category-info-bar-contact-item">
+              <div
+                className="category-info-bar-contact-icon"
+                aria-hidden="true"
+              >
+                <i className="bi bi-telephone" />
               </div>
 
-              <div>
+              <div className="category-info-bar-contact-details">
                 <h6>Phone:</h6>
                 <p>578-393-4937</p>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
     </motion.div>
   );

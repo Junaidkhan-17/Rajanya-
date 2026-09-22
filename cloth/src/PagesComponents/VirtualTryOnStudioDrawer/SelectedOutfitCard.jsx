@@ -1,14 +1,13 @@
 import "./SelectedOutfitCard.css";
+
 import { Star } from "lucide-react";
 
 const SelectedOutfitCard = ({ product }) => {
   const productImage = product?.images?.[0];
 
-  const productName =
-    product?.name || "Designer Outfit";
+  const productName = product?.name || "Designer Outfit";
 
-  const productColor =
-    product?.colors?.[0] || "Magenta";
+  const productColor = product?.colors?.[0] || "Magenta";
 
   return (
     <div className="selected-outfit-card">
@@ -28,12 +27,15 @@ const SelectedOutfitCard = ({ product }) => {
 
         <div className="selected-outfit-color">
           <span className="selected-color-dot"></span>
-
           <p>{productColor}</p>
         </div>
       </div>
 
-      <button className="selected-outfit-star">
+      <button
+        type="button"
+        className="selected-outfit-star"
+        aria-label="Selected outfit"
+      >
         <Star
           size={18}
           fill="currentColor"

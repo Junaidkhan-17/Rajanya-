@@ -2,4 +2,25 @@
   width: 100%;
   min-height: 100vh;
   background: #ffffff;
+}.home-page-main {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  overflow-x: clip;
+}
+
+@media (max-width: 768px) {
+  .home-page-main {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page-main {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
 }

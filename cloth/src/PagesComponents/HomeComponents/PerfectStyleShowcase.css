@@ -1,70 +1,117 @@
+/* =========================================================
+   PERFECT STYLE SHOWCASE
+   Premium Responsive Section
+   ========================================================= */
+
 .perfect-style-showcase-main {
+  width: 100%;
   padding: 80px 0;
+  overflow: hidden;
 }
 
+/* =========================================================
+   MAIN SHOWCASE WRAPPER
+   ========================================================= */
+
 .perfect-style-showcase-wrapper {
+  width: 100%;
   background: #02030f;
   border-radius: 28px;
   padding: 40px;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 20px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   LEFT CONTENT
+   ========================================================= */
+
+.perfect-style-showcase-left {
+  width: 100%;
+  min-width: 0;
 }
 
 .perfect-style-showcase-title {
   color: #ffffff;
   font-size: 48px;
-  font-family: "Newake";
-  margin-bottom: 8px;
-  margin-left: -30px;
+  line-height: 1.1;
+  font-family: "Barlow";
+  margin: 0 0 8px -30px;
+  font-weight: 500;
 }
 
 .perfect-style-showcase-title span {
-  color: #ffffff;
-  font-size: 60px;
-  font-family: "Newake";
-  margin-bottom: 8px;
   color: #ffd500;
+  font-size: 60px;
+  line-height: 1;
+  font-family: "Barlow";
+  margin-bottom: 8px;
   -webkit-text-stroke: 1px rgb(255, 255, 255);
 }
 
 .perfect-style-showcase-description {
-  color: rgba(255,255,255,0.75);
-  line-height: 1.8;
+  width: 100%;
   max-width: 600px;
-  margin-bottom: 35px;
+  color: rgb(255, 255, 255);
+  line-height: 1.8;
+  margin: 0 0 35px;
+  font-family: "Barlow";
+  text-align: left;
+  font-size: 16px;
 }
 
+/* =========================================================
+   RIGHT CONTENT
+   ========================================================= */
+
 .perfect-style-showcase-right {
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 18px;
 }
 
 .perfect-style-bottom-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
+/* =========================================================
+   IMAGE WRAPPER
+   ========================================================= */
+
 .perfect-style-image-wrapper {
   position: relative;
+  width: 100%;
   overflow: hidden;
   border-radius: 20px;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .perfect-style-image {
   width: 100%;
+  height: auto;
   display: block;
   transition: transform 0.7s ease;
 }
+
+/* =========================================================
+   IMAGE HOVER
+   ========================================================= */
 
 .perfect-style-image-wrapper:hover .perfect-style-image {
   transform: scale(1.08);
 }
 
-/* Right → Center Overlay */
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
 
 .perfect-style-image-wrapper::before {
   content: "";
@@ -73,67 +120,565 @@
   z-index: 2;
   opacity: 0;
   transition: 0.5s ease;
+  pointer-events: none;
 }
 
 .perfect-style-image-wrapper:hover::before {
   opacity: 1;
 }
 
+/* =========================================================
+   CATEGORY CARD
+   ========================================================= */
+
 .perfect-style-category-card {
   position: absolute;
   bottom: 18px;
   left: 18px;
-
   z-index: 5;
-
   background: #ffffff;
   border-radius: 14px;
-
   padding: 14px 18px;
   min-width: 130px;
-
+  box-sizing: border-box;
+  font-family: "Barlow";
   transition: all 0.35s ease;
 }
 
 .perfect-style-category-card h5 {
   margin: 0;
   font-size: 15px;
+  line-height: 1.25;
   font-weight: 700;
   color: #101828;
+  font-family: "Barlow";
 }
 
 .perfect-style-category-card span {
   font-size: 13px;
+  line-height: 1.3;
   color: #667085;
+  font-family: "Barlow";
 }
 
-.perfect-style-image-wrapper:hover
-.perfect-style-category-card {
+.perfect-style-image-wrapper:hover .perfect-style-category-card {
   transform: translateY(-4px);
 }
 
-/* Responsive */
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .perfect-style-showcase-main {
+    padding: 90px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 42px;
+    gap: 22px;
+  }
+}
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+   ========================================================= */
+
+@media (max-width: 1439px) {
+  .perfect-style-showcase-title {
+    font-size: 46px;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 57px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
 
 @media (max-width: 1200px) {
+  .perfect-style-showcase-main {
+    padding: 70px 0;
+  }
 
   .perfect-style-showcase-wrapper {
     grid-template-columns: 1fr;
-  }
-
-}
-
-@media (max-width: 768px) {
-
-  .perfect-style-showcase-wrapper {
-    padding: 24px;
+    padding: 36px;
   }
 
   .perfect-style-showcase-title {
-    font-size: 34px;
+    margin-left: 0;
+  }
+
+  .perfect-style-showcase-description {
+    max-width: 700px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 18px;
+  }
+}
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   992px - 1199px
+   ========================================================= */
+
+@media (max-width: 992px) {
+  .perfect-style-showcase-main {
+    padding: 60px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 32px;
+    border-radius: 24px;
+    gap: 24px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 48px;
+    line-height: 1.08;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 58px;
+    line-height: 1;
+  }
+
+  .perfect-style-showcase-description {
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 30px;
+    line-height: 1.55;
+    font-size: 18px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 16px;
+    left: 16px;
+    padding: 12px 16px;
+    min-width: 125px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 19px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .perfect-style-showcase-main {
+    padding: 50px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 26px;
+    border-radius: 22px;
+    gap: 22px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 40px;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 48px;
+    line-height: 1;
+  }
+
+  .perfect-style-showcase-description {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 16px;
+  }
+
+  .perfect-style-bottom-grid {
+    gap: 16px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 14px;
+    left: 14px;
+    padding: 11px 14px;
+    min-width: 115px;
+    border-radius: 12px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 17px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   576px - 767px
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .perfect-style-showcase-main {
+    padding: 40px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 22px;
+    border-radius: 20px;
+    gap: 20px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: clamp(32px, 8vw, 38px);
+    line-height: 1.08;
+    margin: 0 0 10px;
+  }
+
+  .perfect-style-showcase-title span {
+    display: inline;
+    font-size: clamp(38px, 10vw, 46px);
+    line-height: 1;
+  }
+
+  .perfect-style-showcase-description {
+    width: 100%;
+    max-width: 100%;
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 16px;
   }
 
   .perfect-style-bottom-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
+  .perfect-style-image-wrapper {
+    border-radius: 17px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 12px;
+    left: 12px;
+    padding: 10px 13px;
+    min-width: 105px;
+    border-radius: 11px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 16px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 13px;
+  }
+
+  .perfect-style-image-wrapper:hover .perfect-style-image {
+    transform: scale(1.05);
+  }
+
+  .perfect-style-image-wrapper:hover .perfect-style-category-card {
+    transform: translateY(-3px);
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   480px - 575px
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .perfect-style-showcase-main {
+    padding: 34px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 18px;
+    border-radius: 18px;
+    gap: 18px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: clamp(28px, 8vw, 34px);
+    line-height: 1.1;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: clamp(34px, 9.5vw, 42px);
+  }
+
+  .perfect-style-showcase-description {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 21px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 14px;
+  }
+
+  .perfect-style-bottom-grid {
+    gap: 14px;
+  }
+
+  .perfect-style-image-wrapper {
+    border-radius: 15px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 10px;
+    left: 10px;
+    padding: 9px 11px;
+    min-width: 98px;
+    border-radius: 10px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 15px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   430px
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .perfect-style-showcase-main {
+    padding: 30px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 16px;
+    border-radius: 17px;
+    gap: 17px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 28px;
+    line-height: 1.08;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 35px;
+  }
+
+  .perfect-style-showcase-description {
+    font-size: 13.5px;
+    line-height: 1.55;
+    margin-bottom: 19px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 13px;
+  }
+
+  .perfect-style-bottom-grid {
+    gap: 13px;
+  }
+
+  .perfect-style-image-wrapper {
+    border-radius: 14px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 9px;
+    left: 9px;
+    padding: 8px 10px;
+    min-width: 92px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 14px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 11.5px;
+  }
+}
+
+/* =========================================================
+   375px - 429px
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .perfect-style-showcase-main {
+    padding: 28px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 14px;
+    border-radius: 16px;
+    gap: 15px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 25px;
+    line-height: 1.08;
+    margin-bottom: 9px;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 31px;
+  }
+
+  .perfect-style-showcase-description {
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 12px;
+  }
+
+  .perfect-style-bottom-grid {
+    gap: 12px;
+  }
+
+  .perfect-style-image-wrapper {
+    border-radius: 13px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 8px;
+    left: 8px;
+    padding: 7px 9px;
+    min-width: 86px;
+    border-radius: 9px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 13px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .perfect-style-showcase-main {
+    padding: 24px 0;
+  }
+
+  .perfect-style-showcase-wrapper {
+    padding: 12px;
+    border-radius: 15px;
+    gap: 14px;
+  }
+
+  .perfect-style-showcase-title {
+    font-size: 23px;
+    line-height: 1.08;
+  }
+
+  .perfect-style-showcase-title span {
+    font-size: 28px;
+  }
+
+  .perfect-style-showcase-description {
+    font-size: 12.5px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+
+  .perfect-style-showcase-right {
+    gap: 11px;
+  }
+
+  .perfect-style-bottom-grid {
+    gap: 11px;
+  }
+
+  .perfect-style-image-wrapper {
+    border-radius: 12px;
+  }
+
+  .perfect-style-category-card {
+    bottom: 7px;
+    left: 7px;
+    padding: 6px 8px;
+    min-width: 80px;
+    border-radius: 8px;
+  }
+
+  .perfect-style-category-card h5 {
+    font-size: 12px;
+  }
+
+  .perfect-style-category-card span {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   Prevent sticky hover behavior on touch screens
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .perfect-style-image-wrapper:hover .perfect-style-image {
+    transform: none;
+  }
+
+  .perfect-style-image-wrapper:hover .perfect-style-category-card {
+    transform: none;
+  }
+
+  .perfect-style-image-wrapper:active .perfect-style-image {
+    transform: scale(1.025);
+  }
+
+  .perfect-style-image-wrapper:active .perfect-style-category-card {
+    transform: translateY(-2px);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .perfect-style-image {
+    transition: none;
+  }
+
+  .perfect-style-category-card {
+    transition: none;
+  }
 }

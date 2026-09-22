@@ -1,80 +1,181 @@
+/* =========================================================
+   MOST RENTED STYLES
+   Premium Responsive Section
+   ========================================================= */
+
 .most-rented-styles-main {
+  width: 100%;
   padding: 90px 0;
   background: #ffffff;
 }
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .most-rented-styles-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  gap: 40px;
+
   margin-bottom: 55px;
 }
 
+.most-rented-styles-heading-area {
+  flex: 1;
+  min-width: 0;
+}
+
 .most-rented-styles-title {
+  margin: 0 0 18px;
+
   font-size: 54px;
   font-weight: 700;
+  line-height: 1.05;
+
   color: #101828;
-  font-family: "Newake";
-  margin-bottom: 18px;
+  font-family: "Barlow", sans-serif;
+
+  text-align: left;
 }
 
 .most-rented-styles-title span {
   font-size: 64px;
   font-weight: 700;
+  line-height: 1;
+
   color: #ffd500;
-  font-family: "Newake";
-  margin-bottom: 18px;
+  font-family: "Barlow", sans-serif;
+
   -webkit-text-stroke: 2px rgb(0, 0, 0);
 }
 
 .most-rented-styles-description {
+  width: 100%;
   max-width: 760px;
+
+  margin: 0;
+
   font-size: 18px;
-  line-height: 1.8;
-  color: #667085;
+  line-height: 1.4;
+
+  color: #383c43;
+  font-family: "Barlow", sans-serif;
+
+  text-align: left;
 }
 
 .most-rented-styles-see-all-btn {
+  flex-shrink: 0;
+
+  min-height: 44px;
+
   border: none;
   background: #050816;
   color: #ffffff;
+
   padding: 12px 20px;
+
   border-radius: 6px;
-  display: flex;
+
+  display: inline-flex;
   align-items: center;
-  font-family: "Newake";
+  justify-content: center;
+
+  font-family: "Barlow", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+
   gap: 10px;
-  transition: all 0.35s ease;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.most-rented-styles-see-all-btn i {
+  font-size: 15px;
+  line-height: 1;
+
+  transition: transform 0.35s ease;
 }
 
 .most-rented-styles-see-all-btn:hover {
   transform: translateY(-3px);
 }
 
+.most-rented-styles-see-all-btn:hover i {
+  transform: translateX(3px);
+}
+
+.most-rented-styles-see-all-btn:focus-visible {
+  outline: 2px solid #050816;
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
 .most-rented-style-card {
+  width: 100%;
+
   background: #fdf9f8;
+
   border-radius: 12px;
+
   overflow: hidden;
-  transition: all 0.4s ease;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+
+  will-change: transform;
 }
 
 .most-rented-style-card:hover {
   transform: translateY(-10px);
+
   box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
 }
 
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
 .most-rented-style-image-wrapper {
   position: relative;
+
+  width: 100%;
+
   overflow: hidden;
+
+  background: #f5f2f1;
 }
 
 .most-rented-style-image-wrapper::before {
   content: "";
+
   position: absolute;
   inset: 0;
+
   z-index: 2;
+
   opacity: 0;
-  transition: all 0.4s ease;
+
+  pointer-events: none;
+
+  transition: opacity 0.4s ease;
 }
 
 .most-rented-style-card:hover
@@ -83,100 +184,958 @@
 }
 
 .most-rented-style-image {
+  display: block;
+
   width: 100%;
   height: 560px;
+
   object-fit: cover;
+  object-position: center;
+
   transition: transform 0.7s ease;
+
+  will-change: transform;
 }
 
-.most-rented-style-card:hover .most-rented-style-image {
+.most-rented-style-card:hover
+.most-rented-style-image {
   transform: scale(1.06);
 }
 
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
 .most-rented-style-content {
+  width: 100%;
+
   padding: 24px;
 }
 
 .most-rented-style-name {
+  margin: 0 0 10px;
+
   font-size: 20px;
   font-weight: 700;
+  line-height: 1.2;
+
   color: #101828;
-  margin-bottom: 10px;
-  margin-left: -200px;
+
+  text-align: left;
 }
 
 .most-rented-style-category {
+  margin: 0 0 30px;
+
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.3;
+
   color: #383d48;
-  margin-bottom: 30px;
-  margin-left: -290px;
+
+  text-align: left;
 }
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .most-rented-style-footer {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
 }
 
 .most-rented-style-price-area {
   display: flex;
   align-items: center;
+
+  flex-wrap: wrap;
+
   gap: 8px;
+
+  min-width: 0;
 }
 
 .most-rented-style-price {
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.2;
+
   color: #475467;
 }
 
 .most-rented-style-old-price {
   color: #98a2b3;
+
   text-decoration: line-through;
+
   font-size: 14px;
+  line-height: 1.2;
 }
 
 .most-rented-style-book-btn {
+  flex-shrink: 0;
+
+  min-height: 44px;
+
   border: none;
+
   background: #050816;
   color: #ffffff;
-  padding: 14px 26px;
+
+  padding: 12px 26px;
+
   border-radius: 999px;
-  transition: all 0.35s ease;
+
+  font-family: "Barlow", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 .most-rented-style-book-btn:hover {
   transform: translateY(-2px);
+
+  box-shadow: 0 10px 24px rgba(5, 8, 22, 0.16);
 }
 
+.most-rented-style-book-btn:focus-visible {
+  outline: 2px solid #050816;
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+   ========================================================= */
+
+.most-rented-style-image-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f1eeeb;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  color: #888888;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.most-rented-styles-empty-state {
+  width: 100%;
+  padding: 60px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.most-rented-styles-empty-state p {
+  margin: 0;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  color: #777777;
+}
+
+/* =========================================================
+   GENDER PRODUCT SECTIONS
+   ========================================================= */
+
+.most-rented-gender-section {
+  width: 100%;
+}
+
+.most-rented-men-section {
+  margin-top: 70px;
+}
+
+/* =========================================================
+   GENDER HEADING
+   ========================================================= */
+
+.most-rented-gender-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  margin-bottom: 30px;
+}
+
+.most-rented-gender-heading h3 {
+  margin: 0;
+
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+
+  color: #111111;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.most-rented-gender-line {
+  width: 70px;
+  height: 1px;
+
+  background: #d6aa45;
+}
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+   ========================================================= */
+
+.most-rented-style-image-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f1eeeb;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 13px;
+  color: #888888;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.most-rented-styles-empty-state {
+  width: 100%;
+  padding: 60px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.most-rented-styles-empty-state p {
+  margin: 0;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  color: #777777;
+}
+
+/* =========================================================
+   LARGE TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .most-rented-men-section {
+    margin-top: 60px;
+  }
+
+  .most-rented-gender-heading {
+    margin-bottom: 26px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 26px;
+  }
+
+  .most-rented-gender-line {
+    width: 55px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
 @media (max-width: 992px) {
+  .most-rented-men-section {
+    margin-top: 55px;
+  }
+
+  .most-rented-gender-heading {
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 24px;
+  }
+
+  .most-rented-gender-line {
+    width: 45px;
+  }
+}
+
+/* =========================================================
+   MOBILE TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .most-rented-men-section {
+    margin-top: 50px;
+  }
+
+  .most-rented-gender-heading {
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 22px;
+  }
+
+  .most-rented-gender-line {
+    width: 38px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .most-rented-men-section {
+    margin-top: 45px;
+  }
+
+  .most-rented-gender-heading {
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 20px;
+  }
+
+  .most-rented-gender-line {
+    width: 30px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .most-rented-gender-heading {
+    gap: 8px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 19px;
+  }
+
+  .most-rented-gender-line {
+    width: 24px;
+  }
+}
+
+/* =========================================================
+   375px
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .most-rented-men-section {
+    margin-top: 40px;
+  }
+
+  .most-rented-gender-heading {
+    gap: 7px;
+    margin-bottom: 18px;
+  }
+
+  .most-rented-gender-heading h3 {
+    font-size: 18px;
+  }
+
+  .most-rented-gender-line {
+    width: 20px;
+  }
+}
+
+/* =========================================================
+   320px
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .most-rented-gender-heading h3 {
+    font-size: 17px;
+  }
+
+  .most-rented-gender-line {
+    width: 16px;
+  }
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .most-rented-styles-main {
+    padding: 90px 0;
+  }
+
+  .most-rented-styles-title {
+    font-size: 54px;
+  }
+
+  .most-rented-styles-title span {
+    font-size: 64px;
+  }
+
+  .most-rented-style-image {
+    height: 560px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+   ========================================================= */
+
+@media (max-width: 1439px) {
+  .most-rented-styles-main {
+    padding: 85px 0;
+  }
+
+  .most-rented-styles-title {
+    font-size: clamp(46px, 4vw, 54px);
+  }
+
+  .most-rented-styles-title span {
+    font-size: clamp(54px, 4.6vw, 64px);
+  }
+
+  .most-rented-styles-description {
+    max-width: 700px;
+  }
+
+  .most-rented-style-image {
+    height: 500px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .most-rented-styles-main {
+    padding: 75px 0;
+  }
+
   .most-rented-styles-header {
-    flex-direction: column;
-    gap: 25px;
+    gap: 30px;
+    margin-bottom: 45px;
   }
 
   .most-rented-styles-title {
     font-size: 42px;
   }
 
+  .most-rented-styles-title span {
+    font-size: 50px;
+  }
+
+  .most-rented-styles-description {
+    max-width: 650px;
+
+    font-size: 17px;
+  }
+
   .most-rented-style-image {
-    height: 480px;
+    height: 450px;
+  }
+
+  .most-rented-style-content {
+    padding: 22px;
+  }
+
+  .most-rented-style-name {
+    font-size: 19px;
   }
 }
 
-@media (max-width: 768px) {
+
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .most-rented-styles-main {
+    padding: 70px 0;
+  }
+
+  .most-rented-styles-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 22px;
+
+    margin-bottom: 40px;
+  }
+
+  .most-rented-styles-heading-area {
+    width: 100%;
+  }
+
   .most-rented-styles-title {
-    font-size: 34px;
+    max-width: 700px;
+
+    font-size: clamp(38px, 6vw, 52px);
+
+    line-height: 1.05;
+  }
+
+  .most-rented-styles-title span {
+    font-size: clamp(46px, 7vw, 60px);
+  }
+
+  .most-rented-styles-description {
+    max-width: 720px;
+
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
+  .most-rented-styles-see-all-btn {
+    min-height: 42px;
+
+    padding: 10px 18px;
+
+    font-size: 17px;
   }
 
   .most-rented-style-image {
-    height: 420px;
+    height: 460px;
+  }
+
+  .most-rented-style-content {
+    padding: 22px;
+  }
+
+  .most-rented-style-name {
+    font-size: 21px;
+  }
+
+  .most-rented-style-category {
+    font-size: 14px;
+
+    margin-bottom: 24px;
   }
 
   .most-rented-style-footer {
+    gap: 14px;
+  }
+
+  .most-rented-style-price {
+    font-size: 18px;
+  }
+
+  .most-rented-style-old-price {
+    font-size: 13px;
+  }
+
+  .most-rented-style-book-btn {
+    min-height: 42px;
+
+    padding: 10px 20px;
+
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   576px - 767px
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .most-rented-styles-main {
+    padding: 60px 0;
+  }
+
+  .most-rented-styles-header {
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .most-rented-styles-title {
+    font-size: clamp(32px, 7vw, 42px);
+
+    line-height: 1.08;
+
+    margin-bottom: 14px;
+  }
+
+  .most-rented-styles-title span {
+    font-size: clamp(38px, 8vw, 50px);
+
+    -webkit-text-stroke-width: 1.5px;
+  }
+
+  .most-rented-styles-description {
+    max-width: 100%;
+
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .most-rented-styles-see-all-btn {
+    min-height: 44px;
+
+    padding: 10px 18px;
+
+    font-size: 16px;
+  }
+
+  .most-rented-style-card {
+    border-radius: 11px;
+
+    margin-bottom: 0;
+  }
+
+  .most-rented-style-image {
+    height: 430px;
+
+    object-position: center;
+  }
+
+  .most-rented-style-content {
+    padding: 20px;
+  }
+
+  .most-rented-style-name {
+    font-size: 20px;
+
+    line-height: 1.2;
+
+    margin-bottom: 8px;
+  }
+
+  .most-rented-style-category {
+    font-size: 13px;
+
+    margin-bottom: 22px;
+  }
+
+  .most-rented-style-footer {
+    align-items: center;
+
+    gap: 14px;
+  }
+
+  .most-rented-style-price-area {
+    gap: 7px;
+  }
+
+  .most-rented-style-price {
+    font-size: 17px;
+  }
+
+  .most-rented-style-old-price {
+    font-size: 13px;
+  }
+
+  .most-rented-style-book-btn {
+    min-height: 44px;
+
+    padding: 10px 18px;
+
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   430px - 575px
+   ========================================================= */
+
+@media (max-width: 575px) {
+  .most-rented-styles-main {
+    padding: 52px 0;
+  }
+
+  .most-rented-styles-header {
+    margin-bottom: 28px;
+  }
+
+  .most-rented-styles-title {
+    font-size: 30px;
+
+    line-height: 1.1;
+  }
+
+  .most-rented-styles-title span {
+    font-size: 36px;
+
+    -webkit-text-stroke-width: 1.2px;
+  }
+
+  .most-rented-styles-description {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .most-rented-styles-see-all-btn {
+    min-height: 42px;
+
+    padding: 9px 16px;
+
+    font-size: 15px;
+  }
+
+  .most-rented-style-image {
+    height: 360px;
+  }
+
+  .most-rented-style-content {
+    padding: 18px;
+  }
+
+  .most-rented-style-name {
+    font-size: 18px;
+  }
+
+  .most-rented-style-category {
+    font-size: 12px;
+
+    margin-bottom: 20px;
+  }
+
+  .most-rented-style-footer {
+    align-items: stretch;
+
     flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+  .most-rented-style-price-area {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
+  .most-rented-style-price {
+    font-size: 17px;
+  }
+
+  .most-rented-style-old-price {
+    font-size: 13px;
+  }
+
+  .most-rented-style-book-btn {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 10px 18px;
+
+    font-size: 15px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 429px
+   ========================================================= */
+
+@media (max-width: 429px) {
+  .most-rented-styles-main {
+    padding: 48px 0;
+  }
+
+  .most-rented-styles-title {
+    font-size: 28px;
+  }
+
+  .most-rented-styles-title span {
+    font-size: 34px;
+  }
+
+  .most-rented-styles-description {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .most-rented-styles-see-all-btn {
+    min-height: 41px;
+
+    padding: 8px 15px;
+
+    font-size: 14px;
+  }
+
+  .most-rented-style-image {
+    height: 330px;
+  }
+
+  .most-rented-style-content {
+    padding: 17px;
+  }
+
+  .most-rented-style-name {
+    font-size: 17px;
+  }
+
+  .most-rented-style-category {
+    font-size: 12px;
+
+    margin-bottom: 18px;
+  }
+
+  .most-rented-style-book-btn {
+    min-height: 43px;
+
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .most-rented-styles-main {
+    padding: 42px 0;
+  }
+
+  .most-rented-styles-title {
+    font-size: 26px;
+  }
+
+  .most-rented-styles-title span {
+    font-size: 31px;
+
+    -webkit-text-stroke-width: 1px;
+  }
+
+  .most-rented-styles-description {
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .most-rented-styles-see-all-btn {
+    min-height: 40px;
+
+    padding: 8px 14px;
+
+    font-size: 13px;
+  }
+
+  .most-rented-style-image {
+    height: 300px;
+  }
+
+  .most-rented-style-content {
+    padding: 15px;
+  }
+
+  .most-rented-style-name {
+    font-size: 16px;
+  }
+
+  .most-rented-style-category {
+    font-size: 11px;
+
+    margin-bottom: 17px;
+  }
+
+  .most-rented-style-price {
+    font-size: 16px;
+  }
+
+  .most-rented-style-old-price {
+    font-size: 12px;
+  }
+
+  .most-rented-style-book-btn {
+    min-height: 42px;
+
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .most-rented-style-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .most-rented-style-card:active {
+    transform: translateY(-3px);
+  }
+
+  .most-rented-style-card:active
+  .most-rented-style-image {
+    transform: scale(1.02);
+  }
+
+  .most-rented-styles-see-all-btn:active,
+  .most-rented-style-book-btn:active {
+    transform: scale(0.97);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .most-rented-style-card,
+  .most-rented-style-image,
+  .most-rented-styles-see-all-btn,
+  .most-rented-style-book-btn {
+    transition: none;
   }
 }

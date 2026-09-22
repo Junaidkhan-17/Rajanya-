@@ -1,27 +1,74 @@
-/* ==========================================
-   CATEGORY STRIP
-========================================== */
+/* =========================================================
+   WOMEN'S CATEGORY STRIP
+========================================================= */
 
 .womens-category-strip-section {
+  width: 100%;
   padding: 40px 0;
   background: #ffffff;
+  overflow: hidden;
 }
+
+/* =========================================================
+   MAIN SLIDER WRAPPER
+========================================================= */
+
+.womens-category-strip-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   CATEGORY STRIP
+========================================================= */
 
 .womens-category-strip {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+
   gap: 24px;
-  flex-wrap: wrap;
+
+  width: 100%;
+  min-width: 0;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding: 6px 4px 12px;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+
+  overscroll-behavior-x: contain;
 }
 
-/* ==========================================
+.womens-category-strip::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================================
    CATEGORY ITEM
-========================================== */
+========================================================= */
 
 .womens-category-item {
+  position: relative;
+
   display: flex;
   align-items: center;
+
+  flex: 0 0 245px;
+
+  min-width: 245px;
+
   gap: 14px;
 
   padding: 14px 18px;
@@ -33,20 +80,48 @@
 
   cursor: pointer;
 
-  transition: all 0.35s ease;
+  text-align: left;
+
+  scroll-snap-align: start;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  box-sizing: border-box;
 }
 
-.womens-category-item:hover {
-  transform: translateY(-4px);
+/* =========================================================
+   HOVER
+========================================================= */
 
-  box-shadow:
-    0 15px 30px
-    rgba(0, 0, 0, 0.08);
+@media (hover: hover) and (pointer: fine) {
+  .womens-category-item:hover {
+    transform: translateY(-4px);
+
+    border-color: #d8dede;
+
+    box-shadow:
+      0 15px 30px rgba(0, 0, 0, 0.08);
+  }
 }
+
+/* =========================================================
+   ACTIVE CATEGORY
+========================================================= */
 
 .womens-category-active {
   border-color: #31565a;
+
   background: #31565a;
+
+  box-shadow:
+    0 12px 28px rgba(49, 86, 90, 0.18);
 }
 
 .womens-category-active h4,
@@ -54,63 +129,608 @@
   color: #ffffff;
 }
 
-/* ==========================================
-   IMAGE
-========================================== */
+/* =========================================================
+   IMAGE WRAPPER
+========================================================= */
 
 .womens-category-image-wrapper {
+  position: relative;
+
   width: 60px;
   height: 60px;
 
+  min-width: 60px;
+
   border-radius: 50%;
+
   overflow: hidden;
 
   flex-shrink: 0;
+
+  background: #f4f5f5;
+
+  border: 1px solid #eeeeee;
 }
+
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .womens-category-image {
+  display: block;
+
   width: 100%;
   height: 100%;
+
   object-fit: cover;
+  object-position: center;
+
+  transition:
+    transform 0.45s ease;
 }
 
-/* ==========================================
-   CONTENT
-========================================== */
+@media (hover: hover) and (pointer: fine) {
+  .womens-category-item:hover
+    .womens-category-image {
+    transform: scale(1.08);
+  }
+}
 
-.womens-category-content h4 {
-  margin: 0;
+/* =========================================================
+   IMAGE PLACEHOLDER
+========================================================= */
 
-  font-size: 16px;
+.womens-category-image-placeholder {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f7f7f7,
+      #e9eeee
+    );
+
+  color: #31565a;
+
+  font-size: 20px;
   font-weight: 700;
 
-  color: #111827;
+  text-transform: uppercase;
 }
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.womens-category-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  flex: 1;
+}
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+.womens-category-content h4 {
+  margin: 0 0 4px;
+
+  color: #111827;
+
+  font-size: 16px;
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   PRODUCT COUNT
+========================================================= */
 
 .womens-category-content span {
-  font-size: 13px;
+  display: block;
+
   color: #6b7280;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  font-weight: 500;
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
+/* =========================================================
+   SLIDER CONTROLS
+========================================================= */
 
-@media (max-width: 768px) {
+.womens-category-slider-control {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 42px;
+
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+  min-height: 42px;
+
+  padding: 0;
+
+  border: 1px solid #e4e7e7;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #31565a;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.womens-category-slider-control span {
+  display: block;
+
+  font-size: 16px;
+  line-height: 1;
+
+  transition:
+    transform 0.25s ease;
+}
+
+/* =========================================================
+   LEFT / RIGHT POSITION
+========================================================= */
+
+.womens-category-slider-control-left {
+  margin-right: 12px;
+}
+
+.womens-category-slider-control-right {
+  margin-left: 12px;
+}
+
+/* =========================================================
+   CONTROL HOVER
+========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  .womens-category-slider-control:not(
+      .womens-category-slider-control-disabled
+    ):hover {
+    background: #31565a;
+
+    border-color: #31565a;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 12px 24px
+        rgba(49, 86, 90, 0.18);
+  }
+
+  .womens-category-slider-control-left:not(
+      .womens-category-slider-control-disabled
+    ):hover
+    span {
+    transform: translateX(-2px);
+  }
+
+  .womens-category-slider-control-right:not(
+      .womens-category-slider-control-disabled
+    ):hover
+    span {
+    transform: translateX(2px);
+  }
+}
+
+/* =========================================================
+   DISABLED CONTROL
+========================================================= */
+
+.womens-category-slider-control-disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+
+  transform: none;
+}
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.womens-category-item:focus-visible,
+.womens-category-slider-control:focus-visible {
+  outline: 2px solid #31565a;
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+========================================================= */
+
+@media (min-width: 1440px) {
+  .womens-category-strip-section {
+    padding: 44px 0;
+  }
+
   .womens-category-strip {
-    justify-content: flex-start;
+    gap: 26px;
 
-    overflow-x: auto;
-    flex-wrap: nowrap;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
 
+  .womens-category-item {
+    flex-basis: 255px;
+    min-width: 255px;
+
+    padding: 15px 20px;
+  }
+
+  .womens-category-image-wrapper {
+    width: 62px;
+    height: 62px;
+
+    min-width: 62px;
+  }
+}
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+========================================================= */
+
+@media (max-width: 1439px) {
+  .womens-category-strip {
+    gap: 20px;
+  }
+
+  .womens-category-item {
+    flex-basis: 235px;
+    min-width: 235px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+========================================================= */
+
+@media (max-width: 1199px) {
+  .womens-category-strip-section {
+    padding: 34px 0;
+  }
+
+  .womens-category-strip {
+    gap: 18px;
+  }
+
+  .womens-category-item {
+    flex-basis: 225px;
+    min-width: 225px;
+
+    padding: 13px 16px;
+  }
+
+  .womens-category-image-wrapper {
+    width: 56px;
+    height: 56px;
+
+    min-width: 56px;
+  }
+
+  .womens-category-content h4 {
+    font-size: 15px;
+  }
+
+  .womens-category-content span {
+    font-size: 12px;
+  }
+
+  .womens-category-slider-control {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px - 991px
+========================================================= */
+
+@media (max-width: 991px) {
+  .womens-category-strip-section {
+    padding: 30px 0;
+  }
+
+  .womens-category-strip {
+    gap: 16px;
+
+    padding-top: 4px;
     padding-bottom: 10px;
   }
 
-  .womens-category-strip::-webkit-scrollbar {
+  .womens-category-item {
+    flex-basis: 215px;
+    min-width: 215px;
+
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 15px;
+  }
+
+  .womens-category-image-wrapper {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+  }
+
+  .womens-category-content h4 {
+    font-size: 14px;
+  }
+
+  .womens-category-content span {
+    font-size: 12px;
+  }
+
+  .womens-category-slider-control {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .womens-category-slider-control-left {
+    margin-right: 8px;
+  }
+
+  .womens-category-slider-control-right {
+    margin-left: 8px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   576px - 767px
+========================================================= */
+
+@media (max-width: 767px) {
+  .womens-category-strip-section {
+    padding: 26px 0;
+  }
+
+  .womens-category-strip-wrapper {
+    width: 100%;
+  }
+
+  /*
+   * Mobile uses native touch scrolling.
+   */
+
+  .womens-category-strip {
+    gap: 12px;
+
+    width: 100%;
+
+    padding:
+      4px
+      4px
+      12px;
+
+    scroll-snap-type: x mandatory;
+
+    overscroll-behavior-x: contain;
+  }
+
+  /*
+   * Hide desktop arrows on mobile.
+   */
+
+  .womens-category-slider-control {
     display: none;
   }
 
   .womens-category-item {
-    min-width: max-content;
+    flex: 0 0 min(
+      78vw,
+      270px
+    );
+
+    min-width: min(
+      78vw,
+      270px
+    );
+
+    gap: 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 14px;
+
+    scroll-snap-align: start;
+
+    touch-action: pan-x;
+  }
+
+  .womens-category-image-wrapper {
+    width: 52px;
+    height: 52px;
+
+    min-width: 52px;
+  }
+
+  .womens-category-content h4 {
+    font-size: 14px;
+
+    line-height: 1.25;
+  }
+
+  .womens-category-content span {
+    font-size: 12px;
+
+    line-height: 1.35;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 575px
+========================================================= */
+
+@media (max-width: 575px) {
+  .womens-category-strip-section {
+    padding: 22px 0;
+  }
+
+  .womens-category-strip {
+    gap: 10px;
+
+    padding:
+      3px
+      3px
+      10px;
+  }
+
+  .womens-category-item {
+    flex-basis: 82vw;
+
+    min-width: 82vw;
+
+    max-width: 290px;
+
+    gap: 11px;
+
+    padding: 11px 13px;
+
+    border-radius: 14px;
+  }
+
+  .womens-category-image-wrapper {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+  }
+
+  .womens-category-content h4 {
+    font-size: 14px;
+  }
+
+  .womens-category-content span {
+    font-size: 11.5px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+========================================================= */
+
+@media (max-width: 374px) {
+  .womens-category-strip-section {
+    padding: 20px 0;
+  }
+
+  .womens-category-strip {
+    gap: 9px;
+
+    padding:
+      3px
+      3px
+      9px;
+  }
+
+  .womens-category-item {
+    flex-basis: 84vw;
+
+    min-width: 84vw;
+
+    max-width: 275px;
+
+    gap: 10px;
+
+    padding: 10px 12px;
+
+    border-radius: 13px;
+  }
+
+  .womens-category-image-wrapper {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+  }
+
+  .womens-category-content h4 {
+    font-size: 13px;
+
+    line-height: 1.2;
+  }
+
+  .womens-category-content span {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .womens-category-strip {
+    scroll-behavior: auto;
+  }
+
+  .womens-category-item,
+  .womens-category-image,
+  .womens-category-slider-control,
+  .womens-category-slider-control span {
+    transition: none;
   }
 }

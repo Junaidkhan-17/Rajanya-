@@ -1,102 +1,2246 @@
+/* =========================================================
+   GENERATED RESULT CARD
+   Premium AI Virtual Try-On Result
+========================================================= */
+
 .generated-result-card {
-  margin-top: 35px;
+  position: relative;
 
-  background: #fff;
+  width: 100%;
+  min-width: 0;
 
-  border-radius: 30px;
+  box-sizing: border-box;
 
-  padding: 30px;
+  margin-top: 30px;
+  padding: 28px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(255, 117, 140, 0.06),
+      transparent 32%
+    ),
+    #ffffff;
+
+  border: 1px solid #eeeeef;
+  border-radius: 28px;
 
   box-shadow:
-    0 20px 50px
-    rgba(0, 0, 0, 0.05);
+    0 20px 50px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
+/* =========================================================
+   TOP ACCENT
+========================================================= */
+
+.generated-result-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 28px;
+  right: 28px;
+
+  height: 2px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ff758c,
+      #8b5cf6,
+      transparent
+    );
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 .generated-result-header {
+  position: relative;
+  z-index: 1;
+
   display: flex;
   align-items: center;
-  gap: 12px;
 
-  margin-bottom: 30px;
+  gap: 13px;
+
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 25px;
 
   color: #ff758c;
+}
+
+/* =========================================================
+   HEADER ICON
+========================================================= */
+
+.generated-result-icon {
+  width: 44px;
+  height: 44px;
+
+  min-width: 44px;
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff0f3,
+      #fff8f4
+    );
+
+  color: #ff758c;
+
+  box-shadow:
+    0 8px 20px rgba(255, 117, 140, 0.1);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.generated-result-card:hover .generated-result-icon {
+  transform: rotate(5deg) scale(1.05);
+
+  box-shadow:
+    0 12px 25px rgba(255, 117, 140, 0.16);
+}
+
+/* =========================================================
+   HEADER CONTENT
+========================================================= */
+
+.generated-result-heading {
+  min-width: 0;
+  flex: 1;
+}
+
+.generated-result-eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #b56a7d;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: 0.16em;
+
+  font-family: "Newake", sans-serif;
 }
 
 .generated-result-header h3 {
   margin: 0;
 
-  font-size: 1.4rem;
+  color: #1f2430;
+
+  font-size: clamp(1.15rem, 1.7vw, 1.4rem);
+  line-height: 1.25;
+
   font-weight: 700;
+
+  overflow-wrap: anywhere;
 }
+
+.generated-result-heading p {
+  margin: 5px 0 0;
+
+  color: #858995;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   IMAGE COMPARISON
+========================================================= */
+
+/*
+   IMPORTANT:
+
+   Uploaded Photo = SMALL
+   AI Result      = LARGE
+*/
 
 .generated-result-images {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
+
+  grid-template-columns:
+    minmax(130px, 0.55fr)
+    minmax(0, 1.45fr);
+
+  gap: 22px;
+
+  width: 100%;
+  min-width: 0;
+
+  align-items: start;
 }
+
+/* =========================================================
+   IMAGE BOX
+========================================================= */
 
 .generated-image-box {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
 
-.generated-image-box span {
-  font-weight: 600;
-  color: #555;
-}
-
-.generated-image-box img {
   width: 100%;
-  border-radius: 24px;
+  min-width: 0;
 
-  object-fit: cover;
-
-  min-height: 400px;
+  gap: 10px;
 }
 
-.generated-result-actions {
-  margin-top: 30px;
+/* =========================================================
+   IMAGE LABEL
+========================================================= */
 
-  display: flex;
-  gap: 20px;
-}
-
-.download-result-btn,
-.try-again-btn {
-  flex: 1;
-
-  border: none;
-  border-radius: 18px;
-
-  padding: 16px;
-
-  cursor: pointer;
-
+.generated-image-label {
   display: flex;
   align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  color: #555b66;
+}
+
+.generated-image-label span {
+  width: 26px;
+  height: 26px;
+
+  min-width: 26px;
+
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
+
+  border-radius: 50%;
+
+  background: #f4f4f5;
+
+  color: #8b8d95;
+
+  font-size: 9px;
+  line-height: 1;
 
   font-weight: 700;
 }
 
-.download-result-btn {
-  background: #111;
-  color: #fff;
+.generated-image-label strong {
+  min-width: 0;
+
+  color: #555b66;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  overflow-wrap: anywhere;
 }
+
+/* =========================================================
+   IMAGE FRAME
+========================================================= */
+
+.generated-image-frame {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fafafa,
+      #f5f5f6
+    );
+
+  border: 1px solid #eeeeef;
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* =========================================================
+   ALL IMAGES
+========================================================= */
+
+.generated-image-frame img {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  height: auto;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #f8f8f8;
+
+  border-radius: 19px;
+}
+
+/* =========================================================
+   UPLOADED PHOTO — SMALL
+========================================================= */
+
+.generated-before-box {
+  width: 100%;
+  max-width: 100%;
+}
+
+.generated-before-box .generated-image-frame {
+  width: 100%;
+
+  /*
+    No forced height.
+    This prevents the huge empty area
+    around the uploaded image.
+  */
+
+  min-height: 0;
+
+  padding: 0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8f8f8,
+      #f1f1f2
+    );
+}
+
+.generated-before-box .generated-image-frame img {
+  width: 100%;
+  max-width: 100%;
+
+  height: auto;
+
+  max-height: 420px;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   AI RESULT — LARGE
+========================================================= */
+
+.generated-after-box {
+  width: 100%;
+  min-width: 0;
+}
+
+.generated-after-box .generated-image-frame {
+  width: 100%;
+
+  min-height: 0;
+
+  padding: 0;
+
+  border-color: #f1e5e9;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff8f8,
+      #f8f5f9
+    );
+
+  box-shadow:
+    0 12px 30px rgba(255, 117, 140, 0.07);
+}
+
+.generated-result-frame img {
+  width: 100%;
+  max-width: 100%;
+
+  height: auto;
+
+  max-height: 760px;
+
+  object-fit: contain;
+}
+
+/* =========================================================
+   IMAGE HOVER
+========================================================= */
+
+.generated-image-box:hover .generated-image-frame {
+  transform: translateY(-3px);
+
+  border-color: #e4dfe2;
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.07);
+}
+
+/* =========================================================
+   AI RESULT BADGE
+========================================================= */
+
+.generated-result-badge {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 5px;
+
+  padding: 7px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+
+  background: rgba(17, 17, 17, 0.78);
+
+  color: #ffffff;
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow:
+    0 6px 18px rgba(0, 0, 0, 0.12);
+
+  pointer-events: none;
+}
+
+.generated-result-badge svg {
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.generated-image-placeholder {
+  width: 100%;
+
+  min-height: 150px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  color: #9a9ca4;
+
+  text-align: center;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.generated-result-actions {
+  display: flex;
+  align-items: stretch;
+
+  gap: 14px;
+
+  width: 100%;
+
+  margin-top: 25px;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.download-result-btn,
+.try-again-btn {
+  position: relative;
+
+  flex: 1;
+
+  min-width: 0;
+  min-height: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  padding: 14px 18px;
+
+  border-radius: 16px;
+
+  border: 1px solid transparent;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    color 0.25s ease;
+}
+
+.download-result-btn svg,
+.try-again-btn svg {
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.download-result-btn {
+  background: #111111;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.1);
+}
+
+.download-result-btn:hover {
+  background: #242424;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.14);
+}
+
+.download-result-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* =========================================================
+   TRY AGAIN BUTTON
+========================================================= */
 
 .try-again-btn {
-  background: #fff0f3;
+  border-color: #f4dce3;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f4,
+      #fff6f8
+    );
+
   color: #ff5c8a;
+
+  box-shadow:
+    0 8px 20px rgba(255, 92, 138, 0.06);
 }
 
-@media (max-width: 768px) {
+.try-again-btn:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ffe7ed,
+      #fff0f4
+    );
+
+  border-color: #f2cbd6;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(255, 92, 138, 0.1);
+}
+
+.try-again-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* =========================================================
+   AI IMAGE PREVIEW
+   Desktop: Normal Image
+   Mobile: Tap To Open Full Screen
+========================================================= */
+
+.generated-image-preview-trigger {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  padding: 0;
+
+  margin: 0;
+
+  border: none;
+
+  background: transparent;
+
+  cursor: default;
+
+  font: inherit;
+
+  text-align: inherit;
+}
+
+.generated-image-preview-trigger img {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================================================
+   MOBILE VIEW HINT
+========================================================= */
+
+.generated-mobile-view-hint {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 12px;
+
+  transform: translateX(-50%);
+
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  background: rgba(17, 17, 17, 0.78);
+
+  color: #ffffff;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+
+.generated-image-lightbox {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: rgba(5, 5, 8, 0.94);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  animation: generatedLightboxFadeIn 0.25s ease;
+}
+
+/* =========================================================
+   LIGHTBOX CONTENT
+========================================================= */
+
+.generated-image-lightbox-content {
+  position: relative;
+
+  width: auto;
+  max-width: 94vw;
+  max-height: 92vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.45);
+}
+
+.generated-image-lightbox-content img {
+  display: block;
+
+  width: auto;
+  max-width: 94vw;
+
+  height: auto;
+  max-height: 92vh;
+
+  object-fit: contain;
+
+  border-radius: 14px;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.generated-image-lightbox-close {
+  position: fixed;
+
+  top: 20px;
+  right: 20px;
+
+  z-index: 2;
+
+  width: 46px;
+  height: 46px;
+
+  min-width: 46px;
+  min-height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  font-size: 17px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.generated-image-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+
+  border-color: rgba(255, 255, 255, 0.4);
+
+  transform: rotate(90deg);
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes generatedLightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   AI IMAGE FULL SCREEN PREVIEW
+========================================================= */
+
+.generated-result-frame {
+  position: relative;
+
+  cursor: zoom-in;
+
+  outline: none;
+}
+
+/* =========================================================
+   MOBILE VIEW OVERLAY
+========================================================= */
+
+.generated-image-mobile-overlay {
+  display: none;
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 12px;
+
+  transform: translateX(-50%);
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(17, 17, 17, 0.8);
+
+  color: #ffffff;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* =========================================================
+   FULL SCREEN LIGHTBOX
+========================================================= */
+
+.generated-image-lightbox {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999999;
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding: 30px;
+
+  background: rgba(0, 0, 0, 0.94);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  animation: generatedImagePreviewIn 0.25s ease;
+}
+
+/* =========================================================
+   FULL IMAGE CONTAINER
+========================================================= */
+
+.generated-image-lightbox-content {
+  position: relative;
+
+  width: auto;
+  max-width: 94vw;
+
+  height: auto;
+  max-height: 92vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================================
+   FULL IMAGE
+========================================================= */
+
+.generated-image-lightbox-content img {
+  display: block;
+
+  width: auto;
+
+  max-width: 94vw;
+
+  height: auto;
+
+  max-height: 92vh;
+
+  object-fit: contain;
+
+  border-radius: 14px;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.generated-image-lightbox-close {
+  position: fixed;
+
+  top: 20px;
+  right: 20px;
+
+  z-index: 10;
+
+  width: 48px;
+  height: 48px;
+
+  min-width: 48px;
+  min-height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #ffffff;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.generated-image-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+
+  border-color: rgba(255, 255, 255, 0.45);
+
+  transform: rotate(90deg);
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.generated-result-frame:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.4);
+
+  outline-offset: 3px;
+}
+
+.generated-image-lightbox-close:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.4);
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes generatedImagePreviewIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   MOBILE — 576 TO 767
+========================================================= */
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .generated-result-frame {
+    cursor: zoom-in;
+  }
+
+  .generated-image-mobile-overlay {
+    display: flex;
+  }
+
+  .generated-image-lightbox {
+    padding: 15px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 96vw;
+
+    max-height: 90vh;
+
+    border-radius: 13px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 96vw;
+
+    max-height: 90vh;
+
+    border-radius: 12px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 14px;
+    right: 14px;
+
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 375 TO 575
+========================================================= */
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .generated-result-frame {
+    cursor: zoom-in;
+  }
+
+  .generated-image-mobile-overlay {
+    display: flex;
+
+    bottom: 9px;
+
+    padding: 7px 10px;
+
+    font-size: 8px;
+  }
+
+  .generated-image-lightbox {
+    padding: 10px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 97vw;
+
+    max-height: 90vh;
+
+    border-radius: 12px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 97vw;
+
+    max-height: 90vh;
+
+    border-radius: 11px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 12px;
+    right: 12px;
+
+    width: 43px;
+    height: 43px;
+
+    min-width: 43px;
+    min-height: 43px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE — 320 TO 374
+========================================================= */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .generated-result-frame {
+    cursor: zoom-in;
+  }
+
+  .generated-image-mobile-overlay {
+    display: flex;
+
+    bottom: 7px;
+
+    padding: 6px 8px;
+
+    gap: 4px;
+
+    font-size: 7px;
+  }
+
+  .generated-image-mobile-overlay svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .generated-image-lightbox {
+    padding: 8px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 98vw;
+
+    max-height: 89vh;
+
+    border-radius: 10px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 98vw;
+
+    max-height: 89vh;
+
+    border-radius: 9px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 9px;
+    right: 9px;
+
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .generated-result-frame {
+    cursor: zoom-in;
+  }
+
+  .generated-result-frame:active {
+    transform: scale(0.995);
+  }
+
+  .generated-image-lightbox-close:hover {
+    transform: none;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .generated-image-lightbox-close:active {
+    transform: scale(0.92);
+
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .generated-image-lightbox {
+    animation: none;
+  }
+
+  .generated-image-lightbox-close {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   MOBILE — 576 TO 767
+========================================================= */
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .generated-image-preview-trigger {
+    cursor: zoom-in;
+  }
+
+  .generated-mobile-view-hint {
+    display: inline-flex;
+  }
+
+  .generated-image-preview-trigger:active {
+    transform: scale(0.99);
+  }
+
+  .generated-image-lightbox {
+    padding: 15px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 96vw;
+    max-height: 88vh;
+
+    border-radius: 13px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 96vw;
+    max-height: 88vh;
+
+    border-radius: 12px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 14px;
+    right: 14px;
+
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 375 TO 575
+========================================================= */
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .generated-image-preview-trigger {
+    cursor: zoom-in;
+  }
+
+  .generated-mobile-view-hint {
+    display: inline-flex;
+
+    bottom: 9px;
+
+    padding: 6px 9px;
+
+    font-size: 8px;
+  }
+
+  .generated-image-lightbox {
+    padding: 12px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 97vw;
+    max-height: 88vh;
+
+    border-radius: 12px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 97vw;
+    max-height: 88vh;
+
+    border-radius: 11px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 12px;
+    right: 12px;
+
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+    min-height: 42px;
+
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE — 320 TO 374
+========================================================= */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .generated-image-preview-trigger {
+    cursor: zoom-in;
+  }
+
+  .generated-mobile-view-hint {
+    display: inline-flex;
+
+    bottom: 7px;
+
+    padding: 5px 8px;
+
+    font-size: 7px;
+  }
+
+  .generated-image-lightbox {
+    padding: 9px;
+  }
+
+  .generated-image-lightbox-content {
+    max-width: 98vw;
+    max-height: 87vh;
+
+    border-radius: 10px;
+  }
+
+  .generated-image-lightbox-content img {
+    max-width: 98vw;
+    max-height: 87vh;
+
+    border-radius: 9px;
+  }
+
+  .generated-image-lightbox-close {
+    top: 9px;
+    right: 9px;
+
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .generated-image-preview-trigger {
+    cursor: zoom-in;
+  }
+
+  .generated-image-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+
+    border-color: rgba(255, 255, 255, 0.2);
+
+    transform: none;
+  }
+
+  .generated-image-lightbox-close:active {
+    background: rgba(255, 255, 255, 0.25);
+
+    transform: scale(0.94);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .generated-image-lightbox {
+    animation: none;
+  }
+
+  .generated-image-lightbox-close {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.download-result-btn:focus-visible,
+.try-again-btn:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.25);
+
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   LARGE DESKTOP — 1440+
+========================================================= */
+
+@media (min-width: 1440px) {
+  .generated-result-card {
+    padding: 30px;
+  }
+
   .generated-result-images {
-    grid-template-columns: 1fr;
+    /*
+      Make AI result even more dominant
+    */
+    grid-template-columns:
+      minmax(145px, 0.48fr)
+      minmax(0, 1.52fr);
+
+    gap: 24px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 400px;
+  }
+
+  .generated-result-frame img {
+    max-height: 780px;
+  }
+}
+
+/* =========================================================
+   DESKTOP — 1200 TO 1439
+========================================================= */
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .generated-result-card {
+    padding: 27px;
+  }
+
+  .generated-result-images {
+    grid-template-columns:
+      minmax(135px, 0.5fr)
+      minmax(0, 1.5fr);
+
+    gap: 20px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 390px;
+  }
+
+  .generated-result-frame img {
+    max-height: 720px;
+  }
+}
+
+/* =========================================================
+   LAPTOP — 992 TO 1199
+========================================================= */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .generated-result-card {
+    padding: 24px;
+
+    border-radius: 25px;
+  }
+
+  .generated-result-images {
+    grid-template-columns:
+      minmax(120px, 0.52fr)
+      minmax(0, 1.48fr);
+
+    gap: 17px;
+  }
+
+  .generated-result-header {
+    margin-bottom: 21px;
+  }
+
+  .generated-result-icon {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .generated-result-header h3 {
+    font-size: 1.15rem;
+  }
+
+  .generated-result-heading p {
+    font-size: 11px;
+  }
+
+  .generated-image-frame {
+    border-radius: 17px;
+  }
+
+  .generated-image-frame img {
+    border-radius: 16px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 350px;
+  }
+
+  .generated-result-frame img {
+    max-height: 620px;
+  }
+
+  .generated-image-label strong {
+    font-size: 11px;
+  }
+
+  .generated-result-actions {
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   TABLET — 768 TO 991
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .generated-result-card {
+    margin-top: 24px;
+
+    padding: 23px;
+
+    border-radius: 24px;
+  }
+
+  .generated-result-images {
+    grid-template-columns:
+      minmax(115px, 0.55fr)
+      minmax(0, 1.45fr);
+
+    gap: 17px;
+  }
+
+  .generated-result-header {
+    margin-bottom: 20px;
+  }
+
+  .generated-result-icon {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .generated-result-header h3 {
+    font-size: 1.12rem;
+  }
+
+  .generated-result-heading p {
+    font-size: 11px;
+  }
+
+  .generated-image-frame {
+    border-radius: 17px;
+  }
+
+  .generated-image-frame img {
+    border-radius: 16px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 330px;
+  }
+
+  .generated-result-frame img {
+    max-height: 580px;
+  }
+
+  .generated-result-actions {
+    gap: 12px;
+  }
+
+  .download-result-btn,
+  .try-again-btn {
+    min-height: 50px;
+
+    padding: 13px 15px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 576 TO 767
+========================================================= */
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .generated-result-card {
+    margin-top: 20px;
+
+    padding: 21px;
+
+    border-radius: 22px;
+  }
+
+  .generated-result-card::before {
+    left: 21px;
+    right: 21px;
+  }
+
+  .generated-result-header {
+    gap: 11px;
+
+    margin-bottom: 18px;
+  }
+
+  .generated-result-icon {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+
+    border-radius: 12px;
+  }
+
+  .generated-result-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .generated-result-eyebrow {
+    font-size: 8px;
+  }
+
+  .generated-result-header h3 {
+    font-size: 1.08rem;
+  }
+
+  .generated-result-heading p {
+    margin-top: 4px;
+
+    font-size: 11px;
+  }
+
+  /*
+    On mobile:
+    Uploaded remains compact.
+    AI result gets the majority of the width.
+  */
+
+  .generated-result-images {
+    display: grid;
+
+    grid-template-columns:
+      minmax(95px, 0.42fr)
+      minmax(0, 1.58fr);
+
+    gap: 14px;
+
+    align-items: start;
+  }
+
+  .generated-image-box {
+    gap: 8px;
+  }
+
+  .generated-image-frame {
+    min-height: 0;
+
+    border-radius: 16px;
+  }
+
+  .generated-image-frame img {
+    border-radius: 15px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 300px;
+  }
+
+  .generated-result-frame img {
+    max-height: 520px;
+  }
+
+  .generated-image-label {
+    gap: 6px;
+  }
+
+  .generated-image-label span {
+    width: 23px;
+    height: 23px;
+
+    min-width: 23px;
+
+    font-size: 8px;
+  }
+
+  .generated-image-label strong {
+    font-size: 10px;
+  }
+
+  .generated-result-badge {
+    top: 8px;
+    right: 8px;
+
+    padding: 6px 8px;
+
+    font-size: 8px;
+  }
+
+  .generated-result-actions {
+    gap: 11px;
+
+    margin-top: 20px;
+  }
+
+  .download-result-btn,
+  .try-again-btn {
+    min-height: 49px;
+
+    padding: 12px 14px;
+
+    border-radius: 14px;
+
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 375 TO 575
+========================================================= */
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .generated-result-card {
+    margin-top: 17px;
+
+    padding: 17px;
+
+    border-radius: 19px;
+  }
+
+  .generated-result-card::before {
+    left: 17px;
+    right: 17px;
+  }
+
+  .generated-result-header {
+    align-items: flex-start;
+
+    gap: 10px;
+
+    margin-bottom: 17px;
+  }
+
+  .generated-result-icon {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+    min-height: 38px;
+
+    border-radius: 11px;
+  }
+
+  .generated-result-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .generated-result-eyebrow {
+    margin-bottom: 5px;
+
+    font-size: 7px;
+
+    letter-spacing: 0.12em;
+  }
+
+  .generated-result-header h3 {
+    font-size: clamp(1rem, 4.7vw, 1.12rem);
+
+    line-height: 1.25;
+  }
+
+  .generated-result-heading p {
+    margin-top: 4px;
+
+    font-size: 10.5px;
+
+    line-height: 1.5;
+  }
+
+  /*
+    KEEP BOTH IMAGES SIDE BY SIDE.
+
+    Uploaded = narrow
+    AI Result = wide
+  */
+
+  .generated-result-images {
+    display: grid;
+
+    grid-template-columns:
+      minmax(78px, 0.42fr)
+      minmax(0, 1.58fr);
+
+    gap: 10px;
+
+    align-items: start;
+  }
+
+  .generated-image-box {
+    gap: 7px;
+  }
+
+  .generated-image-label {
+    gap: 5px;
+  }
+
+  .generated-image-label span {
+    width: 22px;
+    height: 22px;
+
+    min-width: 22px;
+
+    font-size: 7px;
+  }
+
+  .generated-image-label strong {
+    font-size: 9px;
+  }
+
+  /*
+    IMPORTANT:
+    No fixed min-height here.
+  */
+
+  .generated-image-frame,
+  .generated-before-box .generated-image-frame,
+  .generated-result-frame {
+    min-height: 0;
+
+    height: auto;
+
+    border-radius: 13px;
+  }
+
+  .generated-image-frame img {
+    width: 100%;
+    height: auto;
+
+    border-radius: 12px;
+  }
+
+  /*
+    Uploaded image stays small.
+  */
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 250px;
+  }
+
+  /*
+    AI result is significantly larger.
+  */
+
+  .generated-result-frame img {
+    max-height: 500px;
+  }
+
+  .generated-result-badge {
+    top: 7px;
+    right: 7px;
+
+    padding: 5px 7px;
+
+    font-size: 8px;
+  }
+
+  .generated-result-badge svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .generated-image-placeholder {
+    min-height: 120px;
+
+    padding: 12px;
+
+    font-size: 9px;
+  }
+
+  /*
+    Buttons remain stacked for comfortable touch.
+  */
+
+  .generated-result-actions {
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 17px;
+  }
+
+  .download-result-btn,
+  .try-again-btn {
+    width: 100%;
+
+    flex: none;
+
+    min-height: 48px;
+
+    padding: 12px 14px;
+
+    border-radius: 13px;
+
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE — 320 TO 374
+========================================================= */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .generated-result-card {
+    margin-top: 15px;
+
+    padding: 14px;
+
+    border-radius: 17px;
+  }
+
+  .generated-result-card::before {
+    left: 14px;
+    right: 14px;
+  }
+
+  .generated-result-header {
+    gap: 8px;
+
+    margin-bottom: 14px;
+  }
+
+  .generated-result-icon {
+    width: 35px;
+    height: 35px;
+
+    min-width: 35px;
+    min-height: 35px;
+
+    border-radius: 10px;
+  }
+
+  .generated-result-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .generated-result-eyebrow {
+    font-size: 6px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .generated-result-header h3 {
+    font-size: 0.94rem;
+
+    line-height: 1.25;
+  }
+
+  .generated-result-heading p {
+    font-size: 9.5px;
+
+    line-height: 1.45;
+  }
+
+  /*
+    Uploaded remains small.
+    AI result dominates.
+  */
+
+  .generated-result-images {
+    display: grid;
+
+    grid-template-columns:
+      minmax(68px, 0.4fr)
+      minmax(0, 1.6fr);
+
+    gap: 8px;
+
+    align-items: start;
+  }
+
+  .generated-image-box {
+    gap: 6px;
+  }
+
+  .generated-image-label {
+    gap: 4px;
+  }
+
+  .generated-image-label span {
+    width: 20px;
+    height: 20px;
+
+    min-width: 20px;
+
+    font-size: 7px;
+  }
+
+  .generated-image-label strong {
+    font-size: 8px;
+  }
+
+  .generated-image-frame,
+  .generated-before-box .generated-image-frame,
+  .generated-result-frame {
+    min-height: 0;
+
+    height: auto;
+
+    border-radius: 11px;
+  }
+
+  .generated-image-frame img {
+    height: auto;
+
+    border-radius: 10px;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 210px;
+  }
+
+  .generated-result-frame img {
+    max-height: 430px;
+  }
+
+  .generated-result-badge {
+    top: 6px;
+    right: 6px;
+
+    padding: 4px 6px;
+
+    font-size: 7px;
+  }
+
+  .generated-result-badge svg {
+    width: 9px;
+    height: 9px;
+  }
+
+  .generated-image-placeholder {
+    min-height: 100px;
+
+    padding: 10px;
+
+    font-size: 8px;
   }
 
   .generated-result-actions {
     flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 14px;
+  }
+
+  .download-result-btn,
+  .try-again-btn {
+    width: 100%;
+
+    min-height: 45px;
+
+    padding: 10px 12px;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL — BELOW 320
+========================================================= */
+
+@media (max-width: 319px) {
+  .generated-result-card {
+    padding: 12px;
+
+    border-radius: 15px;
+  }
+
+  .generated-result-card::before {
+    left: 12px;
+    right: 12px;
+  }
+
+  .generated-result-header {
+    gap: 7px;
+  }
+
+  .generated-result-icon {
+    width: 33px;
+    height: 33px;
+
+    min-width: 33px;
+    min-height: 33px;
+  }
+
+  .generated-result-header h3 {
+    font-size: 0.88rem;
+  }
+
+  .generated-result-heading p {
+    font-size: 9px;
+  }
+
+  .generated-result-images {
+    grid-template-columns:
+      minmax(60px, 0.38fr)
+      minmax(0, 1.62fr);
+
+    gap: 7px;
+  }
+
+  .generated-image-label strong {
+    font-size: 7px;
+  }
+
+  .generated-image-label span {
+    width: 19px;
+    height: 19px;
+
+    min-width: 19px;
+  }
+
+  .generated-image-frame,
+  .generated-before-box .generated-image-frame,
+  .generated-result-frame {
+    min-height: 0;
+  }
+
+  .generated-before-box .generated-image-frame img {
+    max-height: 180px;
+  }
+
+  .generated-result-frame img {
+    max-height: 380px;
+  }
+
+  .download-result-btn,
+  .try-again-btn {
+    min-height: 43px;
+
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .generated-result-card:hover .generated-result-icon {
+    transform: none;
+
+    box-shadow:
+      0 8px 20px rgba(255, 117, 140, 0.1);
+  }
+
+  .generated-image-box:hover .generated-image-frame {
+    transform: none;
+
+    border-color: #eeeeef;
+
+    box-shadow: none;
+  }
+
+  .download-result-btn:hover {
+    transform: none;
+
+    background: #111111;
+
+    box-shadow:
+      0 10px 22px rgba(0, 0, 0, 0.1);
+  }
+
+  .try-again-btn:hover {
+    transform: none;
+
+    background:
+      linear-gradient(
+        135deg,
+        #fff1f4,
+        #fff6f8
+      );
+
+    border-color: #f4dce3;
+
+    box-shadow:
+      0 8px 20px rgba(255, 92, 138, 0.06);
+  }
+
+  .download-result-btn:active {
+    background: #242424;
+
+    transform: scale(0.98);
+  }
+
+  .try-again-btn:active {
+    background:
+      linear-gradient(
+        135deg,
+        #ffe7ed,
+        #fff0f4
+      );
+
+    transform: scale(0.98);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .generated-result-card,
+  .generated-result-icon,
+  .generated-image-frame,
+  .download-result-btn,
+  .try-again-btn {
+    transition: none;
   }
 }

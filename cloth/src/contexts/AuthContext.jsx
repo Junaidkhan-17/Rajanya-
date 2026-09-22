@@ -24,6 +24,8 @@ const initialState = {
 
   error: null,
 
+  pendingAction: null,
+
   showCreateAccountModal: false,
 
   showLoginModal: false,
@@ -36,8 +38,8 @@ const initialState = {
 
   virtualTryOnPayload: null,
 
-showVirtualTryOnStudioDrawer: false,
-virtualTryOnStudioPayload: null,
+  showVirtualTryOnStudioDrawer: false,
+  virtualTryOnStudioPayload: null,
 };
 
 /* ==================================================
@@ -54,6 +56,10 @@ export const AUTH_ACTIONS = {
   SET_LOADING: "SET_LOADING",
 
   SET_ERROR: "SET_ERROR",
+
+  SET_PENDING_ACTION: "SET_PENDING_ACTION",
+
+  CLEAR_PENDING_ACTION: "CLEAR_PENDING_ACTION",
 
   OPEN_BOOK_FOR_RENT_MODAL: "OPEN_BOOK_FOR_RENT_MODAL",
 
@@ -75,14 +81,11 @@ export const AUTH_ACTIONS = {
 
   SET_VIRTUAL_TRY_ON_PAYLOAD: "SET_VIRTUAL_TRY_ON_PAYLOAD",
 
-OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-  "OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER",
+  OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER: "OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER",
 
-CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-  "CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER",
+  CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER: "CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER",
 
-SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD:
-  "SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD",
+  SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD: "SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD",
 };
 
 /* ==================================================
@@ -139,6 +142,18 @@ const authReducer = (state, action) => {
         user: null,
 
         isAuthenticated: false,
+      };
+
+    case AUTH_ACTIONS.SET_PENDING_ACTION:
+      return {
+        ...state,
+        pendingAction: action.payload,
+      };
+
+    case AUTH_ACTIONS.CLEAR_PENDING_ACTION:
+      return {
+        ...state,
+        pendingAction: null,
       };
 
     case AUTH_ACTIONS.SET_LOADING:
@@ -205,11 +220,11 @@ const authReducer = (state, action) => {
         showVirtualTryOnDrawer: true,
       };
 
-case AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_DRAWER:
-  return {
-    ...state,
-    showVirtualTryOnDrawer: false,
-  };
+    case AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_DRAWER:
+      return {
+        ...state,
+        showVirtualTryOnDrawer: false,
+      };
 
     case AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD:
       return {
@@ -218,24 +233,23 @@ case AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_DRAWER:
       };
 
     case AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-  return {
-    ...state,
-    showVirtualTryOnStudioDrawer: true,
-  };
+      return {
+        ...state,
+        showVirtualTryOnStudioDrawer: true,
+      };
 
-case AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-  return {
-    ...state,
-    showVirtualTryOnStudioDrawer: false,
-    virtualTryOnStudioPayload: null,
-  };
+    case AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER:
+      return {
+        ...state,
+        showVirtualTryOnStudioDrawer: false,
+        virtualTryOnStudioPayload: null,
+      };
 
-case AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD:
-  return {
-    ...state,
-    virtualTryOnStudioPayload:
-      action.payload,
-  };
+    case AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD:
+      return {
+        ...state,
+        virtualTryOnStudioPayload: action.payload,
+      };
 
     default:
       return state;
@@ -250,43 +264,113 @@ export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   /* ==========================================
-     LOAD USER FROM LOCAL STORAGE
-  ========================================== */
-
-  /* ==========================================
    LOAD USER FROM LOCAL STORAGE
 ========================================== */
 
-useEffect(() => {
-  const loadUser = async () => {
+  useEffect(() => {
+    const loadUser = async () => {
+      try {
+        const token = localStorage.getItem("rajanya_token");
+
+        if (!token) return;
+
+        dispatch({
+          type: AUTH_ACTIONS.SET_LOADING,
+          payload: true,
+        });
+
+        const response = await getProfile();
+
+        if (response.success) {
+          localStorage.setItem("rajanya_user", JSON.stringify(response.user));
+
+          dispatch({
+            type: AUTH_ACTIONS.LOGIN_SUCCESS,
+            payload: response.user,
+          });
+        } else {
+          logoutUser();
+
+          dispatch({
+            type: AUTH_ACTIONS.LOGOUT,
+          });
+        }
+      } catch (error) {
+        console.error("Failed to restore customer session:", error);
+
+        localStorage.removeItem("rajanya_token");
+        localStorage.removeItem("rajanya_user");
+
+        dispatch({
+          type: AUTH_ACTIONS.LOGOUT,
+        });
+      } finally {
+        dispatch({
+          type: AUTH_ACTIONS.SET_LOADING,
+          payload: false,
+        });
+      }
+    };
+
+    loadUser();
+  }, []);
+
+  /* ==========================================
+     REGISTER
+  ========================================== */
+
+  const register = async (userData) => {
     try {
-      const token = localStorage.getItem("rajanya_token");
-
-      if (!token) return;
-
       dispatch({
         type: AUTH_ACTIONS.SET_LOADING,
         payload: true,
       });
 
-      const response = await getProfile();
+      const response = await registerUser(userData);
 
-      localStorage.setItem(
-        "rajanya_user",
-        JSON.stringify(response.user)
-      );
+      dispatch({
+        type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+      });
+
+      dispatch({
+        type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+      });
+
+      return response;
+    } catch (error) {
+      throw error;
+    } finally {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: false,
+      });
+    }
+  };
+  /* ==========================================
+     LOGIN
+  ========================================== */
+
+  const login = async (loginData) => {
+    try {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: true,
+      });
+
+      const response = await loginUser(loginData);
+
+      localStorage.setItem("rajanya_token", response.token);
+
+      localStorage.setItem("rajanya_user", JSON.stringify(response.user));
 
       dispatch({
         type: AUTH_ACTIONS.LOGIN_SUCCESS,
         payload: response.user,
       });
-    } catch (error) {
-      localStorage.removeItem("rajanya_token");
-      localStorage.removeItem("rajanya_user");
 
-      dispatch({
-        type: AUTH_ACTIONS.LOGOUT,
-      });
+      return response;
+    } catch (error) {
+      throw error;
     } finally {
       dispatch({
         type: AUTH_ACTIONS.SET_LOADING,
@@ -295,91 +379,17 @@ useEffect(() => {
     }
   };
 
-  loadUser();
-}, []);
-
-  /* ==========================================
-     REGISTER
-  ========================================== */
-
-  const register = async (userData) => {
-  try {
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: true,
-    });
-
-    const response = await registerUser(userData);
-
-    dispatch({
-  type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
-});
-
-dispatch({
-  type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
-});
-
-return response;
-
-  } catch (error) {
-    throw error;
-  } finally {
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: false,
-    });
-  }
-};
-  /* ==========================================
-     LOGIN
-  ========================================== */
-
-  const login = async (loginData) => {
-  try {
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: true,
-    });
-
-    const response = await loginUser(loginData);
-
-    localStorage.setItem(
-      "rajanya_token",
-      response.token
-    );
-
-    localStorage.setItem(
-      "rajanya_user",
-      JSON.stringify(response.user)
-    );
-
-    dispatch({
-      type: AUTH_ACTIONS.LOGIN_SUCCESS,
-      payload: response.user,
-    });
-
-    return response;
-  } catch (error) {
-    throw error;
-  } finally {
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: false,
-    });
-  }
-};
-
   /* ==========================================
      LOGOUT
   ========================================== */
 
   const logout = () => {
-  logoutUser();
+    logoutUser();
 
-  dispatch({
-    type: AUTH_ACTIONS.LOGOUT,
-  });
-};
+    dispatch({
+      type: AUTH_ACTIONS.LOGOUT,
+    });
+  };
 
   /* ==========================================
      USER INITIALS

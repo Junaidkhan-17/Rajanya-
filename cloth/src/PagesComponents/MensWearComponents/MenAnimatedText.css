@@ -1,15 +1,29 @@
+/* =========================================================
+   MEN ANIMATED TEXT
+   Premium Responsive SVG Typography
+   ========================================================= */
+
 .men-hero-container {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* Desktop positioning preserved */
   margin-bottom: -110px;
+
+  overflow: visible;
 }
 
 .men-hero-svg {
+  display: block;
   width: 100%;
   height: 120px;
+
   overflow: visible;
+
+  /* Prevent SVG from creating unexpected layout width */
+  max-width: 1200px;
 }
 
 .men-text-base {
@@ -18,7 +32,9 @@
   stroke-width: 2;
 
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  paint-order: stroke fill;
 }
 
 .men-text-light {
@@ -26,19 +42,24 @@
 
   stroke: #ffffff;
   stroke-width: 6;
-
   stroke-linecap: round;
+  stroke-linejoin: round;
 
   stroke-dasharray: 60 2000;
   stroke-dashoffset: 0;
 
-
-
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  paint-order: stroke fill;
 
   animation: moveLight 5s linear infinite;
 }
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
 
 @keyframes moveLight {
   from {
@@ -47,5 +68,304 @@
 
   to {
     stroke-dashoffset: -2000;
+  }
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .men-hero-container {
+    margin-bottom: -110px;
+  }
+
+  .men-hero-svg {
+    height: 120px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 240px;
+  }
+
+  .men-text-base {
+    stroke-width: 2;
+  }
+
+  .men-text-light {
+    stroke-width: 6;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+   ========================================================= */
+
+@media (max-width: 1439px) {
+  .men-hero-container {
+    margin-bottom: -95px;
+  }
+
+  .men-hero-svg {
+    height: 112px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 220px;
+  }
+
+  .men-text-base {
+    stroke-width: 2;
+  }
+
+  .men-text-light {
+    stroke-width: 5.5;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .men-hero-container {
+    margin-bottom: -75px;
+  }
+
+  .men-hero-svg {
+    height: 100px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 195px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.8;
+  }
+
+  .men-text-light {
+    stroke-width: 5;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .men-hero-container {
+    margin-bottom: -45px;
+  }
+
+  .men-hero-svg {
+    height: 88px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 170px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.7;
+  }
+
+  .men-text-light {
+    stroke-width: 4.5;
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   576px - 767px
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .men-hero-container {
+    margin-bottom: 0;
+
+    width: 100%;
+  }
+
+  .men-hero-svg {
+    width: 100%;
+    height: 76px;
+
+    max-width: 100%;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 150px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.5;
+  }
+
+  .men-text-light {
+    stroke-width: 4;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   430px - 575px
+   ========================================================= */
+
+@media (max-width: 575px) {
+  .men-hero-container {
+    margin-bottom: 0;
+
+    width: 100%;
+    padding: 0;
+  }
+
+  .men-hero-svg {
+    width: 100%;
+    height: 68px;
+
+    max-width: 100%;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 135px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.4;
+  }
+
+  .men-text-light {
+    stroke-width: 3.5;
+  }
+
+  .men-text-light {
+    stroke-dasharray: 45 2000;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 429px
+   ========================================================= */
+
+@media (max-width: 429px) {
+  .men-hero-svg {
+    height: 61px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 120px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.3;
+  }
+
+  .men-text-light {
+    stroke-width: 3.2;
+  }
+
+  .men-text-light {
+    stroke-dasharray: 42 2000;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   320px - 374px
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .men-hero-svg {
+    height: 55px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 108px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.2;
+  }
+
+  .men-text-light {
+    stroke-width: 3;
+  }
+
+  .men-text-light {
+    stroke-dasharray: 38 2000;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   <= 340px
+   ========================================================= */
+
+@media (max-width: 340px) {
+  .men-hero-svg {
+    height: 50px;
+  }
+
+  .men-text-base,
+  .men-text-light {
+    font-size: 100px;
+  }
+
+  .men-text-base {
+    stroke-width: 1.1;
+  }
+
+  .men-text-light {
+    stroke-width: 2.7;
+  }
+
+  .men-text-light {
+    stroke-dasharray: 35 2000;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .men-hero-container {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   Accessibility / Performance
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .men-text-light {
+    animation: none;
   }
 }

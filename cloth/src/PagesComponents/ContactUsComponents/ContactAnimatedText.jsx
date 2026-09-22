@@ -14,7 +14,7 @@ function AnimatedText() {
           dominantBaseline="middle"
           className="contact-text-base"
         >
-          contact's wear
+          Contact's Us
         </text>
 
         <text
@@ -24,7 +24,7 @@ function AnimatedText() {
           dominantBaseline="middle"
           className="contact-text-light"
         >
-          contact's wear
+          Contact's Us
         </text>
       </svg>
     </div>

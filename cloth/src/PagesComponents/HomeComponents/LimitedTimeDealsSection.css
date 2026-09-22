@@ -1,13 +1,26 @@
+/* =========================================================
+   LIMITED TIME DEALS SECTION
+   Desktop Design Preserved
+   Responsive Enhancements Added
+========================================================= */
+
 .limited-time-deals-main {
+  width: 100%;
   padding: 100px 70px;
   background: #f8f8f8;
+  overflow: hidden;
 }
 
 .limited-time-deals-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 40px;
   margin-bottom: 60px;
+}
+
+.limited-time-deals-header-content {
+  min-width: 0;
 }
 
 .limited-time-deals-title {
@@ -15,7 +28,9 @@
   font-weight: 700;
   margin-bottom: 8px;
   color: #111;
-  font-family: "Newake";
+  font-family: "Barlow", sans-serif;
+  line-height: 1.05;
+  overflow-wrap: break-word;
 }
 
 .limited-time-deals-title span {
@@ -23,20 +38,28 @@
   font-weight: 700;
   margin-bottom: 18px;
   color: #ffd500;
-  font-family: "Newake";
+  font-family: "Barlow", sans-serif;
   -webkit-text-stroke: 2px rgb(0, 0, 0);
+  line-height: 0.95;
 }
 
 .limited-time-deals-description {
+  width: 100%;
   max-width: 620px;
-  color: #666;
+  color: #353535;
   font-size: 18px;
-  line-height: 1.6;
+  line-height: 1.3;
+  font-family: "Barlow", sans-serif;
+  text-align: left;
+  margin-bottom: 0;
 }
 
 .limited-time-deals-see-all-btn {
   width: 160px;
+  min-width: 160px;
   height: 58px;
+  min-height: 58px;
+  padding: 0 20px;
   border: none;
   border-radius: 12px;
   background: #020515;
@@ -45,26 +68,49 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: all .4s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+  font-family: "Barlow", sans-serif;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.limited-time-deals-see-all-btn i {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.4s ease;
 }
 
 .limited-time-deals-see-all-btn:hover {
   transform: translateY(-4px);
 }
 
+.limited-time-deals-see-all-btn:hover i {
+  transform: translateX(3px);
+}
+
+/* =========================================================
+   DEAL CARD
+========================================================= */
+
 .limited-time-deal-card {
+  width: 100%;
+  min-width: 0;
   border-radius: 24px;
   padding: 18px;
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: all .45s ease;
+  transition:
+    transform 0.45s ease,
+    box-shadow 0.45s ease;
   overflow: hidden;
 }
 
 .limited-time-deal-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 25px 50px rgba(0,0,0,.12);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
 }
 
 .limited-time-deal-image-wrapper {
@@ -76,22 +122,35 @@
 }
 
 .limited-time-deal-image {
+  display: block;
   width: 100%;
   height: 110%;
   object-fit: cover;
-  transition: all .8s ease;
+  object-position: center;
+  transition:
+    transform 0.8s ease,
+    filter 0.8s ease;
 }
 
 .limited-time-deal-card:hover .limited-time-deal-image {
   transform: scale(1.08);
 }
 
+.limited-time-deal-content {
+  min-width: 0;
+  flex: 1;
+}
+
 .limited-time-deal-content h3 {
   color: white;
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 10px;
-  margin-left: -40px;
+  margin-left: 0;
+  font-family: "Barlow", sans-serif;
+  text-align: left;
+  line-height: 1.15;
+  overflow-wrap: break-word;
 }
 
 .limited-time-deal-content h4 {
@@ -100,65 +159,613 @@
   font-weight: 800;
   margin-bottom: 14px;
   margin-left: -99px;
+  font-family: "Barlow", sans-serif;
+  line-height: 1;
+  overflow-wrap: break-word;
 }
 
 .limited-time-deal-content p {
-  color: rgba(255,255,255,.9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 16px;
   line-height: 1.7;
   margin-bottom: 20px;
-  margin-left: -6px;
+  margin-left: 0;
+  font-family: "Barlow", sans-serif;
+  text-align: left;
+  overflow-wrap: break-word;
 }
 
 .limited-time-deal-btn {
   width: 130px;
+  min-width: 130px;
   height: 45px;
+  min-height: 45px;
+  padding: 0 15px;
   border: none;
   border-radius: 6px;
   background: white;
   color: #111;
-  transition: all .4s ease;
-  margin-left: -90px;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+  margin-left: -100px;
+  font-family: "Barlow", sans-serif;
+  cursor: pointer;
 }
 
 .limited-time-deal-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 30px rgba(0,0,0,.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-@media (max-width: 991px) {
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+========================================================= */
 
+@media (min-width: 1440px) {
+  .limited-time-deals-main {
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+}
+
+/* =========================================================
+   DESKTOP / LAPTOP
+   1200px - 1439px
+========================================================= */
+
+@media (max-width: 1439px) {
+  .limited-time-deals-main {
+    padding: 95px 60px;
+  }
+
+  .limited-time-deals-header {
+    margin-bottom: 52px;
+  }
+
+  .limited-time-deals-title {
+    font-size: 50px;
+  }
+
+  .limited-time-deals-title span {
+    font-size: 62px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    width: 135px;
+    height: 220px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 23px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 31px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+========================================================= */
+
+@media (max-width: 1199px) {
+  .limited-time-deals-main {
+    padding: 85px 45px;
+  }
+
+  .limited-time-deals-header {
+    gap: 30px;
+    margin-bottom: 45px;
+  }
+
+  .limited-time-deals-title {
+    font-size: 44px;
+  }
+
+  .limited-time-deals-title span {
+    font-size: 56px;
+  }
+
+  .limited-time-deals-description {
+    max-width: 570px;
+    font-size: 17px;
+  }
+
+  .limited-time-deals-see-all-btn {
+    width: 150px;
+    min-width: 150px;
+    height: 54px;
+    min-height: 54px;
+  }
+
+  .limited-time-deal-card {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    width: 125px;
+    height: 215px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 21px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 28px;
+    margin-left: -70px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .limited-time-deal-btn {
+    width: 125px;
+    min-width: 125px;
+    margin-left: -70px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px - 991px
+
+   Existing card stacking preserved.
+========================================================= */
+
+@media (max-width: 991px) {
   .limited-time-deals-main {
     padding: 80px 25px;
   }
 
   .limited-time-deals-header {
     flex-direction: column;
+    align-items: flex-start;
     gap: 25px;
+    margin-bottom: 45px;
   }
 
   .limited-time-deals-title {
     font-size: 40px;
   }
 
+  .limited-time-deals-title span {
+    font-size: 50px;
+  }
+
+  .limited-time-deals-description {
+    max-width: 650px;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deals-see-all-btn {
+    width: 150px;
+    min-width: 150px;
+    height: 54px;
+    min-height: 54px;
+  }
+
   .limited-time-deal-card {
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-  }
-}
-
-@media (max-width: 576px) {
-
-  .limited-time-deals-title {
-    font-size: 32px;
+    padding: 18px;
+    gap: 20px;
   }
 
   .limited-time-deal-image-wrapper {
     width: 100%;
+    max-width: 260px;
     height: 300px;
+  }
+
+  .limited-time-deal-image {
+    height: 110%;
+  }
+
+  .limited-time-deal-content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 24px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 32px;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+    margin-left: 0;
+  }
+
+  .limited-time-deal-btn {
+    margin-left: 0;
+  }
+}
+
+/* =========================================================
+   SMALL TABLET
+   576px - 767px
+========================================================= */
+
+@media (max-width: 767px) {
+  .limited-time-deals-main {
+    padding: 70px 20px;
+  }
+
+  .limited-time-deals-header {
+    gap: 22px;
+    margin-bottom: 38px;
+  }
+
+  .limited-time-deals-title {
+    font-size: clamp(34px, 7vw, 40px);
+    line-height: 1.08;
+  }
+
+  .limited-time-deals-title span {
+    font-size: clamp(42px, 9vw, 50px);
+    -webkit-text-stroke: 1.5px rgb(0, 0, 0);
+  }
+
+  .limited-time-deals-description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deals-see-all-btn {
+    width: 145px;
+    min-width: 145px;
+    height: 52px;
+    min-height: 52px;
+  }
+
+  .limited-time-deal-card {
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    max-width: 280px;
+    height: 300px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 23px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 30px;
+    margin-bottom: 12px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 15px;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+
+  .limited-time-deal-btn {
+    width: 145px;
+    min-width: 145px;
+    height: 45px;
+    min-height: 45px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   480px - 575px
+========================================================= */
+
+@media (max-width: 575px) {
+  .limited-time-deals-main {
+    padding: 60px 16px;
+  }
+
+  .limited-time-deals-header {
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .limited-time-deals-title {
+    font-size: clamp(30px, 7.5vw, 36px);
+    line-height: 1.08;
+  }
+
+  .limited-time-deals-title span {
+    font-size: clamp(38px, 9vw, 46px);
+    -webkit-text-stroke: 1.25px rgb(0, 0, 0);
+  }
+
+  .limited-time-deals-description {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deals-see-all-btn {
+    width: 100%;
+    min-width: 100%;
+    height: 50px;
+    min-height: 50px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .limited-time-deal-card {
+    border-radius: 20px;
+    padding: 16px;
+    gap: 18px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    width: 100%;
+    max-width: none;
+    height: 300px;
+    border-radius: 13px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 21px;
+    line-height: 1.2;
+    margin-bottom: 9px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 18px;
   }
 
   .limited-time-deal-btn {
     width: 100%;
+    min-width: 100%;
+    height: 45px;
+    min-height: 45px;
+    margin-left: 0;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   430px - 479px
+========================================================= */
+
+@media (max-width: 479px) {
+  .limited-time-deals-main {
+    padding: 55px 15px;
+  }
+
+  .limited-time-deals-header {
+    gap: 18px;
+    margin-bottom: 30px;
+  }
+
+  .limited-time-deals-title {
+    font-size: 28px;
+    line-height: 1.1;
+  }
+
+  .limited-time-deals-title span {
+    font-size: 36px;
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
+  }
+
+  .limited-time-deals-description {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deals-see-all-btn {
+    height: 48px;
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  .limited-time-deal-card {
+    padding: 14px;
+    gap: 16px;
+    border-radius: 18px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    height: 270px;
+    border-radius: 12px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 20px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 26px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 14px;
+  }
+
+  .limited-time-deal-btn {
+    height: 44px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   375px - 429px
+========================================================= */
+
+@media (max-width: 429px) {
+  .limited-time-deals-main {
+    padding: 50px 14px;
+  }
+
+  .limited-time-deals-title {
+    font-size: 26px;
+  }
+
+  .limited-time-deals-title span {
+    font-size: 33px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    height: 250px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 19px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 24px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+========================================================= */
+
+@media (max-width: 374px) {
+  .limited-time-deals-main {
+    padding: 45px 12px;
+  }
+
+  .limited-time-deals-header {
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+
+  .limited-time-deals-title {
+    font-size: 23px;
+    line-height: 1.1;
+  }
+
+  .limited-time-deals-title span {
+    font-size: 29px;
+  }
+
+  .limited-time-deals-description {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deals-see-all-btn {
+    height: 46px;
+    min-height: 46px;
+    font-size: 13px;
+  }
+
+  .limited-time-deal-card {
+    padding: 12px;
+    gap: 14px;
+    border-radius: 16px;
+  }
+
+  .limited-time-deal-image-wrapper {
+    height: 220px;
+    border-radius: 10px;
+  }
+
+  .limited-time-deal-content h3 {
+    font-size: 18px;
+  }
+
+  .limited-time-deal-content h4 {
+    font-size: 22px;
+  }
+
+  .limited-time-deal-content p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .limited-time-deal-btn {
+    height: 44px;
+    min-height: 44px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   Prevent sticky hover behavior
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .limited-time-deal-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .limited-time-deal-card:active {
+    transform: translateY(-3px);
+  }
+
+  .limited-time-deal-card:hover .limited-time-deal-image {
+    transform: none;
+  }
+
+  .limited-time-deal-card:active .limited-time-deal-image {
+    transform: scale(1.025);
+  }
+
+  .limited-time-deals-see-all-btn:hover {
+    transform: none;
+  }
+
+  .limited-time-deals-see-all-btn:active {
+    transform: translateY(-2px);
+  }
+
+  .limited-time-deal-btn:hover {
+    transform: none;
+  }
+
+  .limited-time-deal-btn:active {
+    transform: translateY(-2px);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .limited-time-deal-card,
+  .limited-time-deal-image,
+  .limited-time-deals-see-all-btn,
+  .limited-time-deals-see-all-btn i,
+  .limited-time-deal-btn {
+    transition: none;
   }
 }

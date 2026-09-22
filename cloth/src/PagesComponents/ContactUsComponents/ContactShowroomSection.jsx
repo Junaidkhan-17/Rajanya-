@@ -34,7 +34,7 @@ const ContactShowroomSection = () => {
           <div className="contact-showroom-heading">
 
             <h2>
-              Aura <span>Atelier</span> & <span>Showrooms</span>
+              Aura <span>Atelier</span> & <span>Showroom's</span>
             </h2>
 
             <p>

@@ -18,7 +18,7 @@
   stroke-width: 2;
 
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow";
 }
 
 .contact-text-light {
@@ -35,7 +35,7 @@
 
 
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow";
 
   animation: moveLight 5s linear infinite;
 }

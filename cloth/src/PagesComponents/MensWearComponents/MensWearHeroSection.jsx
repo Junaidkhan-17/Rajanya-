@@ -4,7 +4,6 @@ import { ChevronRight } from "lucide-react";
 import menswearheroimage from "../../assets/menimage/menswearheroimage.png";
 import MenAnimatedText from "./MenAnimatedText";
 
-
 function MensWearHeroSection() {
   return (
     <section className="mens-wear-hero-main">
@@ -17,7 +16,7 @@ function MensWearHeroSection() {
         >
           <img
             src={menswearheroimage}
-            alt="Mens Wear"
+            alt="Men's Wear"
             className="mens-wear-hero-banner-image"
           />
 
@@ -41,13 +40,17 @@ function MensWearHeroSection() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{
-                delay: 0.4,
+                delay: 0.9,
                 duration: 0.6,
               }}
             >
               <span>HOME</span>
 
-              <ChevronRight size={12} />
+              <ChevronRight
+                size={12}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
 
               <span>MEN'S WEAR</span>
             </motion.div>

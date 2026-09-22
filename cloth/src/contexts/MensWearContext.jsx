@@ -3,22 +3,15 @@ import {
   useContext,
   useReducer,
   useMemo,
+  useEffect,
 } from "react";
 
-import { mensWearCatalogData }
-from "../PagesComponents/MensWearComponents/MensWearCatalogData";
-/* ==================================================
-   CONTEXT
-================================================== */
+import { getProducts } from "../services/productService";
 
 const MensWearContext = createContext();
 
-/* ==================================================
-   INITIAL STATE
-================================================== */
-
 const initialState = {
-  products: mensWearCatalogData,
+  products: [],
 
   search: "",
 
@@ -45,10 +38,6 @@ const initialState = {
 
   error: null,
 };
-
-/* ==================================================
-   ACTIONS
-================================================== */
 
 export const MENS_WEAR_ACTIONS = {
   SET_PRODUCTS: "SET_PRODUCTS",
@@ -88,16 +77,13 @@ export const MENS_WEAR_ACTIONS = {
   SET_ERROR: "SET_ERROR",
 };
 
-/* ==================================================
-   REDUCER
-================================================== */
-
 const productReducer = (state, action) => {
   switch (action.type) {
     case MENS_WEAR_ACTIONS.SET_PRODUCTS:
       return {
         ...state,
-        products: action.payload,
+        products: action.payload || [],
+        error: null,
       };
 
     case MENS_WEAR_ACTIONS.SET_SEARCH:
@@ -117,6 +103,16 @@ const productReducer = (state, action) => {
         currentPage: 1,
       };
 
+    case MENS_WEAR_ACTIONS.SET_ACTIVE_CATEGORY:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          activeCategory: action.payload,
+        },
+        currentPage: 1,
+      };
+
     case MENS_WEAR_ACTIONS.CLEAR_FILTERS:
       return {
         ...state,
@@ -128,19 +124,6 @@ const productReducer = (state, action) => {
         },
         currentPage: 1,
       };
-
-      case MENS_WEAR_ACTIONS.SET_ACTIVE_CATEGORY:
-  return {
-    ...state,
-
-    filters: {
-      ...state.filters,
-      activeCategory:
-        action.payload,
-    },
-
-    currentPage: 1,
-  };
 
     case MENS_WEAR_ACTIONS.SET_SORT:
       return {
@@ -164,10 +147,7 @@ const productReducer = (state, action) => {
     case MENS_WEAR_ACTIONS.PREVIOUS_PAGE:
       return {
         ...state,
-        currentPage:
-          state.currentPage > 1
-            ? state.currentPage - 1
-            : 1,
+        currentPage: state.currentPage > 1 ? state.currentPage - 1 : 1,
       };
 
     case MENS_WEAR_ACTIONS.FIRST_PAGE:
@@ -183,44 +163,31 @@ const productReducer = (state, action) => {
       };
 
     case MENS_WEAR_ACTIONS.ADD_TO_WISHLIST:
-  return {
-    ...state,
-
-    wishlist: state.wishlist.includes(
-      action.payload
-    )
-      ? state.wishlist.filter(
-          (id) => id !== action.payload
-        )
-      : [
-          ...state.wishlist,
-          action.payload,
-        ],
-  };
+      return {
+        ...state,
+        wishlist: state.wishlist.includes(action.payload)
+          ? state.wishlist.filter((id) => id !== action.payload)
+          : [...state.wishlist, action.payload],
+      };
 
     case MENS_WEAR_ACTIONS.REMOVE_FROM_WISHLIST:
       return {
         ...state,
-        wishlist: state.wishlist.filter(
-          (item) => item !== action.payload
-        ),
+        wishlist: state.wishlist.filter((item) => item !== action.payload),
       };
 
     case MENS_WEAR_ACTIONS.ADD_TO_COMPARE:
       return {
         ...state,
-        compare: [
-          ...state.compare,
-          action.payload,
-        ],
+        compare: state.compare.includes(action.payload)
+          ? state.compare
+          : [...state.compare, action.payload],
       };
 
     case MENS_WEAR_ACTIONS.REMOVE_FROM_COMPARE:
       return {
         ...state,
-        compare: state.compare.filter(
-          (item) => item !== action.payload
-        ),
+        compare: state.compare.filter((item) => item !== action.payload),
       };
 
     case MENS_WEAR_ACTIONS.ADD_TO_RECENTLY_VIEWED:
@@ -228,9 +195,7 @@ const productReducer = (state, action) => {
         ...state,
         recentlyViewed: [
           action.payload,
-          ...state.recentlyViewed.filter(
-            (item) => item !== action.payload
-          ),
+          ...state.recentlyViewed.filter((item) => item !== action.payload),
         ].slice(0, 10),
       };
 
@@ -251,148 +216,183 @@ const productReducer = (state, action) => {
   }
 };
 
-/* ==================================================
-   PROVIDER
-================================================== */
+export const MensWearProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(productReducer, initialState);
 
-export const MensWearProvider = ({
-  children,
-}) => {
-  const [state, dispatch] = useReducer(
-    productReducer,
-    initialState
-  );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        dispatch({
+          type: MENS_WEAR_ACTIONS.SET_LOADING,
+          payload: true,
+        });
 
+        dispatch({
+          type: MENS_WEAR_ACTIONS.SET_ERROR,
+          payload: null,
+        });
 
-  /* ==========================================
-     SEARCH
-  ========================================== */
+        const response = await getProducts({
+          gender: "Men",
+          page: 1,
+          limit: 100,
+        });
+
+        if (response?.success) {
+          dispatch({
+            type: MENS_WEAR_ACTIONS.SET_PRODUCTS,
+            payload: response.products || [],
+          });
+        } else {
+          dispatch({
+            type: MENS_WEAR_ACTIONS.SET_PRODUCTS,
+            payload: [],
+          });
+
+          dispatch({
+            type: MENS_WEAR_ACTIONS.SET_ERROR,
+            payload: response?.message || "Failed to load products.",
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch Men's Wear products:", error);
+
+        dispatch({
+          type: MENS_WEAR_ACTIONS.SET_PRODUCTS,
+          payload: [],
+        });
+
+        dispatch({
+          type: MENS_WEAR_ACTIONS.SET_ERROR,
+          payload:
+            error?.response?.data?.message ||
+            error?.message ||
+            "Failed to load products.",
+        });
+      } finally {
+        dispatch({
+          type: MENS_WEAR_ACTIONS.SET_LOADING,
+          payload: false,
+        });
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const searchedProducts = useMemo(() => {
+    const searchTerm = state.search.trim().toLowerCase();
+
+    if (!searchTerm) {
+      return state.products;
+    }
+
     return state.products.filter((product) =>
-      product.name
-        .toLowerCase()
-        .includes(state.search.toLowerCase())
+      product?.name?.toLowerCase().includes(searchTerm),
     );
   }, [state.products, state.search]);
 
-  /* ==========================================
-     FILTERS
-  ========================================== */
-
   const filteredProducts = useMemo(() => {
-    console.log("Products:", searchedProducts);
     return searchedProducts.filter((product) => {
+      const genderMatch = product?.gender?.toLowerCase() === "men";
+
+      const productMaterials = Array.isArray(product?.materials)
+        ? product.materials
+        : [];
+
       const materialMatch =
         state.filters.materials.length === 0 ||
-        state.filters.materials.includes(
-          product.material
+        productMaterials.some((material) =>
+          state.filters.materials.includes(material),
         );
 
+      const categoryName =
+        typeof product?.category === "object"
+          ? product.category?.name
+          : product?.category;
+
       const categoryMatch =
-  !state.filters.activeCategory ||
-  product.category ===
-    state.filters.activeCategory;
+        !state.filters.activeCategory ||
+        categoryName === state.filters.activeCategory;
 
-      const displayPrice =
-  product.rentalOptions?.[0]?.price || 0;
+      const displayPrice = Number(product?.rentalOptions?.[0]?.price) || 0;
 
-const priceMatch =
-  displayPrice >=
-    state.filters.priceRange[0] &&
-  displayPrice <=
-    state.filters.priceRange[1];
+      const minPrice = Number(state.filters.priceRange?.[0]) || 0;
 
-      return (
-  materialMatch &&
-  categoryMatch &&
-  priceMatch
-);
+      const maxPrice = Number(state.filters.priceRange?.[1]) || 10000;
+
+      const priceMatch = displayPrice >= minPrice && displayPrice <= maxPrice;
+
+      return genderMatch && materialMatch && categoryMatch && priceMatch;
     });
-  }, [
-    searchedProducts,
-    state.filters,
-  ]);
-
-  /* ==========================================
-     SORTING
-  ========================================== */
+  }, [searchedProducts, state.filters]);
 
   const sortedProducts = useMemo(() => {
     const products = [...filteredProducts];
 
     switch (state.sortBy) {
-  case "newest":
-    return [...products].reverse();
+      case "newest":
+        return products.sort(
+          (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0),
+        );
 
-  case "oldest":
-    return products;
+      case "oldest":
+        return products.sort(
+          (a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0),
+        );
 
-  case "popular":
-    return products.sort(
-      (a, b) => b.bookingCount - a.bookingCount
-    );
+      case "popular":
+        return products.sort(
+          (a, b) => (b.bookingCount || 0) - (a.bookingCount || 0),
+        );
 
-  case "featured":
-    return products.sort(
-      (a, b) => Number(b.featured) - Number(a.featured)
-    );
+      case "featured":
+        return products.sort(
+          (a, b) => Number(b.isFeatured) - Number(a.isFeatured),
+        );
 
-  case "priceLowToHigh":
-  return products.sort(
-    (a, b) =>
-      (a.rentalOptions?.[0]?.price || 0) -
-      (b.rentalOptions?.[0]?.price || 0)
-  );
+      case "priceLowToHigh":
+        return products.sort(
+          (a, b) =>
+            (a.rentalOptions?.[0]?.price || 0) -
+            (b.rentalOptions?.[0]?.price || 0),
+        );
 
-case "priceHighToLow":
-  return products.sort(
-    (a, b) =>
-      (b.rentalOptions?.[0]?.price || 0) -
-      (a.rentalOptions?.[0]?.price || 0)
-  );
+      case "priceHighToLow":
+        return products.sort(
+          (a, b) =>
+            (b.rentalOptions?.[0]?.price || 0) -
+            (a.rentalOptions?.[0]?.price || 0),
+        );
 
-  case "highestRated":
-    return products.sort(
-      (a, b) => b.rating - a.rating
-    );
+      case "highestRated":
+        return products.sort((a, b) => (b.rating || 0) - (a.rating || 0));
 
-  default:
-    return products;
-}
+      default:
+        return products;
+    }
   }, [filteredProducts, state.sortBy]);
 
-  /* ==========================================
-     PAGINATION
-  ========================================== */
-
-  const totalPages = Math.ceil(
-    sortedProducts.length /
-      state.itemsPerPage
-  );
+  const totalPages = Math.ceil(sortedProducts.length / state.itemsPerPage);
 
   const paginatedProducts = useMemo(() => {
-    const start =
-      (state.currentPage - 1) *
-      state.itemsPerPage;
+    const start = (state.currentPage - 1) * state.itemsPerPage;
 
-    const end =
-      start + state.itemsPerPage;
+    const end = start + state.itemsPerPage;
 
-    return sortedProducts.slice(
-      start,
-      end
-    );
-  }, [
-    sortedProducts,
-    state.currentPage,
-    state.itemsPerPage,
-  ]);
+    return sortedProducts.slice(start, end);
+  }, [sortedProducts, state.currentPage, state.itemsPerPage]);
 
- const categoryCounts = useMemo(() => {
-  return state.products.reduce(
-    (acc, product) => {
-      const category = product.category;
+  const categoryCounts = useMemo(() => {
+    return filteredProducts.reduce((acc, product) => {
+      const category =
+        typeof product?.category === "object"
+          ? product.category?.name
+          : product?.category;
+
+      if (!category) {
+        return acc;
+      }
 
       if (!acc[category]) {
         acc[category] = 0;
@@ -401,93 +401,39 @@ case "priceHighToLow":
       acc[category]++;
 
       return acc;
-    },
-    {}
-  );
-}, [state.products]);
+    }, {});
+  }, [filteredProducts]);
 
-/* ==========================================
-   DYNAMIC CATEGORIES
-========================================== */
+  const categories = Object.keys(categoryCounts);
 
-const categories = Object.keys(
-  categoryCounts
-);
-
-/* ==========================================
-   PRODUCT DETAILS HELPERS
-========================================== */
-
-const getProductBySlug = (slug) => {
-  return state.products.find(
-    (product) => product.slug === slug
-  );
-};
-
-  /* ==========================================
-   DEBUG LOGS
-========================================== */
-
-console.log("All Products:", state.products);
-console.log("Searched:", searchedProducts);
-console.log("Filtered:", filteredProducts);
-console.log("Sorted:", sortedProducts);
-console.log("Paginated:", paginatedProducts);
-
-/* ==========================================
-     *************
-  ========================================== */
-
-console.log(
-  "ACTIVE CATEGORY:",
-  state.filters.activeCategory
-);
-  /* ==========================================
-     CONTEXT VALUE
-  ========================================== */
+  const getProductBySlug = (slug) => {
+    return state.products.find((product) => product.slug === slug);
+  };
 
   const value = {
     state,
-
     dispatch,
-
     filteredProducts,
-
     sortedProducts,
-
     paginatedProducts,
-
     totalPages,
-
     categoryCounts,
-
     categories,
-
     getProductBySlug,
   };
 
   return (
-    <MensWearContext.Provider
-      value={value}
-    >
+    <MensWearContext.Provider value={value}>
       {children}
     </MensWearContext.Provider>
   );
 };
 
-/* ==================================================
-   CUSTOM HOOK
-================================================== */
-
 export const useMensWear = () => {
-  const context = useContext(
-    MensWearContext
-  );
+  const context = useContext(MensWearContext);
 
   if (!context) {
-    throw new Error(
-      "useMensWear must be used inside MensWearProvider"
-    );
+    throw new Error("useMensWear must be used inside MensWearProvider");
   }
 
   return context;

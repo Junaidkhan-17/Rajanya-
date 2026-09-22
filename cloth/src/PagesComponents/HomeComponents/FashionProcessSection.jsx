@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+
 import "./FashionProcessSection.css";
 
 const processSteps = [
@@ -10,6 +11,7 @@ const processSteps = [
       "Add your picture and let our smart AI prepare your personalized fitting experience.",
     bgClass: "fashion-process-icon-purple",
   },
+
   {
     id: 2,
     icon: "bi-bag",
@@ -18,6 +20,7 @@ const processSteps = [
       "Explore trending fashion and choose styles that match your vibe.",
     bgClass: "fashion-process-icon-lavender",
   },
+
   {
     id: 3,
     icon: "bi-stars",
@@ -33,9 +36,11 @@ const cardVariants = {
     opacity: 0,
     y: 60,
   },
+
   visible: (index) => ({
     opacity: 1,
     y: 0,
+
     transition: {
       duration: 0.6,
       delay: index * 0.2,
@@ -47,11 +52,8 @@ const cardVariants = {
 const FashionProcessSection = () => {
   return (
     <section className="fashion-process-main">
-
       <div className="container">
-
         {/* Heading */}
-
         <motion.div
           className="fashion-process-heading-wrapper"
           initial={{ opacity: 0, y: 40 }}
@@ -69,14 +71,9 @@ const FashionProcessSection = () => {
         </motion.div>
 
         {/* Process Cards */}
-
         <div className="row">
-
           {processSteps.map((step, index) => (
-            <div
-              className="col-lg-4 col-md-6"
-              key={step.id}
-            >
+            <div className="col-lg-4 col-md-6" key={step.id}>
               <motion.div
                 className="fashion-process-card"
                 variants={cardVariants}
@@ -85,11 +82,13 @@ const FashionProcessSection = () => {
                 viewport={{ once: true }}
                 custom={index}
               >
-
                 <div
                   className={`fashion-process-icon-box ${step.bgClass}`}
                 >
-                  <i className={`bi ${step.icon}`}></i>
+                  <i
+                    className={`bi ${step.icon}`}
+                    aria-hidden="true"
+                  ></i>
                 </div>
 
                 <h3 className="fashion-process-card-title">
@@ -99,15 +98,11 @@ const FashionProcessSection = () => {
                 <p className="fashion-process-card-description">
                   {step.description}
                 </p>
-
               </motion.div>
             </div>
           ))}
-
         </div>
-
       </div>
-
     </section>
   );
 };

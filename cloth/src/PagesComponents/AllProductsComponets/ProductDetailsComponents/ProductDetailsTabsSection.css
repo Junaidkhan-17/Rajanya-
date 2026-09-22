@@ -90,8 +90,8 @@
 
   margin: 0 auto 20px;
 
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 21px;
+  font-weight: 500;
 
   color: #374151;
 
@@ -105,11 +105,11 @@
 }
 
 .product-description-text {
-  font-size: 18px;
-
+  font-size: 24px;
+  font-weight: 500;
   line-height: 1;
 
-  color: #4b5563;
+  color: #333333;
 
   margin-bottom: 18px;
 
@@ -132,7 +132,7 @@
 
 
 .product-fabric-card h4 {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 700;
 
   color: #111827;
@@ -151,15 +151,14 @@
 .product-fabric-card li {
   position: relative;
 
-  padding-left: 20px;
+  padding-left: 30px;
 
-  margin-bottom: 18px;
+  margin-bottom: 58px;
 
-  font-size: 12px;
+  font-size: 28px;
   font-weight: 500;
   line-height: 1;
-  color: #4b5563;
-
+  color: #353535;
   text-align: left;
 }
 
@@ -276,16 +275,7 @@
   padding-left: 24px;
 }
 
-.product-description-text {
-  font-size: 18px;
-  line-height: 2;
 
-  color: #4b5563;
-
-  margin-bottom: 16px;
-
-  text-align: left;
-}
 
 .product-description-text::marker {
   color: #31565a;

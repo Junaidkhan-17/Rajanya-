@@ -37,7 +37,6 @@ function AllProductsHeroSection() {
           />
 
           {/* Overlay */}
-
           <div className="all-products-hero-banner-overlay"></div>
 
           {/* Content */}

@@ -7,29 +7,33 @@ import { XIcon } from "@animateicons/react/lucide";
 import bookingService from "../../services/bookingService";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import bookingAvailabilityService
-from "../../services/bookingAvailabilityService";
+//import bookingAvailabilityService from "../../services/bookingAvailabilityService";
 import { CalendarDays } from "lucide-react";
 
-const CustomDateInput = forwardRef(
-  ({ value, onClick, placeholder }, ref) => (
-    <button
-      type="button"
-      className="custom-date-input"
-      onClick={onClick}
-      ref={ref}
-    >
-      <span>
-        {value || "Select Date"}
-      </span>
+const CustomDateInput = forwardRef(({ value, onClick, placeholder }, ref) => (
+  <button
+    type="button"
+    className="custom-date-input"
+    onClick={onClick}
+    ref={ref}
+  >
+    <span>{value || "Select Date"}</span>
 
-      <CalendarDays size={18} />
-    </button>
-  )
-);
+    <CalendarDays size={18} />
+  </button>
+));
 
-CustomDateInput.displayName =
-  "CustomDateInput";
+CustomDateInput.displayName = "CustomDateInput";
+
+const formatLocalDate = (date) => {
+  if (!date) return "";
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
 
 const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   console.log("BOOK MODAL", {
@@ -48,14 +52,11 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedRentalOption, setSelectedRentalOption] = useState(null);
-const [startDate, setStartDate] =
-  useState(null);
+  const [startDate, setStartDate] = useState(null);
 
-const [returnDate, setReturnDate] =
-  useState(null);
+  const [returnDate, setReturnDate] = useState(null);
 
-const [excludedDates, setExcludedDates] =
-  useState([]);
+  const [excludedDates, setExcludedDates] = useState([]);
   /* -------------------------------- */
   /* Prefill Data */
   /* -------------------------------- */
@@ -89,54 +90,47 @@ const [excludedDates, setExcludedDates] =
   }, [bookingData, currentUser, setValue]);
 
   useEffect(() => {
-
-  if (!bookingData?.product?._id)
-    return;
-
-  const bookings =
-    bookingAvailabilityService
-      .getProductBookings(
-        bookingData.product._id
-      );
-
-  const blockedDates = [];
-
-  bookings.forEach(
-    (booking) => {
-
-      const start =
-        new Date(
-          booking.rental.startDate
-        );
-
-      const end =
-        new Date(
-          booking.rental.returnDate
-        );
-
-      const current =
-        new Date(start);
-
-      while (
-        current <= end
-      ) {
-
-        blockedDates.push(
-          new Date(current)
-        );
-
-        current.setDate(
-          current.getDate() + 1
-        );
+    const fetchAvailability = async () => {
+      if (!bookingData?.product?._id) {
+        setExcludedDates([]);
+        return;
       }
-    }
-  );
 
-  setExcludedDates(
-    blockedDates
-  );
+      try {
+        const response = await bookingService.getBookingAvailability(
+          bookingData.product._id,
+        );
 
-}, [bookingData]);
+        console.log("BOOKING AVAILABILITY RESPONSE:", response);
+
+        const bookings = response?.bookedDates || [];
+
+        const blockedDates = [];
+
+        bookings.forEach((booking) => {
+          const start = new Date(booking.startDate);
+
+          const end = new Date(booking.returnDate);
+
+          const current = new Date(start);
+
+          while (current <= end) {
+            blockedDates.push(new Date(current));
+
+            current.setDate(current.getDate() + 1);
+          }
+        });
+
+        setExcludedDates(blockedDates);
+      } catch (error) {
+        console.error("Failed to fetch booking availability:", error);
+
+        setExcludedDates([]);
+      }
+    };
+
+    fetchAvailability();
+  }, [bookingData]);
 
   /* -------------------------------- */
   /* ESC Close */
@@ -190,14 +184,6 @@ const [excludedDates, setExcludedDates] =
     }
 
     const booking = {
-      bookingId: `RAJ-${Date.now()}`,
-
-      createdAt: new Date().toISOString(),
-
-      status: "pending",
-
-      paymentStatus: "pending",
-
       user: {
         userId: currentUser?.id || null,
         fullName: data.fullName,
@@ -247,14 +233,6 @@ const [excludedDates, setExcludedDates] =
 
     try {
       await bookingService.createBooking(booking);
-
-      const existingBookings =
-        JSON.parse(localStorage.getItem("rajanya_bookings")) || [];
-
-      localStorage.setItem(
-        "rajanya_bookings",
-        JSON.stringify([...existingBookings, booking]),
-      );
 
       console.log("BOOKING CREATED", booking);
 
@@ -391,11 +369,9 @@ ${booking.product.productUrl}
 
           <div className="book-rent-header">
             <div className="book-rent-header-content">
-    <h2>Book For Rent</h2>
-    <p>
-      Complete the form below to reserve your outfit
-    </p>
-  </div>
+              <h2>Book For Rent</h2>
+              <p>Complete the form below to reserve your outfit</p>
+            </div>
             <button onClick={onClose} className="book-rent-close">
               <XIcon size={34} duration={1} color="#000000ff" />
             </button>
@@ -531,54 +507,39 @@ ${booking.product.productUrl}
                 <div className="form-group">
                   <label>ENTER DATE TO RENT</label>
 
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => {
+  setStartDate(date);
 
-  <DatePicker
-  selected={startDate}
-  onChange={(date) => {
-    setStartDate(date);
-
-    setValue(
-      "startDate",
-      date?.toISOString()?.split("T")[0]
-    );
-  }}
-  minDate={new Date()}
-  excludeDates={excludedDates}
-  dateFormat="dd/MM/yyyy"
-  customInput={<CustomDateInput />}
-/>
+  setValue("startDate", formatLocalDate(date));
+}}
+                    minDate={new Date()}
+                    excludeDates={excludedDates}
+                    dateFormat="dd/MM/yyyy"
+                    customInput={<CustomDateInput />}
+                  />
                 </div>
 
                 <div className="form-group">
                   <label>ENTER DATE TO RETURN PRODUCT</label>
 
                   <DatePicker
-  selected={returnDate}
-  onChange={(date) => {
+                    selected={returnDate}
+                    onChange={(date) => {
+  setReturnDate(date);
 
-    setReturnDate(date);
-
-    setValue(
-      "returnDate",
-      date
-        ?.toISOString()
-        ?.split("T")[0]
-    );
-
-  }}
-  minDate={
-    startDate ||
-    new Date()
-  }
-  excludeDates={
-    excludedDates
-  }
-  placeholderText="Select Return Date"
-  dateFormat="dd/MM/yyyy"
-  customInput={
-    <CustomDateInput />
-  }
-/>
+  setValue(
+    "returnDate",
+    formatLocalDate(date),
+  );
+}}
+                    minDate={startDate || new Date()}
+                    excludeDates={excludedDates}
+                    placeholderText="Select Return Date"
+                    dateFormat="dd/MM/yyyy"
+                    customInput={<CustomDateInput />}
+                  />
                 </div>
               </div>
             </div>

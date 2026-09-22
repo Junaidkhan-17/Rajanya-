@@ -1,6 +1,12 @@
 import "./AllProductsProductCard.css";
+
 import { useNavigate } from "react-router-dom";
-import { Heart, Eye, GitCompare, Share2 } from "lucide-react";
+
+import {
+  Heart,
+  Eye,
+  Share2,
+} from "lucide-react";
 
 import {
   useProductLiveData,
@@ -8,26 +14,39 @@ import {
 } from "../../../contexts/ProductLiveDataContext";
 
 const AllProductsProductCard = ({ product }) => {
-  const { state, dispatch } = useProductLiveData();
-  const navigate = useNavigate();
-  const isWishlisted = state.wishlist.includes(product._id);
+  const {
+    state,
+    dispatch,
+    toggleWishlist,
+  } = useProductLiveData();
 
-  const isCompared = state.compare.includes(product._id);
+  const navigate = useNavigate();
+
+  const isWishlisted =
+    state.wishlist.includes(product._id);
+
+  const isCompared =
+    state.compare.includes(product._id);
+
+  /* ======================================
+     PRODUCT IMAGE
+  ====================================== */
+
+  const productImage =
+    product.mainImage ||
+    product.thumbnailImage ||
+    product.galleryImages?.[0] ||
+    product.images?.[0] ||
+    "";
 
   /* ======================================
      WISHLIST
   ====================================== */
 
-  const handleWishlist = (e) => {
+  const handleWishlist = async (e) => {
     e.stopPropagation();
 
-    dispatch({
-      type: isWishlisted
-        ? PRODUCT_ACTIONS.REMOVE_FROM_WISHLIST
-        : PRODUCT_ACTIONS.ADD_TO_WISHLIST,
-
-      payload: product._id,
-    });
+    await toggleWishlist(product._id);
   };
 
   /* ======================================
@@ -36,8 +55,8 @@ const AllProductsProductCard = ({ product }) => {
 
   const handleProductDetails = () => {
     dispatch({
-      type: PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
-
+      type:
+        PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
       payload: product._id,
     });
 
@@ -48,7 +67,9 @@ const AllProductsProductCard = ({ product }) => {
      COMPARE
   ====================================== */
 
-  const handleCompare = () => {
+  const handleCompare = (e) => {
+    e.stopPropagation();
+
     dispatch({
       type: isCompared
         ? PRODUCT_ACTIONS.REMOVE_FROM_COMPARE
@@ -62,21 +83,33 @@ const AllProductsProductCard = ({ product }) => {
      QUICK VIEW
   ====================================== */
 
-  const handleQuickView = () => {
+  const handleQuickView = (e) => {
+    e.stopPropagation();
+
     dispatch({
-      type: PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
+      type:
+        PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
+
       payload: product._id,
     });
 
-    console.log("Quick View Product:", product._id);
+    console.log(
+      "Quick View Product:",
+      product._id
+    );
   };
 
   /* ======================================
      SHARE
   ====================================== */
 
-  const handleShare = async () => {
-    const shareUrl = window.location.origin + "/products/" + product.slug;
+  const handleShare = async (e) => {
+    e.stopPropagation();
+
+    const shareUrl =
+      window.location.origin +
+      "/products/" +
+      product.slug;
 
     try {
       if (navigator.share) {
@@ -85,13 +118,27 @@ const AllProductsProductCard = ({ product }) => {
           text: product.description,
           url: shareUrl,
         });
-      } else {
-        await navigator.clipboard.writeText(shareUrl);
+      } else if (
+        navigator.clipboard
+      ) {
+        await navigator.clipboard.writeText(
+          shareUrl
+        );
 
         alert("Product link copied.");
       }
     } catch (error) {
-      console.log(error);
+      /*
+       * User cancelling the native share
+       * dialog should not create an error
+       * experience.
+       */
+      if (
+        error?.name !==
+        "AbortError"
+      ) {
+        console.log(error);
+      }
     }
   };
 
@@ -99,91 +146,226 @@ const AllProductsProductCard = ({ product }) => {
      BOOK NOW
   ====================================== */
 
-  const handleBookNow = () => {
+  const handleBookNow = (e) => {
+    e.stopPropagation();
+
     handleProductDetails();
   };
 
+  /* ======================================
+     RATING
+  ====================================== */
+
+  const rating =
+    Number(product.rating) || 0;
+
+  const reviewsCount =
+    Number(product.reviewsCount) || 0;
+
+  /* ======================================
+     PRICING
+  ====================================== */
+
+  const rentalPrice =
+    Number(
+      product.rentalOptions?.[0]?.price
+    ) || 0;
+
+  const originalPrice =
+    Number(product.originalPrice) || 0;
+
+  /* ======================================
+     RENDER
+  ====================================== */
+
   return (
-    <div className="all-products-card-main">
-      {/* =========================
+    <article className="all-products-card-main">
+      {/* ======================================
           IMAGE
-      ========================= */}
+      ====================================== */}
 
       <div
         className="all-products-card-image-wrapper"
         onClick={handleProductDetails}
-      >
-        <img
-          src={
-  product.mainImage ||
-  product.thumbnailImage ||
-  product.galleryImages?.[0]
-}
-          alt={product.name}
-          className="all-products-card-image"
-          onLoad={(e) => {
-            console.log(
-              product.name,
-              e.target.naturalWidth,
-              e.target.naturalHeight,
-            );
-          }}
-        />
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (
+            e.key === "Enter" ||
+            e.key === " "
+          ) {
+            e.preventDefault();
 
-        {/* Action Icons */}
+            handleProductDetails();
+          }
+        }}
+        aria-label={`View ${product.name}`}
+      >
+        {productImage ? (
+          <img
+            src={productImage}
+            alt={product.name}
+            className="all-products-card-image"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="all-products-card-image-placeholder">
+            <span>
+              No Image
+            </span>
+          </div>
+        )}
+
+        {/* ======================================
+            ACTION ICONS
+        ====================================== */}
 
         <div className="all-products-card-actions">
+          {/* Wishlist */}
+
           <button
+            type="button"
             onClick={handleWishlist}
             className={`all-products-card-icon-btn ${
-              isWishlisted ? "all-products-card-icon-active" : ""
+              isWishlisted
+                ? "all-products-card-icon-active"
+                : ""
             }`}
+            aria-label={
+              isWishlisted
+                ? `Remove ${product.name} from wishlist`
+                : `Add ${product.name} to wishlist`
+            }
+            aria-pressed={
+              isWishlisted
+            }
           >
-            <Heart size={18} />
+            <Heart
+              size={18}
+              strokeWidth={1.8}
+              fill={
+                isWishlisted
+                  ? "currentColor"
+                  : "none"
+              }
+            />
           </button>
+
+          {/* Quick View */}
 
           <button
+            type="button"
             onClick={handleQuickView}
             className="all-products-card-icon-btn"
+            aria-label={`Quick view ${product.name}`}
           >
-            <Eye size={18} />
+            <Eye
+              size={18}
+              strokeWidth={1.8}
+            />
           </button>
 
-          <button onClick={handleShare} className="all-products-card-icon-btn">
-            <Share2 size={18} />
+          {/* Share */}
+
+          <button
+            type="button"
+            onClick={handleShare}
+            className="all-products-card-icon-btn"
+            aria-label={`Share ${product.name}`}
+          >
+            <Share2
+              size={18}
+              strokeWidth={1.8}
+            />
           </button>
         </div>
       </div>
 
-      {/* =========================
+      {/* ======================================
           CONTENT
-      ========================= */}
+      ====================================== */}
 
       <div className="all-products-card-content">
-        <h3 className="all-products-card-title" onClick={handleProductDetails}>
+        {/* Product title */}
+
+        <h3
+          className="all-products-card-title"
+          onClick={handleProductDetails}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (
+              e.key === "Enter" ||
+              e.key === " "
+            ) {
+              e.preventDefault();
+
+              handleProductDetails();
+            }
+          }}
+        >
           {product.name}
         </h3>
-        <span className="all-products-card-category">{product.category}</span>
-        {/* Rating */}
+
+        {/* Category */}
+
+        <span className="all-products-card-category">
+          {typeof product.category ===
+          "object"
+            ? product.category?.name ||
+              "-"
+            : product.category || "-"}
+        </span>
+
+        {/* ======================================
+            RATING
+        ====================================== */}
 
         <div className="all-products-card-rating">
-          <i className="bi bi-star-fill"></i>
+          <i
+            className="bi bi-star-fill"
+            aria-hidden="true"
+          />
 
-          <span>{product.rating}</span>
+          <span>
+            {rating.toFixed(1)}
+          </span>
 
-          <small>({product.reviewsCount})</small>
+          <small>
+            ({reviewsCount})
+          </small>
         </div>
 
-        {/* Price */}
+        {/* ======================================
+            FOOTER
+        ====================================== */}
 
         <div className="all-products-card-footer">
-          <div className="all-products-card-price-wrapper">
-            <strong>${product.rentalOptions?.[0]?.price || 0}</strong>
+          {/* Price */}
 
-            <span>${product.originalPrice}</span>
+          <div className="all-products-card-price-wrapper">
+            <strong>
+              ₹
+              {rentalPrice.toLocaleString(
+                "en-IN"
+              )}
+            </strong>
+
+            {originalPrice > 0 && (
+              <span>
+                ₹
+                {originalPrice.toLocaleString(
+                  "en-IN"
+                )}
+              </span>
+            )}
           </div>
 
+          {/* Booking */}
+
           <button
+            type="button"
             onClick={handleBookNow}
             className="all-products-card-rent-btn"
           >
@@ -191,7 +373,7 @@ const AllProductsProductCard = ({ product }) => {
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

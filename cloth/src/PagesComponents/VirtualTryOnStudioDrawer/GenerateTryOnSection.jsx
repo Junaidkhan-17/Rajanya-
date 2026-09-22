@@ -19,32 +19,23 @@ const GenerateTryOnSection = ({
       </div>
 
       <p>
-        Upload your photo and let our AI create
-        a realistic virtual try-on experience.
+        Upload your photo and let our AI create a realistic virtual try-on
+        experience.
       </p>
 
       <button
         className="generate-try-on-btn"
-        disabled={
-          !uploadedImage ||
-          tokens <= 0 ||
-          isGenerating
-        }
+        disabled={!uploadedImage || tokens <= 0 || isGenerating}
         onClick={onGenerate}
       >
         {isGenerating ? (
           <>
-            <Loader2
-              size={20}
-              className="generate-spinner"
-            />
-
+            <Loader2 size={20} className="generate-spinner" />
             Generating...
           </>
         ) : (
           <>
             <Sparkles size={20} />
-
             Generate AI Try-On
           </>
         )}

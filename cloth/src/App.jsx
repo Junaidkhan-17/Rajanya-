@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import ScrollToTop from "./SharedComponents/ScrollToTop/ScrollToTop";
 import Navbar from "./SharedComponents/Navbar/Navbar";
 import CategoryInfoBar from "./SharedComponents/CategoryInfoBar/CategoryInfoBar";
@@ -80,6 +81,30 @@ import WomensWear from "./Pages/WomensWear/WomensWear";
 
 function App() {
   const { state, dispatch } = useAuth();
+
+  useEffect(() => {
+    if (
+      state.isAuthenticated &&
+      state.pendingAction === "bookForRent" &&
+      state.bookForRentPayload &&
+      !state.showBookForRentModal
+    ) {
+      dispatch({
+        type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
+      });
+
+      dispatch({
+        type: AUTH_ACTIONS.CLEAR_PENDING_ACTION,
+      });
+    }
+  }, [
+    state.isAuthenticated,
+    state.pendingAction,
+    state.bookForRentPayload,
+    state.showBookForRentModal,
+    dispatch,
+  ]);
+
   return (
     <div className="app-main-wrapper">
       <ScrollToTop />
@@ -181,19 +206,14 @@ function App() {
       />
 
       <VirtualTryOnStudioDrawer
-  isOpen={
-    state.showVirtualTryOnStudioDrawer
-  }
-  bookingData={
-    state.virtualTryOnStudioPayload
-  }
-  onClose={() =>
-    dispatch({
-      type:
-        AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER,
-    })
-  }
-/>
+        isOpen={state.showVirtualTryOnStudioDrawer}
+        bookingData={state.virtualTryOnStudioPayload}
+        onClose={() =>
+          dispatch({
+            type: AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER,
+          })
+        }
+      />
     </div>
   );
 }

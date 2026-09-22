@@ -1,6 +1,12 @@
-/* =========================================
+/* =========================================================
+   VIRTUAL TRY-ON UNLOCK DRAWER
+   Responsive: 320px → 1920px
+========================================================= */
+
+
+/* =========================================================
    OVERLAY
-========================================= */
+========================================================= */
 
 .virtual-try-overlay {
   position: fixed;
@@ -10,19 +16,30 @@
   display: flex;
   justify-content: flex-end;
 
+  width: 100%;
+  height: 100dvh;
+
   background: rgba(0, 0, 0, 0.55);
+
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+
+  overflow: hidden;
 }
 
-/* =========================================
+
+/* =========================================================
    DRAWER
-========================================= */
+========================================================= */
 
 .virtual-try-drawer {
-  width: 900px;
+  width: min(900px, 100%);
   max-width: 100%;
-  height: 100vh;
+
+  height: 100dvh;
+  max-height: 100dvh;
+
+  overflow-x: hidden;
   overflow-y: auto;
 
   background: #ffffff;
@@ -35,10 +52,18 @@
 
   scrollbar-width: thin;
   scrollbar-color: #d6d6d6 transparent;
+
+  overscroll-behavior: contain;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .virtual-try-drawer::-webkit-scrollbar {
   width: 6px;
+}
+
+.virtual-try-drawer::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .virtual-try-drawer::-webkit-scrollbar-thumb {
@@ -46,28 +71,43 @@
   border-radius: 30px;
 }
 
-/* =========================================
+.virtual-try-drawer::-webkit-scrollbar-thumb:hover {
+  background: #bdbdbd;
+}
+
+
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 .virtual-try-header {
+  width: 100%;
+
   padding: 30px 35px 25px;
 
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+
   gap: 20px;
 
   border-bottom: 1px solid #f1f1f1;
+
+  flex-shrink: 0;
 }
 
 .virtual-try-back-btn,
 .virtual-try-close-btn {
   width: 50px;
+  min-width: 50px;
   height: 50px;
+  min-height: 50px;
+
+  padding: 0;
 
   border: none;
   outline: none;
+
   border-radius: 50%;
 
   background: #f7f7f7;
@@ -79,103 +119,162 @@
 
   cursor: pointer;
 
-  transition: all 0.35s ease;
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease;
 }
 
 .virtual-try-back-btn:hover,
 .virtual-try-close-btn:hover {
   background: #111111;
   color: #ffffff;
+
   transform: translateY(-3px);
+}
+
+.virtual-try-back-btn:active,
+.virtual-try-close-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.virtual-try-back-btn:disabled,
+.virtual-try-close-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .virtual-try-title-box {
   flex: 1;
+  min-width: 0;
 }
 
 .virtual-try-title-box h2 {
   margin: 0 0 10px;
+
   text-align: left;
-  font-family: "Newake";
-  font-size: 1.2rem;
+
+  font-family: "Newake", sans-serif;
+
+  font-size: clamp(1.15rem, 1.5vw, 1.55rem);
+  line-height: 1.15;
+
   font-weight: 700;
+
   color: #111111;
+
+  overflow-wrap: anywhere;
 }
 
 .virtual-try-title-box p {
   margin: 0;
-  text-align: left;
 
   max-width: 620px;
-  font-size: 0.88rem;
-  line-height: 1;
+
+  text-align: left;
+
+  font-size: clamp(0.78rem, 1vw, 0.88rem);
+  line-height: 1.55;
 
   color: #6d6d6d;
 }
 
-/* =========================================
+
+/* =========================================================
    HERO
-========================================= */
+========================================================= */
 
 .virtual-try-hero {
-  padding: 45px 35px 20px;
+  width: 100%;
 
+  padding: 45px 35px 20px;
+ flex-shrink: 0;
   text-align: center;
 }
 
 .virtual-try-hero h3 {
   margin: 0 0 16px;
 
-  font-family: "Newake";
-  font-size: 2.3rem;
+  font-family: "Newake", sans-serif;
+
+  font-size: clamp(1.75rem, 3vw, 2.3rem);
   line-height: 1.2;
+
   font-weight: 700;
 
   color: #111111;
 }
 
 .virtual-try-hero p {
-  margin: 0 auto;
-  text-align: center;
+  width: 100%;
   max-width: 580px;
-  font-size: 1rem;
-  line-height: 1;
+
+  margin: 0 auto;
+
+  text-align: center;
+
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
+  line-height: 1.7;
+
   color: #666666;
 }
 
-/* =========================================
+
+/* =========================================================
    SHOWCASE
-========================================= */
+========================================================= */
 
 .virtual-try-showcase {
+  width: 100%;
+
   padding: 40px 35px 50px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 35px;
+
+  gap: clamp(20px, 3vw, 35px);
 
   flex-wrap: wrap;
+
+  /* IMPORTANT */
+  flex-shrink: 0;
+
+  /* Do not clip the preview cards */
+  overflow: visible;
+
+  box-sizing: border-box;
 }
 
-/* =========================================
-   CARDS
-========================================= */
+
+/* =========================================================
+   PREVIEW CARDS
+========================================================= */
 
 .virtual-preview-card {
   width: 210px;
+  max-width: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
   gap: 18px;
+
+  flex-shrink: 0;
+
+  box-sizing: border-box;
 }
 
 .virtual-preview-image-box {
   width: 210px;
   height: 280px;
 
+  flex-shrink: 0;
+
   border-radius: 28px;
+
   overflow: hidden;
 
   background: #f8f8f8;
@@ -183,11 +282,18 @@
   box-shadow:
     0 15px 50px rgba(0, 0, 0, 0.08);
 
-  transition: all 0.4s ease;
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+
+  box-sizing: border-box;
 }
 
 .virtual-preview-image-box:hover {
   transform: translateY(-10px);
+
+  box-shadow:
+    0 22px 55px rgba(0, 0, 0, 0.12);
 }
 
 .virtual-preview-image-box img {
@@ -195,24 +301,33 @@
   height: 100%;
 
   object-fit: cover;
+
   display: block;
 }
 
 .virtual-preview-card span {
-  font-size: 0.95rem;
+  font-size: clamp(0.82rem, 1vw, 0.95rem);
+
   font-weight: 600;
+
   letter-spacing: 0.5px;
+
+  text-align: center;
 
   color: #202020;
 }
 
-/* =========================================
+
+/* =========================================================
    MAGIC ICON
-========================================= */
+========================================================= */
 
 .virtual-magic-icon {
   width: 90px;
+  min-width: 90px;
+
   height: 90px;
+  min-height: 90px;
 
   border-radius: 50%;
 
@@ -231,98 +346,257 @@
 
   box-shadow:
     0 20px 40px rgba(216, 179, 107, 0.35);
+
+  flex-shrink: 0;
 }
 
-/* =========================================
+.virtual-magic-icon svg {
+  width: 40px;
+  height: 40px;
+}
+
+
+/* =========================================================
    PAYMENT SECTION
-========================================= */
+========================================================= */
 
 .virtual-payment-section {
+  width: 100%;
+  flex-shrink: 0;
   padding: 20px 35px 50px;
 }
 
 .virtual-payment-section h3 {
-  margin: 0 0 2px;
+  margin: 0 0 8px;
+
   text-align: center;
-  font-family: "Newake";
-  font-size: 2rem;
+
+  font-family: "Newake", sans-serif;
+
+  font-size: clamp(1.55rem, 2.6vw, 2rem);
+  line-height: 1.2;
+
   font-weight: 700;
 
   color: #111111;
 }
 
-.virtual-payment-section p {
-  margin: 0 0 20px;
+.virtual-payment-section > p {
+  width: 100%;
+  max-width: 650px;
+
+  margin: 0 auto 25px;
+
   text-align: center;
 
-
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: clamp(0.86rem, 1.2vw, 1rem);
+  line-height: 1.7;
 
   color: #6c6c6c;
 }
 
 
-/* =========================================
+/* =========================================================
    PAYMENT CARD
-========================================= */
+========================================================= */
 
 .virtual-payment-card {
-  max-width: 420px;
+  width: min(420px, 100%);
+
   margin: 0 auto;
 
-  padding: 35px;
+  padding: clamp(22px, 4vw, 35px);
 
   background: #ffffff;
 
   border: 1px solid #efefef;
+
   border-radius: 32px;
 
   box-shadow:
     0 25px 60px rgba(0, 0, 0, 0.06);
 
   text-align: center;
+
+  overflow: hidden;
 }
 
-/* =========================================
-   QR SECTION
-========================================= */
+/* =========================================================
+   RAZORPAY QR CODE
+========================================================= */
 
-.virtual-payment-qr {
-  width: 340px;
-  height: 340px;
+.virtual-payment-qr-code {
+ width: 500px;
+  height: 600px;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+}
 
-  margin: 0 auto 20px;
+.virtual-payment-qr-code img {
+  width: 880px;
+  height: 780px;
+  max-width: 480px;
+  display: block; 
+  object-fit: contain;
+  image-rendering: auto;
+  margin-left: -150px;
+  margin-top: -120px;
+}
 
-  padding: 8px;
+
+/* =========================================================
+   PAYMENT WAITING
+========================================================= */
+
+.virtual-payment-waiting {
+  width: min(650px, 100%);
+
+  margin: 20px auto 0;
+
+  padding: 13px 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 10px;
 
   background: #fafafa;
 
+  color: #555555;
+
+  font-size: 0.82rem;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   PAYMENT SUCCESS
+========================================================= */
+
+.virtual-payment-success {
+  width: 100%;
+
+  margin: 5px auto 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  color: #26734d;
+
+  font-size: 0.9rem;
+
+  font-weight: 700;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+.virtual-payment-success svg {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PAYMENT NUMBER
+========================================================= */
+
+.virtual-payment-number {
+  width: 100%;
+
+  margin: 15px auto 0;
+
+  text-align: center;
+
+  font-size: 0.72rem;
+
+  line-height: 1.5;
+
+  color: #777777;
+
+  overflow-wrap: anywhere;
+}
+
+.virtual-payment-number strong {
+  color: #333333;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PAYMENT ICON
+========================================================= */
+
+.virtual-payment-qr {
+  width: clamp(90px, 20vw, 120px);
+  height: clamp(90px, 20vw, 120px);
+
+  margin: 0 auto 22px;
+
+  padding: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fafafa,
+      #f3f3f3
+    );
+
   border: 1px solid #eeeeee;
+
   border-radius: 24px;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  color: #d8b36b;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(216, 179, 107, 0.04);
 }
 
-.virtual-payment-qr img {
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-  display: block;
+.virtual-payment-qr svg {
+  width: clamp(32px, 8vw, 42px);
+  height: clamp(32px, 8vw, 42px);
 }
 
-/* =========================================
+
+/* =========================================================
    PRICE
-========================================= */
+========================================================= */
 
 .virtual-payment-card h2 {
   margin: 0;
 
-  font-family: "Newake";
-  font-size: 2.2rem;
+  font-family: "Newake", sans-serif;
+
+  font-size: clamp(1.8rem, 5vw, 2.2rem);
+  line-height: 1.15;
+
   font-weight: 700;
 
   color: #111111;
@@ -330,143 +604,345 @@
 
 .virtual-payment-card span {
   display: block;
+
   margin-top: 10px;
 
-  font-size: 0.8rem;
+  font-size: clamp(0.66rem, 1.5vw, 0.8rem);
+
   font-weight: 600;
-  letter-spacing: 3px;
+
+  letter-spacing: clamp(1.5px, 0.5vw, 3px);
+
+  line-height: 1.5;
 
   text-transform: uppercase;
 
   color: #b58a4d;
 }
 
-/* =========================================
-   BUTTONS
-========================================= */
+.virtual-payment-card small {
+  display: block;
+
+  margin-top: 12px;
+
+  font-size: clamp(0.74rem, 1.5vw, 0.82rem);
+
+  line-height: 1.5;
+
+  color: #777777;
+}
+
+
+/* =========================================================
+   PAYMENT ERROR
+========================================================= */
+
+.virtual-payment-error {
+  width: min(650px, 100%);
+
+  margin: 20px auto 0;
+
+  padding: 13px 16px;
+
+  border: 1px solid #f1caca;
+
+  border-radius: 10px;
+
+  background: #fff6f6;
+
+  color: #a33a3a;
+
+  text-align: center;
+
+  font-size: 0.82rem;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   PAYMENT BUTTONS
+========================================================= */
 
 .virtual-payment-buttons {
+  width: 100%;
+
   display: flex;
+
   gap: 10px;
+
   margin-top: 30px;
 }
 
 .virtual-payment-btn,
 .virtual-back-product-btn {
-  flex: 1;
+  flex: 1 1 0;
+
+  min-width: 0;
 }
+
 .virtual-payment-btn {
   width: 100%;
-  height: 50px;
+  min-height: 50px;
+
+  padding: 12px 18px;
+
   border: none;
   outline: none;
+
   border-radius: 8px;
+
   background: #111111;
   color: #ffffff;
 
-  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  font-size: clamp(0.76rem, 1vw, 0.92rem);
+
   font-weight: 700;
-  letter-spacing: 1.5px;
+
+  letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
+
+  line-height: 1.2;
+
+  text-align: center;
 
   cursor: pointer;
-  transition: all 0.35s ease;
+
+  transition:
+    background 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
-.virtual-payment-btn:hover {
+.virtual-payment-btn:hover:not(:disabled) {
   background: #232323;
+
   transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.virtual-payment-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.virtual-payment-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
 }
 
 .virtual-back-product-btn {
   width: 100%;
-  height: 50px;
+  min-height: 50px;
+
+  padding: 12px 18px;
 
   border: 1px solid #d9d9d9;
+
   border-radius: 8px;
 
   background: #ffffff;
   color: #111111;
 
-  font-size: 0.92rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: clamp(0.76rem, 1vw, 0.92rem);
+
   font-weight: 700;
-  letter-spacing: 1.5px;
+
+  letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
+
+  line-height: 1.2;
+
+  text-align: center;
 
   cursor: pointer;
-  transition: all 0.35s ease;
+
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease,
+    transform 0.35s ease;
 }
 
-.virtual-back-product-btn:hover {
+.virtual-back-product-btn:hover:not(:disabled) {
   background: #111111;
+
   color: #ffffff;
+
   border-color: #111111;
 
   transform: translateY(-3px);
 }
 
-
-.virtual-divider {
-  width: 100%;
-  border-top: 1px solid #d8b46bb8;
-  margin: -10px 0 50px;
+.virtual-back-product-btn:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
 }
 
-/* =========================================
-   PAYMENT INFO CARDS
-========================================= */
+.virtual-back-product-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   PAYMENT SPINNER
+========================================================= */
+
+.virtual-payment-spinner {
+  animation:
+    virtualPaymentSpin 0.9s linear infinite;
+
+  flex-shrink: 0;
+}
+
+@keyframes virtualPaymentSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.virtual-divider {
+  width: calc(100% - 70px);
+
+  height: 1px;
+
+  margin: 0 auto 45px;
+
+  border: 0;
+
+  background: #d8b46b;
+
+  opacity: 0.72;
+}
+
+
+/* =========================================================
+   PAYMENT INFORMATION
+========================================================= */
 
 .payment-card-info {
-  margin-top: -20px;
+  width: 100%;
+
+  margin: 0;
+
+  padding: 0 35px;
+  flex-shrink: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
   gap: 24px;
-  padding-left: 35px;
-  padding-right: 35px;
 }
 
 .payment-card-info .atropos {
   width: 100%;
-  margin-left: 40px;
-  align-content: flex-start;
+  margin: 0;
 }
 
+
+/* =========================================================
+   SECURITY CARDS
+========================================================= */
+
 .demo-info {
+  width: 100%;
+
+  min-height: 120px;
+
   padding: 28px;
 
   display: flex;
+
   align-items: center;
+
   gap: 20px;
+
   text-align: left;
+
   background: #ffffff;
+
   border-radius: 14px;
-  margin-top: -30px;
-  transition: all 0.35s ease;
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .demo-info:hover {
   transform: translateY(-6px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.06);
 }
 
 .demo-info-icon {
-  width: 70px;
-  height: 70px;
-  flex-shrink: 0;
-  align-items: flex-start;
-  border-radius: 20px;
-  color:#d8b36b ;
+  width: 60px;
+  min-width: 60px;
+
+  height: 60px;
+  min-height: 60px;
+
+  border-radius: 18px;
+
+  color: #d8b36b;
+
   display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.demo-info-icon svg {
+  width: 36px;
+  height: 36px;
 }
 
 .demo-info-content {
   flex: 1;
-  margin-left:-40px;
+
+  min-width: 0;
+
+  margin: 0;
 }
 
 .demo-info-content h3 {
   margin: 0 0 8px;
 
-  font-family: "Newake";
-  font-size: 1rem;
+  font-family: "Newake", sans-serif;
+
+  font-size: clamp(0.82rem, 1.2vw, 1rem);
+
+  line-height: 1.25;
+
   font-weight: 700;
+
   letter-spacing: 1px;
 
   color: #111111;
@@ -475,36 +951,57 @@
 .demo-info-content p {
   margin: 0;
 
-  font-size: 0.78rem;
-  line-height: 1.7;
-  letter-spacing: 1.5px;
+  font-size: clamp(0.64rem, 1vw, 0.78rem);
+
+  line-height: 1.6;
+
+  letter-spacing: clamp(0.8px, 0.2vw, 1.5px);
+
   text-transform: uppercase;
 
   color: #7a7a7a;
+
+  overflow-wrap: anywhere;
 }
+
+
+/* =========================================================
+   IMPORTANT NOTE CONTAINER
+========================================================= */
 
 .virtual-container {
   width: 100%;
-  padding-left: -50px;
+  flex-shrink: 0;
+  padding: 0 35px 30px;
+
+  box-sizing: border-box;
 }
 
 .virtual-important-note {
-  margin-top: 10px;
+  width: 100%;
+
+  margin: 25px 0 0;
+
   padding: 22px;
-  margin-left:30px;
-  width: 92%;
+
   background: #f8f8f8;
+
   text-align: left;
+
   border: 1px solid #e7e7e7;
+
   border-radius: 18px;
-  padding-left: -50px;
-  margin-bottom: 30px;
+
+  box-sizing: border-box;
 }
 
 .virtual-important-note h4 {
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+
+  line-height: 1.3;
+
   font-weight: 700;
 
   color: #111111;
@@ -513,214 +1010,1002 @@
 .virtual-important-note p {
   margin: 0;
 
-  font-size: 0.9rem;
-  line-height: 1.3;
+  font-size: clamp(0.78rem, 1.1vw, 0.9rem);
+
+  line-height: 1.7;
+
   font-weight: 400;
 
   color: #4f4f4f;
 }
 
-/* Responsive */
 
-@media (max-width: 768px) {
-  .virtual-important-note {
-    padding: 25px;
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+========================================================= */
+
+@media (min-width: 1440px) {
+  .virtual-try-drawer {
+    width: 900px;
   }
 
-  .virtual-important-note h4 {
-    font-size: 1.45rem;
+  .virtual-try-header {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-important-note p {
-    font-size: 0.95rem;
-    line-height: 1.8;
-  }
-}
-
-@media (max-width: 480px) {
-  .virtual-important-note {
-    padding: 20px;
-    border-radius: 14px;
+  .virtual-try-hero {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-important-note h4 {
-    font-size: 1.25rem;
+  .virtual-try-showcase {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-important-note p {
-    font-size: 0.9rem;
-  }
-}
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media (max-width: 768px) {
-  .payment-card-info {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .demo-info {
-    height: 200px;
-    padding: 30px 24px;
-  }
-
-  .demo-info h3 {
-    font-size: 1.05rem;
-  }
-
-  .demo-info p {
-    font-size: 0.78rem;
-    letter-spacing: 1.5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .demo-info {
-    height: 180px;
-    border-radius: 24px;
-  }
-
-  .demo-info svg {
-    margin-bottom: 18px;
-  }
-
-  .demo-info h3 {
-    font-size: 0.95rem;
-  }
-
-  .demo-info p {
-    font-size: 0.72rem;
-    line-height: 1.6;
-  }
-}
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-@media (max-width: 600px) {
-  .virtual-payment-buttons {
-    flex-direction: column;
-  }
-}
-
-
-
-@media (max-width: 768px) {
   .virtual-payment-section {
-    padding: 20px 20px 45px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-payment-section h3 {
-    font-size: 1.7rem;
+  .payment-card-info {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-payment-card {
-    padding: 25px;
+  .virtual-container {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
-  .virtual-payment-qr {
-    width: 210px;
-    height: 210px;
-  }
-
-  .virtual-payment-card h2 {
-    font-size: 2rem;
+  .virtual-divider {
+    width: calc(100% - 80px);
   }
 }
 
-@media (max-width: 480px) {
-  .virtual-payment-card {
-    padding: 22px;
-    border-radius: 24px;
+
+/* =========================================================
+   LAPTOP / SMALL DESKTOP
+   992px – 1199px
+========================================================= */
+
+@media (max-width: 1199px) {
+  .virtual-try-drawer {
+    width: min(820px, 100%);
   }
 
-  .virtual-payment-qr {
-    width: 180px;
-    height: 180px;
+  .virtual-try-showcase {
+    gap: 24px;
   }
 
-  .virtual-payment-btn,
-  .virtual-back-product-btn {
-    height: 54px;
-    font-size: 0.85rem;
+  .virtual-preview-card,
+  .virtual-preview-image-box {
+    width: 190px;
+  }
+
+  .virtual-preview-image-box {
+    height: 255px;
+  }
+
+  .virtual-magic-icon {
+    width: 76px;
+    min-width: 76px;
+
+    height: 76px;
+    min-height: 76px;
+  }
+
+  .virtual-magic-icon svg {
+    width: 34px;
+    height: 34px;
   }
 }
 
-/* =========================================
-   RESPONSIVE
-========================================= */
 
-@media (max-width: 992px) {
+/* =========================================================
+   TABLET
+   768px – 991px
+========================================================= */
+
+@media (max-width: 991px) {
   .virtual-try-drawer {
     width: 100%;
   }
 
-  .virtual-try-showcase {
-    gap: 25px;
-  }
-}
-
-@media (max-width: 768px) {
   .virtual-try-header {
-    padding: 25px 20px;
-  }
-
-  .virtual-try-title-box h2 {
-    font-size: 1.6rem;
+    padding: 25px 25px 22px;
   }
 
   .virtual-try-hero {
-    padding: 35px 20px 20px;
-  }
-
-  .virtual-try-hero h3 {
-    font-size: 1.9rem;
+    padding: 35px 25px 20px;
   }
 
   .virtual-try-showcase {
-    padding: 35px 20px 45px;
+    padding: 30px 25px 40px;
 
-    flex-direction: column;
+    gap: 22px;
+  }
+
+  .virtual-preview-card,
+  .virtual-preview-image-box {
+    width: 185px;
+  }
+
+  .virtual-preview-image-box {
+    height: 245px;
+
+    border-radius: 24px;
   }
 
   .virtual-magic-icon {
-    width: 70px;
-    height: 70px;
+    width: 68px;
+    min-width: 68px;
+
+    height: 68px;
+    min-height: 68px;
+  }
+
+  .virtual-magic-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .virtual-payment-section {
+    padding: 20px 25px 45px;
+  }
+
+  .payment-card-info {
+    padding: 0 25px;
+
+    gap: 18px;
+  }
+
+  .demo-info {
+    padding: 22px;
+  }
+
+  .virtual-container {
+    padding: 0 25px 25px;
+  }
+
+  .virtual-divider {
+    width: calc(100% - 50px);
+
+    margin-bottom: 35px;
   }
 }
 
-@media (max-width: 480px) {
+
+/* =========================================================
+   SMALL TABLET / LARGE MOBILE
+   576px – 767px
+========================================================= */
+
+@media (max-width: 767px) {
+  .virtual-try-overlay {
+    align-items: stretch;
+  }
+
+  .virtual-try-drawer {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100dvh;
+  }
+
   .virtual-try-header {
+    padding: 20px;
+
     gap: 12px;
+
+    align-items: flex-start;
+  }
+
+  .virtual-try-back-btn,
+  .virtual-try-close-btn {
+    width: 44px;
+    min-width: 44px;
+
+    height: 44px;
+    min-height: 44px;
+  }
+
+  .virtual-try-title-box h2 {
+    font-size: clamp(1.15rem, 4vw, 1.45rem);
+
+    margin-bottom: 7px;
+  }
+
+  .virtual-try-title-box p {
+    font-size: 0.78rem;
+
+    line-height: 1.5;
+  }
+
+  .virtual-try-hero {
+    padding: 30px 20px 15px;
+  }
+
+  .virtual-try-hero h3 {
+    font-size: clamp(1.55rem, 5vw, 1.9rem);
+
+    margin-bottom: 12px;
+  }
+
+  .virtual-try-hero p {
+    font-size: 0.88rem;
+
+    line-height: 1.65;
+  }
+
+  .virtual-try-showcase {
+    padding: 30px 20px 40px;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+    flex-shrink: 0;
+
+    overflow: visible;
+  }
+
+  .virtual-preview-card,
+  .virtual-preview-image-box {
+    width: min(210px, 72vw);
+  }
+
+  .virtual-preview-image-box {
+    height: min(280px, 92vw);
+    flex-shrink: 0;
+    border-radius: 24px;
+  }
+
+  .virtual-preview-card {
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .virtual-preview-card span {
+    font-size: 0.88rem;
+  }
+
+  .virtual-magic-icon {
+    width: 62px;
+    min-width: 62px;
+
+    height: 62px;
+    min-height: 62px;
+
+    order: 0;
+  }
+
+  .virtual-magic-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .virtual-payment-section {
+    padding: 20px 20px 40px;
+  }
+
+  .virtual-payment-section h3 {
+    font-size: clamp(1.45rem, 5vw, 1.7rem);
+  }
+
+  .virtual-payment-section > p {
+    font-size: 0.86rem;
+
+    line-height: 1.6;
+
+    margin-bottom: 20px;
+  }
+
+  .virtual-payment-card {
+    width: min(420px, 100%);
+
+    padding: 24px;
+
+    border-radius: 26px;
+  }
+
+  .virtual-payment-buttons {
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 22px;
+  }
+
+  .virtual-payment-btn,
+  .virtual-back-product-btn {
+    flex: none;
+
+    width: 100%;
+
+    min-height: 52px;
+  }
+
+  .payment-card-info {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+
+    padding: 0 20px;
+  }
+
+  .demo-info {
+    min-height: 100px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    gap: 15px;
+  }
+
+  .demo-info-icon {
+    width: 52px;
+    min-width: 52px;
+
+    height: 52px;
+    min-height: 52px;
+  }
+
+  .demo-info-icon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .demo-info-content h3 {
+    font-size: 0.86rem;
+
+    margin-bottom: 6px;
+  }
+
+  .demo-info-content p {
+    font-size: 0.65rem;
+
+    line-height: 1.55;
+  }
+
+  .virtual-container {
+    padding: 0 20px 25px;
+  }
+
+  .virtual-important-note {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border-radius: 16px;
+  }
+
+  .virtual-important-note h4 {
+    font-size: 1.05rem;
+
+    margin-bottom: 10px;
+  }
+
+  .virtual-important-note p {
+    font-size: 0.82rem;
+
+    line-height: 1.7;
+  }
+
+  .virtual-divider {
+    width: calc(100% - 40px);
+
+    margin-bottom: 30px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   375px – 575px
+========================================================= */
+
+@media (max-width: 575px) {
+  .virtual-try-header {
+    padding: 16px 15px 18px;
+
+    gap: 9px;
   }
 
   .virtual-try-back-btn,
   .virtual-try-close-btn {
     width: 42px;
+    min-width: 42px;
+
     height: 42px;
+    min-height: 42px;
+  }
+
+  .virtual-try-back-btn svg,
+  .virtual-try-close-btn svg {
+    width: 20px;
+    height: 20px;
   }
 
   .virtual-try-title-box h2 {
-    font-size: 1.35rem;
+    font-size: 1.12rem;
+
+    line-height: 1.2;
   }
 
   .virtual-try-title-box p {
-    font-size: 0.9rem;
+    font-size: 0.72rem;
+
+    line-height: 1.45;
+  }
+
+  .virtual-try-hero {
+    padding: 26px 15px 12px;
   }
 
   .virtual-try-hero h3 {
-    font-size: 1.55rem;
+    font-size: clamp(1.38rem, 6vw, 1.6rem);
+
+    line-height: 1.2;
+  }
+
+  .virtual-try-hero p {
+    font-size: 0.8rem;
+
+    line-height: 1.65;
+  }
+
+  .virtual-try-showcase {
+    padding: 24px 15px 32px;
+
+    gap: 18px;
+
+    flex-shrink: 0;
+
+    overflow: visible;
+  }
+
+  .virtual-preview-card,
+  .virtual-preview-image-box {
+    width: min(190px, 66vw);
   }
 
   .virtual-preview-image-box {
-    width: 190px;
-    height: 260px;
+    height: min(250px, 87vw);
+
+    border-radius: 20px;
   }
 
   .virtual-preview-card {
-    width: 190px;
+    gap: 10px;
   }
+
+  .virtual-preview-card span {
+    font-size: 0.8rem;
+  }
+
+  .virtual-magic-icon {
+    width: 56px;
+    min-width: 56px;
+
+    height: 56px;
+    min-height: 56px;
+  }
+
+  .virtual-magic-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .virtual-payment-section {
+    padding: 18px 15px 32px;
+  }
+
+  .virtual-payment-section h3 {
+    font-size: 1.35rem;
+  }
+
+  .virtual-payment-section > p {
+    font-size: 0.78rem;
+
+    line-height: 1.6;
+  }
+
+  .virtual-payment-card {
+    padding: 20px;
+
+    border-radius: 22px;
+  }
+
+  .virtual-payment-qr {
+    width: 82px;
+    height: 82px;
+
+    margin-bottom: 16px;
+
+    padding: 12px;
+
+    border-radius: 19px;
+  }
+
+  .virtual-payment-qr svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .virtual-payment-card h2 {
+    font-size: 1.75rem;
+  }
+
+  .virtual-payment-card span {
+    font-size: 0.61rem;
+
+    letter-spacing: 1.6px;
+  }
+
+  .virtual-payment-card small {
+    font-size: 0.7rem;
+
+    line-height: 1.5;
+  }
+
+  .virtual-payment-error {
+    padding: 11px 13px;
+
+    font-size: 0.72rem;
+
+    line-height: 1.5;
+  }
+
+  .virtual-payment-btn,
+  .virtual-back-product-btn {
+    min-height: 50px;
+
+    padding: 11px 14px;
+
+    font-size: 0.74rem;
+
+    letter-spacing: 0.8px;
+  }
+
+  .payment-card-info {
+    padding: 0 15px;
+
+    gap: 12px;
+  }
+
+  .demo-info {
+    min-height: 92px;
+
+    padding: 17px;
+
+    gap: 13px;
+
+    border-radius: 14px;
+  }
+
+  .demo-info-icon {
+    width: 46px;
+    min-width: 46px;
+
+    height: 46px;
+    min-height: 46px;
+
+    border-radius: 14px;
+  }
+
+  .demo-info-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .demo-info-content h3 {
+    font-size: 0.78rem;
+
+    letter-spacing: 0.8px;
+  }
+
+  .demo-info-content p {
+    font-size: 0.58rem;
+
+    letter-spacing: 0.7px;
+
+    line-height: 1.5;
+  }
+
+  .virtual-container {
+    padding: 0 15px 20px;
+  }
+
+  .virtual-important-note {
+    margin-top: 15px;
+
+    padding: 17px;
+
+    border-radius: 14px;
+  }
+
+  .virtual-important-note h4 {
+    font-size: 0.98rem;
+
+    margin-bottom: 9px;
+  }
+
+  .virtual-important-note p {
+    font-size: 0.76rem;
+
+    line-height: 1.65;
+  }
+
+  .virtual-divider {
+    width: calc(100% - 30px);
+
+    margin-bottom: 25px;
+  }
+}
+
+/* =========================================================
+   QR RESPONSIVE
+========================================================= */
+
+@media (max-width: 575px) {
+  .virtual-payment-qr-code {
+    width: min(250px, 100%);
+
+    padding: 11px;
+
+    margin-bottom: 18px;
+
+    border-radius: 17px;
+  }
+
+  .virtual-payment-waiting {
+    padding: 11px 12px;
+
+    font-size: 0.72rem;
+  }
+
+  .virtual-payment-success {
+    font-size: 0.78rem;
+  }
+
+  .virtual-payment-number {
+    font-size: 0.65rem;
+  }
+}
+
+
+@media (max-width: 374px) {
+  .virtual-payment-qr-code {
+    width: min(220px, 100%);
+
+    padding: 9px;
+
+    border-radius: 15px;
+  }
+
+  .virtual-payment-waiting {
+    font-size: 0.66rem;
+
+    gap: 7px;
+  }
+
+  .virtual-payment-success {
+    font-size: 0.72rem;
+  }
+
+  .virtual-payment-number {
+    font-size: 0.6rem;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   320px – 374px
+========================================================= */
+
+@media (max-width: 374px) {
+  .virtual-try-header {
+    padding: 13px 11px 15px;
+
+    gap: 7px;
+  }
+
+  .virtual-try-back-btn,
+  .virtual-try-close-btn {
+    width: 38px;
+    min-width: 38px;
+
+    height: 38px;
+    min-height: 38px;
+  }
+
+  .virtual-try-back-btn svg,
+  .virtual-try-close-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .virtual-try-title-box h2 {
+    font-size: 1rem;
+  }
+
+  .virtual-try-title-box p {
+    font-size: 0.66rem;
+
+    line-height: 1.4;
+  }
+
+  .virtual-try-hero {
+    padding: 22px 11px 10px;
+  }
+
+  .virtual-try-hero h3 {
+    font-size: 1.28rem;
+
+    margin-bottom: 9px;
+  }
+
+  .virtual-try-hero p {
+    font-size: 0.74rem;
+
+    line-height: 1.6;
+  }
+
+  .virtual-try-showcase {
+    padding: 20px 11px 28px;
+
+    gap: 15px;
+  }
+
+  .virtual-preview-card,
+  .virtual-preview-image-box {
+    width: min(175px, 65vw);
+  }
+
+  .virtual-preview-image-box {
+    height: min(225px, 84vw);
+
+    border-radius: 18px;
+  }
+
+  .virtual-preview-card span {
+    font-size: 0.74rem;
+  }
+
+  .virtual-magic-icon {
+    width: 50px;
+    min-width: 50px;
+
+    height: 50px;
+    min-height: 50px;
+  }
+
+  .virtual-magic-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .virtual-payment-section {
+    padding: 15px 11px 28px;
+  }
+
+  .virtual-payment-section h3 {
+    font-size: 1.22rem;
+  }
+
+  .virtual-payment-section > p {
+    font-size: 0.72rem;
+
+    line-height: 1.55;
+  }
+
+  .virtual-payment-card {
+    padding: 17px;
+
+    border-radius: 19px;
+  }
+
+  .virtual-payment-qr {
+    width: 72px;
+    height: 72px;
+
+    padding: 10px;
+
+    border-radius: 16px;
+  }
+
+  .virtual-payment-qr svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .virtual-payment-card h2 {
+    font-size: 1.55rem;
+  }
+
+  .virtual-payment-card span {
+    font-size: 0.56rem;
+
+    letter-spacing: 1.3px;
+  }
+
+  .virtual-payment-card small {
+    font-size: 0.66rem;
+  }
+
+  .virtual-payment-btn,
+  .virtual-back-product-btn {
+    min-height: 48px;
+
+    padding: 10px 10px;
+
+    font-size: 0.68rem;
+
+    letter-spacing: 0.55px;
+  }
+
+  .virtual-payment-error {
+    padding: 10px;
+
+    font-size: 0.67rem;
+  }
+
+  .payment-card-info {
+    padding: 0 11px;
+
+    gap: 10px;
+  }
+
+  .demo-info {
+    min-height: 84px;
+
+    padding: 14px;
+
+    gap: 10px;
+
+    border-radius: 13px;
+  }
+
+  .demo-info-icon {
+    width: 40px;
+    min-width: 40px;
+
+    height: 40px;
+    min-height: 40px;
+
+    border-radius: 12px;
+  }
+
+  .demo-info-icon svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .demo-info-content h3 {
+    font-size: 0.7rem;
+
+    letter-spacing: 0.55px;
+  }
+
+  .demo-info-content p {
+    font-size: 0.52rem;
+
+    letter-spacing: 0.4px;
+
+    line-height: 1.45;
+  }
+
+  .virtual-container {
+    padding: 0 11px 18px;
+  }
+
+  .virtual-important-note {
+    padding: 14px;
+
+    border-radius: 12px;
+  }
+
+  .virtual-important-note h4 {
+    font-size: 0.9rem;
+
+    margin-bottom: 8px;
+  }
+
+  .virtual-important-note p {
+    font-size: 0.7rem;
+
+    line-height: 1.6;
+  }
+
+  .virtual-divider {
+    width: calc(100% - 22px);
+
+    margin-bottom: 20px;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .virtual-preview-image-box:hover,
+  .virtual-payment-btn:hover,
+  .virtual-back-product-btn:hover,
+  .demo-info:hover,
+  .virtual-try-back-btn:hover,
+  .virtual-try-close-btn:hover {
+    transform: none;
+  }
+
+  .virtual-preview-image-box:active {
+    transform: scale(0.985);
+  }
+
+  .virtual-payment-btn:active:not(:disabled),
+  .virtual-back-product-btn:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .virtual-try-back-btn:active:not(:disabled),
+  .virtual-try-close-btn:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .virtual-preview-image-box,
+  .virtual-payment-btn,
+  .virtual-back-product-btn,
+  .demo-info,
+  .virtual-try-back-btn,
+  .virtual-try-close-btn {
+    transition: none;
+  }
+
+  .virtual-payment-spinner {
+    animation-duration: 1.8s;
+  }
+}
+
+
+/* =========================================================
+   KEYBOARD FOCUS
+========================================================= */
+
+.virtual-try-back-btn:focus-visible,
+.virtual-try-close-btn:focus-visible,
+.virtual-payment-btn:focus-visible,
+.virtual-back-product-btn:focus-visible {
+  outline: 2px solid #d8b36b;
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   SAFETY AGAINST LONG CONTENT
+========================================================= */
+
+.virtual-try-title-box,
+.virtual-payment-section,
+.virtual-payment-card,
+.payment-card-info,
+.demo-info,
+.virtual-important-note {
+  overflow-wrap: anywhere;
+}
+
+.virtual-try-drawer img {
+  max-width: 100%;
 }

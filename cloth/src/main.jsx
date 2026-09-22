@@ -16,18 +16,16 @@ import { ProductLiveDataProvider } from "./contexts/ProductLiveDataContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import { MensWearProvider } from "./contexts/MensWearContext";
 
-ReactDOM.createRoot(
-  document.getElementById("root")
-).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-    <AuthProvider>
-      <ProductLiveDataProvider>
-        <MensWearProvider>
-        <App />
-        </MensWearProvider>
-      </ProductLiveDataProvider>
+      <AuthProvider>
+        <ProductLiveDataProvider>
+          <MensWearProvider>
+            <App />
+          </MensWearProvider>
+        </ProductLiveDataProvider>
       </AuthProvider>
     </BrowserRouter>
-  </StrictMode>
+  </StrictMode>,
 );

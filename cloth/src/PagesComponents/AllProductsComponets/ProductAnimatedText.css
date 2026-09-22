@@ -16,9 +16,9 @@
   fill: transparent;
   stroke: #ffae00;
   stroke-width: 2;
-
+  font-family: "Barlow";
   font-size: 240px;
-  font-family: "Muthiara";
+
 }
 
 .product-text-light {
@@ -28,14 +28,10 @@
   stroke-width: 6;
 
   stroke-linecap: round;
-
-  stroke-dasharray: 60 2000;
+  stroke-dasharray: 120 2000;
   stroke-dashoffset: 0;
-
-
-
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow";
 
   animation: moveLight 5s linear infinite;
 }

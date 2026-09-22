@@ -49,13 +49,20 @@ const LoginModal = () => {
   ========================================== */
 
   const closeModal = () => {
-    dispatch({
-      type:
-        AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
-    });
+  dispatch({
+    type: AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
+  });
 
-    reset();
-  };
+  dispatch({
+    type: AUTH_ACTIONS.CLEAR_PENDING_ACTION,
+  });
+
+  dispatch({
+    type: AUTH_ACTIONS.CLOSE_BOOK_FOR_RENT_MODAL,
+  });
+
+  reset();
+};
 
   /* ==========================================
      ESC CLOSE
@@ -135,12 +142,12 @@ const LoginModal = () => {
   const onSubmit = async (data) => {
   try {
     const loginData = {
-      email: data.email.trim(),
+      email: data.email.trim().toLowerCase(),
       password: data.password,
     };
 
     await login(loginData);
-
+    closeModal();
     reset();
   } catch (error) {
     if (error.response?.data?.message) {

@@ -1,76 +1,113 @@
-class BookingService {
-  async createBooking(
-    bookingData
-  ) {
-    /*
-      POST /api/bookings
-    */
+import api from "./api";
 
-    console.log(
-      "CREATE BOOKING API",
+class BookingService {
+  /*
+  ========================================
+  Create Booking
+  ========================================
+  */
+
+  async createBooking(bookingData) {
+    const response = await api.post(
+      "/bookings",
       bookingData
     );
 
-    return bookingData;
+    return response.data;
   }
 
-  async getBookings() {
-    /*
-      GET /api/bookings
-    */
+  /*
+  ========================================
+  Get My Bookings
+  ========================================
+  */
 
-    console.log(
-      "GET BOOKINGS API"
+  async getMyBookings() {
+    const response = await api.get(
+      "/bookings/my-bookings"
     );
 
-    return [];
+    return response.data;
   }
 
-  async getBookingById(
-    bookingId
+  /*
+  ========================================
+  Get Booking By ID
+  ========================================
+  */
+
+  async getBookingById(bookingId) {
+    const response = await api.get(
+      `/bookings/${bookingId}`
+    );
+
+    return response.data;
+  }
+
+  /*
+  ========================================
+  Get Product Booking Availability
+  ========================================
+  */
+
+  async getBookingAvailability(productId) {
+    const response = await api.get(
+      `/bookings/availability/${productId}`
+    );
+
+    return response.data;
+  }
+
+  /*
+  ========================================
+  Update Booking
+  ========================================
+  */
+
+  async updateBooking(
+    bookingId,
+    bookingData
   ) {
-    /*
-      GET /api/bookings/:id
-    */
-
-    console.log(
-      "GET BOOKING",
-      bookingId
+    const response = await api.put(
+      `/bookings/${bookingId}`,
+      bookingData
     );
 
-    return null;
+    return response.data;
   }
+
+  /*
+  ========================================
+  Update Booking Status
+  ========================================
+  */
 
   async updateBookingStatus(
     bookingId,
     status
   ) {
-    /*
-      PATCH /api/bookings/:id
-    */
-
-    console.log(
-      "UPDATE BOOKING STATUS",
-      bookingId,
-      status
+    const response = await api.put(
+      `/bookings/${bookingId}`,
+      {
+        bookingStatus: status,
+      }
     );
 
-    return true;
+    return response.data;
   }
 
-  async deleteBooking(
-    bookingId
-  ) {
-    /*
-      DELETE /api/bookings/:id
-    */
+  /*
+  ========================================
+  Delete Booking
+  ========================================
+  */
 
-    console.log(
-      "DELETE BOOKING",
-      bookingId
+  async deleteBooking(bookingId) {
+    const response = await api.delete(
+      `/bookings/${bookingId}`
     );
 
-    return true;
+    return response.data;
   }
 }
 

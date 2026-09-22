@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-
 import "./PerfectStyleShowcase.css";
 
 import one from "../../assets/one.png";
@@ -11,9 +10,7 @@ import four from "../../assets/four.png";
 const PerfectStyleShowcase = () => {
   return (
     <section className="perfect-style-showcase-main">
-
       <div className="container">
-
         <motion.div
           className="perfect-style-showcase-wrapper"
           initial={{ opacity: 0, y: 80 }}
@@ -21,11 +18,8 @@ const PerfectStyleShowcase = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-
           {/* Left Side */}
-
           <div className="perfect-style-showcase-left">
-
             <h2 className="perfect-style-showcase-title">
               Choose Your <span>Perfect Style</span>
             </h2>
@@ -42,7 +36,6 @@ const PerfectStyleShowcase = () => {
               scale={1.02}
             >
               <div className="perfect-style-image-wrapper">
-
                 <img
                   src={one}
                   alt="Lehengas"
@@ -53,22 +46,17 @@ const PerfectStyleShowcase = () => {
                   <h5>Lehengas</h5>
                   <span>15 products</span>
                 </div>
-
               </div>
             </Tilt>
-
           </div>
 
           {/* Right Side */}
-
           <div className="perfect-style-showcase-right">
-
             <Tilt
               tiltMaxAngleX={4}
               tiltMaxAngleY={4}
             >
               <div className="perfect-style-image-wrapper">
-
                 <img
                   src={three}
                   alt=""
@@ -79,18 +67,15 @@ const PerfectStyleShowcase = () => {
                   <h5>Lehengas</h5>
                   <span>24 products</span>
                 </div>
-
               </div>
             </Tilt>
 
             <div className="perfect-style-bottom-grid">
-
               <Tilt
                 tiltMaxAngleX={4}
                 tiltMaxAngleY={4}
               >
                 <div className="perfect-style-image-wrapper">
-
                   <img
                     src={two}
                     alt=""
@@ -101,7 +86,6 @@ const PerfectStyleShowcase = () => {
                     <h5>Lehengas</h5>
                     <span>30 products</span>
                   </div>
-
                 </div>
               </Tilt>
 
@@ -110,7 +94,6 @@ const PerfectStyleShowcase = () => {
                 tiltMaxAngleY={4}
               >
                 <div className="perfect-style-image-wrapper">
-
                   <img
                     src={four}
                     alt=""
@@ -121,18 +104,12 @@ const PerfectStyleShowcase = () => {
                     <h5>Lehengas</h5>
                     <span>24 products</span>
                   </div>
-
                 </div>
               </Tilt>
-
             </div>
-
           </div>
-
         </motion.div>
-
       </div>
-
     </section>
   );
 };

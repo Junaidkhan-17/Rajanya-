@@ -1,168 +1,275 @@
+/* =========================================================
+   TRENDING RENTAL COLLECTION
+   ========================================================= */
+
 .trending-rental-collection-main {
+  width: 100%;
   padding: 100px 70px;
   background: #f8f8f8;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-/* Header */
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .trending-rental-collection-header {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 40px;
   margin-bottom: 60px;
 }
 
+.trending-rental-collection-header-content {
+  min-width: 0;
+}
+
 .trending-rental-collection-title {
+  margin: 0 0 5px;
   font-size: 58px;
+  line-height: 1.1;
   font-weight: 700;
   color: #0b0b0b;
-  margin-bottom: 5px;
-  font-family: "Newake";
+  font-family: "Barlow";
 }
 
 .trending-rental-collection-title span {
   font-size: 68px;
+  line-height: 1;
   font-weight: 700;
   color: #ffc800;
-  margin-bottom: 20px;
-  font-family: "Newake";
- -webkit-text-stroke: 2px rgb(0, 0, 0);
+  font-family: "Barlow";
+  -webkit-text-stroke: 2px rgb(0, 0, 0);
 }
 
 .trending-rental-collection-description {
+  width: 100%;
   max-width: 620px;
+  margin: 0 0 5px;
   font-size: 18px;
-  line-height: 1.5;
-  color: #6b6b6b;
-  margin-bottom: 5px;
+  line-height: 1.3;
+  color: #2f2f2f;
+  font-family: "Barlow";
+  text-align: left;
 }
 
 .trending-rental-collection-see-all-btn {
-  border: none;
-  background: #030516;
-  color: white;
+  flex: 0 0 auto;
   width: 160px;
   height: 58px;
+  padding: 0 20px;
+  border: none;
   border-radius: 14px;
+  background: #030516;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  font-family: "Barlow";
+  font-size: 16px;
+  cursor: pointer;
   transition: all 0.4s ease;
 }
 
 .trending-rental-collection-see-all-btn:hover {
   transform: translateY(-4px);
-  box-shadow: 0px 18px 35px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* Card */
+/* =========================================================
+   CARD
+   ========================================================= */
 
 .trending-rental-card-main {
+  width: 100%;
   overflow: hidden;
-  background: white;
+  background: #ffffff;
   border-radius: 14px;
   transition: all 0.45s ease;
 }
 
 .trending-rental-card-main:hover {
   transform: translateY(-12px);
-  box-shadow: 0px 35px 60px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 35px 60px rgba(0, 0, 0, 0.12);
 }
+
+/* =========================================================
+   VIDEO
+   ========================================================= */
 
 .trending-rental-card-image-wrapper {
   position: relative;
-  overflow: hidden;
-}
-
-.trending-rental-card-image {
   width: 100%;
-  height: 620px;
-  object-fit: cover;
-  transition: all 0.8s ease;
+  overflow: hidden;
+  background: #111111;
 }
 
-.trending-rental-card-main:hover .trending-rental-card-image {
+.trending-rental-card-video {
+  width: 100%;
+  height: 590px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.trending-rental-card-main:hover .trending-rental-card-video {
   transform: scale(1.08);
 }
 
-/* Luxury Overlay */
+/* =========================================================
+   LUXURY OVERLAY
+   ========================================================= */
 
 .trending-rental-card-overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   opacity: 0;
-  transition: 0.5s ease;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
 
-.trending-rental-card-main:hover
-.trending-rental-card-overlay {
+.trending-rental-card-main:hover .trending-rental-card-overlay {
   opacity: 1;
 }
 
-/* Content */
+/* =========================================================
+   CONTENT
+   ========================================================= */
 
 .trending-rental-card-content {
+  width: 100%;
   padding: 28px;
+  box-sizing: border-box;
 }
 
-.trending-rental-card-content h3 {
+.trending-rental-card-title {
+  margin: 0 0 10px;
   font-size: 22px;
+  line-height: 1.25;
   font-weight: 700;
-  color: #000000;
-  margin-bottom: 12px;
-  margin-left: -230px;
+  color: #111111;
+  text-align: left;
+  font-family: "Barlow";
 }
 
-.trending-rental-card-content span {
+.trending-rental-card-category {
+  display: block;
+  margin: 0 0 18px;
   font-size: 13px;
-  color: #000000;
+  line-height: 1.3;
   font-weight: 700;
   letter-spacing: 1px;
-  margin-left: -330px;
+  color: #555555;
+  text-align: left;
+  font-family: "Barlow";
 }
 
+/* =========================================================
+   PRICE + CTA
+   ========================================================= */
+
 .trending-rental-card-bottom {
+  width: 100%;
   margin-top: 25px;
-  border-top: 1px solid #ececec;
   padding-top: 20px;
+  border-top: 1px solid #ececec;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 18px;
 }
 
 .trending-rental-card-price {
+  min-width: 0;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .trending-rental-card-price strong {
   font-size: 28px;
+  line-height: 1.1;
   color: #1c1c1c;
+  font-family: "Barlow";
 }
 
 .trending-rental-card-price small {
-  color: #999;
+  font-size: 13px;
+  color: #999999;
   text-decoration: line-through;
+  font-family: "Barlow";
 }
 
 .trending-rental-card-btn {
+  flex: 0 0 auto;
   width: 170px;
-  height: 52px;
-  border-radius: 14px;
+  min-height: 52px;
+  padding: 0 18px;
   border: none;
+  border-radius: 14px;
   background: #020515;
-  color: white;
+  color: #ffffff;
+  font-family: "Barlow";
+  font-size: 15px;
+  cursor: pointer;
   transition: all 0.4s ease;
 }
 
 .trending-rental-card-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0px 18px 35px rgba(0,0,0,.18);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
 }
 
-/* Responsive */
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .trending-rental-collection-main {
+    padding: 110px 70px;
+  }
+
+  .trending-rental-card-video {
+    height: 620px;
+  }
+}
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .trending-rental-collection-main {
+    padding: 90px 50px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 50px;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 60px;
+  }
+
+  .trending-rental-card-video {
+    height: 540px;
+  }
+
+  .trending-rental-card-content {
+    padding: 24px;
+  }
+}
+
+/* =========================================================
+   TABLET / LAPTOP
+   ========================================================= */
 
 @media (max-width: 991px) {
   .trending-rental-collection-main {
@@ -172,75 +279,490 @@
   .trending-rental-collection-header {
     flex-direction: column;
     gap: 25px;
+    margin-bottom: 45px;
   }
 
   .trending-rental-collection-title {
     font-size: 42px;
   }
 
-  .trending-rental-card-image {
+  .trending-rental-collection-title span {
+    font-size: 50px;
+  }
+
+  .trending-rental-collection-description {
+    max-width: 680px;
+    font-size: 17px;
+  }
+
+  .trending-rental-collection-see-all-btn {
+    width: 150px;
+    height: 54px;
+  }
+
+  .trending-rental-card-video {
     height: 500px;
+  }
+
+  .trending-rental-card-content {
+    padding: 24px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 21px;
+  }
+
+  .trending-rental-card-bottom {
+    gap: 14px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 25px;
+  }
+
+  .trending-rental-card-btn {
+    width: 155px;
+    min-height: 50px;
   }
 }
 
-@media (max-width: 576px) {
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .trending-rental-collection-main {
+    padding: 65px 22px;
+  }
+
+  .trending-rental-collection-header {
+    margin-bottom: 38px;
+    gap: 22px;
+  }
+
   .trending-rental-collection-title {
-    font-size: 34px;
+    font-size: 38px;
+    line-height: 1.08;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 46px;
+  }
+
+  .trending-rental-collection-description {
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .trending-rental-collection-see-all-btn {
+    width: 145px;
+    height: 52px;
+    font-size: 15px;
+  }
+
+  .trending-rental-card-video {
+    height: 460px;
+  }
+
+  .trending-rental-card-content {
+    padding: 22px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 20px;
+  }
+
+  .trending-rental-card-category {
+    font-size: 12px;
+    margin-bottom: 16px;
+  }
+
+  .trending-rental-card-bottom {
+    margin-top: 20px;
+    padding-top: 17px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 24px;
+  }
+
+  .trending-rental-card-btn {
+    width: 150px;
+    min-height: 48px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .trending-rental-collection-main {
+    padding: 55px 16px;
+  }
+
+  .trending-rental-collection-header {
+    margin-bottom: 32px;
+    gap: 20px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: clamp(30px, 8vw, 36px);
+    line-height: 1.08;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: clamp(38px, 10vw, 46px);
+    line-height: 1;
   }
 
   .trending-rental-collection-description {
     font-size: 15px;
+    line-height: 1.5;
   }
 
-  .trending-rental-card-image {
+  .trending-rental-collection-see-all-btn {
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    border-radius: 12px;
+  }
+
+  .trending-rental-card-main {
+    border-radius: 13px;
+  }
+
+  .trending-rental-card-video {
     height: 420px;
+  }
+
+  .trending-rental-card-content {
+    padding: 20px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 19px;
+    line-height: 1.25;
+  }
+
+  .trending-rental-card-category {
+    font-size: 12px;
+    margin-bottom: 15px;
   }
 
   .trending-rental-card-bottom {
     flex-direction: column;
+    align-items: stretch;
     gap: 15px;
+    margin-top: 19px;
+    padding-top: 17px;
+  }
+
+  .trending-rental-card-price {
+    justify-content: flex-start;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 23px;
   }
 
   .trending-rental-card-btn {
     width: 100%;
+    min-height: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .trending-rental-card-main:hover {
+    transform: translateY(-6px);
+  }
+
+  .trending-rental-card-main:hover .trending-rental-card-video {
+    transform: scale(1.05);
   }
 }
 
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
 
-/* Video */
+@media (max-width: 480px) {
+  .trending-rental-collection-main {
+    padding: 48px 15px;
+  }
 
-.trending-rental-card-video {
-  width: 100%;
-  height: 590px;
-  object-fit: cover;
-  display: block;
-  transition: all 0.8s ease;
+  .trending-rental-collection-header {
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 28px;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 38px;
+  }
+
+  .trending-rental-collection-description {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .trending-rental-collection-see-all-btn {
+    width: 100%;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .trending-rental-card-video {
+    height: 340px;
+  }
+
+  .trending-rental-card-content {
+    padding: 18px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 18px;
+  }
+
+  .trending-rental-card-category {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+  }
+
+  .trending-rental-card-bottom {
+    gap: 13px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 22px;
+  }
+
+  .trending-rental-card-price small {
+    font-size: 12px;
+  }
+
+  .trending-rental-card-btn {
+    min-height: 46px;
+    height: 46px;
+    font-size: 14px;
+  }
 }
 
-.trending-rental-card-main:hover .trending-rental-card-video {
-  transform: scale(1.08);
+/* =========================================================
+   430px
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .trending-rental-collection-main {
+    padding: 42px 14px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 26px;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 35px;
+  }
+
+  .trending-rental-collection-description {
+    font-size: 13.5px;
+  }
+
+  .trending-rental-card-video {
+    height: 320px;
+  }
+
+  .trending-rental-card-content {
+    padding: 16px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 17px;
+  }
+
+  .trending-rental-card-category {
+    font-size: 11px;
+    margin-bottom: 13px;
+  }
+
+  .trending-rental-card-bottom {
+    margin-top: 17px;
+    padding-top: 15px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 21px;
+  }
+
+  .trending-rental-card-btn {
+    height: 45px;
+    min-height: 45px;
+  }
 }
 
-/* Content */
+/* =========================================================
+   375px
+   ========================================================= */
 
-.trending-rental-card-content {
-  padding: 28px;
+@media (max-width: 375px) {
+  .trending-rental-collection-main {
+    padding: 38px 12px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 24px;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 32px;
+  }
+
+  .trending-rental-collection-description {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .trending-rental-card-video {
+    height: 300px;
+  }
+
+  .trending-rental-card-content {
+    padding: 15px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 16px;
+  }
+
+  .trending-rental-card-category {
+    font-size: 10.5px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 20px;
+  }
+
+  .trending-rental-card-price small {
+    font-size: 11px;
+  }
+
+  .trending-rental-card-btn {
+    height: 44px;
+    min-height: 44px;
+    font-size: 13px;
+  }
 }
 
-.trending-rental-card-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 10px;
-  text-align: left;
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .trending-rental-collection-main {
+    padding: 34px 10px;
+  }
+
+  .trending-rental-collection-title {
+    font-size: 22px;
+  }
+
+  .trending-rental-collection-title span {
+    font-size: 29px;
+  }
+
+  .trending-rental-collection-description {
+    font-size: 12px;
+  }
+
+  .trending-rental-collection-see-all-btn {
+    height: 46px;
+    font-size: 13px;
+  }
+
+  .trending-rental-card-video {
+    height: 280px;
+  }
+
+  .trending-rental-card-content {
+    padding: 14px;
+  }
+
+  .trending-rental-card-title {
+    font-size: 15px;
+  }
+
+  .trending-rental-card-category {
+    font-size: 10px;
+  }
+
+  .trending-rental-card-price strong {
+    font-size: 19px;
+  }
+
+  .trending-rental-card-btn {
+    height: 43px;
+    min-height: 43px;
+    font-size: 12.5px;
+  }
 }
 
-.trending-rental-card-category {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #555;
-  text-align: left;
-  margin-bottom: 18px;
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .trending-rental-collection-see-all-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .trending-rental-card-main:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .trending-rental-card-main:hover .trending-rental-card-video {
+    transform: none;
+  }
+
+  .trending-rental-card-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .trending-rental-collection-see-all-btn:active {
+    transform: translateY(-2px);
+  }
+
+  .trending-rental-card-main:active {
+    transform: translateY(-3px);
+  }
+
+  .trending-rental-card-main:active .trending-rental-card-video {
+    transform: scale(1.03);
+  }
+
+  .trending-rental-card-btn:active {
+    transform: translateY(-2px);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .trending-rental-card-main,
+  .trending-rental-card-video,
+  .trending-rental-card-overlay,
+  .trending-rental-card-btn,
+  .trending-rental-collection-see-all-btn {
+    transition: none;
+  }
 }

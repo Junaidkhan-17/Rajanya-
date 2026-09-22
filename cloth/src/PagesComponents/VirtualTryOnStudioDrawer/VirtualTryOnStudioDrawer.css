@@ -1,142 +1,1256 @@
+/* =========================================================
+   VIRTUAL TRY-ON STUDIO
+   Premium Responsive Drawer
+========================================================= */
+
 .virtual-studio-overlay {
   position: fixed;
   inset: 0;
   z-index: 999999;
 
-  background: rgba(0, 0, 0, 0.45);
-
   display: flex;
   justify-content: flex-end;
+  align-items: stretch;
 
-  backdrop-filter: blur(10px);
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+
+  background: rgba(8, 8, 12, 0.52);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  overflow: hidden;
+
+  overscroll-behavior: contain;
 }
+
+/* =========================================================
+   DRAWER
+========================================================= */
 
 .virtual-studio-drawer {
+  position: relative;
+
   width: min(950px, 58vw);
+  max-width: 950px;
+  min-width: 0;
+
   height: 100vh;
-  background: #ffffff;
+  height: 100dvh;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(139, 92, 246, 0.045),
+      transparent 30%
+    ),
+    #ffffff;
+
+  overflow-x: hidden;
   overflow-y: auto;
+
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  box-shadow: -20px 0 70px rgba(0, 0, 0, 0.14);
+
+  scrollbar-width: thin;
+  scrollbar-color: #d8d8dc transparent;
 }
 
-.virtual-studio-wrapper {
-  padding: 40px;
+.virtual-studio-drawer::-webkit-scrollbar {
+  width: 7px;
 }
+
+.virtual-studio-drawer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.virtual-studio-drawer::-webkit-scrollbar-thumb {
+  background: #d8d8dc;
+  border-radius: 20px;
+}
+
+.virtual-studio-drawer::-webkit-scrollbar-thumb:hover {
+  background: #bcbcc2;
+}
+
+/* =========================================================
+   MAIN WRAPPER
+========================================================= */
+
+.virtual-studio-wrapper {
+  width: 100%;
+  max-width: 100%;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .virtual-studio-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  width: 100%;
+  min-width: 0;
+
+  gap: 24px;
+}
+
+.virtual-studio-header-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.virtual-studio-eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 8px;
+
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+
+  color: #8b5cf6;
+
+  font-family: "Newake", sans-serif;
 }
 
 .virtual-studio-header h2 {
-  font-size: 1.5rem;
+  margin: 0;
+
+  font-size: clamp(1.45rem, 2vw, 1.8rem);
+  line-height: 1.1;
   font-weight: 700;
-  color: #111;
+
+  color: #111111;
+
   text-align: left;
-  font-family: "Newake";
+
+  font-family: "Newake", sans-serif;
 }
 
 .virtual-studio-header p {
-  margin-top: 5px;
-  font-size: 15px;
+  margin: 8px 0 0;
+
+  max-width: 480px;
+
+  font-size: clamp(13px, 1.2vw, 15px);
+  line-height: 1.55;
+
   color: #8b8b8b;
 }
+
+/* =========================================================
+   HEADER RIGHT
+========================================================= */
 
 .virtual-studio-header-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  gap: 12px;
 }
 
+/* =========================================================
+   TOKEN PILL
+========================================================= */
+
 .virtual-studio-token-pill {
-  padding: 8px 18px;
-  border-radius: 30px;
-  background: #fff4e8;
-  border: 1px solid #f5e2d3;
-  font-weight: 600;
-  font-family: "Newake";
+  min-height: 42px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 8px 16px;
+
+  border: 1px solid #f2dfd0;
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff8f0,
+      #fff2e5
+    );
+
+  color: #222222;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 4px 15px rgba(177, 120, 66, 0.06);
+
+  font-family: "Newake", sans-serif;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
+
+.virtual-studio-token-pill:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(177, 120, 66, 0.1);
+}
+
+.virtual-token-icon {
+  font-size: 14px;
+  color: #8b5cf6;
+}
+
+.virtual-token-label {
+  color: #777777;
+  font-weight: 600;
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
 
 .virtual-studio-close-btn {
   width: 48px;
   height: 48px;
+
+  min-width: 48px;
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #eeeeee;
   border-radius: 50%;
-  border: none;
-  background: #f7f7f7;
+
+  background: #f8f8f8;
+
+  color: #111111;
+
   cursor: pointer;
-  font-size: 20px;
-  color: #000000;
+
+  font-size: 18px;
+  line-height: 1;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
+
+.virtual-studio-close-btn:hover:not(:disabled) {
+  background: #111111;
+  border-color: #111111;
+
+  color: #ffffff;
+
+  transform: rotate(90deg);
+
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.15);
+}
+
+.virtual-studio-close-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.virtual-studio-close-btn:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.25);
+  outline-offset: 3px;
+}
+
+.virtual-studio-close-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   STEPPER
+========================================================= */
 
 .virtual-studio-stepper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 60px;
+  align-items: flex-start;
+
+  width: 100%;
+
+  margin-top: 48px;
+  margin-bottom: 52px;
+
+  padding: 0 10px;
+
+  box-sizing: border-box;
 }
 
 .virtual-step {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  min-width: 82px;
+
+  color: #a1a1a1;
+
+  text-align: center;
+
+  transition:
+    color 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .virtual-step-circle {
-  width: 55px;
-  height: 55px;
-
-  border-radius: 50%;
+  width: 54px;
+  height: 54px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  background: #f3f3f3;
+  flex-shrink: 0;
 
+  border-radius: 50%;
+
+  background: #f2f2f3;
+
+  color: #888888;
+
+  font-size: 15px;
   font-weight: 700;
-}
 
-.virtual-step.active .virtual-step-circle {
-  background: #8b5cf6;
-  color: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.025);
+
+  transition:
+    background 0.35s ease,
+    color 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
 }
 
 .virtual-step span {
-  margin-top: 15px;
-  font-size: 15px;
+  margin-top: 13px;
+
+  font-size: 13px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  color: #888888;
+
+  white-space: nowrap;
+
+  transition:
+    color 0.3s ease;
+}
+
+.virtual-step.active .virtual-step-circle {
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #7444db
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(139, 92, 246, 0.24);
+
+  transform: translateY(-2px);
 }
 
 .virtual-step.active span {
   color: #8b5cf6;
 }
 
+.virtual-step.completed .virtual-step-circle {
+  background: #111111;
+  color: #ffffff;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.14);
+}
+
+.virtual-step.completed span {
+  color: #222222;
+}
+
 .virtual-step-line {
+  flex: 0 1 180px;
+
   width: 180px;
   height: 2px;
-  background: #ececec;
-  margin: 0 30px;
+
+  margin: 27px 24px 0;
+
+  background: #ececee;
+
+  border-radius: 999px;
+
+  transition:
+    background 0.4s ease;
 }
+
+.virtual-step-line.completed {
+  background: #111111;
+}
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .virtual-main-content {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 50px;
 
-  margin-top: 40px;
-}
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    minmax(240px, 1fr);
 
-.virtual-left-section {
+  align-items: start;
+
+  gap: 42px;
+
   width: 100%;
+  min-width: 0;
+
+  margin-top: 10px;
 }
 
+.virtual-left-section,
 .virtual-right-section {
   width: 100%;
+  min-width: 0;
 }
 
-@media (max-width: 992px) {
+/* =========================================================
+   RIGHT SIDE
+========================================================= */
+
+.virtual-right-section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  min-width: 0;
+}
+
+/* =========================================================
+   RESULT STEP
+========================================================= */
+
+.virtual-result-step {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(240px, 280px);
+
+  align-items: start;
+
+  gap: 30px;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.virtual-result-main {
+  min-width: 0;
+  width: 100%;
+}
+
+.virtual-result-main .generated-result-card {
+  margin-top: 25px;
+}
+
+/* =========================================================
+   RESULT IMAGES
+========================================================= */
+
+.virtual-result-images {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.75fr)
+    minmax(0, 1.25fr);
+
+  gap: 20px;
+
+  align-items: start;
+
+  width: 100%;
+  min-width: 0;
+}
+
+.virtual-result-images img {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+}
+
+.virtual-result-images .uploaded-image-card,
+.virtual-result-images .generated-image-card {
+  width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   LARGE DESKTOP — 1440+
+========================================================= */
+
+@media (min-width: 1440px) {
+  .virtual-studio-wrapper {
+    padding: 46px;
+  }
+
+  .virtual-main-content {
+    gap: 48px;
+  }
+
+  .virtual-result-step {
+    gap: 34px;
+  }
+}
+
+/* =========================================================
+   DESKTOP — 1200 TO 1439
+========================================================= */
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+  .virtual-studio-drawer {
+    width: min(900px, 68vw);
+  }
+
+  .virtual-studio-wrapper {
+    padding: 38px;
+  }
+
+  .virtual-main-content {
+    gap: 38px;
+  }
+
+  .virtual-step-line {
+    max-width: 150px;
+  }
+}
+
+/* =========================================================
+   LAPTOP — 992 TO 1199
+========================================================= */
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .virtual-studio-drawer {
+    width: 72vw;
+  }
+
+  .virtual-studio-wrapper {
+    padding: 34px;
+  }
+
+  .virtual-main-content {
+    grid-template-columns:
+      minmax(0, 1.25fr)
+      minmax(220px, 0.9fr);
+
+    gap: 30px;
+  }
+
+  .virtual-result-step {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(220px, 250px);
+
+    gap: 24px;
+  }
+
+  .virtual-step-line {
+    width: 130px;
+    max-width: 130px;
+
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+}
+
+/* =========================================================
+   TABLET — 768 TO 991
+========================================================= */
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .virtual-studio-drawer {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .virtual-studio-wrapper {
+    padding: 32px;
+  }
+
   .virtual-main-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+
+    gap: 30px;
   }
+
+  .virtual-right-section {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .virtual-result-step {
+    grid-template-columns: 1fr;
+
+    gap: 28px;
+  }
+
+  .virtual-result-step .virtual-right-section {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .virtual-result-images {
+    grid-template-columns:
+      minmax(0, 0.8fr)
+      minmax(0, 1.2fr);
+
+    gap: 18px;
+  }
+
+  .virtual-studio-stepper {
+    margin-top: 40px;
+    margin-bottom: 42px;
+  }
+
+  .virtual-step-line {
+    width: 120px;
+    max-width: 120px;
+
+    margin-left: 18px;
+    margin-right: 18px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 576 TO 767
+========================================================= */
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .virtual-studio-overlay {
+    align-items: flex-end;
+  }
+
+  .virtual-studio-drawer {
+    width: 100%;
+    max-width: 100%;
+
+    height: 100vh;
+    height: 100dvh;
+
+    border-radius: 20px 20px 0 0;
+
+    box-shadow:
+      0 -18px 60px rgba(0, 0, 0, 0.18);
+  }
+
+  .virtual-studio-wrapper {
+    padding:
+      28px
+      24px
+      34px;
+  }
+
+  .virtual-studio-header {
+    gap: 16px;
+  }
+
+  .virtual-studio-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+
+  .virtual-studio-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .virtual-studio-header p {
+    font-size: 13px;
+
+    max-width: 360px;
+  }
+
+  .virtual-studio-header-right {
+    gap: 8px;
+  }
+
+  .virtual-studio-token-pill {
+    min-height: 40px;
+
+    padding: 7px 12px;
+
+    font-size: 12px;
+  }
+
+  .virtual-token-label {
+    display: none;
+  }
+
+  .virtual-studio-close-btn {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .virtual-studio-stepper {
+    margin-top: 38px;
+    margin-bottom: 38px;
+
+    padding: 0;
+  }
+
+  .virtual-step {
+    min-width: 78px;
+  }
+
+  .virtual-step-circle {
+    width: 48px;
+    height: 48px;
+
+    font-size: 14px;
+  }
+
+  .virtual-step span {
+    margin-top: 11px;
+
+    font-size: 12px;
+  }
+
+  .virtual-step-line {
+    width: 90px;
+    max-width: 90px;
+
+    margin: 24px 14px 0;
+  }
+
+  .virtual-main-content {
+    grid-template-columns: 1fr;
+
+    gap: 26px;
+
+    margin-top: 0;
+  }
+
+  .virtual-right-section {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+  }
+
+  .virtual-result-step {
+    grid-template-columns: 1fr;
+
+    gap: 26px;
+  }
+
+  .virtual-result-step .virtual-right-section {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+  }
+
+  .virtual-result-main .generated-result-card {
+    margin-top: 20px;
+  }
+
+  .virtual-result-images {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+}
+
+/* =========================================================
+   MOBILE — 375 TO 575
+========================================================= */
+
+@media (min-width: 375px) and (max-width: 575px) {
+  .virtual-studio-overlay {
+    align-items: flex-end;
+  }
+
+  .virtual-studio-drawer {
+    width: 100%;
+    max-width: 100%;
+
+    border-radius: 18px 18px 0 0;
+
+    box-shadow:
+      0 -16px 55px rgba(0, 0, 0, 0.2);
+  }
+
+  .virtual-studio-wrapper {
+    padding:
+      24px
+      17px
+      calc(30px + env(safe-area-inset-bottom));
+  }
+
+  .virtual-studio-header {
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .virtual-studio-eyebrow {
+    margin-bottom: 7px;
+
+    font-size: 8px;
+    letter-spacing: 0.13em;
+  }
+
+  .virtual-studio-header h2 {
+    font-size: clamp(1.35rem, 6vw, 1.5rem);
+  }
+
+  .virtual-studio-header p {
+    margin-top: 6px;
+
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .virtual-studio-header-right {
+    gap: 7px;
+  }
+
+  .virtual-studio-token-pill {
+    min-height: 38px;
+
+    padding: 6px 10px;
+
+    gap: 5px;
+
+    font-size: 11px;
+  }
+
+  .virtual-token-icon {
+    font-size: 12px;
+  }
+
+  .virtual-token-label {
+    display: none;
+  }
+
+  .virtual-studio-close-btn {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+    min-height: 42px;
+
+    font-size: 15px;
+  }
+
+  /* -------------------------------------------------------
+     Stepper
+  ------------------------------------------------------- */
+
+  .virtual-studio-stepper {
+    justify-content: space-between;
+
+    margin-top: 32px;
+    margin-bottom: 32px;
+
+    padding: 0 8px;
+  }
+
+  .virtual-step {
+    min-width: 72px;
+  }
+
+  .virtual-step-circle {
+    width: 46px;
+    height: 46px;
+
+    font-size: 13px;
+  }
+
+  .virtual-step span {
+    margin-top: 9px;
+
+    font-size: 11px;
+  }
+
+  .virtual-step-line {
+    flex: 1;
+
+    width: auto;
+    max-width: none;
+
+    min-width: 30px;
+
+    margin:
+      23px
+      8px
+      0;
+  }
+
+  /* -------------------------------------------------------
+     Main
+  ------------------------------------------------------- */
+
+  .virtual-main-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+
+    margin-top: 0;
+  }
+
+  .virtual-left-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0;
+  }
+
+  .virtual-right-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  /* -------------------------------------------------------
+     Result
+  ------------------------------------------------------- */
+
+  .virtual-result-step {
+    display: flex;
+    flex-direction: column;
+
+    gap: 22px;
+  }
+
+  .virtual-result-main {
+    width: 100%;
+  }
+
+  .virtual-result-main .generated-result-card {
+    margin-top: 18px;
+  }
+
+  .virtual-result-step .virtual-right-section {
+    display: flex;
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  .virtual-result-images {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .virtual-result-images img {
+    border-radius: 10px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE — 320 TO 374
+========================================================= */
+
+@media (min-width: 320px) and (max-width: 374px) {
+  .virtual-studio-overlay {
+    align-items: flex-end;
+  }
+
+  .virtual-studio-drawer {
+    width: 100%;
+    max-width: 100%;
+
+    border-radius: 16px 16px 0 0;
+  }
+
+  .virtual-studio-wrapper {
+    padding:
+      21px
+      13px
+      calc(26px + env(safe-area-inset-bottom));
+  }
+
+  .virtual-studio-header {
+    gap: 8px;
+  }
+
+  .virtual-studio-eyebrow {
+    font-size: 7px;
+
+    letter-spacing: 0.1em;
+  }
+
+  .virtual-studio-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .virtual-studio-header p {
+    font-size: 11px;
+
+    line-height: 1.4;
+  }
+
+  .virtual-studio-header-right {
+    gap: 5px;
+  }
+
+  .virtual-studio-token-pill {
+    min-height: 36px;
+
+    padding:
+      5px
+      8px;
+
+    font-size: 10px;
+  }
+
+  .virtual-token-icon {
+    font-size: 11px;
+  }
+
+  .virtual-studio-close-btn {
+    width: 40px;
+    height: 40px;
+
+    min-width: 40px;
+    min-height: 40px;
+
+    font-size: 14px;
+  }
+
+  /* -------------------------------------------------------
+     Stepper
+  ------------------------------------------------------- */
+
+  .virtual-studio-stepper {
+    margin-top: 27px;
+    margin-bottom: 27px;
+
+    padding: 0 3px;
+  }
+
+  .virtual-step {
+    min-width: 62px;
+  }
+
+  .virtual-step-circle {
+    width: 42px;
+    height: 42px;
+
+    font-size: 12px;
+  }
+
+  .virtual-step span {
+    margin-top: 8px;
+
+    font-size: 10px;
+  }
+
+  .virtual-step-line {
+    min-width: 24px;
+
+    margin:
+      21px
+      5px
+      0;
+  }
+
+  /* -------------------------------------------------------
+     Main
+  ------------------------------------------------------- */
+
+  .virtual-main-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 19px;
+  }
+
+  .virtual-right-section {
+    gap: 12px;
+  }
+
+  .virtual-result-step {
+    gap: 19px;
+  }
+
+  .virtual-result-step .virtual-right-section {
+    gap: 12px;
+  }
+
+  .virtual-result-main .generated-result-card {
+    margin-top: 15px;
+  }
+
+  .virtual-result-images {
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL / SAFETY
+========================================================= */
+
+@media (max-width: 319px) {
+  .virtual-studio-wrapper {
+    padding:
+      18px
+      10px
+      calc(22px + env(safe-area-inset-bottom));
+  }
+
+  .virtual-studio-header {
+    gap: 7px;
+  }
+
+  .virtual-studio-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .virtual-studio-header p {
+    font-size: 10px;
+  }
+
+  .virtual-studio-token-pill {
+    padding: 5px 7px;
+
+    font-size: 9px;
+  }
+
+  .virtual-studio-close-btn {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+    min-height: 38px;
+  }
+
+  .virtual-step {
+    min-width: 55px;
+  }
+
+  .virtual-step-circle {
+    width: 39px;
+    height: 39px;
+  }
+
+  .virtual-step span {
+    font-size: 9px;
+  }
+
+  .virtual-step-line {
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   Preserve functionality while respecting accessibility.
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .virtual-studio-drawer,
+  .virtual-studio-close-btn,
+  .virtual-studio-token-pill,
+  .virtual-step,
+  .virtual-step-circle,
+  .virtual-step span,
+  .virtual-step-line {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   Prevent hover-only movement from feeling sticky.
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .virtual-studio-token-pill:hover {
+    transform: none;
+
+    box-shadow:
+      0 4px 15px rgba(177, 120, 66, 0.06);
+  }
+
+  .virtual-studio-close-btn:hover:not(:disabled) {
+    transform: none;
+
+    background: #f8f8f8;
+    border-color: #eeeeee;
+
+    color: #111111;
+
+    box-shadow: none;
+  }
+
+  .virtual-studio-close-btn:active:not(:disabled) {
+    background: #111111;
+    border-color: #111111;
+    color: #ffffff;
+
+    transform: scale(0.94);
+  }
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.virtual-studio-close-btn:focus-visible {
+  outline: 3px solid rgba(139, 92, 246, 0.3);
+  outline-offset: 3px;
 }

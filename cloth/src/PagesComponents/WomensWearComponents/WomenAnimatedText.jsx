@@ -6,6 +6,8 @@ function AnimatedText() {
       <svg
         viewBox="0 0 1200 250"
         className="women-hero-svg"
+        role="img"
+        aria-label="Women's wear"
       >
         <text
           x="50%"
@@ -14,7 +16,7 @@ function AnimatedText() {
           dominantBaseline="middle"
           className="women-text-base"
         >
-          women's wear
+          Women's wear
         </text>
 
         <text
@@ -24,7 +26,7 @@ function AnimatedText() {
           dominantBaseline="middle"
           className="women-text-light"
         >
-          women's wear
+          Women's wear
         </text>
       </svg>
     </div>

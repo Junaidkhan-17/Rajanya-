@@ -1,240 +1,751 @@
-/* ========================================
+/* =========================================================
    FASHION PROCESS SECTION
-======================================== */
+   ========================================================= */
 
 .fashion-process-main {
-  padding: 90px 0 70px;
-  background: #ffffff;
   position: relative;
+
+  width: 100%;
+
+  padding: 90px 0 70px;
+
+  background: #ffffff;
+
   overflow: hidden;
 }
 
-/* ========================================
+/* =========================================================
    HEADING
-======================================== */
+   ========================================================= */
 
 .fashion-process-heading-wrapper {
-  text-align: center;
   margin-bottom: 90px;
+
+  text-align: center;
 }
 
 .fashion-process-title {
-  font-family: "Newake";
+  margin: 0 0 12px;
+
+  font-family: "Barlow", sans-serif;
   font-size: 58px;
   font-weight: 700;
   line-height: 1.15;
+
   color: #111827;
-  margin-bottom: 12px;
 }
 
 .fashion-process-title span {
-  font-family: "Newake";
-  font-size: 58px;
+  font-family: "Barlow", sans-serif;
+  font-size: inherit;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: inherit;
+
   color: #ffd500;
-  margin-bottom: 12px;
-  -webkit-text-stroke: 2px rgb(0, 0, 0);
+
+  -webkit-text-stroke: 2px #000000;
+  paint-order: stroke fill;
 }
 
 .fashion-process-subtitle {
-  font-size: 16px;
-  font-weight: 400;
-  color: #6b7280;
   margin: 0;
+
+  font-family: "Barlow", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  color: #393c43;
 }
 
-/* ========================================
+/* =========================================================
    PROCESS CARD
-======================================== */
+   ========================================================= */
 
 .fashion-process-card {
-  text-align: center;
+  width: 100%;
+
   padding: 20px 25px;
-  transition: all 0.4s ease;
+
+  text-align: center;
+
   cursor: pointer;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 .fashion-process-card:hover {
   transform: translateY(-10px);
 }
 
-/* ========================================
+/* =========================================================
    ICON BOX
-======================================== */
+   ========================================================= */
 
 .fashion-process-icon-box {
-  width: 68px;
-  height: 68px;
-  border-radius: 14px;
-  margin: 0 auto 28px;
+  position: relative;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  transition: all 0.4s ease;
-  position: relative;
+  width: 68px;
+  height: 68px;
+
+  margin: 0 auto 28px;
+
+  border-radius: 14px;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
 .fashion-process-icon-box i {
+  position: relative;
+  z-index: 2;
+
   font-size: 28px;
+  line-height: 1;
+
   color: #111827;
-  transition: all 0.4s ease;
+
+  transition: transform 0.4s ease;
 }
 
-/* Purple */
+/* =========================================================
+   ICON COLORS
+   ========================================================= */
 
 .fashion-process-icon-purple {
   background: #e7ecff;
 }
 
-/* Lavender */
-
 .fashion-process-icon-lavender {
   background: #efe1ff;
 }
-
-/* Blue */
 
 .fashion-process-icon-blue {
   background: #cdefff;
 }
 
-/* Hover */
+/* =========================================================
+   ICON HOVER
+   ========================================================= */
 
-.fashion-process-card:hover .fashion-process-icon-box {
+.fashion-process-card:hover
+  .fashion-process-icon-box {
   transform: scale(1.1) rotate(6deg);
 }
 
-.fashion-process-card:hover .fashion-process-icon-box i {
+.fashion-process-card:hover
+  .fashion-process-icon-box i {
   transform: scale(1.15);
 }
 
-/* ========================================
-   TITLE
-======================================== */
-
-.fashion-process-card-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #202124;
-  line-height: 1.45;
-  margin-bottom: 16px;
-}
-
-/* ========================================
-   DESCRIPTION
-======================================== */
-
-.fashion-process-card-description {
-  max-width: 280px;
-  margin: 0 auto;
-
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.7;
-
-  color: #6b7280;
-}
-
-/* ========================================
+/* =========================================================
    PREMIUM GLOW EFFECT
-======================================== */
+   ========================================================= */
 
 .fashion-process-icon-box::before {
   content: "";
+
   position: absolute;
+
+  top: 0;
+  left: 0;
 
   width: 100%;
   height: 100%;
+
   border-radius: inherit;
 
   opacity: 0;
-  transition: all 0.4s ease;
 
   background: radial-gradient(
     circle,
     rgba(139, 92, 246, 0.15) 0%,
     rgba(139, 92, 246, 0) 70%
   );
+
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+
+  pointer-events: none;
 }
 
-.fashion-process-card:hover .fashion-process-icon-box::before {
+.fashion-process-card:hover
+  .fashion-process-icon-box::before {
   opacity: 1;
+
   transform: scale(1.4);
 }
 
-/* ========================================
-   RESPONSIVE
-======================================== */
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
 
-@media (max-width: 1200px) {
-  .fashion-process-title {
-    font-size: 50px;
-  }
+.fashion-process-card-title {
+  margin: 0 0 16px;
+
+  font-family: "Barlow", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.45;
+
+  color: #202124;
 }
 
-@media (max-width: 992px) {
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
+.fashion-process-card-description {
+  max-width: 280px;
+
+  margin: 0 auto;
+
+  font-family: "Barlow", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.7;
+
+  color: #26282c;
+}
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+   ========================================================= */
+
+@media (min-width: 1440px) {
   .fashion-process-main {
-    padding: 80px 0 60px;
+    padding-top: 95px;
+    padding-bottom: 75px;
   }
 
   .fashion-process-heading-wrapper {
-    margin-bottom: 70px;
+    margin-bottom: 90px;
   }
 
   .fashion-process-title {
-    font-size: 42px;
-  }
-
-  .fashion-process-card {
-    margin-bottom: 50px;
-  }
-}
-
-@media (max-width: 768px) {
-  .fashion-process-title {
-    font-size: 34px;
+    font-size: 58px;
   }
 
   .fashion-process-subtitle {
-    font-size: 14px;
+    font-size: 20px;
+  }
+}
+
+/* =========================================================
+   DESKTOP
+   1200px
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .fashion-process-main {
+    padding: 85px 0 65px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 75px;
+  }
+
+  .fashion-process-title {
+    font-size: 50px;
+  }
+
+  .fashion-process-subtitle {
+    font-size: 19px;
+  }
+
+  .fashion-process-card {
+    padding: 20px 18px;
+  }
+}
+
+/* =========================================================
+   LAPTOP
+   992px
+   ========================================================= */
+
+@media (max-width: 992px) {
+  .fashion-process-main {
+    padding: 75px 0 55px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 60px;
+  }
+
+  .fashion-process-title {
+    font-size: 44px;
+    line-height: 1.15;
+  }
+
+  .fashion-process-title span {
+    -webkit-text-stroke-width: 1.5px;
+  }
+
+  .fashion-process-subtitle {
+    max-width: 700px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .fashion-process-card {
+    padding: 18px 15px;
+    margin-bottom: 35px;
+  }
+
+  .fashion-process-icon-box {
+    width: 72px;
+    height: 72px;
+
+    margin-bottom: 24px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 30px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 21px;
+    line-height: 1.35;
+  }
+
+  .fashion-process-card-description {
+    max-width: 290px;
+
+    font-size: 15px;
+    line-height: 1.65;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .fashion-process-main {
+    padding: 65px 0 45px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 50px;
+  }
+
+  .fashion-process-title {
+    max-width: 650px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  .fashion-process-title span {
+    -webkit-text-stroke-width: 1.25px;
+  }
+
+  .fashion-process-subtitle {
+    max-width: 580px;
+
     padding: 0 15px;
+
+    font-size: 17px;
+    line-height: 1.55;
+  }
+
+  .fashion-process-card {
+    padding: 18px 12px;
+    margin-bottom: 30px;
+  }
+
+  .fashion-process-icon-box {
+    width: 66px;
+    height: 66px;
+
+    margin-bottom: 22px;
+
+    border-radius: 13px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 28px;
   }
 
   .fashion-process-card-title {
     font-size: 20px;
+    line-height: 1.35;
+
+    margin-bottom: 12px;
   }
 
   .fashion-process-card-description {
-    font-size: 14px;
-  }
+    max-width: 300px;
 
-  .fashion-process-heading-wrapper {
-    margin-bottom: 55px;
+    font-size: 15px;
+    line-height: 1.65;
   }
 }
 
+/* =========================================================
+   MOBILE
+   576px
+   ========================================================= */
+
 @media (max-width: 576px) {
   .fashion-process-main {
-    padding: 70px 0 40px;
+    padding: 55px 0 35px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 42px;
   }
 
   .fashion-process-title {
-    font-size: 28px;
+    max-width: 430px;
+
+    padding: 0 10px;
+
+    font-size: 31px;
+    line-height: 1.18;
   }
 
-  .fashion-process-icon-box {
-    width: 60px;
-    height: 60px;
+  .fashion-process-title span {
+    -webkit-text-stroke-width: 1px;
   }
 
-  .fashion-process-icon-box i {
-    font-size: 24px;
+  .fashion-process-subtitle {
+    max-width: 420px;
+
+    padding: 0 15px;
+
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .fashion-process-card {
-    margin-bottom: 40px;
+    max-width: 430px;
+
+    margin: 0 auto 38px;
+
+    padding: 15px 15px;
+  }
+
+  .fashion-process-icon-box {
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 20px;
+
+    border-radius: 13px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 25px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 19px;
+    line-height: 1.35;
+
+    margin-bottom: 10px;
+  }
+
+  .fashion-process-card-description {
+    max-width: 340px;
+
+    font-size: 14px;
+    line-height: 1.65;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   480px
+   ========================================================= */
+
+@media (max-width: 480px) {
+  .fashion-process-main {
+    padding: 50px 0 30px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 38px;
+  }
+
+  .fashion-process-title {
+    max-width: 390px;
+
+    font-size: 28px;
+    line-height: 1.18;
+  }
+
+  .fashion-process-subtitle {
+    max-width: 370px;
+
+    padding: 0 12px;
+
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 35px;
+
+    padding: 14px 12px;
+  }
+
+  .fashion-process-icon-box {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 23px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 18px;
+    line-height: 1.35;
+
+    margin-bottom: 9px;
+  }
+
+  .fashion-process-card-description {
+    max-width: 330px;
+
+    font-size: 13.5px;
+    line-height: 1.65;
+  }
+}
+
+/* =========================================================
+   430px
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .fashion-process-main {
+    padding: 48px 0 28px;
+  }
+
+  .fashion-process-title {
+    padding: 0 8px;
+
+    font-size: 26px;
+  }
+
+  .fashion-process-subtitle {
+    padding: 0 10px;
+
+    font-size: 13.5px;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 32px;
+  }
+
+  .fashion-process-icon-box {
+    width: 56px;
+    height: 56px;
+
+    margin-bottom: 17px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 22px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 17.5px;
+  }
+
+  .fashion-process-card-description {
+    max-width: 315px;
+
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   375px
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .fashion-process-main {
+    padding: 44px 0 25px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 34px;
+  }
+
+  .fashion-process-title {
+    padding: 0 6px;
+
+    font-size: 24px;
+  }
+
+  .fashion-process-subtitle {
+    padding: 0 8px;
+
+    font-size: 13px;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 30px;
+
+    padding: 12px 10px;
+  }
+
+  .fashion-process-icon-box {
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 16px;
+
+    border-radius: 11px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 21px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 16.5px;
+  }
+
+  .fashion-process-card-description {
+    max-width: 300px;
+
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .fashion-process-main {
+    padding: 40px 0 22px;
+  }
+
+  .fashion-process-heading-wrapper {
+    margin-bottom: 30px;
+  }
+
+  .fashion-process-title {
+    padding: 0 4px;
+
+    font-size: 22px;
+  }
+
+  .fashion-process-subtitle {
+    padding: 0 6px;
+
+    font-size: 12.5px;
+  }
+
+  .fashion-process-card {
+    margin-bottom: 28px;
+
+    padding: 10px 8px;
+  }
+
+  .fashion-process-icon-box {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 14px;
+
+    border-radius: 10px;
+  }
+
+  .fashion-process-icon-box i {
+    font-size: 20px;
+  }
+
+  .fashion-process-card-title {
+    font-size: 15.5px;
+
+    margin-bottom: 8px;
+  }
+
+  .fashion-process-card-description {
+    max-width: 285px;
+
+    font-size: 12px;
+    line-height: 1.6;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .fashion-process-card:hover {
+    transform: none;
+  }
+
+  .fashion-process-card:hover
+    .fashion-process-icon-box {
+    transform: none;
+  }
+
+  .fashion-process-card:hover
+    .fashion-process-icon-box i {
+    transform: none;
+  }
+
+  .fashion-process-card:hover
+    .fashion-process-icon-box::before {
+    opacity: 0;
+    transform: none;
+  }
+
+  .fashion-process-card:active {
+    transform: translateY(-3px);
+  }
+
+  .fashion-process-card:active
+    .fashion-process-icon-box {
+    transform: scale(1.04);
+  }
+
+  .fashion-process-card:active
+    .fashion-process-icon-box i {
+    transform: scale(1.05);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .fashion-process-card,
+  .fashion-process-icon-box,
+  .fashion-process-icon-box i,
+  .fashion-process-icon-box::before {
+    transition: none;
   }
 }

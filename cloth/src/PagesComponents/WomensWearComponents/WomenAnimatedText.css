@@ -1,25 +1,60 @@
+/* ==========================================
+   WOMEN ANIMATED HERO TEXT
+========================================== */
+
 .women-hero-container {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: -110px;
-}
 
-.women-hero-svg {
-  width: 100%;
-  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: -110px;
+
   overflow: visible;
 }
 
+
+/* ==========================================
+   SVG
+========================================== */
+
+.women-hero-svg {
+  display: block;
+
+  width: 100%;
+  height: 120px;
+
+  overflow: visible;
+
+  flex-shrink: 0;
+}
+
+
+/* ==========================================
+   BASE TEXT
+========================================== */
+
 .women-text-base {
   fill: transparent;
+
   stroke: #ffae00;
   stroke-width: 2;
 
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  font-weight: 700;
+
+  paint-order: stroke fill;
+
+  vector-effect: non-scaling-stroke;
 }
+
+
+/* ==========================================
+   ANIMATED LIGHT TEXT
+========================================== */
 
 .women-text-light {
   fill: rgba(255, 217, 0, 0.963);
@@ -28,17 +63,27 @@
   stroke-width: 6;
 
   stroke-linecap: round;
+  stroke-linejoin: round;
 
   stroke-dasharray: 60 2000;
   stroke-dashoffset: 0;
 
-
-
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  font-weight: 700;
+
+  paint-order: stroke fill;
 
   animation: moveLight 5s linear infinite;
+
+  vector-effect: non-scaling-stroke;
 }
+
+
+/* ==========================================
+   ANIMATION
+========================================== */
 
 @keyframes moveLight {
   from {
@@ -47,5 +92,231 @@
 
   to {
     stroke-dashoffset: -2000;
+  }
+}
+
+
+/* ==========================================
+   LAPTOP
+   992px - 1199px
+========================================== */
+
+@media (max-width: 1199px) {
+  .women-hero-container {
+    margin-bottom: -85px;
+  }
+
+  .women-hero-svg {
+    height: 105px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 210px;
+  }
+}
+
+
+/* ==========================================
+   TABLET
+   768px - 991px
+========================================== */
+
+@media (max-width: 991px) {
+  .women-hero-container {
+    margin-bottom: -55px;
+  }
+
+  .women-hero-svg {
+    width: 100%;
+    height: 90px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 180px;
+  }
+
+  .women-text-light {
+    stroke-dasharray: 55 2000;
+  }
+}
+
+
+/* ==========================================
+   SMALL TABLET
+   576px - 767px
+========================================== */
+
+@media (max-width: 767px) {
+  .women-hero-container {
+    width: 100%;
+
+    margin-bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: visible;
+  }
+
+  .women-hero-svg {
+    width: 100%;
+    height: 72px;
+
+    overflow: visible;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 150px;
+  }
+
+  .women-text-base {
+    stroke-width: 2;
+  }
+
+  .women-text-light {
+    stroke-width: 5;
+
+    stroke-dasharray: 50 2000;
+
+    animation-duration: 5s;
+  }
+}
+
+
+/* ==========================================
+   MOBILE
+   430px - 575px
+========================================== */
+
+@media (max-width: 575px) {
+  .women-hero-container {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .women-hero-svg {
+    width: 100%;
+    height: 65px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 135px;
+  }
+
+  .women-text-light {
+    stroke-width: 4.5;
+    stroke-dasharray: 45 2000;
+  }
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+   375px - 429px
+========================================== */
+
+@media (max-width: 429px) {
+  .women-hero-container {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .women-hero-svg {
+    width: 100%;
+    height: 58px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 120px;
+  }
+
+  .women-text-base {
+    stroke-width: 1.8;
+  }
+
+  .women-text-light {
+    stroke-width: 4;
+    stroke-dasharray: 42 2000;
+  }
+}
+
+
+/* ==========================================
+   VERY SMALL MOBILE
+   320px - 374px
+========================================== */
+
+@media (max-width: 374px) {
+  .women-hero-container {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .women-hero-svg {
+    width: 100%;
+    height: 52px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 108px;
+  }
+
+  .women-text-base {
+    stroke-width: 1.6;
+  }
+
+  .women-text-light {
+    stroke-width: 3.5;
+    stroke-dasharray: 38 2000;
+  }
+}
+
+
+/* ==========================================
+   VERY NARROW DEVICES
+   <= 340px
+========================================== */
+
+@media (max-width: 340px) {
+  .women-hero-svg {
+    height: 48px;
+  }
+
+  .women-text-base,
+  .women-text-light {
+    font-size: 100px;
+  }
+
+  .women-text-light {
+    stroke-width: 3;
+  }
+}
+
+
+/* ==========================================
+   TOUCH DEVICES
+========================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .women-hero-container {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .women-text-light {
+    animation: none;
   }
 }

@@ -44,12 +44,17 @@ const CreateAccountModal = () => {
   ========================================== */
 
   const closeModal = () => {
-    dispatch({
-      type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
-    });
+  dispatch({
+    type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+  });
 
-    reset();
-  };
+  dispatch({
+    type: AUTH_ACTIONS.SET_ERROR,
+    payload: null,
+  });
+
+  reset();
+};
 
   /* ==========================================
      ESC KEY CLOSE
@@ -104,7 +109,7 @@ const onSubmit = async (data) => {
     const userData = {
       firstName: data.firstName.trim(),
       lastName: data.lastName.trim(),
-      email: data.email.trim(),
+      email: data.email.trim().toLowerCase(),
       password: data.password,
       phone: "",
     };
@@ -371,7 +376,7 @@ const onSubmit = async (data) => {
               {/* GOOGLE */}
 
               <button type="button" className="google-btn">
-                <i class="bi bi-google me-2"></i>
+                <i className="bi bi-google me-2"></i>
 
                 Continue with Google
               </button>

@@ -1,4 +1,5 @@
 import "./BestResultCard.css";
+
 import {
   Camera,
   Sun,

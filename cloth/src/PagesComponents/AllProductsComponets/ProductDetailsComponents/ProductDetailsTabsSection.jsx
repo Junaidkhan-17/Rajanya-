@@ -149,18 +149,14 @@ const ProductDetailsTabsSection = ({ product }) => {
                 y: -20,
               }}
             >
-              <h3 className="product-description-title">
-                "{product?.productDescription?.title}"
-              </h3>
+              <h3 className="product-description-title"> -: Product Description :-</h3>
 
               <div className="product-description-wrapper">
-                <ul className="product-description-list">
-                  {product?.productDescription?.content?.map((item, index) => (
-                    <li key={index} className="product-description-text">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                <p className="product-description-text">
+                  {product?.description ||
+                    product?.shortDescription ||
+                    "No description available."}
+                </p>
               </div>
             </motion.div>
           )}
@@ -187,24 +183,32 @@ const ProductDetailsTabsSection = ({ product }) => {
               <div className="row g-4">
                 <div className="col-lg-12">
                   <div className="product-fabric-card">
-                    <h4>Fabric Details</h4>
+                    <h4>Fabric Details :-</h4>
 
                     <ul>
-                      {product?.fabricAndCare?.fabric?.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))}
+                      {product?.materials?.length > 0 ? (
+                        product.materials.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))
+                      ) : (
+                        <li>No fabric details available.</li>
+                      )}
                     </ul>
                   </div>
                 </div>
 
                 <div className="col-lg-12">
                   <div className="product-fabric-card">
-                    <h4>Care Instructions</h4>
+                    <h4>Care Instructions :-</h4>
 
                     <ul>
-                      {product?.fabricAndCare?.care?.map((item, index) => (
-                        <li key={index}>{item}</li>
-                      ))}
+                      {product?.careInstructions?.length > 0 ? (
+                        product.careInstructions.map((item, index) => (
+                          <li key={index}>{item}</li>
+                        ))
+                      ) : (
+                        <li>No care instructions available.</li>
+                      )}
                     </ul>
                   </div>
                 </div>

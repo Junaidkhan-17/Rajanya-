@@ -77,7 +77,7 @@ const ContactGetInTouchSection = () => {
           <div className="contact-touch-heading">
 
             <h2>
-              Get in <span>touch</span>
+              Get in <span>Touch</span>
             </h2>
 
             <p>

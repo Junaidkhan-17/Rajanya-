@@ -1,40 +1,32 @@
 import { motion } from "framer-motion";
 import "./Hero.css";
 import AnimatedText from "./AnimatedText";
-
 import herovideo from "../../assets/video/herovideo.mp4";
-//import homehero from "../../assets/homehero.png";
 
 const HeroSection = () => {
   return (
     <section className="home-hero-main">
-
       <video
-    className="home-hero-background-video"
-    autoPlay
-    muted
-    loop
-    playsInline
-  >
-    <source src={herovideo} type="video/mp4" />
-  </video>
+        className="home-hero-background-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src={herovideo} type="video/mp4" />
+      </video>
 
-     {/* <img
-        src={homehero}
-        alt="Occasion Wear"
-        className="home-hero-background-image"
-      />
-*/}
-      {/* Right Fade Overlay */}
       <motion.div
         className="home-hero-overlay"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
+        aria-hidden="true"
       />
 
       <div className="home-hero-content-wrapper">
-
         <motion.div
           className="home-hero-content"
           initial={{
@@ -49,20 +41,19 @@ const HeroSection = () => {
             duration: 1,
           }}
         >
-
           <h1 className="home-hero-title">
-            {<AnimatedText />}
+            <AnimatedText />
           </h1>
 
-          <div className="home-hero-divider"></div>
+          <div className="home-hero-divider" aria-hidden="true"></div>
 
           <p className="home-hero-description">
-            A timeless and sustainable wardrobe,
-            where each ensemble is designed with perfection
-            and tailored to last.
+            A timeless and sustainable wardrobe, where each ensemble is
+            designed with perfection and tailored to last.
           </p>
 
           <motion.button
+            type="button"
             className="home-hero-book-button"
             whileHover={{
               scale: 1.05,
@@ -74,11 +65,8 @@ const HeroSection = () => {
           >
             Book for Rent
           </motion.button>
-
         </motion.div>
-
       </div>
-
     </section>
   );
 };

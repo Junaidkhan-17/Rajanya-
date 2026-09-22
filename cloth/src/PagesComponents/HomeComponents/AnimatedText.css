@@ -1,44 +1,80 @@
+/* =========================================================
+   HOME HERO ANIMATED TEXT
+   Premium Responsive SVG Typography
+   ========================================================= */
+
 .hero-container {
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: -110px;
-}
 
-.hero-svg {
-  width: 100%;
-  height: 340px;
+  /*
+    Desktop positioning preserved from the original design.
+    This is removed on mobile to prevent Hero content overlap.
+  */
+  margin-bottom: -110px;
+
   overflow: visible;
 }
 
+.hero-svg {
+  display: block;
+
+  width: 100%;
+  max-width: 1200px;
+  height: 340px;
+
+  overflow: visible;
+}
+
+
+/* =========================================================
+   BASE TEXT
+   ========================================================= */
+
 .text-base {
   fill: transparent;
+
   stroke: #ffae00;
   stroke-width: 2;
 
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  paint-order: stroke fill;
 }
 
+
+/* =========================================================
+   ANIMATED LIGHT TEXT
+   ========================================================= */
+
 .text-light {
-  fill: rgba(255, 217, 0, 0.963);
+  fill: rgba(0, 0, 0, 0.963);
 
   stroke: #ffffff;
   stroke-width: 6;
 
   stroke-linecap: round;
+  stroke-linejoin: round;
 
-  stroke-dasharray: 60 2000;
+  stroke-dasharray: 120 2000;
   stroke-dashoffset: 0;
 
-
-
   font-size: 240px;
-  font-family: "Muthiara";
+  font-family: "Barlow", sans-serif;
+
+  paint-order: stroke fill;
 
   animation: moveLight 5s linear infinite;
 }
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
 
 @keyframes moveLight {
   from {
@@ -47,5 +83,302 @@
 
   to {
     stroke-dashoffset: -2000;
+  }
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .hero-container {
+    margin-bottom: -110px;
+  }
+
+  .hero-svg {
+    height: 340px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 240px;
+  }
+
+  .text-base {
+    stroke-width: 2;
+  }
+
+  .text-light {
+    stroke-width: 6;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+   ========================================================= */
+
+@media (max-width: 1439px) {
+  .hero-container {
+    margin-bottom: -95px;
+  }
+
+  .hero-svg {
+    height: 290px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 220px;
+  }
+
+  .text-base {
+    stroke-width: 1.8;
+  }
+
+  .text-light {
+    stroke-width: 5.5;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+   992px - 1199px
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .hero-container {
+    margin-bottom: -75px;
+  }
+
+  .hero-svg {
+    height: 245px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 195px;
+  }
+
+  .text-base {
+    stroke-width: 1.7;
+  }
+
+  .text-light {
+    stroke-width: 5;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .hero-container {
+    margin-bottom: -40px;
+  }
+
+  .hero-svg {
+    height: 195px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 170px;
+  }
+
+  .text-base {
+    stroke-width: 1.6;
+  }
+
+  .text-light {
+    stroke-width: 4.5;
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+   576px - 767px
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .hero-container {
+    width: 100%;
+    margin-bottom: 0;
+
+    padding: 0;
+  }
+
+  .hero-svg {
+    width: 100%;
+    max-width: 100%;
+
+    height: 145px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 150px;
+  }
+
+  .text-base {
+    stroke-width: 1.5;
+  }
+
+  .text-light {
+    stroke-width: 4;
+  }
+
+  .text-light {
+    stroke-dasharray: 95 2000;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   430px - 575px
+   ========================================================= */
+
+@media (max-width: 575px) {
+  .hero-container {
+    margin-bottom: 0;
+  }
+
+  .hero-svg {
+    height: 115px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 135px;
+  }
+
+  .text-base {
+    stroke-width: 1.4;
+  }
+
+  .text-light {
+    stroke-width: 3.5;
+  }
+
+  .text-light {
+    stroke-dasharray: 80 2000;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 429px
+   ========================================================= */
+
+@media (max-width: 429px) {
+  .hero-svg {
+    height: 100px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 120px;
+  }
+
+  .text-base {
+    stroke-width: 1.3;
+  }
+
+  .text-light {
+    stroke-width: 3.2;
+  }
+
+  .text-light {
+    stroke-dasharray: 70 2000;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   320px - 374px
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .hero-svg {
+    height: 88px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 108px;
+  }
+
+  .text-base {
+    stroke-width: 1.2;
+  }
+
+  .text-light {
+    stroke-width: 3;
+  }
+
+  .text-light {
+    stroke-dasharray: 60 2000;
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+   <= 340px
+   ========================================================= */
+
+@media (max-width: 340px) {
+  .hero-svg {
+    height: 80px;
+  }
+
+  .text-base,
+  .text-light {
+    font-size: 100px;
+  }
+
+  .text-base {
+    stroke-width: 1.1;
+  }
+
+  .text-light {
+    stroke-width: 2.7;
+  }
+
+  .text-light {
+    stroke-dasharray: 55 2000;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .hero-container {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .text-light {
+    animation: none;
   }
 }
