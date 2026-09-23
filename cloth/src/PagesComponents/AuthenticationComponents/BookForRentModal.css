@@ -1,197 +1,349 @@
-/* ==========================================
+/* =========================================================
    BOOK FOR RENT MODAL
    Rajanya Luxury Fashion Rental Platform
-========================================== */
+   Responsive: 320px → 1920px
+========================================================= */
+
+/* =========================================================
+   OVERLAY
+========================================================= */
 
 .book-rent-overlay {
   position: fixed;
   inset: 0;
+
+  width: 100%;
+  height: 100dvh;
+
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: rgba(12, 12, 12, 0.78);
+
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  z-index: 9999;
 
-}
-
-.book-rent-modal {
-  width: 100%;
-  max-width: 1280px;
-  background: #ffffff;
-  border-radius: 4px;
-  position: relative;
-  margin-left: 450px;
-  max-height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;
+
+  overscroll-behavior: contain;
+
+  z-index: 999999;
+
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.book-rent-modal {
+  position: relative;
+
+  width: min(1280px, 100%);
+
+  max-width: 1280px;
+
+  max-height: calc(100dvh - 48px);
+
+  margin: 0;
+
+  background: #ffffff;
+
+  border-radius: 6px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 
   box-shadow:
     0 25px 80px rgba(0, 0, 0, 0.18),
     0 8px 25px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+
+  scrollbar-width: thin;
+  scrollbar-color: #c8a96b transparent;
 }
 
-/* ==========================================
+.book-rent-modal::-webkit-scrollbar {
+  width: 7px;
+}
+
+.book-rent-modal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.book-rent-modal::-webkit-scrollbar-thumb {
+  background: #c8a96b;
+  border-radius: 100px;
+}
+
+/* =========================================================
    HEADER
-========================================== */
+========================================================= */
 
 .book-rent-header {
+  position: relative;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 18px 30px;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  padding: 20px 30px;
+
   border-bottom: 1px solid #ececec;
-  background: linear-gradient(
-    135deg,
-    #ffffff,
-    #faf8f4
-  );
+
+  background: linear-gradient(135deg, #ffffff, #faf8f4);
+
+  box-sizing: border-box;
 }
 
 .book-rent-header-content {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
-  gap: 4px;
   align-items: flex-start;
+
+  gap: 4px;
+
+  padding-right: 50px;
+}
+
+.book-rent-eyebrow {
+  display: block;
+
+  margin-bottom: 2px;
+
+  color: #b8934f;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.8px;
+
+  line-height: 1.4;
 }
 
 .book-rent-header h2 {
   margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
+
   color: #111111;
+
+  font-size: clamp(1.15rem, 1.5vw, 1.55rem);
+
+  font-weight: 600;
+
   letter-spacing: 0.5px;
+
+  line-height: 1.3;
 }
 
 .book-rent-header p {
   margin: 0;
 
-  font-size: 15px;
   color: #6b7280;
-  line-height: 1.6;
+
+  font-size: 14px;
+
+  line-height: 1.5;
 }
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
 
 .book-rent-close {
   position: absolute;
-  top: 20px;
+
+  top: 18px;
   right: 20px;
 
-  width: 35px;
-  height: 35px;
+  width: 42px;
+  min-width: 42px;
+
+  height: 42px;
+  min-height: 42px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  background: rgb(255, 255, 255);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: 0;
 
-  transition: all 0.4s ease;
+  border: none;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background: #ffffff;
+
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+
   overflow: hidden;
+
+  z-index: 5;
 }
 
-/* Animated Glow Ring */
 .book-rent-close::before {
   content: "";
+
   position: absolute;
+
   inset: -2px;
+
   border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    #000000aa,
-    #00000044,
-    #00000000
-  );
+
+  background: linear-gradient(135deg, #000000aa, #00000044, #00000000);
+
   opacity: 0;
+
+  transition: opacity 0.35s ease;
+
   z-index: -1;
-  transition: opacity 0.4s ease;
 }
 
-/* Hover Effect */
 .book-rent-close:hover {
-  transform: translateY(-4px) scale(1.08) rotate(90deg);
+  transform: translateY(-3px) scale(1.06) rotate(90deg);
+
+  background: #f8f8f8;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .book-rent-close:hover::before {
   opacity: 1;
 }
 
-/* Click Effect */
 .book-rent-close:active {
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
 
-/* Icon Animation */
 .book-rent-close svg {
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
 .book-rent-close:hover svg {
   transform: rotate(-90deg);
 }
-/* ==========================================
-   CONTENT
-========================================== */
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .book-rent-content {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding: 40px;
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(300px, 0.75fr);
+
+  align-items: start;
+
+  gap: 42px;
+
+  padding: 38px 40px 42px;
+
+  box-sizing: border-box;
 }
 
-/* ==========================================
-   LEFT SECTION
-========================================== */
+/* =========================================================
+   FORM SECTION
+========================================================= */
 
 .book-rent-form-section {
   width: 100%;
+
+  min-width: 0;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 22px 24px;
+
+  width: 100%;
 }
 
 .form-group {
+  min-width: 0;
+
   display: flex;
   flex-direction: column;
 }
 
 .form-group label {
-  font-size: 0.85rem;
+  margin: 0 0 7px;
+
+  color: #444444;
+
+  font-size: 0.82rem;
+
   font-weight: 600;
-  color: #444;
-    margin-top: -6px;
-  margin-bottom: 2px;
+
   letter-spacing: 0.3px;
+
+  line-height: 1.4;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  height: 44px;
-  border: 2px solid #aba9a96f;
-  border-radius: 3px;
-  padding: 0 18px;
-  background: #fff;
-  font-size: 0.85rem;
-  color: #111;
+  min-width: 0;
+
+  height: 46px;
+
+  padding: 0 15px;
+
+  border: 1.5px solid #aba9a96f;
+
+  border-radius: 4px;
+
   outline: none;
-  transition: all 0.25s ease;
+
+  background: #ffffff;
+
+  color: #111111;
+
+  font-family: inherit;
+
+  font-size: 0.88rem;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: #c8a96b;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   border-color: #c8a96b;
+
   box-shadow: 0 0 0 4px rgba(200, 169, 107, 0.12);
+}
+
+.form-group select {
+  cursor: pointer;
 }
 
 .form-group.full-width {
@@ -203,75 +355,94 @@
 }
 
 .error {
+  display: block;
+
+  margin-top: 5px;
+
   color: #d32f2f;
-  font-size: 0.8rem;
-  margin-top: 6px;
+
+  font-size: 0.76rem;
+
+  line-height: 1.4;
 }
 
-/* ==========================================
+/* =========================================================
    SIZE SELECTOR
-========================================== */
+========================================================= */
 
 .size-options {
+  width: 100%;
+
   display: flex;
+
   flex-wrap: wrap;
-  gap: 12px;
+
+  gap: 10px;
 }
 
 .size-btn {
-  min-width: 64px;
-  height: 48px;
-  border-radius: 12px;
+  min-width: 60px;
+
+  min-height: 44px;
+
+  padding: 8px 14px;
+
   border: 1px solid #d9d9d9;
-  background: #fff;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #222222;
+
   cursor: pointer;
-  font-size: 0.92rem;
+
+  font-family: inherit;
+
+  font-size: 0.88rem;
+
   font-weight: 600;
-  transition: all 0.25s ease;
+
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .size-btn:hover {
   border-color: #c8a96b;
-  color: #c8a96b;
+
+  color: #b8934f;
+
+  transform: translateY(-2px);
+}
+
+.size-btn:active {
+  transform: scale(0.96);
 }
 
 .size-btn.active {
-  background: linear-gradient(
-    135deg,
-    #c8a96b,
-    #b8934f
-  );
+  background: linear-gradient(135deg, #c8a96b, #b8934f);
+
   border-color: #c8a96b;
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(200, 169, 107, 0.3);
+
+  color: #ffffff;
+
+  box-shadow: 0 8px 20px rgba(200, 169, 107, 0.25);
 }
-/* ==========================================
+
+/* =========================================================
    DATE PICKER
-========================================== */
+========================================================= */
 
-.date-picker-input {
+.date-picker-wrapper {
+  position: relative;
+
   width: 100%;
-  height: 52px;
 
-  padding: 0 50px 0 16px;
-
-  border: 1px solid #dcdcdc;
-  border-radius: 12px;
-
-  font-size: 14px;
-}
-
-.date-picker-icon {
-  position: absolute;
-
-  top: 50%;
-  right: 16px;
-
-  transform: translateY(-50%);
-
-  color: #6b7280;
-
-  pointer-events: none;
+  min-width: 0;
 }
 
 .react-datepicker-wrapper {
@@ -284,271 +455,890 @@
 
 .custom-date-input {
   width: 100%;
+  min-width: 0;
 
-  height: 52px;
+  height: 46px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 16px;
+  gap: 10px;
 
-  border: 1px solid #dcdcdc;
-  border-radius: 12px;
+  padding: 0 14px;
+
+  border: 1.5px solid #dcdcdc;
+
+  border-radius: 4px;
+
+  outline: none;
 
   background: #ffffff;
 
+  color: #111827;
+
   cursor: pointer;
 
-  font-size: 14px;
-  color: #111827;
+  font-family: inherit;
+
+  font-size: 0.86rem;
+
+  text-align: left;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-/* ==========================================
+.custom-date-input:hover {
+  border-color: #c8a96b;
+}
+
+.custom-date-input:focus-visible {
+  border-color: #c8a96b;
+
+  box-shadow: 0 0 0 4px rgba(200, 169, 107, 0.12);
+}
+
+.custom-date-input span {
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.custom-date-input svg {
+  flex-shrink: 0;
+
+  color: #6b7280;
+}
+
+/* =========================================================
    ORDER SUMMARY
-========================================== */
+========================================================= */
 
 .order-summary {
   width: 100%;
+
+  min-width: 0;
 }
 
 .order-summary h3 {
-  margin: 0 0 18px;
-  font-size: 1.4rem;
-  color: #111;
+  margin: 0 0 16px;
+
+  color: #111111;
+
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+
   font-weight: 700;
+
+  line-height: 1.3;
 }
 
 .summary-card {
-  background: linear-gradient(
-    180deg,
-    #ffffff,
-    #faf9f7,
-  );
-  border: 1px solid #ece6db;
-  border-radius: 2px;
-  padding: 24px;
   position: sticky;
+
   top: 20px;
+
+  width: 100%;
+
+  padding: 22px;
+
+  border: 1px solid #ece6db;
+
+  border-radius: 4px;
+
+  background: linear-gradient(180deg, #ffffff, #faf9f7);
+
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.05),
     0 4px 10px rgba(0, 0, 0, 0.03);
+
+  box-sizing: border-box;
+}
+
+.summary-product-image-wrapper {
+  width: 100%;
+
+  margin-bottom: 17px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background: #f5f5f5;
 }
 
 .summary-card img {
+  display: block;
+
   width: 100%;
-  height: 340px;
+
+  height: 300px;
+
   object-fit: cover;
-  border-radius: 18px;
-  margin-bottom: 18px;
+
+  object-position: center;
+
+  transition: transform 0.5s ease;
+}
+
+.summary-product-image-wrapper:hover .summary-product-image {
+  transform: scale(1.025);
 }
 
 .summary-card h4 {
-  margin: 0 0 20px;
-  font-size: 1.1rem;
-  color: #111;
+  margin: 0 0 17px;
+
+  color: #111111;
+
+  font-size: 1.05rem;
+
   font-weight: 700;
-  line-height: 1.5;
+
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
 }
 
 .summary-row {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
-  padding: 14px 0;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 12px 0;
+
   border-bottom: 1px solid #ededed;
 }
 
 .summary-row span:first-child {
-  color: #666;
-  font-size: 0.92rem;
+  color: #666666;
+
+  font-size: 0.88rem;
 }
 
 .summary-row span:last-child {
+  color: #111111;
+
+  font-size: 0.9rem;
+
   font-weight: 600;
-  color: #111;
+
+  text-align: right;
+
+  overflow-wrap: anywhere;
 }
 
 .summary-total {
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
-  padding-top: 22px;
-  margin-top: 12px;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-top: 19px;
+
+  margin-top: 10px;
+
   border-top: 2px solid #e7ddcb;
 }
 
 .summary-total span:first-child {
-  font-size: 1.05rem;
+  color: #111111;
+
+  font-size: 1rem;
+
   font-weight: 700;
-  color: #111;
 }
 
 .summary-total span:last-child {
-  font-size: 1.3rem;
-  font-weight: 800;
   color: #c8a96b;
+
+  font-size: 1.25rem;
+
+  font-weight: 800;
+
+  text-align: right;
 }
 
-/* ==========================================
-   BUTTON
-========================================== */
+/* =========================================================
+   CONFIRM BUTTON
+========================================================= */
 
 .confirm-booking-btn {
-  width: 35%;
-  height: 48px;
+  width: 100%;
+
+  min-height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 24px;
+
+  padding: 12px 18px;
+
   border: none;
-  border-radius: 0px;
-  margin-top: 28px;
+
+  border-radius: 2px;
+
   cursor: pointer;
-  background: linear-gradient(
-    135deg,
-    #000000,
-    #000000
-  );
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
+
+  background: #000000;
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 0.88rem;
+
+  font-weight: 500;
+
+  letter-spacing: 0.6px;
+
+  line-height: 1.3;
+
+  text-align: center;
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
 }
 
 .confirm-booking-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(200, 169, 107, 0.35);
+
+  background: #111111;
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
 
 .confirm-booking-btn:active {
-  transform: translateY(0);
+  transform: translateY(0) scale(0.99);
 }
 
-/* ==========================================
-   SCROLLBAR
-========================================== */
+.confirm-booking-btn:focus-visible {
+  outline: 2px solid #c8a96b;
 
-.book-rent-overlay::-webkit-scrollbar {
-  width: 8px;
+  outline-offset: 3px;
 }
 
-.book-rent-overlay::-webkit-scrollbar-thumb {
-  background: #c8a96b;
-  border-radius: 100px;
-}
+/* =========================================================
+   TABLET / LAPTOP
+   992px – 1199px
+========================================================= */
 
-/* ==========================================
-   LAPTOP
-========================================== */
+@media (max-width: 1199px) {
+  .book-rent-overlay {
+    padding: 20px;
+  }
 
-@media (max-width: 1200px) {
+  .book-rent-modal {
+    max-width: 1100px;
+
+    max-height: calc(100dvh - 40px);
+  }
+
   .book-rent-content {
+    grid-template-columns:
+      minmax(0, 1.25fr)
+      minmax(280px, 0.75fr);
+
     gap: 30px;
+
+    padding: 32px;
   }
 
   .summary-card img {
-    height: 280px;
+    height: 270px;
   }
 }
 
-/* ==========================================
+/* =========================================================
    TABLET
-========================================== */
+   768px – 991px
+========================================================= */
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
+  .book-rent-overlay {
+    align-items: flex-start;
+
+    padding: 18px;
+  }
+
   .book-rent-modal {
-    max-width: 95%;
+    width: 100%;
+
+    max-width: 900px;
+
+    max-height: calc(100dvh - 36px);
+
+    margin: 0;
+
+    border-radius: 12px;
   }
 
   .book-rent-content {
     grid-template-columns: 1fr;
+
+    gap: 30px;
+
+    padding: 30px;
+  }
+
+  .order-summary {
+    order: 2;
+  }
+
+  .book-rent-form-section {
+    order: 1;
   }
 
   .summary-card {
     position: static;
   }
 
+  .summary-product-image-wrapper {
+    max-width: 520px;
+
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   .summary-card img {
-    height: 320px;
+    height: 330px;
+  }
+
+  .confirm-booking-btn {
+    width: 100%;
   }
 }
 
-/* ==========================================
+/* =========================================================
    MOBILE
-========================================== */
+   576px – 767px
+========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .book-rent-overlay {
-    padding: 12px;
     align-items: flex-start;
+
+    padding: 10px;
+
+    background: rgba(12, 12, 12, 0.82);
   }
 
   .book-rent-modal {
-    margin-top: 20px;
-    border-radius: 20px;
+    width: 100%;
+
+    max-width: none;
+
+    max-height: calc(100dvh - 20px);
+
+    margin: 0;
+
+    border-radius: 14px;
   }
 
   .book-rent-header {
-    padding: 20px;
+    min-height: 82px;
+
+    align-items: flex-start;
+
+    padding: 18px 60px 17px 18px;
+
+    gap: 12px;
+  }
+
+  .book-rent-header-content {
+    width: 100%;
+
+    padding-right: 0;
+  }
+
+  .book-rent-eyebrow {
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
   }
 
   .book-rent-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+
+    line-height: 1.3;
+  }
+
+  .book-rent-header p {
+    max-width: 90%;
+
+    font-size: 12px;
+
+    line-height: 1.45;
+  }
+
+  .book-rent-close {
+    top: 17px;
+
+    right: 15px;
+
+    width: 40px;
+    min-width: 40px;
+
+    height: 40px;
+    min-height: 40px;
+  }
+
+  .book-rent-close svg {
+    width: 25px;
+
+    height: 25px;
   }
 
   .book-rent-content {
-    padding: 20px;
-    gap: 24px;
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 28px;
+
+    padding: 22px 18px 24px;
+  }
+
+  .book-rent-form-section {
+    width: 100%;
   }
 
   .form-grid {
     grid-template-columns: 1fr;
+
+    gap: 18px;
   }
 
   .form-group.full-width {
-    grid-column: span 1;
+    grid-column: auto;
   }
 
-  .summary-card img {
-    height: 260px;
+  .form-group label {
+    margin-bottom: 6px;
+
+    font-size: 0.79rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 46px;
+
+    padding: 0 13px;
+
+    font-size: 0.86rem;
+  }
+
+  .size-options {
+    display: grid;
+
+    grid-template-columns: repeat(auto-fit, minmax(58px, 1fr));
+
+    gap: 8px;
   }
 
   .size-btn {
-    flex: 1;
-    min-width: 60px;
-  }
-}
+    width: 100%;
 
-/* ==========================================
-   SMALL MOBILE
-========================================== */
+    min-width: 0;
 
-@media (max-width: 480px) {
-  .book-rent-header {
-    padding: 18px;
-  }
+    min-height: 44px;
 
-  .book-rent-content {
-    padding: 18px;
+    padding: 8px 10px;
+
+    border-radius: 7px;
+
+    font-size: 0.82rem;
   }
 
-  .book-rent-close {
-    width: 42px;
-    height: 42px;
+  .custom-date-input {
+    height: 46px;
+
+    padding: 0 13px;
+
+    font-size: 0.84rem;
+  }
+
+  .react-datepicker {
+    font-size: 0.82rem;
+  }
+
+  .order-summary {
+    width: 100%;
+  }
+
+  .order-summary h3 {
+    margin-bottom: 12px;
+
+    font-size: 1.15rem;
   }
 
   .summary-card {
-    padding: 18px;
+    width: 100%;
+
+    padding: 16px;
+
+    border-radius: 10px;
+  }
+
+  .summary-product-image-wrapper {
+    width: 100%;
+
+    max-width: none;
+
+    margin-bottom: 15px;
+
+    border-radius: 12px;
   }
 
   .summary-card img {
-    height: 220px;
+    width: 100%;
+
+    height: min(72vw, 320px);
+
+    min-height: 220px;
+
+    object-fit: cover;
   }
 
-  .confirm-booking-btn {
-    height: 54px;
+  .summary-card h4 {
+    margin-bottom: 14px;
+
+    font-size: 1rem;
+
+    line-height: 1.4;
+  }
+
+  .summary-row {
+    gap: 14px;
+
+    padding: 10px 0;
+  }
+
+  .summary-row span:first-child {
+    font-size: 0.82rem;
+  }
+
+  .summary-row span:last-child {
+    font-size: 0.84rem;
+  }
+
+  .summary-total {
+    padding-top: 16px;
+
+    margin-top: 8px;
+  }
+
+  .summary-total span:first-child {
     font-size: 0.95rem;
   }
 
   .summary-total span:last-child {
     font-size: 1.15rem;
+  }
+
+  .confirm-booking-btn {
+    width: 100%;
+
+    min-height: 50px;
+
+    margin-top: 20px;
+
+    padding: 12px 14px;
+
+    font-size: 0.78rem;
+
+    letter-spacing: 0.4px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   375px – 575px
+========================================================= */
+
+@media (max-width: 575px) {
+  .book-rent-overlay {
+    padding: 7px;
+  }
+
+  .book-rent-modal {
+    max-height: calc(100dvh - 14px);
+
+    border-radius: 12px;
+  }
+
+  .book-rent-header {
+    min-height: 78px;
+
+    padding: 16px 54px 15px 16px;
+  }
+
+  .book-rent-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .book-rent-header p {
+    font-size: 11.5px;
+  }
+
+  .book-rent-close {
+    top: 14px;
+
+    right: 12px;
+
+    width: 38px;
+    min-width: 38px;
+
+    height: 38px;
+    min-height: 38px;
+  }
+
+  .book-rent-close svg {
+    width: 23px;
+
+    height: 23px;
+  }
+
+  .book-rent-content {
+    gap: 24px;
+
+    padding: 20px 14px 22px;
+  }
+
+  .form-grid {
+    gap: 16px;
+  }
+
+  .form-group label {
+    font-size: 0.77rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 44px;
+
+    font-size: 0.83rem;
+  }
+
+  .size-options {
+    grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+
+    gap: 7px;
+  }
+
+  .size-btn {
+    min-height: 42px;
+
+    padding: 7px 8px;
+
+    font-size: 0.78rem;
+  }
+
+  .custom-date-input {
+    height: 44px;
+
+    font-size: 0.81rem;
+  }
+
+  .summary-card {
+    padding: 14px;
+  }
+
+  .summary-card img {
+    height: 240px;
+
+    min-height: 200px;
+  }
+
+  .summary-card h4 {
+    font-size: 0.95rem;
+  }
+
+  .summary-row span:first-child {
+    font-size: 0.79rem;
+  }
+
+  .summary-row span:last-child {
+    font-size: 0.81rem;
+  }
+
+  .summary-total span:first-child {
+    font-size: 0.9rem;
+  }
+
+  .summary-total span:last-child {
+    font-size: 1.05rem;
+  }
+
+  .confirm-booking-btn {
+    min-height: 50px;
+
+    font-size: 0.73rem;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px – 374px
+========================================================= */
+
+@media (max-width: 374px) {
+  .book-rent-overlay {
+    padding: 5px;
+  }
+
+  .book-rent-modal {
+    max-height: calc(100dvh - 10px);
+
+    border-radius: 10px;
+  }
+
+  .book-rent-header {
+    padding: 14px 50px 14px 14px;
+  }
+
+  .book-rent-header h2 {
+    font-size: 1rem;
+  }
+
+  .book-rent-header p {
+    font-size: 10.5px;
+  }
+
+  .book-rent-close {
+    top: 12px;
+
+    right: 10px;
+
+    width: 36px;
+    min-width: 36px;
+
+    height: 36px;
+    min-height: 36px;
+  }
+
+  .book-rent-content {
+    padding: 18px 12px 20px;
+  }
+
+  .form-group input,
+  .form-group select {
+    height: 43px;
+
+    font-size: 0.8rem;
+  }
+
+  .size-btn {
+    min-height: 40px;
+
+    font-size: 0.74rem;
+  }
+
+  .custom-date-input {
+    height: 43px;
+
+    font-size: 0.78rem;
+  }
+
+  .summary-card {
+    padding: 12px;
+  }
+
+  .summary-card img {
+    height: 210px;
+
+    min-height: 180px;
+  }
+
+  .summary-total span:last-child {
+    font-size: 1rem;
+  }
+
+  .confirm-booking-btn {
+    min-height: 48px;
+
+    padding: 10px 8px;
+
+    font-size: 0.68rem;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .book-rent-close:hover {
+    transform: none;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .book-rent-close:hover::before {
+    opacity: 0;
+  }
+
+  .size-btn:hover {
+    transform: none;
+
+    border-color: #d9d9d9;
+
+    color: #222222;
+  }
+
+  .confirm-booking-btn:hover {
+    transform: none;
+
+    box-shadow: none;
+
+    background: #000000;
+  }
+
+  .summary-product-image-wrapper:hover .summary-product-image {
+    transform: none;
+  }
+
+  .book-rent-close:active {
+    transform: scale(0.94);
+  }
+
+  .size-btn:active {
+    transform: scale(0.96);
+  }
+
+  .confirm-booking-btn:active {
+    transform: scale(0.985);
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .book-rent-close,
+  .book-rent-close svg,
+  .size-btn,
+  .confirm-booking-btn,
+  .form-group input,
+  .form-group select,
+  .custom-date-input,
+  .summary-product-image {
+    transition: none;
   }
 }

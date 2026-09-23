@@ -1,14 +1,26 @@
 import "./BookForRentModal.css";
 
 import { useEffect, useRef, useState, forwardRef } from "react";
+
+import { createPortal } from "react-dom";
+
 import { motion, AnimatePresence } from "framer-motion";
+
 import { useForm } from "react-hook-form";
+
 import { XIcon } from "@animateicons/react/lucide";
+
 import bookingService from "../../services/bookingService";
+
 import DatePicker from "react-datepicker";
+
 import "react-datepicker/dist/react-datepicker.css";
-//import bookingAvailabilityService from "../../services/bookingAvailabilityService";
+
 import { CalendarDays } from "lucide-react";
+
+/* =========================================================
+   CUSTOM DATE INPUT
+========================================================= */
 
 const CustomDateInput = forwardRef(({ value, onClick, placeholder }, ref) => (
   <button
@@ -16,6 +28,7 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }, ref) => (
     className="custom-date-input"
     onClick={onClick}
     ref={ref}
+    aria-label={placeholder || "Select date"}
   >
     <span>{value || "Select Date"}</span>
 
@@ -25,15 +38,25 @@ const CustomDateInput = forwardRef(({ value, onClick, placeholder }, ref) => (
 
 CustomDateInput.displayName = "CustomDateInput";
 
+/* =========================================================
+   LOCAL DATE FORMATTER
+========================================================= */
+
 const formatLocalDate = (date) => {
   if (!date) return "";
 
   const year = date.getFullYear();
+
   const month = String(date.getMonth() + 1).padStart(2, "0");
+
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 };
+
+/* =========================================================
+   BOOK FOR RENT MODAL
+========================================================= */
 
 const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   console.log("BOOK MODAL", {
@@ -41,7 +64,16 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
     bookingData,
     currentUser,
   });
+
+  /* =========================================================
+     REFS
+  ========================================================= */
+
   const modalRef = useRef(null);
+
+  /* =========================================================
+     FORM
+  ========================================================= */
 
   const {
     register,
@@ -50,49 +82,128 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
     formState: { errors },
   } = useForm();
 
+  /* =========================================================
+     STATE
+  ========================================================= */
+
   const [selectedSize, setSelectedSize] = useState("");
+
   const [selectedRentalOption, setSelectedRentalOption] = useState(null);
+
   const [startDate, setStartDate] = useState(null);
 
   const [returnDate, setReturnDate] = useState(null);
 
   const [excludedDates, setExcludedDates] = useState([]);
-  /* -------------------------------- */
-  /* Prefill Data */
-  /* -------------------------------- */
+
+  /* =========================================================
+     PREFILL DATA
+  ========================================================= */
 
   useEffect(() => {
     if (!bookingData) return;
 
-    setSelectedSize(bookingData.selectedSize || "");
+    /* =====================================================
+     SIZE
+  ===================================================== */
 
-    const matchedRental =
-      bookingData.product?.rentalOptions?.find(
-        (option) => option.days === bookingData.rentalDuration,
-      ) || null;
+    setSelectedSize(bookingData.selectedSize || "");
+    /*
+    bookingData.rentalDuration can arrive as:
+    - number
+    - string
+    - undefined
+  */
+
+    const requestedDuration = Number(bookingData.rentalDuration);
+
+    let matchedRental = null;
+
+    if (Number.isFinite(requestedDuration) && requestedDuration > 0) {
+      matchedRental =
+        rentalOptions.find(
+          (option) => Number(option.days) === requestedDuration,
+        ) || null;
+    }
+
+    /*
+    Fallback:
+    If duration was not passed correctly but
+    rentalPrice was passed, find the matching
+    rental option using price.
+  */
+
+    if (!matchedRental && bookingData.rentalPrice != null) {
+      matchedRental =
+        rentalOptions.find(
+          (option) => Number(option.price) === Number(bookingData.rentalPrice),
+        ) || null;
+    }
+
+    /*
+    Final fallback:
+    If there is only one rental option,
+    automatically select it.
+  */
+
+    if (!matchedRental && rentalOptions.length === 1) {
+      matchedRental = rentalOptions[0];
+    }
 
     setSelectedRentalOption(matchedRental);
 
-    setValue(
-      "startDate",
-      bookingData.startDate ? bookingData.startDate.slice(0, 10) : "",
-    );
+    /* =====================================================
+     DATES
+  ===================================================== */
 
-    setValue(
-      "returnDate",
-      bookingData.returnDate ? bookingData.returnDate.slice(0, 10) : "",
-    );
+    if (bookingData.startDate) {
+      const parsedStartDate = new Date(bookingData.startDate);
+
+      if (!Number.isNaN(parsedStartDate.getTime())) {
+        setStartDate(parsedStartDate);
+
+        setValue("startDate", formatLocalDate(parsedStartDate));
+      }
+    } else {
+      setStartDate(null);
+
+      setValue("startDate", "");
+    }
+
+    if (bookingData.returnDate) {
+      const parsedReturnDate = new Date(bookingData.returnDate);
+
+      if (!Number.isNaN(parsedReturnDate.getTime())) {
+        setReturnDate(parsedReturnDate);
+
+        setValue("returnDate", formatLocalDate(parsedReturnDate));
+      }
+    } else {
+      setReturnDate(null);
+
+      setValue("returnDate", "");
+    }
+
+    /* =====================================================
+     USER
+  ===================================================== */
 
     if (currentUser) {
       setValue("fullName", currentUser.name || "");
+
       setValue("email", currentUser.email || "");
     }
   }, [bookingData, currentUser, setValue]);
+
+  /* =========================================================
+     FETCH BOOKING AVAILABILITY
+  ========================================================= */
 
   useEffect(() => {
     const fetchAvailability = async () => {
       if (!bookingData?.product?._id) {
         setExcludedDates([]);
+
         return;
       }
 
@@ -132,13 +243,13 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
     fetchAvailability();
   }, [bookingData]);
 
-  /* -------------------------------- */
-  /* ESC Close */
-  /* -------------------------------- */
+  /* =========================================================
+     ESC CLOSE
+  ========================================================= */
 
   useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
         onClose();
       }
     };
@@ -147,16 +258,34 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       document.addEventListener("keydown", handleEsc);
     }
 
-    return () => document.removeEventListener("keydown", handleEsc);
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+    };
   }, [isOpen, onClose]);
 
-  /* -------------------------------- */
-  /* Click Outside Close */
-  /* -------------------------------- */
+  /* =========================================================
+     BODY SCROLL LOCK
+  ========================================================= */
 
   useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
+    if (!isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  /* =========================================================
+     CLICK OUTSIDE CLOSE
+  ========================================================= */
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
         onClose();
       }
     };
@@ -165,40 +294,50 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       document.addEventListener("mousedown", handleOutsideClick);
     }
 
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
   }, [isOpen, onClose]);
 
-  /* -------------------------------- */
-  /* Submit Booking */
-  /* -------------------------------- */
+  /* =========================================================
+     SUBMIT BOOKING
+  ========================================================= */
 
   const onSubmit = async (data) => {
     if (!selectedSize) {
       alert("Please select a size");
+
       return;
     }
 
     if (!selectedRentalOption) {
       alert("Please select rental duration");
+
       return;
     }
 
     const booking = {
       user: {
         userId: currentUser?.id || null,
+
         fullName: data.fullName,
+
         mobileNumber: data.mobileNumber,
+
         email: data.email,
       },
 
       address: {
         city: data.city,
+
         state: data.state,
+
         pinCode: data.pinCode,
       },
 
       rental: {
         startDate: data.startDate,
+
         returnDate: data.returnDate,
       },
 
@@ -213,7 +352,7 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
 
         productBrand: bookingData.product?.brand || "",
 
-        productImage: bookingData.product?.images?.[0] || "",
+        productImage: productImage || "",
 
         productUrl: bookingData.product?.slug
           ? `${window.location.origin}/products/${bookingData.product.slug}`
@@ -306,7 +445,9 @@ ${booking.product.productImage}
 ${booking.product.productUrl}
 `;
 
-      const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
+      const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(
+        message,
+      )}`;
 
       window.open(whatsappUrl, "_blank");
     } catch (error) {
@@ -316,6 +457,7 @@ ${booking.product.productUrl}
 
       return;
     }
+
     /*
       Future Payment Integration
 
@@ -334,15 +476,75 @@ ${booking.product.productUrl}
     onClose();
   };
 
-  if (!isOpen || !bookingData) return null;
+  /* =========================================================
+     CLOSED STATE
+  ========================================================= */
 
-  return (
+  if (!isOpen || !bookingData) {
+    return null;
+  }
+
+const product = bookingData?.product || {};
+
+const rentalOptions = Array.isArray(product.rentalOptions)
+  ? product.rentalOptions
+  : Array.isArray(bookingData?.rentalOptions)
+    ? bookingData.rentalOptions
+    : [];
+
+
+const getProductImage = (productData) => {
+  const imageCandidates = [
+    productData?.mainImage,
+    productData?.thumbnailImage,
+    productData?.image,
+    productData?.imageUrl,
+    productData?.thumbnail,
+    productData?.galleryImages?.[0],
+    productData?.images?.[0],
+  ];
+
+  const image = imageCandidates.find(Boolean);
+
+  if (!image) return "";
+
+  if (typeof image === "string") {
+    return image;
+  }
+
+  if (typeof image === "object") {
+    return (
+      image.url ||
+      image.secure_url ||
+      image.src ||
+      image.path ||
+      ""
+    );
+  }
+
+  return "";
+};
+
+const productImage = getProductImage(product);
+
+  /* =========================================================
+     MODAL CONTENT
+  ========================================================= */
+
+  const modalContent = (
     <AnimatePresence>
       <motion.div
         className="book-rent-overlay"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        exit={{
+          opacity: 0,
+        }}
+        role="presentation"
       >
         <motion.div
           ref={modalRef}
@@ -364,33 +566,56 @@ ${booking.product.productUrl}
           transition={{
             duration: 0.3,
           }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="book-rent-title"
         >
-          {/* Header */}
+          {/* =================================================
+              HEADER
+          ================================================= */}
 
           <div className="book-rent-header">
             <div className="book-rent-header-content">
-              <h2>Book For Rent</h2>
+              <span className="book-rent-eyebrow">RAJANYA RENTAL</span>
+
+              <h2 id="book-rent-title">Book For Rent</h2>
+
               <p>Complete the form below to reserve your outfit</p>
             </div>
-            <button onClick={onClose} className="book-rent-close">
-              <XIcon size={34} duration={1} color="#000000ff" />
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="book-rent-close"
+              aria-label="Close booking modal"
+            >
+              <XIcon size={30} duration={1} color="#000000" />
             </button>
           </div>
 
+          {/* =================================================
+              FORM
+          ================================================= */}
+
           <form onSubmit={handleSubmit(onSubmit)} className="book-rent-content">
-            {/* LEFT */}
+            {/* =================================================
+                LEFT / FORM SECTION
+            ================================================= */}
 
             <div className="book-rent-form-section">
               <div className="form-grid">
+                {/* FULL NAME */}
+
                 <div className="form-group">
-                  <label>Full Name</label>
+                  <label htmlFor="fullName">Full Name</label>
 
                   <input
+                    id="fullName"
                     type="text"
                     {...register("fullName", {
                       required: "Full name required",
                     })}
-                    placeholder="Enter Full Name "
+                    placeholder="Enter Full Name"
                   />
 
                   {errors.fullName && (
@@ -398,36 +623,51 @@ ${booking.product.productUrl}
                   )}
                 </div>
 
+                {/* MOBILE */}
+
                 <div className="form-group">
-                  <label>Mobile Number</label>
+                  <label htmlFor="mobileNumber">Mobile Number</label>
 
                   <input
+                    id="mobileNumber"
                     type="tel"
                     {...register("mobileNumber", {
                       required: "Mobile number required",
                     })}
                     placeholder="Enter Mobile Number"
                   />
+
+                  {errors.mobileNumber && (
+                    <span className="error">{errors.mobileNumber.message}</span>
+                  )}
                 </div>
 
+                {/* EMAIL */}
+
                 <div className="form-group full-width">
-                  <label>Email Address</label>
+                  <label htmlFor="email">Email Address</label>
 
                   <input
+                    id="email"
                     type="email"
                     {...register("email", {
                       required: "Email required",
                     })}
                     placeholder="Enter Email Address"
                   />
+
+                  {errors.email && (
+                    <span className="error">{errors.email.message}</span>
+                  )}
                 </div>
 
-                {/* Size */}
+                {/* CITY */}
 
                 <div className="form-group">
-                  <label>City</label>
+                  <label htmlFor="city">City</label>
 
                   <input
+                    id="city"
                     type="text"
                     {...register("city", {
                       required: true,
@@ -436,10 +676,13 @@ ${booking.product.productUrl}
                   />
                 </div>
 
+                {/* STATE */}
+
                 <div className="form-group">
-                  <label>State</label>
+                  <label htmlFor="state">State</label>
 
                   <input
+                    id="state"
                     type="text"
                     {...register("state", {
                       required: true,
@@ -448,17 +691,23 @@ ${booking.product.productUrl}
                   />
                 </div>
 
+                {/* PIN CODE */}
+
                 <div className="form-group">
-                  <label>Pin Code</label>
+                  <label htmlFor="pinCode">Pin Code</label>
 
                   <input
+                    id="pinCode"
                     type="text"
+                    inputMode="numeric"
                     {...register("pinCode", {
                       required: true,
                     })}
                     placeholder="Enter Pincode"
                   />
                 </div>
+
+                {/* SIZE */}
 
                 <div className="form-group full-width">
                   <label>Select Size</label>
@@ -479,82 +728,127 @@ ${booking.product.productUrl}
                   </div>
                 </div>
 
-                {/* Rental */}
+                {/* RENTAL DURATION */}
 
                 <div className="form-group full-width">
-                  <label>Rental Duration</label>
+                  <label htmlFor="rentalDuration">Rental Duration</label>
 
                   <select
-                    value={selectedRentalOption?.days || ""}
+                    id="rentalDuration"
+                    value={
+                      selectedRentalOption
+                        ? String(selectedRentalOption.days)
+                        : ""
+                    }
                     onChange={(e) => {
-                      const option = bookingData.product.rentalOptions.find(
-                        (item) => item.days === Number(e.target.value),
-                      );
+                      const selectedDays = Number(e.target.value);
+
+                      const rentalOptions = Array.isArray(
+                        bookingData.product?.rentalOptions,
+                      )
+                        ? bookingData.product.rentalOptions
+                        : [];
+
+                      const option =
+                        rentalOptions.find(
+                          (item) => Number(item.days) === selectedDays,
+                        ) || null;
 
                       setSelectedRentalOption(option);
                     }}
                   >
                     <option value="">Select Rental Duration</option>
 
-                    {bookingData.product?.rentalOptions?.map((option) => (
-                      <option key={option.days} value={option.days}>
-                        {option.days} Days — ₹{option.price}
-                      </option>
-                    ))}
+                    {rentalOptions.map((option) => (
+  <option key={option.days} value={option.days}>
+    {option.days} Days — ₹
+    {Number(option.price || 0).toLocaleString("en-IN")}
+  </option>
+))}
                   </select>
                 </div>
+
+                {/* RENT DATE */}
 
                 <div className="form-group">
                   <label>ENTER DATE TO RENT</label>
 
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => {
-  setStartDate(date);
+                  <div className="date-picker-wrapper">
+                    <DatePicker
+                      selected={startDate}
+                      onChange={(date) => {
+                        setStartDate(date);
 
-  setValue("startDate", formatLocalDate(date));
-}}
-                    minDate={new Date()}
-                    excludeDates={excludedDates}
-                    dateFormat="dd/MM/yyyy"
-                    customInput={<CustomDateInput />}
-                  />
+                        setValue("startDate", formatLocalDate(date));
+
+                        if (returnDate && date && returnDate < date) {
+                          setReturnDate(null);
+
+                          setValue("returnDate", "");
+                        }
+                      }}
+                      minDate={new Date()}
+                      excludeDates={excludedDates}
+                      dateFormat="dd/MM/yyyy"
+                      customInput={<CustomDateInput />}
+                      popperPlacement="bottom-start"
+                    />
+                  </div>
+
+                  {errors.startDate && (
+                    <span className="error">Please select rental date</span>
+                  )}
                 </div>
+
+                {/* RETURN DATE */}
 
                 <div className="form-group">
                   <label>ENTER DATE TO RETURN PRODUCT</label>
 
-                  <DatePicker
-                    selected={returnDate}
-                    onChange={(date) => {
-  setReturnDate(date);
+                  <div className="date-picker-wrapper">
+                    <DatePicker
+                      selected={returnDate}
+                      onChange={(date) => {
+                        setReturnDate(date);
 
-  setValue(
-    "returnDate",
-    formatLocalDate(date),
-  );
-}}
-                    minDate={startDate || new Date()}
-                    excludeDates={excludedDates}
-                    placeholderText="Select Return Date"
-                    dateFormat="dd/MM/yyyy"
-                    customInput={<CustomDateInput />}
-                  />
+                        setValue("returnDate", formatLocalDate(date));
+                      }}
+                      minDate={startDate || new Date()}
+                      excludeDates={excludedDates}
+                      placeholderText="Select Return Date"
+                      dateFormat="dd/MM/yyyy"
+                      customInput={<CustomDateInput />}
+                      popperPlacement="bottom-start"
+                    />
+                  </div>
+
+                  {errors.returnDate && (
+                    <span className="error">Please select return date</span>
+                  )}
                 </div>
               </div>
             </div>
 
-            {/* RIGHT */}
+            {/* =================================================
+                ORDER SUMMARY
+            ================================================= */}
 
             <div className="order-summary">
               <h3>Order Summary</h3>
 
               <div className="summary-card">
-                <img
-                  src={bookingData.product?.images?.[0]}
-                  alt={bookingData.productName}
-                  className="summary-product-image"
-                />
+                <div className="summary-product-image-wrapper">
+                  <img
+                    src={productImage}
+                    alt={
+                      bookingData.productName ||
+                      bookingData.product?.name ||
+                      "Selected rental product"
+                    }
+                    className="summary-product-image"
+                  />
+                </div>
+
                 <h4>{bookingData.productName}</h4>
 
                 <div className="summary-row">
@@ -566,19 +860,27 @@ ${booking.product.productUrl}
                 <div className="summary-row">
                   <span>Rental Days</span>
 
-                  <span>{selectedRentalOption?.days} Days</span>
+                  <span>
+                    {selectedRentalOption?.days
+                      ? `${selectedRentalOption.days} Days`
+                      : "-"}
+                  </span>
                 </div>
 
                 <div className="summary-row">
                   <span>Rental Price</span>
 
-                  <span>₹{selectedRentalOption?.price}</span>
+                  <span>
+                    ₹{(selectedRentalOption?.price || 0).toLocaleString()}
+                  </span>
                 </div>
 
                 <div className="summary-row">
                   <span>Security Deposit</span>
 
-                  <span>₹{bookingData.securityDeposit || 0}</span>
+                  <span>
+                    ₹{(bookingData.securityDeposit || 0).toLocaleString()}
+                  </span>
                 </div>
 
                 <div className="summary-total">
@@ -603,6 +905,12 @@ ${booking.product.productUrl}
       </motion.div>
     </AnimatePresence>
   );
+
+  /* =========================================================
+     PORTAL
+  ========================================================= */
+
+  return createPortal(modalContent, document.body);
 };
 
 export default BookForRentModal;
