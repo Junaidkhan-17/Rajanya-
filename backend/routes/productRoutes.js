@@ -1,23 +1,16 @@
 const express = require("express");
 const router = express.Router();
 
-const {
-  protect,
-} = require(
-  "../middleware/authMiddleware"
-);
+const { protect } = require("../middleware/authMiddleware");
 
-const authorizeRoles = require(
-  "../middleware/authorizeRoles"
-);
+const authorizeRoles = require("../middleware/authorizeRoles");
 
-const upload = require(
-  "../middleware/uploadMiddleware"
-);
+const upload = require("../middleware/uploadMiddleware");
 
 const {
   createProduct,
   getProducts,
+  getProductStats,
   getProductById,
   getProductBySlug,
   updateProduct,
@@ -28,77 +21,38 @@ const {
   getRelatedProducts,
   uploadProductImage,
   deleteProductImage,
-} = require(
-  "../controllers/productController"
-);
+} = require("../controllers/productController");
 
 router.post(
   "/upload",
   protect,
   authorizeRoles("admin"),
   upload.single("image"),
-  uploadProductImage
+  uploadProductImage,
 );
 
+router.post("/", protect, authorizeRoles("admin"), createProduct);
 
-router.post(
-  "/",
-  protect,
-  authorizeRoles("admin"),
-  createProduct
-);
-
-router.delete(
-  "/image",
-  protect,
-  authorizeRoles("admin"),
-  deleteProductImage
-);
-
+router.delete("/image", protect, authorizeRoles("admin"), deleteProductImage);
 
 router.get("/", getProducts);
 
-router.get(
-  "/featured",
-  getFeaturedProducts
-);
+router.get("/stats", protect, authorizeRoles("admin"), getProductStats);
 
-router.get(
-  "/trending",
-  getTrendingProducts
-);
+router.get("/featured", getFeaturedProducts);
 
-router.get(
-  "/recommended",
-  getRecommendedProducts
-);
+router.get("/trending", getTrendingProducts);
 
-router.get(
-  "/related/:id",
-  getRelatedProducts
-);
+router.get("/recommended", getRecommendedProducts);
 
-router.get(
-  "/slug/:slug",
-  getProductBySlug
-);
+router.get("/related/:id", getRelatedProducts);
+
+router.get("/slug/:slug", getProductBySlug);
 
 router.get("/:id", getProductById);
 
-router.put(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  updateProduct
-);
+router.put("/:id", protect, authorizeRoles("admin"), updateProduct);
 
-router.delete(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  deleteProduct
-);
-
-
+router.delete("/:id", protect, authorizeRoles("admin"), deleteProduct);
 
 module.exports = router;

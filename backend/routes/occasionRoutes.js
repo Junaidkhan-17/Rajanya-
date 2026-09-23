@@ -11,13 +11,9 @@ const {
   deleteOccasion,
 } = require("../controllers/occasionController");
 
-const {
-  protect,
-} = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
-const authorizeRoles = require(
-  "../middleware/authorizeRoles"
-);
+const authorizeRoles = require("../middleware/authorizeRoles");
 
 /*
 ========================================
@@ -37,25 +33,10 @@ Admin Routes
 ========================================
 */
 
-router.post(
-  "/",
-  protect,
-  authorizeRoles("admin"),
-  createOccasion
-);
+router.post("/", protect, authorizeRoles("admin"), createOccasion);
 
-router.put(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  updateOccasion
-);
+router.put("/:id", protect, authorizeRoles("admin"), updateOccasion);
 
-router.delete(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  deleteOccasion
-);
+router.delete("/:id", protect, authorizeRoles("admin"), deleteOccasion);
 
 module.exports = router;

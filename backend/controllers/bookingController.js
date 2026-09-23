@@ -43,13 +43,9 @@ exports.createBooking = async (req, res) => {
        PRODUCT
     ========================== */
 
-    const existingProduct = await Product.findById(product.productId).populate(
-      "category",
-      "name slug",
-    ).populate(
-    "occasion",
-    "name slug"
-  );
+    const existingProduct = await Product.findById(product.productId)
+      .populate("category", "name slug")
+      .populate("occasion", "name slug");
 
     console.log("Product Occasion:", existingProduct.occasion);
 
@@ -91,28 +87,92 @@ exports.createBooking = async (req, res) => {
     ========================== */
 
     const startDate = new Date(rental.startDate);
-
     const returnDate = new Date(rental.returnDate);
 
     const today = new Date();
 
-today.setHours(0, 0, 0, 0);
+    const todayDate = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate(),
+    );
 
-if (startDate < today) {
-  return res.status(400).json({
-    success: false,
-    message: "Start date cannot be in the past",
-  });
-}
+    const selectedStartDate = new Date(
+      startDate.getUTCFullYear(),
+      startDate.getUTCMonth(),
+      startDate.getUTCDate(),
+    );
+
+    const selectedReturnDate = new Date(
+      returnDate.getUTCFullYear(),
+      returnDate.getUTCMonth(),
+      returnDate.getUTCDate(),
+    );
+
+    console.log("========== DATE VALIDATION ==========");
+    console.log("Raw rental.startDate:", rental.startDate);
+    console.log("startDate:", startDate);
+    console.log("today:", today);
+    console.log("todayDate:", todayDate);
+    console.log("selectedStartDate:", selectedStartDate);
+    console.log(
+      "selectedStartDate < todayDate:",
+      selectedStartDate < todayDate,
+    );
+    console.log("====================================");
+
+    if (selectedStartDate < todayDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Start date cannot be in the past",
+      });
+    }
+
+    if (selectedReturnDate < selectedStartDate) {
+      return res.status(400).json({
+        success: false,
+        message: "Return date cannot be before start date",
+      });
+    }
+
+    /* ==========================
+   BOOKING AVAILABILITY
+========================== */
+
+    const overlappingBooking = await Booking.findOne({
+      "product.productId": existingProduct._id,
+
+      bookingStatus: {
+        $nin: ["cancelled", "rejected"],
+      },
+
+      $or: [
+        {
+          "rental.startDate": {
+            $lte: returnDate,
+          },
+
+          "rental.returnDate": {
+            $gte: startDate,
+          },
+        },
+      ],
+    });
+
+    if (overlappingBooking) {
+      return res.status(409).json({
+        success: false,
+        message: "This product is already booked for the selected dates.",
+        bookedFrom: overlappingBooking.rental.startDate,
+        bookedTill: overlappingBooking.rental.returnDate,
+      });
+    }
 
     /* ==========================
        BOOKING ID
     ========================== */
 
-    const bookingId =
-  `RAJ${Date.now()
-    .toString()
-    .slice(-8)}`;
+    const bookingId = `RAJ${Date.now().toString().slice(-8)}`;
     /* ==========================
        PRICING
     ========================== */
@@ -158,11 +218,10 @@ if (startDate < today) {
         productCategory: existingProduct.category?.name || "",
 
         productOccasion: existingProduct.occasion.map(
-  (occasion) => occasion.name
-),
+          (occasion) => occasion.name,
+        ),
 
-productGender:
-  existingProduct.gender || "Women",
+        productGender: existingProduct.gender || "Women",
 
         productBrand: existingProduct.brand || "",
 
@@ -415,6 +474,81 @@ exports.deleteBooking = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Booking deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.getBookingAvailability = async (req, res) => {
+  try {
+    const { productId } = req.params;
+
+    /*
+    =========================================
+    Validate Product ID
+    =========================================
+    */
+
+    if (!mongoose.Types.ObjectId.isValid(productId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid product ID",
+      });
+    }
+
+    /*
+    =========================================
+    Check Product Exists
+    =========================================
+    */
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    /*
+    =========================================
+    Get Active Bookings
+    =========================================
+    */
+
+    const bookings = await Booking.find({
+      "product.productId": productId,
+      bookingStatus: {
+        $nin: ["cancelled", "rejected"],
+      },
+    })
+      .select("rental.startDate rental.returnDate bookingStatus")
+      .sort({
+        "rental.startDate": 1,
+      });
+
+    /*
+    =========================================
+    Response
+    =========================================
+    */
+
+    res.status(200).json({
+      success: true,
+      message: "Booking availability fetched successfully.",
+      productId,
+      bookedDates: bookings.map((booking) => ({
+        startDate: booking.rental.startDate,
+        returnDate: booking.rental.returnDate,
+        bookingStatus: booking.bookingStatus,
+      })),
     });
   } catch (error) {
     console.log(error);

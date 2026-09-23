@@ -53,7 +53,7 @@ const occasionSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /*
@@ -74,7 +74,4 @@ occasionSchema.index({
   displayOrder: 1,
 });
 
-module.exports = mongoose.model(
-  "Occasion",
-  occasionSchema
-);
+module.exports = mongoose.model("Occasion", occasionSchema);

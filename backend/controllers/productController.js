@@ -1,23 +1,23 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
-const Occasion = require("../models/Occasion");
 const mongoose = require("mongoose");
 const cloudinary = require("../config/cloudinary");
 
 exports.createProduct = async (req, res) => {
   try {
+    console.log("🔥 NEW createProduct CONTROLLER HIT");
     const {
       name,
       description,
       shortDescription,
       category,
-      occasion,
       gender,
       brand,
       tags,
       mainImage,
       thumbnailImage,
       galleryImages,
+      virtualTryOnImage,
       originalPrice,
       securityDeposit,
       rentalOptions,
@@ -62,7 +62,7 @@ exports.createProduct = async (req, res) => {
 ========================================
 Occasion Validation
 ========================================
-*/
+
 
     if (!occasion || !Array.isArray(occasion) || occasion.length === 0) {
       return res.status(400).json({
@@ -88,7 +88,7 @@ Occasion Validation
         });
       }
     }
-
+*/
     const slug = name.toLowerCase().trim().replace(/\s+/g, "-");
 
     const existingProduct = await Product.findOne({
@@ -108,11 +108,12 @@ Occasion Validation
       description,
       shortDescription,
       category,
-      occasion,
+      occasion: [category],
       gender,
       brand,
       tags,
       mainImage,
+      virtualTryOnImage,
       thumbnailImage,
       galleryImages,
       originalPrice,
@@ -149,17 +150,11 @@ Occasion Validation
 
 exports.getProducts = async (req, res) => {
   try {
-    const page = Number(req.query.page) || 1;
-
-    const limit = Number(req.query.limit) || 12;
-
-    const skip = (page - 1) * limit;
-
     const query = {};
 
     /*
     ==========================
-    Search
+    SEARCH
     ==========================
     */
 
@@ -188,7 +183,7 @@ exports.getProducts = async (req, res) => {
 
     /*
     ==========================
-    Category Filter
+    CATEGORY FILTER
     ==========================
     */
 
@@ -198,7 +193,7 @@ exports.getProducts = async (req, res) => {
 
     /*
     ==========================
-    Occasion Filter
+    OCCASION FILTER
     ==========================
     */
 
@@ -207,18 +202,18 @@ exports.getProducts = async (req, res) => {
     }
 
     /*
-==========================
-Gender Filter
-==========================
-*/
+    ==========================
+    GENDER FILTER
+    ==========================
+    */
 
-if (req.query.gender) {
-  query.gender = req.query.gender;
-}
+    if (req.query.gender) {
+      query.gender = req.query.gender;
+    }
 
     /*
     ==========================
-    Featured Filter
+    FEATURED FILTER
     ==========================
     */
 
@@ -228,7 +223,7 @@ if (req.query.gender) {
 
     /*
     ==========================
-    Trending Filter
+    TRENDING FILTER
     ==========================
     */
 
@@ -238,7 +233,7 @@ if (req.query.gender) {
 
     /*
     ==========================
-    Recommended Filter
+    RECOMMENDED FILTER
     ==========================
     */
 
@@ -248,7 +243,7 @@ if (req.query.gender) {
 
     /*
     ==========================
-    Availability Filter
+    AVAILABILITY FILTER
     ==========================
     */
 
@@ -258,7 +253,7 @@ if (req.query.gender) {
 
     /*
     ==========================
-    Price Filter
+    PRICE FILTER
     ==========================
     */
 
@@ -276,7 +271,7 @@ if (req.query.gender) {
 
     /*
     ==========================
-    Sorting
+    SORTING
     ==========================
     */
 
@@ -313,47 +308,239 @@ if (req.query.gender) {
         sort = {
           createdAt: -1,
         };
+        break;
     }
 
     /*
-    ==========================
-    Total Count
-    ==========================
+    ==================================================
+    PAGINATION
+    ==================================================
+
+    IMPORTANT:
+
+    If page/limit are NOT provided:
+    → return ALL matching products.
+
+    If page/limit ARE provided:
+    → use backend pagination.
+    ==================================================
     */
+
+    const hasPagination =
+      req.query.page !== undefined ||
+      req.query.limit !== undefined;
+
+    let productsQuery = Product.find(query)
+      .populate("category", "name slug")
+      .populate("occasion", "name slug")
+      .sort(sort);
 
     const total = await Product.countDocuments(query);
 
+    let page = 1;
+    let limit = total || 1;
+    let totalPages = 1;
+
+    if (hasPagination) {
+      page = Math.max(Number(req.query.page) || 1, 1);
+      limit = Math.max(Number(req.query.limit) || 12, 1);
+
+      const skip = (page - 1) * limit;
+
+      productsQuery = productsQuery
+        .skip(skip)
+        .limit(limit);
+
+      totalPages = Math.ceil(total / limit);
+    }
+
+    const products = await productsQuery;
+
     /*
     ==========================
-    Products
-    ==========================
-    */
-
-    const products = await Product.find(query)
-      .populate("category", "name slug")
-      .populate("occasion", "name slug")
-      .sort(sort)
-      .skip(skip)
-      .limit(limit);
-
-    /*
-    ==========================
-    Response
+    RESPONSE
     ==========================
     */
 
     res.status(200).json({
       success: true,
+
       total,
+
       page,
-      totalPages: Math.ceil(total / limit),
+
+      totalPages,
+
       count: products.length,
+
       products,
     });
   } catch (error) {
     console.log(error);
 
     res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.getProductStats = async (req, res) => {
+  try {
+    /*
+    ========================================
+    TOTAL PRODUCTS
+    ========================================
+    */
+
+    const totalProducts = await Product.countDocuments();
+
+    /*
+    ========================================
+    CATEGORIES USED
+
+    Count unique category references that
+    are actually used by products.
+    ========================================
+    */
+
+    const categoriesUsedResult = await Product.aggregate([
+      {
+        $match: {
+          category: {
+            $exists: true,
+            $ne: null,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$category",
+        },
+      },
+      {
+        $count: "total",
+      },
+    ]);
+
+    const categoriesUsed =
+      categoriesUsedResult[0]?.total || 0;
+
+    /*
+    ========================================
+    FEATURED PRODUCTS
+    ========================================
+    */
+
+    const featuredProducts = await Product.countDocuments({
+      isFeatured: true,
+    });
+
+    /*
+    ========================================
+    ACTIVE PRODUCTS
+
+    Product schema uses availabilityStatus.
+
+    Everything except "discontinued" is
+    considered active.
+    ========================================
+    */
+
+    const activeProducts = await Product.countDocuments({
+      availabilityStatus: {
+        $ne: "discontinued",
+      },
+    });
+
+    /*
+    ========================================
+    CURRENT MONTH
+    ========================================
+    */
+
+    const now = new Date();
+
+    const monthStart = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      1
+    );
+
+    const nextMonthStart = new Date(
+      now.getFullYear(),
+      now.getMonth() + 1,
+      1
+    );
+
+    /*
+    ========================================
+    PRODUCTS ADDED THIS MONTH
+    ========================================
+    */
+
+    const productsThisMonth =
+      await Product.countDocuments({
+        createdAt: {
+          $gte: monthStart,
+          $lt: nextMonthStart,
+        },
+      });
+
+    /*
+    ========================================
+    FEATURED PRODUCTS ADDED THIS MONTH
+    ========================================
+    */
+
+    const featuredThisMonth =
+      await Product.countDocuments({
+        isFeatured: true,
+        createdAt: {
+          $gte: monthStart,
+          $lt: nextMonthStart,
+        },
+      });
+
+    /*
+    ========================================
+    ACTIVE PERCENTAGE
+    ========================================
+    */
+
+    const activePercentage =
+      totalProducts > 0
+        ? Math.round(
+            (activeProducts / totalProducts) * 100
+          )
+        : 0;
+
+    /*
+    ========================================
+    RESPONSE
+    ========================================
+    */
+
+    return res.status(200).json({
+      success: true,
+
+      stats: {
+        totalProducts,
+        categoriesUsed,
+        featuredProducts,
+        activeProducts,
+        productsThisMonth,
+        featuredThisMonth,
+        activePercentage,
+      },
+    });
+  } catch (error) {
+    console.error(
+      "Get Product Stats Error:",
+      error
+    );
+
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
@@ -571,6 +758,7 @@ exports.updateProduct = async (req, res) => {
     }
 
     // Category Validation
+
     if (req.body.category) {
       if (!mongoose.Types.ObjectId.isValid(req.body.category)) {
         return res.status(400).json({
@@ -587,13 +775,16 @@ exports.updateProduct = async (req, res) => {
           message: "Category not found",
         });
       }
+
+      // Occasion always matches Category
+      req.body.occasion = [req.body.category];
     }
 
     /*
 ========================================
 Occasion Validation
 ========================================
-*/
+
 
     if (req.body.occasion) {
       if (!Array.isArray(req.body.occasion) || req.body.occasion.length === 0) {
@@ -621,7 +812,7 @@ Occasion Validation
         }
       }
     }
-
+*/
     // Name & Slug Validation
     if (req.body.name) {
       const slug = req.body.name.toLowerCase().trim().replace(/\s+/g, "-");

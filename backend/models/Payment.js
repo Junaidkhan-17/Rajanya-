@@ -15,11 +15,11 @@ const paymentInfoSchema = new mongoose.Schema(
       trim: true,
     },
 
-   paymentFor: {
-  type: String,
-  enum: ["virtual_try_on"],
-  default: "virtual_try_on",
-},
+    paymentFor: {
+      type: String,
+      enum: ["virtual_try_on"],
+      default: "virtual_try_on",
+    },
 
     paymentStatus: {
       type: String,
@@ -35,39 +35,29 @@ const paymentInfoSchema = new mongoose.Schema(
     },
 
     paymentMethod: {
-  type: String,
-  enum: [
-    "",
-    "UPI",
-    "Card",
-    "Net Banking",
-    "Wallet",
-    "Razorpay",
-  ],
-  default: "",
-},
+      type: String,
+      enum: ["", "UPI", "Card", "Net Banking", "Wallet", "Razorpay"],
+      default: "",
+    },
 
-paymentCompletedAt: {
-  type: Date,
-  default: null,
-},
+    paymentCompletedAt: {
+      type: Date,
+      default: null,
+    },
 
     paymentGateway: {
-  type: String,
-  enum: [
-    "",
-    "Razorpay",
-  ],
-  default: "",
-},
+      type: String,
+      enum: ["", "Razorpay"],
+      default: "",
+    },
 
     currency: {
-  type: String,
-  enum: ["INR"],
-  default: "INR",
-},
+      type: String,
+      enum: ["INR"],
+      default: "INR",
+    },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -103,7 +93,7 @@ const customerSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -167,7 +157,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -202,7 +192,7 @@ const virtualTryOnSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -237,12 +227,34 @@ const gatewaySchema = new mongoose.Schema(
       trim: true,
     },
 
+    /* ========================================
+       Razorpay QR Information
+    ======================================== */
+
+    qrCodeId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    qrImageUrl: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    qrStatus: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
     gatewayResponse: {
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -270,7 +282,7 @@ const adminSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -283,20 +295,14 @@ const refundSchema = new mongoose.Schema(
   {
     refundStatus: {
       type: String,
-      enum: [
-        "not_requested",
-        "requested",
-        "approved",
-        "rejected",
-        "processed",
-      ],
+      enum: ["not_requested", "requested", "approved", "rejected", "processed"],
       default: "not_requested",
     },
 
     isRefundable: {
-  type: Boolean,
-  default: true,
-},
+      type: Boolean,
+      default: true,
+    },
 
     refundAmount: {
       type: Number,
@@ -315,7 +321,7 @@ const refundSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -363,7 +369,7 @@ const paymentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /*
@@ -371,10 +377,6 @@ const paymentSchema = new mongoose.Schema(
 MongoDB Indexes
 ========================================
 */
-
-paymentSchema.index({
-  "payment.paymentNumber": 1,
-});
 
 paymentSchema.index({
   "payment.paymentStatus": 1,
@@ -392,7 +394,4 @@ paymentSchema.index({
   createdAt: -1,
 });
 
-module.exports = mongoose.model(
-  "Payment",
-  paymentSchema
-);
+module.exports = mongoose.model("Payment", paymentSchema);

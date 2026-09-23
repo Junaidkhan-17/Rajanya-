@@ -9,6 +9,18 @@ const categorySchema = new mongoose.Schema(
       trim: true,
     },
 
+    parentCategory: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    gender: {
+      type: String,
+      enum: ["Men", "Women", "Unisex"],
+      required: true,
+    },
+
     slug: {
       type: String,
       required: true,
@@ -28,20 +40,66 @@ const categorySchema = new mongoose.Schema(
       default: "",
     },
 
+    /*
+    ========================================
+    Category Status
+    ========================================
+    */
+
     isActive: {
       type: Boolean,
       default: true,
     },
+
+    /*
+    ========================================
+    Featured Category
+    ========================================
+    */
 
     isFeatured: {
       type: Boolean,
       default: false,
     },
 
+    /*
+    ========================================
+    Homepage Display
+    ========================================
+    */
+
+    showOnHomepage: {
+      type: Boolean,
+      default: false,
+    },
+
+    /*
+    ========================================
+    Navigation Display
+    ========================================
+    */
+
+    showInNavigation: {
+      type: Boolean,
+      default: false,
+    },
+
+    /*
+    ========================================
+    Display Order
+    ========================================
+    */
+
     displayOrder: {
       type: Number,
       default: 0,
     },
+
+    /*
+    ========================================
+    SEO
+    ========================================
+    */
 
     seoTitle: {
       type: String,
@@ -57,7 +115,7 @@ const categorySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /*
@@ -75,6 +133,14 @@ categorySchema.index({
 });
 
 categorySchema.index({
+  showOnHomepage: 1,
+});
+
+categorySchema.index({
+  showInNavigation: 1,
+});
+
+categorySchema.index({
   displayOrder: 1,
 });
 
@@ -82,7 +148,4 @@ categorySchema.index({
   createdAt: -1,
 });
 
-module.exports = mongoose.model(
-  "Category",
-  categorySchema
-);
+module.exports = mongoose.model("Category", categorySchema);

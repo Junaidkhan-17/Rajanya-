@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -62,7 +62,7 @@ const addressSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -83,7 +83,7 @@ const rentalSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -119,15 +119,15 @@ const productSchema = new mongoose.Schema(
     },
 
     productOccasion: {
-  type: [String],
-  default: [],
-},
+      type: [String],
+      default: [],
+    },
 
-productGender: {
-  type: String,
-  enum: ["Men", "Women", "Unisex"],
-  default: "Women",
-},
+    productGender: {
+      type: String,
+      enum: ["Men", "Women", "Unisex"],
+      default: "Women",
+    },
 
     productBrand: {
       type: String,
@@ -167,7 +167,7 @@ productGender: {
       min: 0,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -196,7 +196,7 @@ const pricingSchema = new mongoose.Schema(
       min: 0,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -221,7 +221,7 @@ const adminSchema = new mongoose.Schema(
       type: Date,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -241,29 +241,29 @@ const bookingSchema = new mongoose.Schema(
     },
 
     user: {
-  type: userSchema,
-  required: true,
-},
+      type: userSchema,
+      required: true,
+    },
 
-address: {
-  type: addressSchema,
-  required: true,
-},
+    address: {
+      type: addressSchema,
+      required: true,
+    },
 
-rental: {
-  type: rentalSchema,
-  required: true,
-},
+    rental: {
+      type: rentalSchema,
+      required: true,
+    },
 
-product: {
-  type: productSchema,
-  required: true,
-},
+    product: {
+      type: productSchema,
+      required: true,
+    },
 
-pricing: {
-  type: pricingSchema,
-  required: true,
-},
+    pricing: {
+      type: pricingSchema,
+      required: true,
+    },
     bookingStatus: {
       type: String,
       enum: [
@@ -284,12 +284,7 @@ pricing: {
 
     paymentStatus: {
       type: String,
-      enum: [
-        "pending",
-        "paid",
-        "failed",
-        "refunded",
-      ],
+      enum: ["pending", "paid", "failed", "refunded"],
       default: "pending",
     },
 
@@ -315,7 +310,7 @@ pricing: {
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /*
@@ -323,7 +318,6 @@ pricing: {
 MongoDB Indexes
 ========================================
 */
-
 
 bookingSchema.index({
   "user.userId": 1,
@@ -345,7 +339,4 @@ bookingSchema.index({
   createdAt: -1,
 });
 
-module.exports = mongoose.model(
-  "Booking",
-  bookingSchema
-);
+module.exports = mongoose.model("Booking", bookingSchema);

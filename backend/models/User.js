@@ -26,7 +26,7 @@ const virtualTryOnSchema = new mongoose.Schema(
       min: 0,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const userSchema = new mongoose.Schema(
@@ -62,10 +62,10 @@ const userSchema = new mongoose.Schema(
     },
 
     password: {
-  type: String,
-  required: true,
-  select: false,
-},
+      type: String,
+      required: true,
+      select: false,
+    },
 
     profileImage: {
       type: String,
@@ -92,19 +92,18 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
 
-virtualTryOn: {
-  type: virtualTryOnSchema,
-  default: () => ({}),
-},
+    virtualTryOn: {
+      type: virtualTryOnSchema,
+      default: () => ({}),
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.pre("save", function () {
-  this.fullName =
-    `${this.firstName} ${this.lastName}`.trim();
+  this.fullName = `${this.firstName} ${this.lastName}`.trim();
 });
 
 /*
@@ -112,7 +111,6 @@ userSchema.pre("save", function () {
 MongoDB Indexes
 ========================================
 */
-
 
 userSchema.index({
   role: 1,

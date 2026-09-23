@@ -2,17 +2,14 @@ const express = require("express");
 
 const router = express.Router();
 
-const {
-  protect,
-} = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
-const authorizeRoles = require(
-  "../middleware/authorizeRoles"
-);
+const authorizeRoles = require("../middleware/authorizeRoles");
 
 const {
   createBooking,
   getMyBookings,
+  getBookingAvailability,
   getBookingById,
   getAllBookings,
   updateBooking,
@@ -25,23 +22,13 @@ Customer APIs
 ========================================
 */
 
-router.post(
-  "/",
-  protect,
-  createBooking
-);
+router.post("/", protect, createBooking);
 
-router.get(
-  "/my-bookings",
-  protect,
-  getMyBookings
-);
+router.get("/my-bookings", protect, getMyBookings);
 
-router.get(
-  "/:id",
-  protect,
-  getBookingById
-);
+router.get("/availability/:productId", getBookingAvailability);
+
+router.get("/:id", protect, getBookingById);
 
 /*
 ========================================
@@ -49,25 +36,10 @@ Admin APIs
 ========================================
 */
 
-router.get(
-  "/",
-  protect,
-  authorizeRoles("admin"),
-  getAllBookings
-);
+router.get("/", protect, authorizeRoles("admin"), getAllBookings);
 
-router.put(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  updateBooking
-);
+router.put("/:id", protect, authorizeRoles("admin"), updateBooking);
 
-router.delete(
-  "/:id",
-  protect,
-  authorizeRoles("admin"),
-  deleteBooking
-);
+router.delete("/:id", protect, authorizeRoles("admin"), deleteBooking);
 
 module.exports = router;
