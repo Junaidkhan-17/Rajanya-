@@ -61,7 +61,16 @@ CORS
 ========================================
 */
 
-app.use(cors());
+const allowedOrigins = [
+  "https://rajanya-beryl.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 
 
 /*
