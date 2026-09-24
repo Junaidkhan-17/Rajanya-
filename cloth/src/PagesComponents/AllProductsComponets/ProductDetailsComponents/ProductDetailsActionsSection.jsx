@@ -22,34 +22,50 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
   ========================================
   */
 
-  const handleBookNow = () => {
-    if (!state.isAuthenticated) {
-      dispatch({
-        type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
-        payload: bookingPayload,
-      });
+const handleBookNow = () => {
+  const bookForRentPayload = {
+    ...bookingPayload,
 
-      dispatch({
-        type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
-      });
+    product: {
+      ...(bookingPayload?.product || {}),
+      ...product,
 
-      return;
-    }
+      rentalOptions:
+        product?.rentalOptions ||
+        bookingPayload?.product?.rentalOptions ||
+        [],
+    },
+  };
 
+  console.log("BOOK FOR RENT PAYLOAD:", bookForRentPayload);
+
+  if (!state.isAuthenticated) {
     dispatch({
       type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
-      payload: bookingPayload,
+      payload: bookForRentPayload,
     });
 
     dispatch({
-      type: AUTH_ACTIONS.SET_PENDING_ACTION,
-      payload: "bookForRent",
+      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
     });
 
-    dispatch({
-      type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
-    });
-  };
+    return;
+  }
+
+  dispatch({
+    type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
+    payload: bookForRentPayload,
+  });
+
+  dispatch({
+    type: AUTH_ACTIONS.SET_PENDING_ACTION,
+    payload: "bookForRent",
+  });
+
+  dispatch({
+    type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
+  });
+};
 
   /*
   ========================================
