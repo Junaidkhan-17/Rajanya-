@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 /*
-========================================
+=========================================
 Virtual Try-On Token Wallet
-========================================
+=========================================
 */
 
 const virtualTryOnSchema = new mongoose.Schema(
@@ -92,11 +92,30 @@ const userSchema = new mongoose.Schema(
       type: Date,
     },
 
+    /*
+    =========================================
+    Google Authentication
+    =========================================
+    */
+
+    authProvider: {
+      type: String,
+      enum: ["local", "google"],
+      default: "local",
+    },
+
+    googleId: {
+      type: String,
+      sparse: true,
+      unique: true,
+    },
+
     virtualTryOn: {
       type: virtualTryOnSchema,
       default: () => ({}),
     },
   },
+
   {
     timestamps: true,
   },
@@ -107,9 +126,9 @@ userSchema.pre("save", function () {
 });
 
 /*
-========================================
+=========================================
 MongoDB Indexes
-========================================
+=========================================
 */
 
 userSchema.index({
