@@ -24,6 +24,7 @@
     border-color 0.4s ease;
 }
 
+
 /* =========================================================
    DESKTOP CARD HOVER
 ========================================================= */
@@ -36,9 +37,10 @@
 
     box-shadow:
       0 25px 50px
-        rgba(0, 0, 0, 0.08);
+      rgba(0, 0, 0, 0.08);
   }
 }
+
 
 /* =========================================================
    IMAGE WRAPPER
@@ -69,6 +71,7 @@
   isolation: isolate;
 }
 
+
 /* =========================================================
    PRODUCT IMAGE
 ========================================================= */
@@ -82,13 +85,8 @@
   /*
    * IMPORTANT:
    *
-   * The old implementation used:
-   *
-   * object-fit: cover;
-   *
-   * which cropped the garment.
-   *
-   * Contain keeps the COMPLETE product visible.
+   * Contain keeps the COMPLETE product visible
+   * instead of cropping the garment.
    */
   object-fit: contain;
 
@@ -105,6 +103,7 @@
     transform 0.8s ease;
 }
 
+
 /* =========================================================
    DESKTOP IMAGE HOVER
 ========================================================= */
@@ -115,6 +114,7 @@
     transform: scale(1.035);
   }
 }
+
 
 /* =========================================================
    IMAGE PLACEHOLDER
@@ -145,6 +145,7 @@
   letter-spacing: 0.08em;
 }
 
+
 /* =========================================================
    ACTION BUTTONS
 ========================================================= */
@@ -171,6 +172,7 @@
     transform 0.35s ease;
 }
 
+
 /* =========================================================
    SHOW ACTIONS ON DESKTOP HOVER
 ========================================================= */
@@ -183,6 +185,7 @@
     transform: translateX(0);
   }
 }
+
 
 /* =========================================================
    ACTION BUTTON
@@ -213,7 +216,7 @@
 
   box-shadow:
     0 8px 20px
-      rgba(0, 0, 0, 0.08);
+    rgba(0, 0, 0, 0.08);
 
   transition:
     transform 0.3s ease,
@@ -223,7 +226,10 @@
 
   appearance: none;
   -webkit-appearance: none;
+
+  touch-action: manipulation;
 }
+
 
 /* =========================================================
    ACTION HOVER
@@ -239,9 +245,21 @@
 
     box-shadow:
       0 10px 24px
-        rgba(0, 0, 0, 0.12);
+      rgba(0, 0, 0, 0.12);
   }
 }
+
+
+/* =========================================================
+   ACTION ACTIVE / TOUCH
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .all-products-card-icon-btn:active {
+    transform: scale(0.94);
+  }
+}
+
 
 /* =========================================================
    ACTIVE WISHLIST
@@ -253,6 +271,7 @@
   color: #ffffff;
 }
 
+
 /* =========================================================
    ACTION FOCUS
 ========================================================= */
@@ -262,6 +281,7 @@
 
   outline-offset: 3px;
 }
+
 
 /* =========================================================
    CONTENT
@@ -281,6 +301,7 @@
 
   box-sizing: border-box;
 }
+
 
 /* =========================================================
    CATEGORY
@@ -307,6 +328,7 @@
   overflow-wrap: anywhere;
 }
 
+
 /* =========================================================
    PRODUCT TITLE
 ========================================================= */
@@ -326,16 +348,19 @@
   cursor: pointer;
 
   overflow-wrap: anywhere;
+  word-break: break-word;
 
   transition:
     color 0.25s ease;
 }
+
 
 @media (hover: hover) and (pointer: fine) {
   .all-products-card-title:hover {
     color: #31565a;
   }
 }
+
 
 /* =========================================================
    TITLE FOCUS
@@ -346,6 +371,7 @@
 
   outline-offset: 3px;
 }
+
 
 /* =========================================================
    RATING
@@ -361,13 +387,19 @@
   gap: 6px;
 
   margin-bottom: 10px;
+
+  min-width: 0;
 }
+
 
 .all-products-card-rating i {
   color: #f59e0b;
 
   font-size: 13px;
+
+  flex: 0 0 auto;
 }
+
 
 .all-products-card-rating span {
   color: #111827;
@@ -377,13 +409,19 @@
   line-height: 1.3;
 
   font-weight: 600;
+
+  white-space: nowrap;
 }
+
 
 .all-products-card-rating small {
   color: #9ca3af;
 
   font-size: 12px;
+
+  white-space: nowrap;
 }
+
 
 /* =========================================================
    CARD FOOTER
@@ -407,7 +445,10 @@
   border-top: 2px solid #ececec;
 
   box-sizing: border-box;
+
+  min-width: 0;
 }
+
 
 /* =========================================================
    PRICE
@@ -427,6 +468,7 @@
   flex: 1;
 }
 
+
 .all-products-card-price-wrapper strong {
   color: #4b5a57;
 
@@ -438,6 +480,7 @@
 
   white-space: nowrap;
 }
+
 
 .all-products-card-price-wrapper span {
   color: #ff5c5c;
@@ -452,6 +495,7 @@
 
   white-space: nowrap;
 }
+
 
 /* =========================================================
    RENT BUTTON
@@ -492,7 +536,10 @@
 
   appearance: none;
   -webkit-appearance: none;
+
+  touch-action: manipulation;
 }
+
 
 /* =========================================================
    RENT BUTTON HOVER
@@ -504,9 +551,21 @@
 
     box-shadow:
       0 18px 35px
-        rgba(0, 0, 0, 0.15);
+      rgba(0, 0, 0, 0.15);
   }
 }
+
+
+/* =========================================================
+   RENT BUTTON ACTIVE / TOUCH
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .all-products-card-rent-btn:active {
+    transform: translateY(1px);
+  }
+}
+
 
 /* =========================================================
    RENT BUTTON FOCUS
@@ -517,6 +576,7 @@
 
   outline-offset: 3px;
 }
+
 
 /* =========================================================
    LAPTOP
@@ -532,6 +592,7 @@
     padding: 24px;
   }
 }
+
 
 /* =========================================================
    TABLET / SMALL LAPTOP
@@ -572,6 +633,7 @@
     font-size: 13px;
   }
 }
+
 
 /* =========================================================
    TABLET
@@ -684,6 +746,7 @@
   }
 }
 
+
 /* =========================================================
    MOBILE
    <= 576px
@@ -701,7 +764,7 @@
      */
     box-shadow:
       0 6px 22px
-        rgba(0, 0, 0, 0.045);
+      rgba(0, 0, 0, 0.045);
   }
 
   /*
@@ -763,11 +826,13 @@
 
     box-shadow:
       0 6px 16px
-        rgba(0, 0, 0, 0.09);
+      rgba(0, 0, 0, 0.09);
   }
 
   .all-products-card-content {
     padding: 17px 16px 16px;
+
+    min-width: 0;
   }
 
   .all-products-card-category {
@@ -785,15 +850,11 @@
 
     line-height: 1.3;
 
-    /*
-     * Prevent an extremely long product
-     * name from making the card enormous.
-     */
-
     display: -webkit-box;
-    line-clamp:2;
-    -webkit-box-orient: vertical;
+
+    line-clamp: 2;
     -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
     overflow: hidden;
   }
@@ -845,6 +906,7 @@
     font-size: 13px;
   }
 }
+
 
 /* =========================================================
    SMALL MOBILE
@@ -912,6 +974,7 @@
     font-size: 12.5px;
   }
 }
+
 
 /* =========================================================
    375px AND BELOW
@@ -1005,6 +1068,7 @@
   }
 }
 
+
 /* =========================================================
    VERY SMALL DEVICES
    <= 320px
@@ -1018,6 +1082,8 @@
   .all-products-card-actions {
     top: 7px;
     right: 7px;
+
+    gap: 5px;
   }
 
   .all-products-card-icon-btn {
@@ -1046,6 +1112,7 @@
     font-size: 11.5px;
   }
 }
+
 
 /* =========================================================
    REDUCED MOTION

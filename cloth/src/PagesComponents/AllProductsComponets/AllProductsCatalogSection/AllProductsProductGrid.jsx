@@ -27,8 +27,8 @@ const AllProductsProductGrid = () => {
         <h3>No Products Found</h3>
 
         <p>
-          No products match your current search,
-          filters, or sorting criteria.
+          No products match your current search, filters,
+          or sorting criteria.
         </p>
       </div>
     );
@@ -36,8 +36,11 @@ const AllProductsProductGrid = () => {
 
   return (
     <div className="all-products-grid-wrapper">
-      {/* Product Count */}
-{/*}
+      {/* ==========================================
+          PRODUCT COUNT
+      ========================================== */}
+
+      {/*
       <div className="all-products-grid-top-info">
         <span>
           Showing{" "}
@@ -51,37 +54,36 @@ const AllProductsProductGrid = () => {
           products
         </span>
       </div>
-*/}
-      {/* Products Grid */}
+      */}
+
+      {/* ==========================================
+          PRODUCTS GRID
+      ========================================== */}
 
       <div className="row g-4">
-        {paginatedProducts.map(
-          (product, index) => (
-            <motion.div
-              key={product._id}
-              className="col-xl-4 col-lg-6 col-md-6 col-sm-6"
-              initial={{
-                opacity: 0,
-                y: 40,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: true,
-              }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.08,
-              }}
-            >
-              <AllProductsProductCard
-                product={product}
-              />
-            </motion.div>
-          )
-        )}
+        {paginatedProducts.map((product, index) => (
+          <motion.div
+            key={product._id}
+            className="col-xl-4 col-lg-6 col-md-6 col-sm-6"
+            initial={{
+              opacity: 0,
+              y: 40,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              duration: 0.5,
+              delay: index * 0.08,
+            }}
+          >
+            <AllProductsProductCard product={product} />
+          </motion.div>
+        ))}
       </div>
     </div>
   );

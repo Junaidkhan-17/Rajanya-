@@ -1,40 +1,71 @@
+/* ==========================================
+   PRODUCT ANIMATED TEXT
+========================================== */
+
 .product-hero-container {
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   margin-bottom: -110px;
+
+  box-sizing: border-box;
+
+  overflow: visible;
 }
 
 .product-hero-svg {
   width: 100%;
+  max-width: 1200px;
+
   height: 120px;
+
+  display: block;
+
   overflow: visible;
 }
 
+/* ==========================================
+   BASE TEXT
+========================================== */
+
 .product-text-base {
   fill: transparent;
+
   stroke: #ffae00;
   stroke-width: 2;
-  font-family: "Barlow";
-  font-size: 240px;
 
+  font-family: "Barlow";
+
+  font-size: 240px;
 }
+
+/* ==========================================
+   ANIMATED LIGHT TEXT
+========================================== */
 
 .product-text-light {
   fill: rgba(255, 217, 0, 0.963);
 
   stroke: #ffffff;
   stroke-width: 6;
-
   stroke-linecap: round;
+
   stroke-dasharray: 120 2000;
   stroke-dashoffset: 0;
+
   font-size: 240px;
+
   font-family: "Barlow";
 
   animation: moveLight 5s linear infinite;
 }
+
+/* ==========================================
+   ANIMATION
+========================================== */
 
 @keyframes moveLight {
   from {
@@ -43,5 +74,134 @@
 
   to {
     stroke-dashoffset: -2000;
+  }
+}
+
+/* ==========================================
+   TABLET / SMALL LAPTOP
+========================================== */
+
+@media (max-width: 991px) {
+  .product-hero-container {
+    margin-bottom: -88px;
+  }
+
+  .product-hero-svg {
+    height: 105px;
+  }
+
+  .product-text-base,
+  .product-text-light {
+    font-size: 210px;
+  }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 768px) {
+  .product-hero-container {
+    width: 100%;
+
+    margin-bottom: -65px;
+  }
+
+  .product-hero-svg {
+    width: 100%;
+    height: 88px;
+  }
+
+  .product-text-base,
+  .product-text-light {
+    font-size: 175px;
+  }
+
+  .product-text-light {
+    stroke-width: 5;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 576px) {
+  .product-hero-container {
+    margin-bottom: -48px;
+  }
+
+  .product-hero-svg {
+    width: 100%;
+    height: 72px;
+  }
+
+  .product-text-base,
+  .product-text-light {
+    font-size: 145px;
+  }
+
+  .product-text-base {
+    stroke-width: 1.7;
+  }
+
+  .product-text-light {
+    stroke-width: 4;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 414px) {
+  .product-hero-container {
+    margin-bottom: -40px;
+  }
+
+  .product-hero-svg {
+    width: 100%;
+    height: 64px;
+  }
+
+  .product-text-base,
+  .product-text-light {
+    font-size: 128px;
+  }
+
+  .product-text-base {
+    stroke-width: 1.5;
+  }
+
+  .product-text-light {
+    stroke-width: 3.5;
+  }
+}
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 374px) {
+  .product-hero-container {
+    margin-bottom: -34px;
+  }
+
+  .product-hero-svg {
+    width: 100%;
+    height: 58px;
+  }
+
+  .product-text-base,
+  .product-text-light {
+    font-size: 115px;
+  }
+
+  .product-text-base {
+    stroke-width: 1.4;
+  }
+
+  .product-text-light {
+    stroke-width: 3;
   }
 }

@@ -6,6 +6,8 @@ function ProductAnimatedText() {
       <svg
         viewBox="0 0 1200 250"
         className="product-hero-svg"
+        aria-label="All Products"
+        role="img"
       >
         <text
           x="50%"

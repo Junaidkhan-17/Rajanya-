@@ -1,9 +1,11 @@
-// src/PagesComponents/AllProductsComponents/AllProductsHeroSection.jsx
-
 import "./AllProductsHeroSection.css";
+
 import { motion } from "framer-motion";
+
 import { ChevronRight } from "lucide-react";
+
 import producthero from "../../assets/producthero.png";
+
 import ProductAnimatedText from "./ProductAnimatedText";
 
 import { allProductsCategoriesData } from "./AllProductsHeroData";
@@ -23,7 +25,6 @@ function AllProductsHeroSection() {
     <section className="all-products-hero-main">
       <div className="container-fluid">
         {/* Hero Banner */}
-
         <motion.div
           className="all-products-hero-banner"
           initial={{ opacity: 0, scale: 1.05 }}
@@ -40,7 +41,6 @@ function AllProductsHeroSection() {
           <div className="all-products-hero-banner-overlay"></div>
 
           {/* Content */}
-
           <div className="all-products-hero-banner-content">
             <motion.h1
               className="all-products-hero-title"
@@ -51,7 +51,7 @@ function AllProductsHeroSection() {
                 duration: 0.7,
               }}
             >
-              <ProductAnimatedText/>
+              <ProductAnimatedText />
             </motion.h1>
 
             <motion.div
@@ -73,8 +73,6 @@ function AllProductsHeroSection() {
         </motion.div>
 
         {/* Categories */}
-
-        
       </div>
     </section>
   );

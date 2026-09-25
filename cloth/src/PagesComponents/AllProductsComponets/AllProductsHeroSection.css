@@ -25,7 +25,9 @@
   display: block;
 }
 
-/* Luxury Overlay */
+/* ==========================================
+   LUXURY OVERLAY
+========================================== */
 
 .all-products-hero-banner-overlay {
   position: absolute;
@@ -53,32 +55,81 @@
   justify-content: center;
 
   z-index: 5;
+
+  padding: 20px;
+
+  box-sizing: border-box;
 }
 
 .all-products-hero-title {
   font-size: 78px;
   font-weight: 700;
   color: #ffffff;
+
   margin-top: -92px;
+  margin-bottom: 0;
+
   font-family: "Muthiara";
+
+  line-height: 1.05;
+
+  text-align: center;
+
+  max-width: 100%;
+
+  overflow-wrap: break-word;
 }
 
 .all-products-hero-breadcrumb {
   display: flex;
   align-items: center;
+  justify-content: center;
+
   gap: 8px;
+
   margin-top: 82px;
+
   font-size: 12px;
   font-weight: 600;
+
   color: rgba(255, 255, 255, 0.9);
+
   letter-spacing: 1.2px;
+
+  text-align: center;
 }
 
 .all-products-hero-breadcrumb span {
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
+/* ==========================================
+   TABLET / SMALL LAPTOP
+========================================== */
 
+@media (max-width: 991px) {
+  .all-products-hero-main {
+    padding: 35px 35px 20px;
+  }
+
+  .all-products-hero-banner {
+    height: 360px;
+    border-radius: 25px;
+  }
+
+  .all-products-hero-title {
+    font-size: clamp(48px, 7vw, 68px);
+  }
+
+  .all-products-hero-breadcrumb {
+    margin-top: 65px;
+  }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
 
 @media (max-width: 768px) {
   .all-products-hero-main {
@@ -90,54 +141,157 @@
     border-radius: 22px;
   }
 
-  .all-products-hero-title {
-    font-size: 36px;
-  }
-
-  .all-products-category-strip {
-    margin-top: 35px;
-
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-
-    padding-bottom: 10px;
-
-    scrollbar-width: none;
-  }
-
-  .all-products-category-strip::-webkit-scrollbar {
-    display: none;
-  }
-
-  .all-products-category-item {
-    min-width: max-content;
-  }
-}
-
-@media (max-width: 576px) {
-  .all-products-hero-banner {
-    height: 220px;
+  .all-products-hero-banner-content {
+    padding: 18px;
   }
 
   .all-products-hero-title {
-    font-size: 28px;
+    font-size: clamp(38px, 7vw, 52px);
+
+    margin-top: -55px;
+
+    line-height: 1.05;
   }
 
   .all-products-hero-breadcrumb {
+    gap: 7px;
+
+    margin-top: 48px;
+
     font-size: 10px;
+
+    letter-spacing: 1px;
   }
 
-  .all-products-category-image-wrapper {
-    width: 55px;
-    height: 55px;
+  .all-products-hero-breadcrumb svg {
+    flex-shrink: 0;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 576px) {
+  .all-products-hero-main {
+    padding: 22px 15px 14px;
   }
 
-  .all-products-category-content h4 {
-    font-size: 15px;
+  .all-products-hero-banner {
+    height: 220px;
+    border-radius: 19px;
   }
 
-  .all-products-category-content span {
-    font-size: 12px;
+  .all-products-hero-banner-content {
+    padding: 14px;
+  }
+
+  .all-products-hero-title {
+    font-size: clamp(28px, 8vw, 38px);
+
+    margin-top: -35px;
+
+    line-height: 1.08;
+
+    max-width: 95%;
+  }
+
+  .all-products-hero-breadcrumb {
+    gap: 6px;
+
+    margin-top: 34px;
+
+    font-size: 9px;
+
+    letter-spacing: 0.9px;
+  }
+
+  .all-products-hero-breadcrumb svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 414px) {
+  .all-products-hero-main {
+    padding: 18px 12px 12px;
+  }
+
+  .all-products-hero-banner {
+    height: 205px;
+    border-radius: 17px;
+  }
+
+  .all-products-hero-banner-content {
+    padding: 12px;
+  }
+
+  .all-products-hero-title {
+    font-size: clamp(25px, 8.5vw, 32px);
+
+    margin-top: -28px;
+
+    max-width: 100%;
+  }
+
+  .all-products-hero-breadcrumb {
+    margin-top: 28px;
+
+    gap: 5px;
+
+    font-size: 8px;
+
+    letter-spacing: 0.75px;
+  }
+
+  .all-products-hero-breadcrumb svg {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 374px) {
+  .all-products-hero-main {
+    padding: 15px 10px 10px;
+  }
+
+  .all-products-hero-banner {
+    height: 190px;
+    border-radius: 15px;
+  }
+
+  .all-products-hero-banner-content {
+    padding: 10px;
+  }
+
+  .all-products-hero-title {
+    font-size: 25px;
+
+    margin-top: -22px;
+
+    line-height: 1.05;
+  }
+
+  .all-products-hero-breadcrumb {
+    margin-top: 23px;
+
+    gap: 4px;
+
+    font-size: 7.5px;
+
+    letter-spacing: 0.65px;
+  }
+
+  .all-products-hero-breadcrumb svg {
+    width: 8px;
+    height: 8px;
   }
 }

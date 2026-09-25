@@ -1,0 +1,568 @@
+/* =========================================================
+   ALL PRODUCTS PRODUCT GRID
+========================================================= */
+
+.all-products-grid-wrapper {
+  width: 100%;
+  max-width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BOOTSTRAP ROW SAFETY
+========================================================= */
+
+.all-products-grid-wrapper > .row {
+  width: 100%;
+  max-width: 100%;
+
+  margin-right: 0;
+  margin-left: 0;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PRODUCT GRID COLUMNS
+========================================================= */
+
+.all-products-grid-wrapper > .row > [class*="col-"] {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PRODUCT CARD HEIGHT
+========================================================= */
+
+.all-products-grid-wrapper
+  > .row
+  > [class*="col-"]
+  > .all-products-card-main {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =========================================================
+   TOP INFORMATION
+   Currently unused / reserved for future product count
+========================================================= */
+
+.all-products-grid-top-info {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  width: 100%;
+
+  margin-bottom: 24px;
+
+  color: #4d5a57;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  box-sizing: border-box;
+}
+
+.all-products-grid-top-info strong {
+  color: #050817;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.all-products-empty-state {
+  width: 100%;
+  max-width: 680px;
+
+  margin: 60px auto;
+
+  padding: 60px 40px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border: 1px solid #eeeeee;
+  border-radius: 20px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 18px 45px
+    rgba(0, 0, 0, 0.045);
+}
+
+
+/* =========================================================
+   EMPTY STATE ICON
+========================================================= */
+
+.all-products-empty-icon {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 22px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8f7f5,
+      #efeeec
+    );
+
+  color: #31565a;
+
+  font-size: 27px;
+
+  box-shadow:
+    0 10px 25px
+    rgba(0, 0, 0, 0.06);
+}
+
+
+/* =========================================================
+   EMPTY STATE TITLE
+========================================================= */
+
+.all-products-empty-state h3 {
+  margin: 0 0 10px;
+
+  color: #050817;
+
+  font-size: 24px;
+  line-height: 1.25;
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   EMPTY STATE DESCRIPTION
+========================================================= */
+
+.all-products-empty-state p {
+  max-width: 500px;
+
+  margin: 0;
+
+  color: #6b7471;
+
+  font-size: 14px;
+  line-height: 1.7;
+
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   >= 1440px
+========================================================= */
+
+@media (min-width: 1440px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
+  }
+
+  .all-products-empty-state {
+    margin-top: 70px;
+    margin-bottom: 70px;
+
+    padding: 70px 50px;
+  }
+}
+
+
+/* =========================================================
+   DESKTOP
+   1200px - 1439px
+========================================================= */
+
+@media (max-width: 1439px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 1.5rem;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP
+   <= 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 1.25rem;
+    --bs-gutter-y: 1.25rem;
+  }
+
+  .all-products-grid-top-info {
+    margin-bottom: 20px;
+  }
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   <= 992px
+========================================================= */
+
+@media (max-width: 992px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 1.15rem;
+    --bs-gutter-y: 1.15rem;
+  }
+
+  .all-products-grid-top-info {
+    margin-bottom: 18px;
+
+    font-size: 13px;
+  }
+
+  .all-products-empty-state {
+    max-width: 600px;
+
+    margin-top: 45px;
+    margin-bottom: 45px;
+
+    padding: 50px 30px;
+  }
+
+  .all-products-empty-icon {
+    width: 66px;
+    height: 66px;
+
+    margin-bottom: 20px;
+
+    font-size: 25px;
+  }
+
+  .all-products-empty-state h3 {
+    font-size: 22px;
+  }
+
+  .all-products-empty-state p {
+    font-size: 13.5px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   <= 768px
+========================================================= */
+
+@media (max-width: 768px) {
+  .all-products-grid-wrapper {
+    width: 100%;
+
+    padding: 0;
+  }
+
+  /*
+   * Keep Bootstrap's two-column layout at md,
+   * while ensuring columns never become wider
+   * than their available space.
+   */
+
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+
+    width: 100%;
+  }
+
+  .all-products-grid-wrapper
+    > .row
+    > [class*="col-"] {
+    min-width: 0;
+  }
+
+  .all-products-grid-top-info {
+    margin-bottom: 16px;
+
+    font-size: 13px;
+  }
+
+  .all-products-empty-state {
+    width: calc(100% - 30px);
+    max-width: 560px;
+
+    margin: 40px auto;
+
+    padding: 44px 28px;
+
+    border-radius: 18px;
+  }
+
+  .all-products-empty-icon {
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 18px;
+
+    font-size: 23px;
+  }
+
+  .all-products-empty-state h3 {
+    font-size: 21px;
+  }
+
+  .all-products-empty-state p {
+    max-width: 440px;
+
+    font-size: 13px;
+
+    line-height: 1.65;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   <= 576px
+========================================================= */
+
+@media (max-width: 576px) {
+  .all-products-grid-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /*
+   * Bootstrap's sm breakpoint has already changed
+   * the grid to one column here.
+   *
+   * Keep the layout intentionally single-column
+   * so the product cards retain enough width for:
+   * - product image
+   * - action buttons
+   * - product title
+   * - pricing
+   * - full-width CTA
+   */
+
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 18px;
+
+    width: 100%;
+
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .all-products-grid-wrapper
+    > .row
+    > [class*="col-"] {
+    width: 100%;
+    max-width: 100%;
+
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .all-products-grid-top-info {
+    justify-content: flex-start;
+
+    margin-bottom: 14px;
+
+    font-size: 12px;
+  }
+
+  .all-products-empty-state {
+    width: calc(100% - 24px);
+
+    margin: 32px auto;
+
+    padding: 38px 22px;
+
+    border-radius: 16px;
+  }
+
+  .all-products-empty-icon {
+    width: 58px;
+    height: 58px;
+
+    margin-bottom: 16px;
+
+    font-size: 21px;
+  }
+
+  .all-products-empty-state h3 {
+    margin-bottom: 9px;
+
+    font-size: 20px;
+  }
+
+  .all-products-empty-state p {
+    font-size: 12.5px;
+
+    line-height: 1.65;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   <= 430px
+========================================================= */
+
+@media (max-width: 430px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-y: 16px;
+  }
+
+  .all-products-empty-state {
+    width: calc(100% - 20px);
+
+    margin: 28px auto;
+
+    padding: 34px 18px;
+  }
+
+  .all-products-empty-icon {
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 15px;
+
+    font-size: 20px;
+  }
+
+  .all-products-empty-state h3 {
+    font-size: 19px;
+  }
+
+  .all-products-empty-state p {
+    font-size: 12px;
+
+    line-height: 1.6;
+  }
+}
+
+
+/* =========================================================
+   375px AND BELOW
+========================================================= */
+
+@media (max-width: 375px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-y: 15px;
+  }
+
+  .all-products-empty-state {
+    width: calc(100% - 16px);
+
+    margin: 24px auto;
+
+    padding: 30px 16px;
+
+    border-radius: 14px;
+  }
+
+  .all-products-empty-icon {
+    width: 50px;
+    height: 50px;
+
+    margin-bottom: 14px;
+
+    font-size: 18px;
+  }
+
+  .all-products-empty-state h3 {
+    font-size: 18px;
+  }
+
+  .all-products-empty-state p {
+    font-size: 11.5px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   <= 320px
+========================================================= */
+
+@media (max-width: 320px) {
+  .all-products-grid-wrapper > .row {
+    --bs-gutter-y: 14px;
+  }
+
+  .all-products-empty-state {
+    width: calc(100% - 12px);
+
+    margin: 20px auto;
+
+    padding: 26px 13px;
+  }
+
+  .all-products-empty-icon {
+    width: 46px;
+    height: 46px;
+
+    margin-bottom: 12px;
+
+    font-size: 17px;
+  }
+
+  .all-products-empty-state h3 {
+    font-size: 17px;
+  }
+
+  .all-products-empty-state p {
+    font-size: 11px;
+
+    line-height: 1.55;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .all-products-grid-wrapper,
+  .all-products-empty-state,
+  .all-products-empty-icon {
+    transition: none;
+  }
+}

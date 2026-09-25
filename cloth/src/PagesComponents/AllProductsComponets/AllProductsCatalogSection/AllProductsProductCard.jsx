@@ -2,11 +2,7 @@ import "./AllProductsProductCard.css";
 
 import { useNavigate } from "react-router-dom";
 
-import {
-  Heart,
-  Eye,
-  Share2,
-} from "lucide-react";
+import { Heart, Eye, Share2 } from "lucide-react";
 
 import {
   useProductLiveData,
@@ -14,19 +10,11 @@ import {
 } from "../../../contexts/ProductLiveDataContext";
 
 const AllProductsProductCard = ({ product }) => {
-  const {
-    state,
-    dispatch,
-    toggleWishlist,
-  } = useProductLiveData();
-
+  const { state, dispatch, toggleWishlist } = useProductLiveData();
   const navigate = useNavigate();
 
-  const isWishlisted =
-    state.wishlist.includes(product._id);
-
-  const isCompared =
-    state.compare.includes(product._id);
+  const isWishlisted = state.wishlist.includes(product._id);
+  const isCompared = state.compare.includes(product._id);
 
   /* ======================================
      PRODUCT IMAGE
@@ -45,7 +33,6 @@ const AllProductsProductCard = ({ product }) => {
 
   const handleWishlist = async (e) => {
     e.stopPropagation();
-
     await toggleWishlist(product._id);
   };
 
@@ -55,8 +42,7 @@ const AllProductsProductCard = ({ product }) => {
 
   const handleProductDetails = () => {
     dispatch({
-      type:
-        PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
+      type: PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
       payload: product._id,
     });
 
@@ -74,7 +60,6 @@ const AllProductsProductCard = ({ product }) => {
       type: isCompared
         ? PRODUCT_ACTIONS.REMOVE_FROM_COMPARE
         : PRODUCT_ACTIONS.ADD_TO_COMPARE,
-
       payload: product._id,
     });
   };
@@ -87,16 +72,11 @@ const AllProductsProductCard = ({ product }) => {
     e.stopPropagation();
 
     dispatch({
-      type:
-        PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
-
+      type: PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
       payload: product._id,
     });
 
-    console.log(
-      "Quick View Product:",
-      product._id
-    );
+    console.log("Quick View Product:", product._id);
   };
 
   /* ======================================
@@ -107,9 +87,7 @@ const AllProductsProductCard = ({ product }) => {
     e.stopPropagation();
 
     const shareUrl =
-      window.location.origin +
-      "/products/" +
-      product.slug;
+      window.location.origin + "/products/" + product.slug;
 
     try {
       if (navigator.share) {
@@ -118,13 +96,8 @@ const AllProductsProductCard = ({ product }) => {
           text: product.description,
           url: shareUrl,
         });
-      } else if (
-        navigator.clipboard
-      ) {
-        await navigator.clipboard.writeText(
-          shareUrl
-        );
-
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareUrl);
         alert("Product link copied.");
       }
     } catch (error) {
@@ -133,10 +106,8 @@ const AllProductsProductCard = ({ product }) => {
        * dialog should not create an error
        * experience.
        */
-      if (
-        error?.name !==
-        "AbortError"
-      ) {
+
+      if (error?.name !== "AbortError") {
         console.log(error);
       }
     }
@@ -148,7 +119,6 @@ const AllProductsProductCard = ({ product }) => {
 
   const handleBookNow = (e) => {
     e.stopPropagation();
-
     handleProductDetails();
   };
 
@@ -156,20 +126,15 @@ const AllProductsProductCard = ({ product }) => {
      RATING
   ====================================== */
 
-  const rating =
-    Number(product.rating) || 0;
-
-  const reviewsCount =
-    Number(product.reviewsCount) || 0;
+  const rating = Number(product.rating) || 0;
+  const reviewsCount = Number(product.reviewsCount) || 0;
 
   /* ======================================
      PRICING
   ====================================== */
 
   const rentalPrice =
-    Number(
-      product.rentalOptions?.[0]?.price
-    ) || 0;
+    Number(product.rentalOptions?.[0]?.price) || 0;
 
   const originalPrice =
     Number(product.originalPrice) || 0;
@@ -190,12 +155,8 @@ const AllProductsProductCard = ({ product }) => {
         role="button"
         tabIndex={0}
         onKeyDown={(e) => {
-          if (
-            e.key === "Enter" ||
-            e.key === " "
-          ) {
+          if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-
             handleProductDetails();
           }
         }}
@@ -211,9 +172,7 @@ const AllProductsProductCard = ({ product }) => {
           />
         ) : (
           <div className="all-products-card-image-placeholder">
-            <span>
-              No Image
-            </span>
+            <span>No Image</span>
           </div>
         )}
 
@@ -237,18 +196,12 @@ const AllProductsProductCard = ({ product }) => {
                 ? `Remove ${product.name} from wishlist`
                 : `Add ${product.name} to wishlist`
             }
-            aria-pressed={
-              isWishlisted
-            }
+            aria-pressed={isWishlisted}
           >
             <Heart
               size={18}
               strokeWidth={1.8}
-              fill={
-                isWishlisted
-                  ? "currentColor"
-                  : "none"
-              }
+              fill={isWishlisted ? "currentColor" : "none"}
             />
           </button>
 
@@ -260,10 +213,7 @@ const AllProductsProductCard = ({ product }) => {
             className="all-products-card-icon-btn"
             aria-label={`Quick view ${product.name}`}
           >
-            <Eye
-              size={18}
-              strokeWidth={1.8}
-            />
+            <Eye size={18} strokeWidth={1.8} />
           </button>
 
           {/* Share */}
@@ -274,10 +224,7 @@ const AllProductsProductCard = ({ product }) => {
             className="all-products-card-icon-btn"
             aria-label={`Share ${product.name}`}
           >
-            <Share2
-              size={18}
-              strokeWidth={1.8}
-            />
+            <Share2 size={18} strokeWidth={1.8} />
           </button>
         </div>
       </div>
@@ -295,12 +242,8 @@ const AllProductsProductCard = ({ product }) => {
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (
-              e.key === "Enter" ||
-              e.key === " "
-            ) {
+            if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-
               handleProductDetails();
             }
           }}
@@ -311,10 +254,8 @@ const AllProductsProductCard = ({ product }) => {
         {/* Category */}
 
         <span className="all-products-card-category">
-          {typeof product.category ===
-          "object"
-            ? product.category?.name ||
-              "-"
+          {typeof product.category === "object"
+            ? product.category?.name || "-"
             : product.category || "-"}
         </span>
 
@@ -328,13 +269,9 @@ const AllProductsProductCard = ({ product }) => {
             aria-hidden="true"
           />
 
-          <span>
-            {rating.toFixed(1)}
-          </span>
+          <span>{rating.toFixed(1)}</span>
 
-          <small>
-            ({reviewsCount})
-          </small>
+          <small>({reviewsCount})</small>
         </div>
 
         {/* ======================================
@@ -346,18 +283,12 @@ const AllProductsProductCard = ({ product }) => {
 
           <div className="all-products-card-price-wrapper">
             <strong>
-              ₹
-              {rentalPrice.toLocaleString(
-                "en-IN"
-              )}
+              ₹{rentalPrice.toLocaleString("en-IN")}
             </strong>
 
             {originalPrice > 0 && (
               <span>
-                ₹
-                {originalPrice.toLocaleString(
-                  "en-IN"
-                )}
+                ₹{originalPrice.toLocaleString("en-IN")}
               </span>
             )}
           </div>
