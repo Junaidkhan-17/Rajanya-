@@ -1,19 +1,32 @@
+/* =========================================================
+   Rental Includes Card
+   ========================================================= */
+
 .rental-includes-card {
+  width: 100%;
   margin-top: 5px;
   padding: 32px;
 
   background: #ffffff;
-
   border: 1px solid #ebebeb;
-
   border-radius: 4px;
+
+  box-sizing: border-box;
 }
 
+/* =========================================================
+   Header
+   ========================================================= */
+
 .rental-includes-header {
+  width: 100%;
+
   padding-bottom: 8px;
   margin-bottom: 20px;
   margin-top: -20px;
+
   text-align: left;
+
   border-bottom: 1px solid #eeeeee;
 }
 
@@ -22,53 +35,288 @@
 
   font-size: 0.85rem;
   font-weight: 500;
+  line-height: 1.4;
   letter-spacing: 3px;
+
   color: #222222;
 }
 
+/* =========================================================
+   Includes Grid
+   ========================================================= */
+
 .rental-includes-grid {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(
-    2,
-    minmax(0, 1fr)
-  );
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
   gap: 30px 60px;
 }
 
+/* =========================================================
+   Include Item
+   ========================================================= */
+
 .rental-includes-item {
+  min-width: 0;
+
   display: flex;
   align-items: center;
+
   gap: 14px;
 }
 
 .rental-includes-item svg {
   flex-shrink: 0;
+
   color: #c7a461;
 }
 
 .rental-includes-item span {
+  min-width: 0;
+
   font-size: 1rem;
+  font-weight: 400;
   line-height: 1.5;
+
   color: #2c2c2c;
+
+  overflow-wrap: break-word;
 }
+
+/* =========================================================
+   Large Desktop
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .rental-includes-card {
+    padding: 34px;
+  }
+
+  .rental-includes-grid {
+    column-gap: 70px;
+    row-gap: 32px;
+  }
+
+  .rental-includes-item {
+    gap: 15px;
+  }
+}
+
+/* =========================================================
+   Desktop / Laptop
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .rental-includes-card {
+    padding: 30px;
+  }
+
+  .rental-includes-grid {
+    column-gap: 40px;
+    row-gap: 26px;
+  }
+
+  .rental-includes-item {
+    gap: 12px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.96rem;
+  }
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .rental-includes-card {
+    padding: 28px;
+  }
+
+  .rental-includes-header {
+    margin-bottom: 20px;
+  }
+
+  .rental-includes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 30px;
+    row-gap: 24px;
+  }
+
+  .rental-includes-item {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .rental-includes-item svg {
+    margin-top: 2px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.95rem;
+  }
+}
+
+/* =========================================================
+   Small Tablet
+   ========================================================= */
 
 @media (max-width: 768px) {
   .rental-includes-card {
     padding: 24px;
   }
 
+  .rental-includes-header {
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+  }
+
+  .rental-includes-header h5 {
+    font-size: 0.8rem;
+    letter-spacing: 2.5px;
+  }
+
   .rental-includes-grid {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: 20px;
+  }
+
+  .rental-includes-item {
+    gap: 12px;
+  }
+
+  .rental-includes-item svg {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 }
 
-@media (max-width: 480px) {
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 576px) {
   .rental-includes-card {
-    padding: 20px;
+    margin-top: 3px;
+    padding: 21px;
+  }
+
+  .rental-includes-header {
+    padding-bottom: 8px;
+    margin-bottom: 18px;
+    margin-top: -7px;
+  }
+
+  .rental-includes-header h5 {
+    font-size: 0.76rem;
+    letter-spacing: 2.2px;
+  }
+
+  .rental-includes-grid {
+    gap: 17px;
+  }
+
+  .rental-includes-item {
+    gap: 11px;
+  }
+
+  .rental-includes-item svg {
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
   }
 
   .rental-includes-item span {
     font-size: 0.92rem;
+    line-height: 1.5;
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .rental-includes-card {
+    padding: 19px;
+  }
+
+  .rental-includes-header {
+    margin-bottom: 17px;
+  }
+
+  .rental-includes-header h5 {
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+  }
+
+  .rental-includes-grid {
+    gap: 15px;
+  }
+
+  .rental-includes-item {
+    gap: 10px;
+  }
+
+  .rental-includes-item svg {
+    width: 17px;
+    height: 17px;
+    flex-basis: 17px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.89rem;
+    line-height: 1.45;
+  }
+}
+
+/* =========================================================
+   Very Small Devices
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .rental-includes-card {
+    padding: 17px;
+  }
+
+  .rental-includes-header {
+    padding-bottom: 7px;
+    margin-bottom: 15px;
+  }
+
+  .rental-includes-header h5 {
+    font-size: 0.68rem;
+    letter-spacing: 1.7px;
+  }
+
+  .rental-includes-grid {
+    gap: 14px;
+  }
+
+  .rental-includes-item {
+    gap: 9px;
+  }
+
+  .rental-includes-item svg {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+  }
+
+  .rental-includes-item span {
+    font-size: 0.86rem;
+    line-height: 1.45;
   }
 }

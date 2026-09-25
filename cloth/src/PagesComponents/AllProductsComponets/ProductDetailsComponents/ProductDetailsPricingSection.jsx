@@ -6,6 +6,7 @@ const ProductDetailsPricingSection = ({ product, selectedRentalOption }) => {
   const discountPercentage = Math.round(
     ((product.originalPrice - rentalPrice) / product.originalPrice) * 100,
   );
+
   console.log("Pricing:", selectedRentalOption);
 
   return (
@@ -19,12 +20,15 @@ const ProductDetailsPricingSection = ({ product, selectedRentalOption }) => {
           ₹{rentalPrice.toLocaleString()}
         </span>
 
-        <span className="product-rental-label">/ {selectedRentalOption?.days} DAYS RENT</span>
+        <span className="product-rental-label">
+          / {selectedRentalOption?.days} DAYS RENT
+        </span>
 
         <span className="product-discount-badge">
           {discountPercentage}% OFF
         </span>
       </div>
+
       {/*
       <div className="product-security-deposit">
         Security Deposit:
@@ -32,7 +36,7 @@ const ProductDetailsPricingSection = ({ product, selectedRentalOption }) => {
           ₹{product.securityDeposit?.toLocaleString()}
         </span>
       </div>
-*/}
+      */}
     </div>
   );
 };

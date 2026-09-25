@@ -168,6 +168,22 @@
   text-align: center;
 }
 
+.category-info-bar-phone-link {
+  display: inline-block;
+  margin-top: 2px;
+  color: #777777;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 400;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.category-info-bar-phone-link:hover {
+  color: #0f766e;
+}
+
 /* =========================================================
    CATEGORY TEXT
 ========================================================= */

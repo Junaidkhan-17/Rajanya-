@@ -1,66 +1,369 @@
+/* =========================================================
+   Product Details Actions Section
+   ========================================================= */
+
 .product-details-actions-section {
   width: 100%;
-
   display: flex;
-
+  align-items: stretch;
   gap: 16px;
-
   margin-top: 20px;
 }
 
+/* =========================================================
+   Common Button Behavior
+   ========================================================= */
+
+.virtual-try-on-btn,
+.book-rent-btn,
+.wishlist-btn {
+  font-family: inherit;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* =========================================================
+   Virtual Try-On Button
+   ========================================================= */
+
 .virtual-try-on-btn {
   flex: 1;
-
+  min-width: 0;
   height: 60px;
+  padding: 0 20px;
 
   border: none;
-
   background: #111111;
-
   color: #ffffff;
 
   font-size: 15px;
   font-weight: 500;
+  line-height: 1.2;
 
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  white-space: normal;
 }
+
+.virtual-try-on-btn:hover {
+  background: #c8a96b;
+  color: #ffffff;
+}
+
+.virtual-try-on-btn:active {
+  transform: translateY(1px);
+}
+
+.virtual-try-on-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+/* =========================================================
+   Book For Rent Button
+   ========================================================= */
 
 .book-rent-btn {
   flex: 1;
-
+  min-width: 0;
   height: 60px;
+  padding: 0 20px;
 
   border: 1px solid #111111;
-
   background: #ffffff;
-
   color: #111111;
 
   font-size: 15px;
   font-weight: 500;
+  line-height: 1.2;
 
   cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  white-space: normal;
 }
 
+.book-rent-btn:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+.book-rent-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   Wishlist Button
+   ========================================================= */
+
 .wishlist-btn {
+  flex: 0 0 60px;
   width: 60px;
-
+  min-width: 60px;
+  min-height: 60px;
   height: 60px;
-  color:#111111;
-  border: 1px solid #dddddd;
 
+  padding: 0;
+
+  color: #111111;
+  border: 1px solid #dddddd;
   background: #ffffff;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   cursor: pointer;
 }
 
+.wishlist-btn:hover {
+  border-color: #c8a96b;
+  color: #c8a96b;
+  transform: translateY(-2px);
+}
+
+.wishlist-btn:active {
+  transform: translateY(0);
+}
+
 .wishlist-btn-active {
   background: #c8a96b;
   color: #ffffff;
+  border-color: #c8a96b;
+}
+
+.wishlist-btn-active:hover {
+  background: #b89559;
+  color: #ffffff;
+  border-color: #b89559;
+}
+
+/* =========================================================
+   Large Desktop
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .product-details-actions-section {
+    gap: 18px;
+    margin-top: 22px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    height: 62px;
+    font-size: 15px;
+  }
+
+  .wishlist-btn {
+    flex-basis: 62px;
+    width: 62px;
+    min-width: 62px;
+    height: 62px;
+  }
+}
+
+/* =========================================================
+   Desktop / Laptop
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .product-details-actions-section {
+    gap: 14px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    padding: 0 16px;
+    font-size: 14px;
+  }
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .product-details-actions-section {
+    margin-top: 16px;
+    gap: 14px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    height: 58px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .wishlist-btn {
+    flex-basis: 58px;
+    width: 58px;
+    min-width: 58px;
+    min-height: 58px;
+    height: 58px;
+  }
+}
+
+/* =========================================================
+   Small Tablet
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .product-details-actions-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    width: 100%;
+    min-width: 0;
+    height: 56px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .wishlist-btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 54px;
+    height: 54px;
+
+    grid-column: 1 / -1;
+  }
+
+  .wishlist-btn:hover {
+    transform: none;
+  }
+
+  .virtual-try-on-btn:hover,
+  .book-rent-btn:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .product-details-actions-section {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    width: 100%;
+    flex: none;
+    height: 54px;
+
+    padding: 0 16px;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    white-space: normal;
+  }
+
+  .wishlist-btn {
+    width: 100%;
+    min-width: 44px;
+    min-height: 50px;
+    height: 50px;
+
+    flex: none;
+  }
+
+  .wishlist-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /*
+   * Touch devices do not have true hover.
+   * Keep the buttons stable instead of allowing
+   * hover transforms to remain visually stuck.
+   */
+
+  .virtual-try-on-btn:hover,
+  .book-rent-btn:hover,
+  .wishlist-btn:hover {
+    transform: none;
+  }
+
+  .virtual-try-on-btn:active,
+  .book-rent-btn:active,
+  .wishlist-btn:active {
+    transform: scale(0.99);
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .product-details-actions-section {
+    gap: 9px;
+    margin-top: 10px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    height: 52px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .wishlist-btn {
+    height: 48px;
+    min-height: 48px;
+  }
+
+  .wishlist-btn svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+/* =========================================================
+   Very Small Devices
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .product-details-actions-section {
+    gap: 8px;
+  }
+
+  .virtual-try-on-btn,
+  .book-rent-btn {
+    height: 50px;
+    padding: 0 10px;
+    font-size: 12.5px;
+  }
+
+  .wishlist-btn {
+    height: 46px;
+    min-height: 46px;
+  }
 }

@@ -8,9 +8,7 @@ const ProductDetailsVariantsSection = ({
   return (
     <div className="product-details-variants-section">
       <div className="variant-header">
-        <h4 className="variant-title">
-          Select Size
-        </h4>
+        <h4 className="variant-title">Select Size</h4>
 
         <button
           type="button"
@@ -26,13 +24,10 @@ const ProductDetailsVariantsSection = ({
             key={size}
             type="button"
             className={`size-btn ${
-              selectedSize === size
-                ? "active"
-                : ""
+              selectedSize === size ? "active" : ""
             }`}
-            onClick={() =>
-              setSelectedSize(size)
-            }
+            onClick={() => setSelectedSize(size)}
+            aria-pressed={selectedSize === size}
           >
             {size}
           </button>

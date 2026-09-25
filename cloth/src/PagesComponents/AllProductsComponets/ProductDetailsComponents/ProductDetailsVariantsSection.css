@@ -1,18 +1,24 @@
+/* =========================================================
+   Product Details Variants Section
+   ========================================================= */
+
 .product-details-variants-section {
   width: 100%;
-
   display: flex;
   flex-direction: column;
-
   gap: 16px;
 }
 
+/* =========================================================
+   Variant Header
+   ========================================================= */
+
 .variant-header {
+  width: 100%;
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
+  gap: 20px;
 }
 
 .variant-title {
@@ -20,62 +26,327 @@
 
   font-size: 14px;
   font-weight: 600;
-
   letter-spacing: 2px;
-
+  line-height: 1.4;
   text-transform: uppercase;
 
   color: #111111;
 }
 
-.size-guide-btn {
-  border: none;
+/* =========================================================
+   Size Guide Button
+   ========================================================= */
 
+.size-guide-btn {
+  flex-shrink: 0;
+
+  padding: 6px 0;
+
+  border: none;
   background: transparent;
 
   font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
 
   color: #777777;
 
   cursor: pointer;
+
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
-.size-options {
-  display: flex;
+.size-guide-btn:hover {
+  color: #111111;
+}
 
+.size-guide-btn:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   Size Options
+   ========================================================= */
+
+.size-options {
+  width: 100%;
+
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
 
   gap: 12px;
 }
 
+/* =========================================================
+   Size Button
+   ========================================================= */
+
 .size-btn {
   width: 48px;
-
   height: 48px;
 
+  flex: 0 0 48px;
+
+  padding: 0;
+
   border: 1px solid #d9d9d9;
-
   background: #ffffff;
-
   color: #333333;
 
   font-size: 14px;
-
   font-weight: 500;
+  line-height: 1;
 
   cursor: pointer;
 
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .size-btn:hover {
   border-color: #111111;
 }
 
+.size-btn:active {
+  transform: scale(0.96);
+}
+
 .size-btn.active {
   background: #111111;
-
   color: #ffffff;
-
   border-color: #111111;
+}
+
+/* =========================================================
+   Large Desktop
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .product-details-variants-section {
+    gap: 18px;
+  }
+
+  .size-options {
+    gap: 13px;
+  }
+
+  .size-btn {
+    width: 50px;
+    height: 50px;
+    flex-basis: 50px;
+  }
+}
+
+/* =========================================================
+   Desktop / Laptop
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .product-details-variants-section {
+    gap: 15px;
+  }
+
+  .size-options {
+    gap: 11px;
+  }
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .product-details-variants-section {
+    gap: 15px;
+  }
+
+  .variant-header {
+    gap: 16px;
+  }
+
+  .size-options {
+    gap: 10px;
+  }
+
+  .size-btn {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
+}
+
+/* =========================================================
+   Small Tablet
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .product-details-variants-section {
+    gap: 14px;
+  }
+
+  .variant-header {
+    align-items: center;
+  }
+
+  .variant-title {
+    font-size: 13px;
+    letter-spacing: 1.8px;
+  }
+
+  .size-guide-btn {
+    font-size: 12px;
+    padding: 7px 0;
+  }
+
+  .size-options {
+    gap: 10px;
+  }
+
+  .size-btn {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+
+    font-size: 13px;
+  }
+
+  /*
+   * Disable hover movement on touch-oriented layouts.
+   * Selection and active feedback remain intact.
+   */
+
+  .size-btn:hover {
+    transform: none;
+  }
+
+  .size-guide-btn:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .product-details-variants-section {
+    gap: 13px;
+  }
+
+  .variant-header {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .variant-title {
+    font-size: 12px;
+    letter-spacing: 1.6px;
+  }
+
+  .size-guide-btn {
+    font-size: 11px;
+    padding: 8px 0;
+
+    min-height: 36px;
+
+    display: flex;
+    align-items: center;
+  }
+
+  .size-options {
+    gap: 9px;
+    width: 100%;
+  }
+
+  .size-btn {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+
+    font-size: 13px;
+  }
+
+  .size-btn:active {
+    transform: scale(0.95);
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .product-details-variants-section {
+    gap: 12px;
+  }
+
+  .variant-header {
+    gap: 10px;
+  }
+
+  .variant-title {
+    font-size: 11.5px;
+    letter-spacing: 1.4px;
+  }
+
+  .size-guide-btn {
+    font-size: 10.5px;
+  }
+
+  .size-options {
+    gap: 8px;
+  }
+
+  .size-btn {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   Very Small Devices
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .product-details-variants-section {
+    gap: 11px;
+  }
+
+  .variant-header {
+    gap: 8px;
+  }
+
+  .variant-title {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
+
+  .size-guide-btn {
+    font-size: 10px;
+  }
+
+  .size-options {
+    gap: 7px;
+  }
+
+  .size-btn {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+
+    font-size: 11px;
+  }
 }

@@ -18,8 +18,15 @@ const RentalIncludesCard = () => {
 
       <div className="rental-includes-grid">
         {RENTAL_INCLUDES.map((item, index) => (
-          <div key={index} className="rental-includes-item">
-            <CheckCircle2 size={18} />
+          <div
+            key={index}
+            className="rental-includes-item"
+          >
+            <CheckCircle2
+              size={18}
+              aria-hidden="true"
+            />
+
             <span>{item}</span>
           </div>
         ))}

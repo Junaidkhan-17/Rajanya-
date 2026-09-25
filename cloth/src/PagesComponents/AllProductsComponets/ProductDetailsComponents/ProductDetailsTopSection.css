@@ -1,60 +1,187 @@
+/* ==========================================
+   PRODUCT DETAILS TOP SECTION
+========================================== */
+
 .product-details-top-section {
+  width: 100%;
   padding: 80px 0;
   background: #f8f8f8;
-
+  overflow: hidden;
 }
+
+.product-details-top-section .container {
+  width: 100%;
+}
+
 .product-details-gallery-wrapper {
   width: 100%;
+  max-width: 100%;
 }
 
 .product-details-content-wrapper {
   width: 100%;
-
   display: flex;
   flex-direction: column;
-
   align-items: flex-start;
   justify-content: flex-start;
-
   text-align: left;
 }
 
 .product-details-right-content {
+  width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
   gap: 32px;
 }
 
-/* ==========================
-   Large Desktop
-========================== */
+/* ==========================================
+   LARGE DESKTOP
+========================================== */
 
 @media (min-width: 1600px) {
   .product-details-top-section {
     padding: 100px 0;
   }
+
+  .product-details-right-content {
+    gap: 36px;
+  }
 }
 
-/* ==========================
-   Tablet
-========================== */
+/* ==========================================
+   LAPTOP / DESKTOP
+========================================== */
+
+@media (max-width: 1199px) {
+  .product-details-top-section {
+    padding: 70px 0;
+  }
+
+  .product-details-right-content {
+    gap: 28px;
+  }
+}
+
+/* ==========================================
+   TABLET
+========================================== */
 
 @media (max-width: 991px) {
   .product-details-top-section {
     padding: 60px 0;
   }
+
+  .product-details-top-section .row {
+    --bs-gutter-y: 3rem;
+  }
+
+  .product-details-right-content {
+    gap: 28px;
+  }
+
+  .product-details-gallery-wrapper,
+  .product-details-content-wrapper {
+    width: 100%;
+  }
 }
 
-/* ==========================
-   Mobile
-========================== */
+/* ==========================================
+   SMALL TABLET
+========================================== */
+
+@media (max-width: 768px) {
+  .product-details-top-section {
+    padding: 50px 0;
+  }
+
+  .product-details-top-section .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 2.5rem;
+  }
+
+  .product-details-right-content {
+    gap: 26px;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 576px) {
   .product-details-top-section {
     padding: 40px 0;
   }
 
+  .product-details-top-section .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .product-details-top-section .row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 2rem;
+  }
+
+  .product-details-top-section .col-lg-6 {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .product-details-gallery-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .product-details-content-wrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
   .product-details-right-content {
+    width: 100%;
     gap: 24px;
+  }
+}
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 375px) {
+  .product-details-top-section {
+    padding: 35px 0;
+  }
+
+  .product-details-top-section .container {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .product-details-right-content {
+    gap: 22px;
+  }
+}
+
+/* ==========================================
+   VERY SMALL DEVICES
+========================================== */
+
+@media (max-width: 320px) {
+  .product-details-top-section {
+    padding: 30px 0;
+  }
+
+  .product-details-top-section .container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .product-details-right-content {
+    gap: 20px;
   }
 }

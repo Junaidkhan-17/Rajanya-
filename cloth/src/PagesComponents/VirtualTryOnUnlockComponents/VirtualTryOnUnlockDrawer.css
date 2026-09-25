@@ -3,7 +3,6 @@
    Responsive: 320px → 1920px
 ========================================================= */
 
-
 /* =========================================================
    OVERLAY
 ========================================================= */
@@ -27,7 +26,6 @@
   overflow: hidden;
 }
 
-
 /* =========================================================
    DRAWER
 ========================================================= */
@@ -44,8 +42,7 @@
 
   background: #ffffff;
 
-  box-shadow:
-    -20px 0 60px rgba(0, 0, 0, 0.18);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.18);
 
   display: flex;
   flex-direction: column;
@@ -74,7 +71,6 @@
 .virtual-try-drawer::-webkit-scrollbar-thumb:hover {
   background: #bdbdbd;
 }
-
 
 /* =========================================================
    HEADER
@@ -180,7 +176,6 @@
   color: #6d6d6d;
 }
 
-
 /* =========================================================
    HERO
 ========================================================= */
@@ -189,7 +184,7 @@
   width: 100%;
 
   padding: 45px 35px 20px;
- flex-shrink: 0;
+  flex-shrink: 0;
   text-align: center;
 }
 
@@ -220,7 +215,6 @@
   color: #666666;
 }
 
-
 /* =========================================================
    SHOWCASE
 ========================================================= */
@@ -246,7 +240,6 @@
 
   box-sizing: border-box;
 }
-
 
 /* =========================================================
    PREVIEW CARDS
@@ -279,8 +272,7 @@
 
   background: #f8f8f8;
 
-  box-shadow:
-    0 15px 50px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
 
   transition:
     transform 0.4s ease,
@@ -292,8 +284,7 @@
 .virtual-preview-image-box:hover {
   transform: translateY(-10px);
 
-  box-shadow:
-    0 22px 55px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.12);
 }
 
 .virtual-preview-image-box img {
@@ -317,7 +308,6 @@
   color: #202020;
 }
 
-
 /* =========================================================
    MAGIC ICON
 ========================================================= */
@@ -331,12 +321,7 @@
 
   border-radius: 50%;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f7d28d,
-      #d8b36b
-    );
+  background: linear-gradient(135deg, #f7d28d, #d8b36b);
 
   color: #ffffff;
 
@@ -344,8 +329,7 @@
   align-items: center;
   justify-content: center;
 
-  box-shadow:
-    0 20px 40px rgba(216, 179, 107, 0.35);
+  box-shadow: 0 20px 40px rgba(216, 179, 107, 0.35);
 
   flex-shrink: 0;
 }
@@ -354,7 +338,6 @@
   width: 40px;
   height: 40px;
 }
-
 
 /* =========================================================
    PAYMENT SECTION
@@ -395,7 +378,6 @@
   color: #6c6c6c;
 }
 
-
 /* =========================================================
    PAYMENT CARD
 ========================================================= */
@@ -413,8 +395,7 @@
 
   border-radius: 32px;
 
-  box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.06);
 
   text-align: center;
 
@@ -426,7 +407,7 @@
 ========================================================= */
 
 .virtual-payment-qr-code {
- width: 500px;
+  width: 500px;
   height: 600px;
   max-width: 700px;
   margin: 0 auto;
@@ -443,13 +424,12 @@
   width: 880px;
   height: 780px;
   max-width: 480px;
-  display: block; 
+  display: block;
   object-fit: contain;
   image-rendering: auto;
   margin-left: -150px;
   margin-top: -120px;
 }
-
 
 /* =========================================================
    PAYMENT WAITING
@@ -485,7 +465,6 @@
   text-align: center;
 }
 
-
 /* =========================================================
    PAYMENT SUCCESS
 ========================================================= */
@@ -518,7 +497,6 @@
   flex-shrink: 0;
 }
 
-
 /* =========================================================
    PAYMENT NUMBER
 ========================================================= */
@@ -545,7 +523,6 @@
   font-weight: 700;
 }
 
-
 /* =========================================================
    PAYMENT ICON
 ========================================================= */
@@ -558,12 +535,7 @@
 
   padding: 15px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #fafafa,
-      #f3f3f3
-    );
+  background: linear-gradient(135deg, #fafafa, #f3f3f3);
 
   border: 1px solid #eeeeee;
 
@@ -575,15 +547,13 @@
 
   color: #d8b36b;
 
-  box-shadow:
-    inset 0 0 0 1px rgba(216, 179, 107, 0.04);
+  box-shadow: inset 0 0 0 1px rgba(216, 179, 107, 0.04);
 }
 
 .virtual-payment-qr svg {
   width: clamp(32px, 8vw, 42px);
   height: clamp(32px, 8vw, 42px);
 }
-
 
 /* =========================================================
    PRICE
@@ -632,7 +602,6 @@
   color: #777777;
 }
 
-
 /* =========================================================
    PAYMENT ERROR
 ========================================================= */
@@ -658,7 +627,6 @@
 
   line-height: 1.55;
 }
-
 
 /* =========================================================
    PAYMENT BUTTONS
@@ -724,8 +692,7 @@
 
   transform: translateY(-3px);
 
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .virtual-payment-btn:active:not(:disabled) {
@@ -798,14 +765,12 @@
   transform: none;
 }
 
-
 /* =========================================================
    PAYMENT SPINNER
 ========================================================= */
 
 .virtual-payment-spinner {
-  animation:
-    virtualPaymentSpin 0.9s linear infinite;
+  animation: virtualPaymentSpin 0.9s linear infinite;
 
   flex-shrink: 0;
 }
@@ -819,7 +784,6 @@
     transform: rotate(360deg);
   }
 }
-
 
 /* =========================================================
    DIVIDER
@@ -839,7 +803,6 @@
   opacity: 0.72;
 }
 
-
 /* =========================================================
    PAYMENT INFORMATION
 ========================================================= */
@@ -853,8 +816,7 @@
   flex-shrink: 0;
   display: grid;
 
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   gap: 24px;
 }
@@ -863,7 +825,6 @@
   width: 100%;
   margin: 0;
 }
-
 
 /* =========================================================
    SECURITY CARDS
@@ -896,8 +857,7 @@
 .demo-info:hover {
   transform: translateY(-6px);
 
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
 }
 
 .demo-info-icon {
@@ -964,7 +924,6 @@
   overflow-wrap: anywhere;
 }
 
-
 /* =========================================================
    IMPORTANT NOTE CONTAINER
 ========================================================= */
@@ -1019,7 +978,6 @@
   color: #4f4f4f;
 }
 
-
 /* =========================================================
    LARGE DESKTOP
    1440px+
@@ -1065,7 +1023,6 @@
   }
 }
 
-
 /* =========================================================
    LAPTOP / SMALL DESKTOP
    992px – 1199px
@@ -1102,7 +1059,6 @@
     height: 34px;
   }
 }
-
 
 /* =========================================================
    TABLET
@@ -1176,7 +1132,6 @@
     margin-bottom: 35px;
   }
 }
-
 
 /* =========================================================
    SMALL TABLET / LARGE MOBILE
@@ -1401,7 +1356,6 @@
     margin-bottom: 30px;
   }
 }
-
 
 /* =========================================================
    MOBILE
@@ -1651,20 +1605,48 @@
    QR RESPONSIVE
 ========================================================= */
 
+/* =========================================================
+   QR RESPONSIVE
+========================================================= */
+
 @media (max-width: 575px) {
   .virtual-payment-qr-code {
-    width: min(250px, 100%);
+    width: 100%;
+    max-width: 320px;
 
-    padding: 11px;
+    height: auto;
 
-    margin-bottom: 18px;
+    margin: 0 auto 18px;
 
-    border-radius: 17px;
+    padding: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    border-radius: 16px;
+  }
+
+  .virtual-payment-qr-code img {
+    width: 100%;
+    max-width: 100%;
+
+    height: auto;
+
+    margin: 0;
+
+    display: block;
+
+    object-fit: contain;
+    object-position: center;
   }
 
   .virtual-payment-waiting {
     padding: 11px 12px;
-
     font-size: 0.72rem;
   }
 
@@ -1677,19 +1659,30 @@
   }
 }
 
-
 @media (max-width: 374px) {
   .virtual-payment-qr-code {
-    width: min(220px, 100%);
+    width: 100%;
+    max-width: 280px;
 
-    padding: 9px;
+    padding: 8px;
 
-    border-radius: 15px;
+    border-radius: 14px;
+  }
+
+  .virtual-payment-qr-code img {
+    width: 100%;
+    max-width: 100%;
+
+    height: auto;
+
+    margin: 0;
+
+    object-fit: contain;
+    object-position: center;
   }
 
   .virtual-payment-waiting {
     font-size: 0.66rem;
-
     gap: 7px;
   }
 
@@ -1701,7 +1694,6 @@
     font-size: 0.6rem;
   }
 }
-
 
 /* =========================================================
    SMALL MOBILE
@@ -1929,7 +1921,6 @@
   }
 }
 
-
 /* =========================================================
    TOUCH DEVICES
 ========================================================= */
@@ -1959,7 +1950,6 @@
   }
 }
 
-
 /* =========================================================
    REDUCED MOTION
 ========================================================= */
@@ -1979,7 +1969,6 @@
   }
 }
 
-
 /* =========================================================
    KEYBOARD FOCUS
 ========================================================= */
@@ -1991,7 +1980,6 @@
   outline: 2px solid #d8b36b;
   outline-offset: 3px;
 }
-
 
 /* =========================================================
    SAFETY AGAINST LONG CONTENT

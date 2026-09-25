@@ -1,9 +1,10 @@
 import "./ProductDetailsRentalSection.css";
 
-const ProductDetailsRentalSection = ({  product,
+const ProductDetailsRentalSection = ({
+  product,
   selectedRentalOption,
-  setSelectedRentalOption, }) => {
-
+  setSelectedRentalOption,
+}) => {
   return (
     <div className="product-details-rental-section">
       <h4 className="rental-section-title">Rental Duration</h4>

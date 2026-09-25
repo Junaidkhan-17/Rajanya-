@@ -1,10 +1,13 @@
 import "./ProductDetailsActionsSection.css";
 
 import { useState } from "react";
+
 import { Heart } from "lucide-react";
 
 import { useAuth, AUTH_ACTIONS } from "../../../contexts/AuthContext";
+
 import { useProductLiveData } from "../../../contexts/ProductLiveDataContext";
+
 import api from "../../../services/api";
 
 const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
@@ -17,78 +20,78 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
   const isWishlisted = productState.wishlist.includes(product._id);
 
   /*
-  ========================================
-  Book For Rent
-  ========================================
-  */
+   * ========================================
+   * Book For Rent
+   * ========================================
+   */
 
-const handleBookNow = () => {
-  const bookForRentPayload = {
-    ...bookingPayload,
+  const handleBookNow = () => {
+    const bookForRentPayload = {
+      ...bookingPayload,
 
-    product: {
-      ...(bookingPayload?.product || {}),
-      ...product,
+      product: {
+        ...(bookingPayload?.product || {}),
+        ...product,
 
-      rentalOptions:
-        product?.rentalOptions ||
-        bookingPayload?.product?.rentalOptions ||
-        [],
-    },
-  };
+        rentalOptions:
+          product?.rentalOptions ||
+          bookingPayload?.product?.rentalOptions ||
+          [],
+      },
+    };
 
-  console.log("BOOK FOR RENT PAYLOAD:", bookForRentPayload);
+    console.log("BOOK FOR RENT PAYLOAD:", bookForRentPayload);
 
-  if (!state.isAuthenticated) {
+    if (!state.isAuthenticated) {
+      dispatch({
+        type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
+        payload: bookForRentPayload,
+      });
+
+      dispatch({
+        type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+      });
+
+      return;
+    }
+
     dispatch({
       type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
       payload: bookForRentPayload,
     });
 
     dispatch({
-      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+      type: AUTH_ACTIONS.SET_PENDING_ACTION,
+      payload: "bookForRent",
     });
 
-    return;
-  }
-
-  dispatch({
-    type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
-    payload: bookForRentPayload,
-  });
-
-  dispatch({
-    type: AUTH_ACTIONS.SET_PENDING_ACTION,
-    payload: "bookForRent",
-  });
-
-  dispatch({
-    type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
-  });
-};
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
+    });
+  };
 
   /*
-  ========================================
-  Virtual Try-On
-  ========================================
-  */
+   * ========================================
+   * Virtual Try-On
+   * ========================================
+   */
 
   const handleVirtualTryOn = async () => {
     /*
-    ----------------------------------------
-    Prevent Multiple Requests
-    ----------------------------------------
-    */
+     * ----------------------------------------
+     * Prevent Multiple Requests
+     * ----------------------------------------
+     */
 
     if (isCheckingVirtualTryOn) {
       return;
     }
 
     /*
-    ----------------------------------------
-    Authentication Check
-    ----------------------------------------
-    */
+     * ----------------------------------------
+     * Authentication Check
+     * ----------------------------------------
+     */
 
     if (!state.isAuthenticated) {
       dispatch({
@@ -99,23 +102,24 @@ const handleBookNow = () => {
     }
 
     /*
-    ----------------------------------------
-    Start Token Balance Check
-    ----------------------------------------
-    */
+     * ----------------------------------------
+     * Start Token Balance Check
+     * ----------------------------------------
+     */
 
     setIsCheckingVirtualTryOn(true);
 
     try {
       /*
-      ========================================
-      Get Customer VTO Token Balance
-      ========================================
-      */
+       * ========================================
+       * Get Customer VTO Token Balance
+       * ========================================
+       */
 
       const response = await api.get("/virtual-try-on/my-tokens");
 
-      const availableTokens = response?.data?.tokens?.availableTokens;
+      const availableTokens =
+        response?.data?.tokens?.availableTokens;
 
       console.log(
         "Virtual Try-On Available Tokens:",
@@ -123,16 +127,14 @@ const handleBookNow = () => {
       );
 
       /*
-      ========================================
-      Customer Has Available Tokens
-      ========================================
-
-      If the customer has at least 1 token,
-      directly open the Virtual Try-On Studio.
-
-      No payment drawer should be shown.
-      ========================================
-      */
+       * ========================================
+       * Customer Has Available Tokens
+       * ========================================
+       *
+       * If the customer has at least 1 token,
+       * directly open the Virtual Try-On Studio.
+       * No payment drawer should be shown.
+       */
 
       if (
         response?.data?.success &&
@@ -152,13 +154,12 @@ const handleBookNow = () => {
       }
 
       /*
-      ========================================
-      Customer Has No Tokens
-      ========================================
-
-      Open the ₹50 payment/unlock drawer.
-      ========================================
-      */
+       * ========================================
+       * Customer Has No Tokens
+       * ========================================
+       *
+       * Open the ₹50 payment/unlock drawer.
+       */
 
       dispatch({
         type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD,
@@ -170,20 +171,18 @@ const handleBookNow = () => {
       });
     } catch (error) {
       /*
-      ========================================
-      VTO Account Does Not Exist
-      ========================================
-
-      A missing VTO account means the customer
-      has never purchased VTO tokens.
-
-      Therefore treat it as:
-
-      availableTokens = 0
-
-      and open the payment drawer.
-      ========================================
-      */
+       * ========================================
+       * VTO Account Does Not Exist
+       * ========================================
+       *
+       * A missing VTO account means the customer
+       * has never purchased VTO tokens.
+       *
+       * Therefore treat it as:
+       * availableTokens = 0
+       *
+       * and open the payment drawer.
+       */
 
       if (error?.response?.status === 404) {
         console.log(
@@ -203,10 +202,10 @@ const handleBookNow = () => {
       }
 
       /*
-      ========================================
-      Other API Errors
-      ========================================
-      */
+       * ========================================
+       * Other API Errors
+       * ========================================
+       */
 
       console.error(
         "Virtual Try-On Token Check Error:",
@@ -223,10 +222,10 @@ const handleBookNow = () => {
   };
 
   /*
-  ========================================
-  Wishlist
-  ========================================
-  */
+   * ========================================
+   * Wishlist
+   * ========================================
+   */
 
   const handleWishlist = async () => {
     if (!state.isAuthenticated) {
@@ -241,10 +240,10 @@ const handleBookNow = () => {
   };
 
   /*
-  ========================================
-  Render
-  ========================================
-  */
+   * ========================================
+   * Render
+   * ========================================
+   */
 
   return (
     <div className="product-details-actions-section">

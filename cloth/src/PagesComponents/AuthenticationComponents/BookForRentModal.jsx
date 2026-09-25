@@ -88,7 +88,7 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
 
   const [selectedSize, setSelectedSize] = useState("");
 
-  const [selectedRentalOption, setSelectedRentalOption] = useState(null);
+  const [calculatedRentalDays, setCalculatedRentalDays] = useState(null);
 
   const [startDate, setStartDate] = useState(null);
 
@@ -108,49 +108,6 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   ===================================================== */
 
     setSelectedSize(bookingData.selectedSize || "");
-    /*
-    bookingData.rentalDuration can arrive as:
-    - number
-    - string
-    - undefined
-  */
-
-    const requestedDuration = Number(bookingData.rentalDuration);
-
-    let matchedRental = null;
-
-    if (Number.isFinite(requestedDuration) && requestedDuration > 0) {
-      matchedRental =
-        rentalOptions.find(
-          (option) => Number(option.days) === requestedDuration,
-        ) || null;
-    }
-
-    /*
-    Fallback:
-    If duration was not passed correctly but
-    rentalPrice was passed, find the matching
-    rental option using price.
-  */
-
-    if (!matchedRental && bookingData.rentalPrice != null) {
-      matchedRental =
-        rentalOptions.find(
-          (option) => Number(option.price) === Number(bookingData.rentalPrice),
-        ) || null;
-    }
-
-    /*
-    Final fallback:
-    If there is only one rental option,
-    automatically select it.
-  */
-
-    if (!matchedRental && rentalOptions.length === 1) {
-      matchedRental = rentalOptions[0];
-    }
-
-    setSelectedRentalOption(matchedRental);
 
     /* =====================================================
      DATES
@@ -194,6 +151,32 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       setValue("email", currentUser.email || "");
     }
   }, [bookingData, currentUser, setValue]);
+
+  /* =========================================================
+   CALCULATE RENTAL DURATION FROM DATES
+========================================================= */
+
+  useEffect(() => {
+    if (!startDate || !returnDate) {
+      setCalculatedRentalDays(null);
+      return;
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(returnDate);
+
+    const difference = end.getTime() - start.getTime();
+
+    const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+    setCalculatedRentalDays(days > 0 ? days : null);
+  }, [startDate, returnDate]);
+
+  const matchedRentalOption = bookingData?.product?.rentalOptions?.find(
+    (option) => option.days === calculatedRentalDays,
+  );
+
+  const calculatedRentalPrice = matchedRentalOption?.price ?? 0;
 
   /* =========================================================
      FETCH BOOKING AVAILABILITY
@@ -310,9 +293,8 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       return;
     }
 
-    if (!selectedRentalOption) {
-      alert("Please select rental duration");
-
+    if (!calculatedRentalDays) {
+      alert("Please select valid rental dates");
       return;
     }
 
@@ -360,15 +342,22 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
 
         selectedSize,
 
-        rentalDuration: selectedRentalOption.days,
+        rentalDuration: calculatedRentalDays,
 
-        rentalPrice: selectedRentalOption.price,
+        rentalPrice: calculatedRentalPrice,
 
         securityDeposit: bookingData.securityDeposit || 0,
       },
     };
 
     const adminNumber = "918806431717";
+
+    if (!matchedRentalOption) {
+      alert(
+        `Rental pricing for ${calculatedRentalDays} days is not configured for this product.`,
+      );
+      return;
+    }
 
     try {
       await bookingService.createBooking(booking);
@@ -484,48 +473,35 @@ ${booking.product.productUrl}
     return null;
   }
 
-const product = bookingData?.product || {};
+  const product = bookingData?.product || {};
 
-const rentalOptions = Array.isArray(product.rentalOptions)
-  ? product.rentalOptions
-  : Array.isArray(bookingData?.rentalOptions)
-    ? bookingData.rentalOptions
-    : [];
+  const getProductImage = (productData) => {
+    const imageCandidates = [
+      productData?.mainImage,
+      productData?.thumbnailImage,
+      productData?.image,
+      productData?.imageUrl,
+      productData?.thumbnail,
+      productData?.galleryImages?.[0],
+      productData?.images?.[0],
+    ];
 
+    const image = imageCandidates.find(Boolean);
 
-const getProductImage = (productData) => {
-  const imageCandidates = [
-    productData?.mainImage,
-    productData?.thumbnailImage,
-    productData?.image,
-    productData?.imageUrl,
-    productData?.thumbnail,
-    productData?.galleryImages?.[0],
-    productData?.images?.[0],
-  ];
+    if (!image) return "";
 
-  const image = imageCandidates.find(Boolean);
+    if (typeof image === "string") {
+      return image;
+    }
 
-  if (!image) return "";
+    if (typeof image === "object") {
+      return image.url || image.secure_url || image.src || image.path || "";
+    }
 
-  if (typeof image === "string") {
-    return image;
-  }
+    return "";
+  };
 
-  if (typeof image === "object") {
-    return (
-      image.url ||
-      image.secure_url ||
-      image.src ||
-      image.path ||
-      ""
-    );
-  }
-
-  return "";
-};
-
-const productImage = getProductImage(product);
+  const productImage = getProductImage(product);
 
   /* =========================================================
      MODAL CONTENT
@@ -733,39 +709,16 @@ const productImage = getProductImage(product);
                 <div className="form-group full-width">
                   <label htmlFor="rentalDuration">Rental Duration</label>
 
-                  <select
+                  <input
                     id="rentalDuration"
+                    type="text"
                     value={
-                      selectedRentalOption
-                        ? String(selectedRentalOption.days)
-                        : ""
+                      calculatedRentalDays
+                        ? `${calculatedRentalDays} Days`
+                        : "Select Rental Dates"
                     }
-                    onChange={(e) => {
-                      const selectedDays = Number(e.target.value);
-
-                      const rentalOptions = Array.isArray(
-                        bookingData.product?.rentalOptions,
-                      )
-                        ? bookingData.product.rentalOptions
-                        : [];
-
-                      const option =
-                        rentalOptions.find(
-                          (item) => Number(item.days) === selectedDays,
-                        ) || null;
-
-                      setSelectedRentalOption(option);
-                    }}
-                  >
-                    <option value="">Select Rental Duration</option>
-
-                    {rentalOptions.map((option) => (
-  <option key={option.days} value={option.days}>
-    {option.days} Days — ₹
-    {Number(option.price || 0).toLocaleString("en-IN")}
-  </option>
-))}
-                  </select>
+                    readOnly
+                  />
                 </div>
 
                 {/* RENT DATE */}
@@ -861,18 +814,15 @@ const productImage = getProductImage(product);
                   <span>Rental Days</span>
 
                   <span>
-                    {selectedRentalOption?.days
-                      ? `${selectedRentalOption.days} Days`
+                    {calculatedRentalDays
+                      ? `${calculatedRentalDays} Days`
                       : "-"}
                   </span>
                 </div>
 
                 <div className="summary-row">
                   <span>Rental Price</span>
-
-                  <span>
-                    ₹{(selectedRentalOption?.price || 0).toLocaleString()}
-                  </span>
+                  <span>₹{calculatedRentalPrice.toLocaleString("en-IN")}</span>
                 </div>
 
                 <div className="summary-row">
@@ -886,13 +836,13 @@ const productImage = getProductImage(product);
                 <div className="summary-total">
                   <span>Total</span>
 
-                  <span>
-                    ₹
-                    {(
-                      (selectedRentalOption?.price || 0) +
-                      (bookingData.securityDeposit || 0)
-                    ).toLocaleString()}
-                  </span>
+<span>
+  ₹
+  {(
+    Number(calculatedRentalPrice || 0) +
+    Number(bookingData.securityDeposit || 0)
+  ).toLocaleString("en-IN")}
+</span>
                 </div>
 
                 <button type="submit" className="confirm-booking-btn">

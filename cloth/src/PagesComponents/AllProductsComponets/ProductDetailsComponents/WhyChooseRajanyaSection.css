@@ -1,62 +1,378 @@
+/* =========================================================
+   Why Choose Rajanya Section
+   ========================================================= */
+
 .why-rajanya-section {
+  width: 100%;
   padding: 40px 0;
+
   background: #faf8f4;
 }
 
+/* =========================================================
+   Main Grid
+   ========================================================= */
+
 .why-rajanya-grid {
+  width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
   gap: 40px;
 }
 
-.atropos {
+/* =========================================================
+   Atropos Wrapper
+   ========================================================= */
+
+.why-rajanya-grid .atropos {
   width: 100%;
   height: 100%;
+  min-width: 0;
 }
+
+/* =========================================================
+   Card
+   ========================================================= */
 
 .why-rajanya-card {
-  text-align: center;
-    cursor: pointer;
+  width: 100%;
   height: 100%;
+
+  padding: 10px 8px;
+
+  text-align: center;
+
+  cursor: pointer;
 }
+
+/* =========================================================
+   Icon
+   ========================================================= */
 
 .why-rajanya-card svg {
+  width: 36px;
+  height: 36px;
+
   color: #8b6b2f;
+
   margin-bottom: 18px;
+
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
+/* =========================================================
+   Card Heading
+   ========================================================= */
+
 .why-rajanya-card h3 {
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 
   font-size: 18px;
   font-weight: 700;
+  line-height: 1.3;
 
   color: #111111;
 
   text-transform: uppercase;
   letter-spacing: 1px;
+
+  overflow-wrap: break-word;
 }
+
+/* =========================================================
+   Card Description
+   ========================================================= */
 
 .why-rajanya-card p {
   margin: 0;
 
   font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
 
   color: #6b7280;
 
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  overflow-wrap: break-word;
 }
 
-@media (max-width: 992px) {
-  .why-rajanya-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* =========================================================
+   Desktop Hover
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  .why-rajanya-card:hover svg {
+    color: #c7a461;
+    transform: translateY(-2px);
   }
 }
 
+/* =========================================================
+   Large Desktop
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .why-rajanya-section {
+    padding: 45px 0;
+  }
+
+  .why-rajanya-grid {
+    gap: 50px;
+  }
+
+  .why-rajanya-card {
+    padding: 12px 10px;
+  }
+
+  .why-rajanya-card svg {
+    width: 38px;
+    height: 38px;
+
+    margin-bottom: 19px;
+  }
+
+  .why-rajanya-card h3 {
+    font-size: 18px;
+  }
+
+  .why-rajanya-card p {
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   Desktop / Laptop
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .why-rajanya-section {
+    padding: 38px 0;
+  }
+
+  .why-rajanya-grid {
+    gap: 32px;
+  }
+
+  .why-rajanya-card {
+    padding: 8px 6px;
+  }
+
+  .why-rajanya-card h3 {
+    font-size: 17px;
+  }
+
+  .why-rajanya-card p {
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 992px) {
+  .why-rajanya-section {
+    padding: 38px 0;
+  }
+
+  .why-rajanya-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 30px;
+  }
+
+  .why-rajanya-card {
+    padding: 8px 12px;
+  }
+
+  .why-rajanya-card svg {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 16px;
+  }
+
+  .why-rajanya-card h3 {
+    font-size: 17px;
+    letter-spacing: 0.9px;
+  }
+
+  .why-rajanya-card p {
+    font-size: 12px;
+    letter-spacing: 0.45px;
+  }
+}
+
+/* =========================================================
+   Small Tablet
+   ========================================================= */
+
+@media (max-width: 768px) {
+  .why-rajanya-section {
+    padding: 36px 0;
+  }
+
+  .why-rajanya-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px 24px;
+  }
+
+  .why-rajanya-card {
+    padding: 8px 10px;
+  }
+
+  .why-rajanya-card svg {
+    width: 33px;
+    height: 33px;
+    margin-bottom: 14px;
+  }
+
+  .why-rajanya-card h3 {
+    margin-bottom: 8px;
+
+    font-size: 15px;
+    line-height: 1.35;
+    letter-spacing: 0.8px;
+  }
+
+  .why-rajanya-card p {
+    font-size: 11px;
+    line-height: 1.45;
+    letter-spacing: 0.4px;
+  }
+}
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
 @media (max-width: 576px) {
+  .why-rajanya-section {
+    padding: 34px 0;
+  }
+
   .why-rajanya-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 28px;
+  }
+
+  .why-rajanya-card {
+    padding: 6px 18px;
+  }
+
+  .why-rajanya-card svg {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 14px;
+  }
+
+  .why-rajanya-card h3 {
+    margin-bottom: 8px;
+
+    font-size: 16px;
+    line-height: 1.35;
+    letter-spacing: 0.8px;
+  }
+
+  .why-rajanya-card p {
+    max-width: 280px;
+    margin: 0 auto;
+
+    font-size: 11px;
+    line-height: 1.5;
+    letter-spacing: 0.4px;
+  }
+}
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 375px) {
+  .why-rajanya-section {
+    padding: 30px 0;
+  }
+
+  .why-rajanya-grid {
+    gap: 25px;
+  }
+
+  .why-rajanya-card {
+    padding: 5px 14px;
+  }
+
+  .why-rajanya-card svg {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 12px;
+  }
+
+  .why-rajanya-card h3 {
+    margin-bottom: 7px;
+
+    font-size: 14px;
+    letter-spacing: 0.7px;
+  }
+
+  .why-rajanya-card p {
+    max-width: 260px;
+
+    font-size: 10.5px;
+    line-height: 1.45;
+    letter-spacing: 0.35px;
+  }
+}
+
+/* =========================================================
+   Very Small Devices
+   ========================================================= */
+
+@media (max-width: 320px) {
+  .why-rajanya-section {
+    padding: 28px 0;
+  }
+
+  .why-rajanya-grid {
+    gap: 23px;
+  }
+
+  .why-rajanya-card {
+    padding: 4px 12px;
+  }
+
+  .why-rajanya-card svg {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 11px;
+  }
+
+  .why-rajanya-card h3 {
+    font-size: 13px;
+    letter-spacing: 0.6px;
+  }
+
+  .why-rajanya-card p {
+    max-width: 240px;
+
+    font-size: 10px;
+    line-height: 1.4;
+  }
+}
+
+/* =========================================================
+   Touch Devices
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .why-rajanya-card {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .why-rajanya-card svg {
+    transition: color 0.3s ease;
   }
 }

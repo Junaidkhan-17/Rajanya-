@@ -1,18 +1,23 @@
 import "./ProductDetailsTabsSection.css";
+
 import { Star } from "lucide-react";
 
 import { useState, useMemo } from "react";
 
 import { useForm } from "react-hook-form";
+
 import reviewService from "../../../services/reviewService";
+
 import {
   useProductLiveData,
   PRODUCT_ACTIONS,
 } from "../../../contexts/ProductLiveDataContext";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 const ProductDetailsTabsSection = ({ product }) => {
   const [activeTab, setActiveTab] = useState("description");
+
   const { state, dispatch } = useProductLiveData();
 
   const [selectedRating, setSelectedRating] = useState(5);
@@ -33,7 +38,8 @@ const ProductDetailsTabsSection = ({ product }) => {
 
     return [...contextReviews, ...originalReviews].sort(
       (a, b) =>
-        new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date),
+        new Date(b.createdAt || b.date) -
+        new Date(a.createdAt || a.date),
     );
   }, [state.reviews, product]);
 
@@ -41,8 +47,8 @@ const ProductDetailsTabsSection = ({ product }) => {
     const imageFile = data.image?.[0] || null;
 
     /* ==========================
-     REVIEW OBJECT
-  ========================== */
+       REVIEW OBJECT
+    ========================== */
 
     const newReview = {
       id: Date.now(),
@@ -67,16 +73,16 @@ const ProductDetailsTabsSection = ({ product }) => {
     };
 
     /* ==========================
-   SERVICE LAYER
-========================== */
+       SERVICE LAYER
+    ========================== */
 
     await reviewService.createReview(newReview);
 
     console.log(newReview);
 
     /* ==========================
-   CONTEXT API
-========================== */
+       CONTEXT API
+    ========================== */
 
     dispatch({
       type: PRODUCT_ACTIONS.ADD_REVIEW,
@@ -115,6 +121,7 @@ const ProductDetailsTabsSection = ({ product }) => {
           {tabs.map((tab) => (
             <button
               key={tab.id}
+              type="button"
               className={`product-tab-btn ${
                 activeTab === tab.id ? "product-tab-active" : ""
               }`}
@@ -149,7 +156,9 @@ const ProductDetailsTabsSection = ({ product }) => {
                 y: -20,
               }}
             >
-              <h3 className="product-description-title"> -: Product Description :-</h3>
+              <h3 className="product-description-title">
+                -: Product Description :-
+              </h3>
 
               <div className="product-description-wrapper">
                 <p className="product-description-text">
@@ -245,7 +254,10 @@ const ProductDetailsTabsSection = ({ product }) => {
 
                   {productReviews.length > 0 ? (
                     productReviews.map((review) => (
-                      <div key={review.id} className="product-review-card">
+                      <div
+                        key={review.id}
+                        className="product-review-card"
+                      >
                         <div className="product-review-stars">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <Star
@@ -270,7 +282,9 @@ const ProductDetailsTabsSection = ({ product }) => {
                         <span>{review.date}</span>
 
                         {review.title && <h6>{review.title}</h6>}
+
                         <p>{review.review}</p>
+
                         {review.image && (
                           <img
                             src={URL.createObjectURL(review.image)}
@@ -281,7 +295,9 @@ const ProductDetailsTabsSection = ({ product }) => {
                       </div>
                     ))
                   ) : (
-                    <div className="product-review-empty">No Reviews Yet</div>
+                    <div className="product-review-empty">
+                      No Reviews Yet
+                    </div>
                   )}
                 </div>
 
@@ -293,10 +309,14 @@ const ProductDetailsTabsSection = ({ product }) => {
                   </h3>
 
                   <div className="product-review-form-wrapper">
-                    <form onSubmit={handleSubmit(handleReviewSubmit)}>
+                    <form
+                      onSubmit={handleSubmit(handleReviewSubmit)}
+                    >
                       {/* Rating */}
 
-                      <label className="product-review-label">Rating</label>
+                      <label className="product-review-label">
+                        Rating
+                      </label>
 
                       <div className="product-rating-selector">
                         {[1, 2, 3, 4, 5].map((star) => (
@@ -308,7 +328,11 @@ const ProductDetailsTabsSection = ({ product }) => {
                           >
                             <Star
                               size={22}
-                              fill={star <= selectedRating ? "#f59e0b" : "none"}
+                              fill={
+                                star <= selectedRating
+                                  ? "#f59e0b"
+                                  : "none"
+                              }
                               color="#f59e0b"
                             />
                           </button>
@@ -341,7 +365,9 @@ const ProductDetailsTabsSection = ({ product }) => {
                       {/* Email */}
 
                       <div className="mb-3">
-                        <label className="product-review-label">Email</label>
+                        <label className="product-review-label">
+                          Email
+                        </label>
 
                         <input
                           type="email"
@@ -351,6 +377,7 @@ const ProductDetailsTabsSection = ({ product }) => {
                             required: "Email is required",
                           })}
                         />
+
                         {errors.email && (
                           <small className="product-review-error">
                             {errors.email.message}
@@ -388,6 +415,7 @@ const ProductDetailsTabsSection = ({ product }) => {
                             required: "Review is required",
                           })}
                         />
+
                         {errors.review && (
                           <small className="product-review-error">
                             {errors.review.message}

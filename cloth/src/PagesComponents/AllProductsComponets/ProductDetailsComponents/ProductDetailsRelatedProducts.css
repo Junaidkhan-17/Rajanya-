@@ -1,72 +1,298 @@
+/* =========================================================
+   RELATED PRODUCTS SECTION
+   ========================================================= */
+
 .related-products-section {
+  width: 100%;
   padding: 100px 0;
   background: #ffffff;
+  overflow: hidden;
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .related-products-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  gap: 40px;
   margin-bottom: 50px;
+}
+
+.related-products-heading-wrapper {
+  min-width: 0;
 }
 
 .related-products-label {
   display: inline-block;
-
   margin-bottom: 12px;
-
   font-size: 13px;
   font-weight: 600;
+  line-height: 1.4;
   letter-spacing: 3px;
   color: #8b5cf6;
 }
 
 .related-products-header h2 {
   margin: 0;
-
   font-size: 42px;
   font-weight: 700;
-
+  line-height: 1.15;
   color: #111827;
 }
 
+/* =========================================================
+   VIEW ALL BUTTON
+   ========================================================= */
+
 .related-products-view-all-btn {
+  flex-shrink: 0;
+  min-height: 48px;
   border: none;
-
   padding: 14px 24px;
-
   border-radius: 999px;
-
   background: #111827;
-
   color: #ffffff;
-
+  font-size: 14px;
   font-weight: 600;
-
-  transition: 0.3s ease;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .related-products-view-all-btn:hover {
   transform: translateY(-2px);
+  background: #1f2937;
+  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.15);
 }
 
+.related-products-view-all-btn:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   SWIPER
+   ========================================================= */
+
 .related-products-section .swiper {
+  width: 100%;
+  max-width: 100%;
   overflow: visible;
+}
+
+.related-products-section .swiper-wrapper {
+  align-items: stretch;
 }
 
 .related-products-section .swiper-slide {
   height: auto;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
+/* =========================================================
+   LARGE DESKTOP
+   1440px+
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  .related-products-section {
+    padding: 110px 0;
+  }
+
+  .related-products-header {
+    margin-bottom: 55px;
+  }
+
+  .related-products-header h2 {
+    font-size: 44px;
+  }
+}
+
+/* =========================================================
+   DESKTOP / LAPTOP
+   992px - 1439px
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .related-products-section {
+    padding: 90px 0;
+  }
+
+  .related-products-header {
+    margin-bottom: 42px;
+  }
+
+  .related-products-header h2 {
+    font-size: 38px;
+  }
+
+  .related-products-label {
+    font-size: 12px;
+    letter-spacing: 2.5px;
+  }
+}
+
+/* =========================================================
+   TABLET
+   768px - 991px
+   ========================================================= */
+
+@media (max-width: 991px) {
+  .related-products-section {
+    padding: 80px 0;
+  }
+
+  .related-products-header {
+    gap: 30px;
+    margin-bottom: 38px;
+  }
+
+  .related-products-header h2 {
+    font-size: 34px;
+  }
+
+  .related-products-label {
+    margin-bottom: 10px;
+    font-size: 11px;
+    letter-spacing: 2.2px;
+  }
+
+  .related-products-view-all-btn {
+    min-height: 46px;
+    padding: 13px 21px;
+    font-size: 13px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   576px - 767px
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .related-products-section {
+    padding: 65px 0;
+  }
+
   .related-products-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    justify-content: flex-start;
+    gap: 22px;
+    margin-bottom: 32px;
+  }
+
+  .related-products-heading-wrapper {
+    width: 100%;
+  }
+
+  .related-products-label {
+    max-width: 100%;
+    margin-bottom: 9px;
+    font-size: 10px;
+    letter-spacing: 2px;
   }
 
   .related-products-header h2 {
     font-size: 30px;
+    line-height: 1.18;
+  }
+
+  .related-products-view-all-btn {
+    width: auto;
+    min-height: 46px;
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .related-products-section .swiper {
+    overflow: visible;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   375px - 575px
+   ========================================================= */
+
+@media (max-width: 575px) {
+  .related-products-section {
+    padding: 55px 0;
+  }
+
+  .related-products-header {
+    gap: 19px;
+    margin-bottom: 27px;
+  }
+
+  .related-products-label {
+    margin-bottom: 8px;
+    font-size: 9px;
+    letter-spacing: 1.7px;
+  }
+
+  .related-products-header h2 {
+    font-size: 27px;
+    line-height: 1.2;
+  }
+
+  .related-products-view-all-btn {
+    min-height: 44px;
+    padding: 11px 18px;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL DEVICES
+   320px - 374px
+   ========================================================= */
+
+@media (max-width: 374px) {
+  .related-products-section {
+    padding: 48px 0;
+  }
+
+  .related-products-header {
+    gap: 17px;
+    margin-bottom: 24px;
+  }
+
+  .related-products-label {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+  }
+
+  .related-products-header h2 {
+    font-size: 24px;
+  }
+
+  .related-products-view-all-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 16px;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .related-products-view-all-btn:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .related-products-view-all-btn:active {
+    transform: scale(0.98);
   }
 }

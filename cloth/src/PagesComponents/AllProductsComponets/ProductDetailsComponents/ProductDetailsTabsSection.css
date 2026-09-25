@@ -10,6 +10,7 @@
 
 .product-tabs-container {
   width: 100%;
+  max-width: 100%;
 }
 
 /* ==========================================
@@ -21,32 +22,23 @@
   align-items: center;
   justify-content: center;
   gap: 50px;
-
   border-bottom: 1px solid #e5e7eb;
-
   margin-bottom: 60px;
-
   flex-wrap: wrap;
 }
 
 .product-tab-btn {
   position: relative;
-
   border: none;
   background: transparent;
-
   padding: 0 0 18px;
-
   font-size: 15px;
   font-weight: 700;
-
   letter-spacing: 2px;
-
   color: #6b7280;
-
   cursor: pointer;
-
   transition: all 0.35s ease;
+  white-space: nowrap;
 }
 
 .product-tab-btn:hover {
@@ -59,15 +51,11 @@
 
 .product-tab-active::after {
   content: "";
-
   position: absolute;
-
   left: 0;
   bottom: -1px;
-
   width: 100%;
   height: 2px;
-
   background: #111827;
 }
 
@@ -77,6 +65,8 @@
 
 .product-tab-content {
   min-height: 250px;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* ==========================================
@@ -85,22 +75,17 @@
 
 .product-description-title {
   text-align: center;
-
   max-width: 900px;
-
   margin: 0 auto 20px;
-
   font-size: 21px;
   font-weight: 500;
-
   color: #374151;
-
   line-height: 1.5;
 }
 
 .product-description-wrapper {
+  width: 100%;
   max-width: 1200px;
-
   margin: 0 auto;
 }
 
@@ -108,12 +93,19 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 1;
-
   color: #333333;
-
   margin-bottom: 18px;
-
   text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.product-description-list {
+  margin: 0;
+  padding-left: 24px;
+}
+
+.product-description-text::marker {
+  color: #31565a;
 }
 
 /* ==========================================
@@ -122,23 +114,18 @@
 
 .product-fabric-card {
   height: 100%;
-
   padding: 5px;
   margin-left: 135px;
   margin-bottom: -60px;
   transition: all 0.35s ease;
 }
 
-
-
 .product-fabric-card h4 {
   font-size: 18px;
   font-weight: 700;
-
   color: #111827;
   text-transform: uppercase;
   margin-bottom: 15px;
-
   text-align: left;
 }
 
@@ -150,34 +137,29 @@
 
 .product-fabric-card li {
   position: relative;
-
   padding-left: 30px;
-
   margin-bottom: 58px;
-
   font-size: 28px;
   font-weight: 500;
   line-height: 1;
   color: #353535;
   text-align: left;
+  overflow-wrap: anywhere;
 }
 
 .product-fabric-card li::before {
   content: "✓";
-
   position: absolute;
-
   left: 0;
   top: 0;
-
   color: #31565a;
-
   font-weight: 700;
 }
 
 /* ==========================================
    REVIEWS
 ========================================== */
+
 .product-review-section-title {
   font-size: 20px;
   text-transform: uppercase;
@@ -188,18 +170,14 @@
 .product-review-card {
   margin-left: 50px;
   padding: 20px;
-
   border: 1px solid #ececec;
   border-radius: 5px;
-
   background: #ffffff;
-
   transition: all 0.35s ease;
 }
 
 .product-review-card:hover {
   transform: translateY(-5px);
-
   box-shadow:
     0 20px 40px
     rgba(0, 0, 0, 0.05);
@@ -208,48 +186,33 @@
 .product-review-card h5 {
   font-size: 25px;
   font-weight: 500;
-
   color: #111827;
-
   margin-bottom: 6px;
-
   text-align: left;
 }
 
 .product-review-card span {
   display: block;
-
   font-size: 14px;
-
   color: #9ca3af;
-
   margin-bottom: 18px;
-
   text-align: left;
 }
 
 .product-review-card p {
   font-size: 16px;
-
   line-height: 1.8;
-
   color: #4b5563;
-
   margin: 0;
-
   text-align: left;
 }
 
 .product-review-empty {
   text-align: center;
-
   padding: 80px 20px;
-
   border: 1px dashed #d1d5db;
   border-radius: 20px;
-
   color: #6b7280;
-
   font-size: 18px;
   font-weight: 600;
 }
@@ -270,68 +233,43 @@
   color: #111827;
 }
 
-.product-description-list {
-  margin: 0;
-  padding-left: 24px;
-}
-
-
-
-.product-description-text::marker {
-  color: #31565a;
-}
-
-
 /* ==========================================
    REVIEW FORM
 ========================================== */
 
 .product-review-form-wrapper {
   padding: 35px;
-
   border: 1px solid #ececec;
   border-radius: 12px;
-
   background: #ffffff;
 }
 
 .product-review-label {
   display: block;
-
   font-size: 14px;
   font-weight: 600;
-
   color: #111827;
-
   margin-bottom: 10px;
-
   text-align: left;
 }
 
 .product-review-input,
 .product-review-textarea {
   width: 100%;
-
   border: 1px solid #d1d5db;
   border-radius: 10px;
-
   padding: 14px 16px;
-
   font-size: 15px;
-
   color: #111827;
-
   background: #ffffff;
-
   transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .product-review-input:focus,
 .product-review-textarea:focus {
   outline: none;
-
   border-color: #31565a;
-
   box-shadow:
     0 0 0 3px
     rgba(49, 86, 90, 0.12);
@@ -344,13 +282,9 @@
 
 .product-review-error {
   display: block;
-
   margin-top: 6px;
-
   color: #dc2626;
-
   font-size: 13px;
-
   text-align: left;
 }
 
@@ -361,20 +295,20 @@
 .product-rating-selector {
   display: flex;
   align-items: center;
-
   gap: 8px;
-
   margin-bottom: 25px;
 }
 
 .product-rating-btn {
   border: none;
   background: transparent;
-
   padding: 0;
-
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-
   transition: all 0.3s ease;
 }
 
@@ -389,22 +323,17 @@
 .product-review-submit-btn {
   width: 100%;
   height: 54px;
-
   border: none;
   border-radius: 10px;
-
   background: #111827;
   color: #ffffff;
-
   font-size: 15px;
   font-weight: 600;
-
   transition: all 0.35s ease;
 }
 
 .product-review-submit-btn:hover {
   background: #31565a;
-
   transform: translateY(-2px);
 }
 
@@ -415,36 +344,42 @@
 .product-review-card h6 {
   font-size: 17px;
   font-weight: 600;
-
   color: #111827;
-
   margin-bottom: 10px;
-
   text-align: left;
 }
 
 .product-review-image {
+  display: block;
   width: 150px;
-  max-width: 150px;
-
+  max-width: 100%;
   height: 120px;
-
   object-fit: cover;
-
   border-radius: 12px;
-
   margin: 15px 0;
 }
 
 /* ==========================================
-   RESPONSIVE
+   RESPONSIVE - 1200px
 ========================================== */
 
 @media (max-width: 1200px) {
   .product-description-title {
     font-size: 30px;
   }
+
+  .product-fabric-card {
+    margin-left: 80px;
+  }
+
+  .product-review-card {
+    margin-left: 30px;
+  }
 }
+
+/* ==========================================
+   RESPONSIVE - 992px
+========================================== */
 
 @media (max-width: 992px) {
   .product-tabs-section {
@@ -461,34 +396,114 @@
 
   .product-description-text {
     font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .product-tab-content > .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .product-fabric-card {
+    margin-left: 0;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .product-review-card {
+    margin-left: 0;
+  }
+
+  .product-review-form-wrapper {
+    padding: 30px;
   }
 }
 
+/* ==========================================
+   RESPONSIVE - 768px
+========================================== */
+
 @media (max-width: 768px) {
+  .product-tabs-section {
+    padding: 55px 0;
+  }
+
   .product-tabs-nav {
     gap: 25px;
-
     margin-bottom: 40px;
+    padding: 0 12px;
   }
 
   .product-tab-btn {
     font-size: 11px;
     letter-spacing: 1px;
+    padding-bottom: 15px;
   }
 
   .product-description-title {
     font-size: 24px;
+    margin-bottom: 25px;
+    padding: 0 15px;
+  }
+
+  .product-description-wrapper {
+    padding: 0 15px;
   }
 
   .product-description-text {
     font-size: 16px;
+    line-height: 1.7;
   }
 
-  .product-fabric-card,
+  /* Fabric & Care */
+
+  .product-fabric-card {
+    padding: 5px 15px;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  .product-fabric-card h4 {
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+
+  .product-fabric-card li {
+    padding-left: 28px;
+    margin-bottom: 28px;
+    font-size: 22px;
+    line-height: 1.35;
+  }
+
+  /* Reviews */
+
+  .product-review-section-title {
+    font-size: 19px;
+    line-height: 1.4;
+  }
+
   .product-review-card {
+    margin-left: 0;
     padding: 25px;
   }
+
+  .product-review-card h5 {
+    font-size: 18px;
+  }
+
+  .product-review-form-wrapper {
+    padding: 25px;
+  }
+
+  .product-review-image {
+    max-width: 100%;
+  }
 }
+
+/* ==========================================
+   RESPONSIVE - 576px
+========================================== */
 
 @media (max-width: 576px) {
   .product-tabs-section {
@@ -497,25 +512,255 @@
 
   .product-tabs-nav {
     justify-content: center;
+    gap: 14px;
+    margin-bottom: 35px;
+    padding: 0 10px;
+    flex-wrap: wrap;
+  }
 
-    gap: 18px;
+  .product-tab-btn {
+    flex: 0 0 auto;
+    font-size: 10px;
+    letter-spacing: 0.9px;
+    padding-bottom: 14px;
   }
 
   .product-description-title {
     font-size: 20px;
-    margin-bottom: 30px;
+    line-height: 1.4;
+    margin-bottom: 25px;
+    padding: 0 15px;
+  }
+
+  .product-description-wrapper {
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
   }
 
   .product-description-text {
     font-size: 15px;
-    line-height: 1.9;
+    line-height: 1.8;
+    margin-bottom: 15px;
+  }
+
+  /* Fabric & Care */
+
+  .product-fabric-card {
+    width: 100%;
+    padding: 5px 15px;
+    margin-left: 0;
+    margin-bottom: 0;
+    box-sizing: border-box;
   }
 
   .product-fabric-card h4 {
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 14px;
+  }
+
+  .product-fabric-card ul {
+    width: 100%;
+  }
+
+  .product-fabric-card li {
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 28px;
+    margin-bottom: 24px;
     font-size: 20px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .product-fabric-card li::before {
+    left: 0;
+  }
+
+  /* Reviews */
+
+  .product-review-section-title {
+    font-size: 18px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .product-review-card {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
   }
 
   .product-review-card h5 {
     font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .product-review-card p {
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .product-review-empty {
+    padding: 60px 15px;
+    font-size: 16px;
+  }
+
+  .product-review-form-wrapper {
+    width: 100%;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  .product-review-input,
+  .product-review-textarea {
+    padding: 13px 14px;
+    font-size: 14px;
+  }
+
+  .product-rating-selector {
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+
+  .product-rating-btn {
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  .product-review-submit-btn {
+    height: 52px;
+    font-size: 14px;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE - 375px
+========================================== */
+
+@media (max-width: 375px) {
+  .product-tabs-section {
+    padding: 45px 0;
+  }
+
+  .product-tabs-nav {
+    gap: 11px;
+    margin-bottom: 30px;
+    padding: 0 8px;
+  }
+
+  .product-tab-btn {
+    font-size: 9px;
+    letter-spacing: 0.7px;
+    padding-bottom: 13px;
+  }
+
+  .product-description-title {
+    font-size: 18px;
+    padding: 0 12px;
+  }
+
+  .product-description-wrapper {
+    padding: 0 12px;
+  }
+
+  .product-description-text {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+
+  .product-fabric-card {
+    padding: 5px 12px;
+  }
+
+  .product-fabric-card h4 {
+    font-size: 17px;
+  }
+
+  .product-fabric-card li {
+    padding-left: 26px;
+    font-size: 18px;
+    line-height: 1.45;
+    margin-bottom: 22px;
+  }
+
+  .product-review-card {
+    padding: 18px;
+  }
+
+  .product-review-form-wrapper {
+    padding: 18px;
+  }
+
+  .product-review-input,
+  .product-review-textarea {
+    font-size: 14px;
+  }
+}
+
+/* ==========================================
+   VERY SMALL DEVICES - 320px
+========================================== */
+
+@media (max-width: 374px) {
+  .product-tabs-nav {
+    gap: 9px;
+    padding: 0 6px;
+  }
+
+  .product-tab-btn {
+    font-size: 8.5px;
+    letter-spacing: 0.5px;
+  }
+
+  .product-description-title {
+    font-size: 17px;
+  }
+
+  .product-description-wrapper {
+    padding: 0 10px;
+  }
+
+  .product-description-text {
+    font-size: 13px;
+  }
+
+  .product-fabric-card {
+    padding: 5px 10px;
+  }
+
+  .product-fabric-card li {
+    padding-left: 24px;
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .product-review-form-wrapper {
+    padding: 16px;
+  }
+}
+
+/* ==========================================
+   TOUCH DEVICES
+========================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .product-review-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .product-rating-btn:hover {
+    transform: none;
+  }
+
+  .product-review-submit-btn:hover {
+    transform: none;
+    background: #111827;
   }
 }

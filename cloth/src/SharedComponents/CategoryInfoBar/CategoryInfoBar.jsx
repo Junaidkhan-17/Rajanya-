@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa6";
 
 import { categoryLinks } from "./CategoryInfoBarData";
 
@@ -17,8 +18,7 @@ const CategoryInfoBar = () => {
         <div className="category-info-bar-content">
           {/* ==========================================
               CATEGORIES
-          ========================================== */}
-
+              ========================================== */}
           <nav
             className="category-info-bar-categories"
             aria-label="Fashion categories"
@@ -33,7 +33,7 @@ const CategoryInfoBar = () => {
                   className="category-info-bar-link-icon"
                   aria-hidden="true"
                 >
-                  {item.icon}
+                  <FaStar />
                 </span>
 
                 <span className="category-info-bar-link-text">
@@ -45,27 +45,34 @@ const CategoryInfoBar = () => {
 
           {/* ==========================================
               CONTACT INFORMATION
-          ========================================== */}
-
+              ========================================== */}
           <div className="category-info-bar-contact">
             {/* Address */}
+            {/* Address */}
+<div className="category-info-bar-contact-item">
+  <div
+    className="category-info-bar-contact-icon"
+    aria-hidden="true"
+  >
+    <i className="bi bi-geo-alt" />
+  </div>
 
-            <div className="category-info-bar-contact-item">
-              <div
-                className="category-info-bar-contact-icon"
-                aria-hidden="true"
-              >
-                <i className="bi bi-geo-alt" />
-              </div>
+  <div className="category-info-bar-contact-details">
+    <h6>Address:</h6>
 
-              <div className="category-info-bar-contact-details">
-                <h6>Address:</h6>
-                <p>Nagpur, Maharashtra</p>
-              </div>
-            </div>
+    <a
+      href="https://maps.app.goo.gl/M13JA6qZLPokhR2P8"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="category-info-bar-address-link"
+      aria-label="Open Rajanya address in Google Maps"
+    >
+      Nagpur, Maharashtra
+    </a>
+  </div>
+</div>
 
             {/* Phone */}
-
             <div className="category-info-bar-contact-item">
               <div
                 className="category-info-bar-contact-icon"
@@ -76,7 +83,14 @@ const CategoryInfoBar = () => {
 
               <div className="category-info-bar-contact-details">
                 <h6>Phone:</h6>
-                <p>578-393-4937</p>
+
+                <a
+                  href="tel:+919695299863"
+                  className="category-info-bar-phone-link"
+                  aria-label="Call Rajanya at +91 96952 99863"
+                >
+                  +91 96952 99863
+                </a>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import "./LoginModal.css";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -17,23 +17,25 @@ import {
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 
 const LoginModal = () => {
-const { state, dispatch, login, loginWithGoogle } = useAuth();
+  const { state, dispatch, login, loginWithGoogle } = useAuth();
 
   const modalRef = useRef(null);
+  const googleButtonRef = useRef(null);
+  const googleInitializedRef = useRef(false);
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [googleLoading, setGoogleLoading] = useState(false);
+  // Google Identity Services refs
+const [showPassword, setShowPassword] = useState(false);
+const [googleLoading, setGoogleLoading] = useState(false);
 const [googleError, setGoogleError] = useState("");
+
+
 
   const {
     register,
     handleSubmit,
     reset,
     setError,
-    formState: {
-      errors,
-      isSubmitting,
-    },
+    formState: { errors, isSubmitting },
   } = useForm({
     mode: "onBlur",
   });
@@ -43,41 +45,62 @@ const [googleError, setGoogleError] = useState("");
   ========================================== */
 
   const closeModal = () => {
-  dispatch({
-    type: AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
-  });
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
+    });
 
-  dispatch({
-    type: AUTH_ACTIONS.CLEAR_PENDING_ACTION,
-  });
+    dispatch({
+      type: AUTH_ACTIONS.CLEAR_PENDING_ACTION,
+    });
 
-  dispatch({
-    type: AUTH_ACTIONS.CLOSE_BOOK_FOR_RENT_MODAL,
-  });
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_BOOK_FOR_RENT_MODAL,
+    });
 
-  reset();
-};
-/*
-useEffect(() => {
+    reset();
+    setGoogleError("");
+    setGoogleLoading(false);
+  };
+
+  /* ==========================================
+     GOOGLE LOGIN CALLBACK
+  ========================================== */
+
+const handleGoogleCredential = useCallback(
+  async (response) => {
+    try {
+      setGoogleError("");
+
+      if (!response?.credential) {
+        throw new Error("Google credential was not received.");
+      }
+
+      setGoogleLoading(true);
+
+      await loginWithGoogle(response.credential);
+
+      closeModal();
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+
+      const message =
+        error.response?.data?.message ||
+        "Unable to sign in with Google. Please try again.";
+
+      setGoogleError(message);
+    } finally {
+      setGoogleLoading(false);
+    }
+  },
+  [loginWithGoogle],
+);
+
+  /* ==========================================
+     GOOGLE IDENTITY SERVICES INITIALIZATION
+  ========================================== */
+
+  useEffect(() => {
   if (!state.showLoginModal) return;
-
-  const existingScript = document.querySelector(
-    'script[src="https://accounts.google.com/gsi/client"]',
-  );
-
-  if (existingScript) return;
-
-  const script = document.createElement("script");
-
-  script.src = "https://accounts.google.com/gsi/client";
-  script.async = true;
-  script.defer = true;
-
-  document.head.appendChild(script);
-}, [state.showLoginModal]);
-*/
-const handleGoogleLogin = () => {
-  setGoogleError("");
 
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -88,66 +111,109 @@ const handleGoogleLogin = () => {
     return;
   }
 
-  if (!window.google?.accounts?.id) {
-    setGoogleError(
-      "Google Sign-In is still loading. Please try again in a moment.",
-    );
-    return;
-  }
+  let cancelled = false;
+  let retryTimer;
 
-  setGoogleLoading(true);
+  const setupGoogle = () => {
+    if (cancelled) return;
 
-  try {
-    window.google.accounts.id.initialize({
-      client_id: clientId,
+    if (!window.google?.accounts?.id) {
+      retryTimer = window.setTimeout(setupGoogle, 100);
+      return;
+    }
 
-      callback: async (response) => {
-        try {
-          if (!response?.credential) {
-            throw new Error("Google credential was not received.");
-          }
+    try {
+      if (!googleInitializedRef.current) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: handleGoogleCredential,
+          ux_mode: "popup",
+          auto_select: false,
+          use_fedcm_for_button: true,
+        });
 
-          await loginWithGoogle(response.credential);
-
-          closeModal();
-          reset();
-        } catch (error) {
-          const message =
-            error.response?.data?.message ||
-            "Unable to sign in with Google. Please try again.";
-
-          setGoogleError(message);
-        } finally {
-          setGoogleLoading(false);
-        }
-      },
-    });
-
-    window.google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed()) {
-        console.log(
-          "Google One Tap was not displayed:",
-          notification.getNotDisplayedReason(),
-        );
+        googleInitializedRef.current = true;
       }
 
-      if (notification.isSkippedMoment()) {
-        console.log(
-          "Google One Tap was skipped:",
-          notification.getSkippedReason(),
-        );
+      if (!googleButtonRef.current) {
+        retryTimer = window.setTimeout(setupGoogle, 100);
+        return;
       }
-    });
-  } catch (error) {
-    console.error("Google Sign-In Error:", error);
 
-    setGoogleLoading(false);
+      googleButtonRef.current.innerHTML = "";
 
-    setGoogleError(
-      "Unable to start Google Sign-In. Please try again.",
-    );
-  }
-};
+      window.google.accounts.id.renderButton(
+        googleButtonRef.current,
+        {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "rectangular",
+          width: Math.min(
+            googleButtonRef.current.offsetWidth || 400,
+            400,
+          ),
+          logo_alignment: "left",
+        },
+      );
+    } catch (error) {
+      console.error("Google Sign-In setup error:", error);
+
+      setGoogleError(
+        "Unable to load Google Sign-In. Please try again.",
+      );
+    }
+  };
+
+  setupGoogle();
+
+  return () => {
+    cancelled = true;
+
+    if (retryTimer) {
+      window.clearTimeout(retryTimer);
+    }
+  };
+}, [state.showLoginModal, handleGoogleCredential]);
+
+  /* ==========================================
+     RENDER GOOGLE BUTTON
+  ========================================== */
+
+  useEffect(() => {
+    if (!state.showLoginModal) return;
+    if (!googleInitializedRef.current) return;
+    if (!googleButtonRef.current) return;
+
+    if (!window.google?.accounts?.id) return;
+
+    googleButtonRef.current.innerHTML = "";
+
+    try {
+      window.google.accounts.id.renderButton(
+        googleButtonRef.current,
+        {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "rectangular",
+          width: Math.min(
+            googleButtonRef.current.offsetWidth || 400,
+            400,
+          ),
+          logo_alignment: "left",
+        },
+      );
+    } catch (error) {
+      console.error("Google button render error:", error);
+
+      setGoogleError(
+        "Unable to load Google Sign-In. Please try again.",
+      );
+    }
+  }, [state.showLoginModal, googleInitializedRef.current]);
 
   /* ==========================================
      ESC CLOSE
@@ -161,17 +227,11 @@ const handleGoogleLogin = () => {
     };
 
     if (state.showLoginModal) {
-      document.addEventListener(
-        "keydown",
-        handleEscape
-      );
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.removeEventListener(
-        "keydown",
-        handleEscape
-      );
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [state.showLoginModal]);
 
@@ -179,15 +239,8 @@ const handleGoogleLogin = () => {
      OUTSIDE CLICK CLOSE
   ========================================== */
 
-  const handleOverlayClick = (
-    e
-  ) => {
-    if (
-      modalRef.current &&
-      !modalRef.current.contains(
-        e.target
-      )
-    ) {
+  const handleOverlayClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
       closeModal();
     }
   };
@@ -196,76 +249,70 @@ const handleGoogleLogin = () => {
      SWITCH TO CREATE ACCOUNT
   ========================================== */
 
-  const switchToCreateAccount =
-    () => {
-      dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
-      });
+  const switchToCreateAccount = () => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
+    });
 
-      dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_CREATE_ACCOUNT_MODAL,
-      });
-    };
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_CREATE_ACCOUNT_MODAL,
+    });
+  };
 
   /* ==========================================
      FORGOT PASSWORD
   ========================================== */
 
-  const handleForgotPassword =
-    () => {
-      alert(
-        "Forgot Password flow will be connected during backend integration."
-      );
-    };
+  const handleForgotPassword = () => {
+    alert(
+      "Forgot Password flow will be connected during backend integration.",
+    );
+  };
 
   /* ==========================================
      SUBMIT
   ========================================== */
 
   const onSubmit = async (data) => {
-  try {
-    const loginData = {
-      email: data.email.trim().toLowerCase(),
-      password: data.password,
-    };
+    try {
+      const loginData = {
+        email: data.email.trim().toLowerCase(),
+        password: data.password,
+      };
 
-    await login(loginData);
-    closeModal();
-    reset();
-  } catch (error) {
-    if (error.response?.data?.message) {
-      const message = error.response.data.message;
+      await login(loginData);
 
-      if (message === "Invalid Email or Password") {
-        setError("password", {
-          type: "manual",
-          message: message,
-        });
+      closeModal();
+    } catch (error) {
+      if (error.response?.data?.message) {
+        const message = error.response.data.message;
+
+        if (message === "Invalid Email or Password") {
+          setError("password", {
+            type: "manual",
+            message: message,
+          });
+        } else {
+          setError("email", {
+            type: "manual",
+            message: message,
+          });
+        }
       } else {
-        setError("email", {
-          type: "manual",
-          message: message,
+        dispatch({
+          type: AUTH_ACTIONS.SET_ERROR,
+          payload: "Unable to login. Please try again.",
         });
       }
-    } else {
-      dispatch({
-        type: AUTH_ACTIONS.SET_ERROR,
-        payload: "Unable to login. Please try again.",
-      });
     }
-  }
-};
+  };
 
   return (
     <AnimatePresence>
       {state.showLoginModal && (
         <motion.div
           className="login-overlay"
-          onMouseDown={
-            handleOverlayClick
-          }
+          onMouseDown={handleOverlayClick}
           initial={{
             opacity: 0,
           }}
@@ -279,9 +326,7 @@ const handleGoogleLogin = () => {
           <motion.div
             ref={modalRef}
             className="login-modal"
-            onMouseDown={(e) =>
-              e.stopPropagation()
-            }
+            onMouseDown={(e) => e.stopPropagation()}
             initial={{
               opacity: 0,
               scale: 0.95,
@@ -304,54 +349,39 @@ const handleGoogleLogin = () => {
             {/* HEADER */}
 
             <button
+              type="button"
               className="login-close-btn"
-              onClick={
-                closeModal
-              }
+              onClick={closeModal}
             >
               <FaTimes />
             </button>
 
             <div className="login-header">
               <div className="login-logo">
-                <h2>
-                  RAJANYA
-                </h2>
+                <h2>RAJANYA</h2>
 
-                <span>
-                  VIRTUAL DRESSING
-                  ROOM
-                </span>
+                <span>VIRTUAL DRESSING ROOM</span>
               </div>
 
               <h3>Log In</h3>
 
               <div className="login-title-divider">
-                <span className="divider-diamond">
-                  ◇
-                </span>
+                <span className="divider-diamond">◇</span>
               </div>
 
-              <p>
-                Continue your
-                fashion journey.
-              </p>
+              <p>Continue your fashion journey.</p>
             </div>
 
             {/* FORM */}
 
             <form
               className="login-form"
-              onSubmit={handleSubmit(
-                onSubmit
-              )}
+              onSubmit={handleSubmit(onSubmit)}
             >
               {/* EMAIL */}
 
               <div className="form-group">
-                <label>
-                  Email Address
-                </label>
+                <label>Email Address</label>
 
                 <div className="input-wrapper">
                   <FaEnvelope />
@@ -359,30 +389,20 @@ const handleGoogleLogin = () => {
                   <input
                     type="email"
                     placeholder="Enter your email address"
-                    {...register(
-                      "email",
-                      {
-                        required:
-                          "Email is required",
+                    {...register("email", {
+                      required: "Email is required",
 
-                        pattern:
-                          {
-                            value:
-                              /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                            message:
-                              "Please enter a valid email address",
-                          },
-                      }
-                    )}
+                      pattern: {
+                        value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                        message: "Please enter a valid email address",
+                      },
+                    })}
                   />
                 </div>
 
                 {errors.email && (
                   <span className="field-error">
-                    {
-                      errors.email
-                        .message
-                    }
+                    {errors.email.message}
                   </span>
                 )}
               </div>
@@ -390,53 +410,31 @@ const handleGoogleLogin = () => {
               {/* PASSWORD */}
 
               <div className="form-group">
-                <label>
-                  Password
-                </label>
+                <label>Password</label>
 
                 <div className="input-wrapper">
                   <FaLock />
 
                   <input
-                    type={
-                      showPassword
-                        ? "text"
-                        : "password"
-                    }
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    {...register(
-                      "password",
-                      {
-                        required:
-                          "Password is required",
-                      }
-                    )}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
                   />
 
                   <button
                     type="button"
                     className="password-toggle"
-                    onClick={() =>
-                      setShowPassword(
-                        !showPassword
-                      )
-                    }
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? (
-                      <FaEyeSlash />
-                    ) : (
-                      <FaEye />
-                    )}
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
 
                 {errors.password && (
                   <span className="field-error">
-                    {
-                      errors
-                        .password
-                        .message
-                    }
+                    {errors.password.message}
                   </span>
                 )}
               </div>
@@ -447,20 +445,15 @@ const handleGoogleLogin = () => {
                 <label className="remember-me">
                   <input
                     type="checkbox"
-                    {...register(
-                      "rememberMe"
-                    )}
+                    {...register("rememberMe")}
                   />
-
                   Remember Me
                 </label>
 
                 <button
                   type="button"
                   className="forgot-password-btn"
-                  onClick={
-                    handleForgotPassword
-                  }
+                  onClick={handleForgotPassword}
                 >
                   Forgot Password?
                 </button>
@@ -471,14 +464,9 @@ const handleGoogleLogin = () => {
               <button
                 type="submit"
                 className="login-submit-btn"
-                disabled={
-                  isSubmitting ||
-                  state.loading
-                }
+                disabled={isSubmitting || state.loading}
               >
-                {state.loading
-                  ? "SIGNING IN..."
-                  : "SIGN IN"}
+                {state.loading ? "SIGNING IN..." : "SIGN IN"}
               </button>
 
               {/* DIVIDER */}
@@ -489,31 +477,30 @@ const handleGoogleLogin = () => {
 
               {/* GOOGLE */}
 
-              <button
-  type="button"
-  className="google-btn"
-  onClick={handleGoogleLogin}
-  disabled={googleLoading || state.loading}
->
-  <i className="bi bi-google me-2"></i>
+              <div
+                ref={googleButtonRef}
+                className="google-btn-container"
+              />
 
-  {googleLoading ? "Signing in with Google..." : "Continue with Google"}
-</button>
+              {googleLoading && (
+                <span className="google-loading">
+                  Signing in with Google...
+                </span>
+              )}
 
-{googleError && (
-  <span className="google-error">{googleError}</span>
-)}
+              {googleError && (
+                <span className="google-error">
+                  {googleError}
+                </span>
+              )}
 
               {/* CREATE ACCOUNT */}
 
               <p className="signin-text">
-                Don't have an
-                account?{" "}
+                Don't have an account?{" "}
                 <button
                   type="button"
-                  onClick={
-                    switchToCreateAccount
-                  }
+                  onClick={switchToCreateAccount}
                 >
                   Create Account
                 </button>

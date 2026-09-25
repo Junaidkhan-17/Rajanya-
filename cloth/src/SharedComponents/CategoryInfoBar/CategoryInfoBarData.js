@@ -1,32 +1,27 @@
 export const categoryLinks = [
   {
     id: 1,
-    icon: "👰",
     title: "Bridal",
-    path: "/bridal",
+    path: "/collection",
   },
   {
     id: 2,
-    icon: "💃",
     title: "Lehengas",
-    path: "/lehengas",
+    path: "/collection",
   },
   {
     id: 3,
-    icon: "🎉",
     title: "Wedding Guest",
-    path: "/wedding-guest",
+    path: "/collection",
   },
   {
     id: 4,
-    icon: "🎭",
     title: "Reception",
-    path: "/reception",
+    path: "/collection",
   },
   {
     id: 5,
-    icon: "👗",
     title: "Designer Dresses",
-    path: "/designer-dresses",
+    path: "/collection",
   },
 ];
