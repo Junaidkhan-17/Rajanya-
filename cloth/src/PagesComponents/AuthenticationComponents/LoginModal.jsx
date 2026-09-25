@@ -14,22 +14,16 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-import {
-  useAuth,
-  AUTH_ACTIONS,
-} from "../../contexts/AuthContext";
+import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 
 const LoginModal = () => {
-  const {
-    state,
-    dispatch,
-    login,
-  } = useAuth();
+const { state, dispatch, login, loginWithGoogle } = useAuth();
 
   const modalRef = useRef(null);
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+const [googleError, setGoogleError] = useState("");
 
   const {
     register,
@@ -62,6 +56,97 @@ const LoginModal = () => {
   });
 
   reset();
+};
+/*
+useEffect(() => {
+  if (!state.showLoginModal) return;
+
+  const existingScript = document.querySelector(
+    'script[src="https://accounts.google.com/gsi/client"]',
+  );
+
+  if (existingScript) return;
+
+  const script = document.createElement("script");
+
+  script.src = "https://accounts.google.com/gsi/client";
+  script.async = true;
+  script.defer = true;
+
+  document.head.appendChild(script);
+}, [state.showLoginModal]);
+*/
+const handleGoogleLogin = () => {
+  setGoogleError("");
+
+  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!clientId) {
+    setGoogleError(
+      "Google Sign-In is not configured. Please try again later.",
+    );
+    return;
+  }
+
+  if (!window.google?.accounts?.id) {
+    setGoogleError(
+      "Google Sign-In is still loading. Please try again in a moment.",
+    );
+    return;
+  }
+
+  setGoogleLoading(true);
+
+  try {
+    window.google.accounts.id.initialize({
+      client_id: clientId,
+
+      callback: async (response) => {
+        try {
+          if (!response?.credential) {
+            throw new Error("Google credential was not received.");
+          }
+
+          await loginWithGoogle(response.credential);
+
+          closeModal();
+          reset();
+        } catch (error) {
+          const message =
+            error.response?.data?.message ||
+            "Unable to sign in with Google. Please try again.";
+
+          setGoogleError(message);
+        } finally {
+          setGoogleLoading(false);
+        }
+      },
+    });
+
+    window.google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed()) {
+        console.log(
+          "Google One Tap was not displayed:",
+          notification.getNotDisplayedReason(),
+        );
+      }
+
+      if (notification.isSkippedMoment()) {
+        console.log(
+          "Google One Tap was skipped:",
+          notification.getSkippedReason(),
+        );
+      }
+    });
+  } catch (error) {
+    console.error("Google Sign-In Error:", error);
+
+    setGoogleLoading(false);
+
+    setGoogleError(
+      "Unable to start Google Sign-In. Please try again.",
+    );
+  }
 };
 
   /* ==========================================
@@ -405,14 +490,19 @@ const LoginModal = () => {
               {/* GOOGLE */}
 
               <button
-                type="button"
-                className="google-btn"
-              >
-                <i className="bi bi-google me-2"></i>
+  type="button"
+  className="google-btn"
+  onClick={handleGoogleLogin}
+  disabled={googleLoading || state.loading}
+>
+  <i className="bi bi-google me-2"></i>
 
-                Continue with
-                Google
-              </button>
+  {googleLoading ? "Signing in with Google..." : "Continue with Google"}
+</button>
+
+{googleError && (
+  <span className="google-error">{googleError}</span>
+)}
 
               {/* CREATE ACCOUNT */}
 

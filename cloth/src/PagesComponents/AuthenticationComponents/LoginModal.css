@@ -466,6 +466,33 @@
   transform: translateY(-2px);
 }
 
+.google-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.google-error {
+  display: block;
+  margin-top: -8px;
+  color: #dc3545;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .google-btn {
+    height: 52px;
+  }
+}
+
+@media (max-width: 576px) {
+  .google-btn {
+    height: 52px;
+  }
+}
+
 /* ==================================================
    CREATE ACCOUNT LINK
 ================================================== */
