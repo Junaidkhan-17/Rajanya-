@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 import {
   registerUser,
   loginUser,
+  googleLoginUser,
   getProfile,
   logoutUser,
 } from "../services/authService";
@@ -379,6 +380,50 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithGoogle = async (credential) => {
+  dispatch({
+    type: AUTH_ACTIONS.SET_LOADING,
+    payload: true,
+  });
+
+  dispatch({
+    type: AUTH_ACTIONS.SET_ERROR,
+    payload: null,
+  });
+
+  try {
+    const response = await googleLoginUser(credential);
+
+    const { token, user } = response;
+
+    localStorage.setItem("rajanya_token", token);
+    localStorage.setItem("rajanya_user", JSON.stringify(user));
+
+    dispatch({
+      type: AUTH_ACTIONS.LOGIN_SUCCESS,
+      payload: user,
+    });
+
+    return response;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      "Unable to sign in with Google. Please try again.";
+
+    dispatch({
+      type: AUTH_ACTIONS.SET_ERROR,
+      payload: message,
+    });
+
+    throw error;
+  } finally {
+    dispatch({
+      type: AUTH_ACTIONS.SET_LOADING,
+      payload: false,
+    });
+  }
+};
+
   /* ==========================================
      LOGOUT
   ========================================== */
@@ -417,6 +462,8 @@ export const AuthProvider = ({ children }) => {
     register,
 
     login,
+
+    loginWithGoogle,
 
     logout,
 

@@ -1,35 +1,60 @@
 import api from "./api";
 
-/* ==========================================
-   REGISTER
-========================================== */
+/*
+==========================================
+REGISTER
+==========================================
+*/
 
 export const registerUser = async (userData) => {
   const response = await api.post("/auth/register", userData);
+
   return response.data;
 };
 
-/* ==========================================
-   LOGIN
-========================================== */
+/*
+==========================================
+LOGIN
+==========================================
+*/
 
 export const loginUser = async (loginData) => {
   const response = await api.post("/auth/login", loginData);
+
   return response.data;
 };
 
-/* ==========================================
-   GET PROFILE
-========================================== */
+/*
+==========================================
+GOOGLE LOGIN
+==========================================
+*/
+
+export const googleLoginUser = async (credential) => {
+  const response = await api.post("/auth/google", {
+    credential,
+  });
+
+  return response.data;
+};
+
+/*
+==========================================
+GET PROFILE
+==========================================
+*/
 
 export const getProfile = async () => {
   const response = await api.get("/auth/profile");
+
   return response.data;
 };
 
-/* ==========================================
-   LOGOUT
-========================================== */
+/*
+==========================================
+LOGOUT
+==========================================
+*/
 
 export const logoutUser = () => {
   localStorage.removeItem("rajanya_token");
