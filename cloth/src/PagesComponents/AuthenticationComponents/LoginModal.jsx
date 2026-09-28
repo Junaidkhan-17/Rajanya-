@@ -6,13 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import {
-  FaEnvelope,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
-  FaTimes,
-} from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 
@@ -24,11 +18,9 @@ const LoginModal = () => {
   const googleInitializedRef = useRef(false);
 
   // Google Identity Services refs
-const [showPassword, setShowPassword] = useState(false);
-const [googleLoading, setGoogleLoading] = useState(false);
-const [googleError, setGoogleError] = useState("");
-
-
+  const [showPassword, setShowPassword] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [googleError, setGoogleError] = useState("");
 
   const {
     register,
@@ -66,116 +58,108 @@ const [googleError, setGoogleError] = useState("");
      GOOGLE LOGIN CALLBACK
   ========================================== */
 
-const handleGoogleCredential = useCallback(
-  async (response) => {
-    try {
-      setGoogleError("");
+  const handleGoogleCredential = useCallback(
+    async (response) => {
+      try {
+        setGoogleError("");
 
-      if (!response?.credential) {
-        throw new Error("Google credential was not received.");
+        if (!response?.credential) {
+          throw new Error("Google credential was not received.");
+        }
+
+        setGoogleLoading(true);
+
+        await loginWithGoogle(response.credential);
+
+        closeModal();
+      } catch (error) {
+        console.error("Google Sign-In Error:", error);
+
+        const message =
+          error.response?.data?.message ||
+          "Unable to sign in with Google. Please try again.";
+
+        setGoogleError(message);
+      } finally {
+        setGoogleLoading(false);
       }
-
-      setGoogleLoading(true);
-
-      await loginWithGoogle(response.credential);
-
-      closeModal();
-    } catch (error) {
-      console.error("Google Sign-In Error:", error);
-
-      const message =
-        error.response?.data?.message ||
-        "Unable to sign in with Google. Please try again.";
-
-      setGoogleError(message);
-    } finally {
-      setGoogleLoading(false);
-    }
-  },
-  [loginWithGoogle],
-);
+    },
+    [loginWithGoogle],
+  );
 
   /* ==========================================
      GOOGLE IDENTITY SERVICES INITIALIZATION
   ========================================== */
 
   useEffect(() => {
-  if (!state.showLoginModal) return;
+    if (!state.showLoginModal) return;
 
-  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-  if (!clientId) {
-    setGoogleError(
-      "Google Sign-In is not configured. Please try again later.",
-    );
-    return;
-  }
-
-  let cancelled = false;
-  let retryTimer;
-
-  const setupGoogle = () => {
-    if (cancelled) return;
-
-    if (!window.google?.accounts?.id) {
-      retryTimer = window.setTimeout(setupGoogle, 100);
+    if (!clientId) {
+      setGoogleError(
+        "Google Sign-In is not configured. Please try again later.",
+      );
       return;
     }
 
-    try {
-      if (!googleInitializedRef.current) {
-        window.google.accounts.id.initialize({
-          client_id: clientId,
-          callback: handleGoogleCredential,
-          ux_mode: "popup",
-          auto_select: false,
-          use_fedcm_for_button: true,
-        });
+    let cancelled = false;
+    let retryTimer;
 
-        googleInitializedRef.current = true;
-      }
+    const setupGoogle = () => {
+      if (cancelled) return;
 
-      if (!googleButtonRef.current) {
+      if (!window.google?.accounts?.id) {
         retryTimer = window.setTimeout(setupGoogle, 100);
         return;
       }
 
-      googleButtonRef.current.innerHTML = "";
+      try {
+        if (!googleInitializedRef.current) {
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleCredential,
+            ux_mode: "popup",
+            auto_select: false,
+            use_fedcm_for_button: false,
+          });
 
-      window.google.accounts.id.renderButton(
-        googleButtonRef.current,
-        {
+          googleInitializedRef.current = true;
+        }
+
+        if (!googleButtonRef.current) {
+          retryTimer = window.setTimeout(setupGoogle, 100);
+          return;
+        }
+
+        googleButtonRef.current.innerHTML = "";
+
+        window.google.accounts.id.renderButton(googleButtonRef.current, {
           type: "standard",
           theme: "outline",
           size: "large",
           text: "continue_with",
           shape: "rectangular",
-          width: Math.min(
-            googleButtonRef.current.offsetWidth || 400,
-            400,
-          ),
+          width: Math.min(googleButtonRef.current.offsetWidth || 400, 400),
           logo_alignment: "left",
-        },
-      );
-    } catch (error) {
-      console.error("Google Sign-In setup error:", error);
+        });
+      } catch (error) {
+        console.error("Google Sign-In setup error:", error);
 
-      setGoogleError(
-        "Unable to load Google Sign-In. Please try again.",
-      );
-    }
-  };
+        setGoogleError("Unable to load Google Sign-In. Please try again.");
+      }
+    };
 
-  setupGoogle();
+    setupGoogle();
 
-  return () => {
-    cancelled = true;
+    return () => {
+      cancelled = true;
 
-    if (retryTimer) {
-      window.clearTimeout(retryTimer);
-    }
-  };
-}, [state.showLoginModal, handleGoogleCredential]);
+      if (retryTimer) {
+        window.clearTimeout(retryTimer);
+      }
+    };
+  }, [state.showLoginModal, handleGoogleCredential]);
 
   /* ==========================================
      RENDER GOOGLE BUTTON
@@ -191,27 +175,19 @@ const handleGoogleCredential = useCallback(
     googleButtonRef.current.innerHTML = "";
 
     try {
-      window.google.accounts.id.renderButton(
-        googleButtonRef.current,
-        {
-          type: "standard",
-          theme: "outline",
-          size: "large",
-          text: "continue_with",
-          shape: "rectangular",
-          width: Math.min(
-            googleButtonRef.current.offsetWidth || 400,
-            400,
-          ),
-          logo_alignment: "left",
-        },
-      );
+      window.google.accounts.id.renderButton(googleButtonRef.current, {
+        type: "standard",
+        theme: "outline",
+        size: "large",
+        text: "continue_with",
+        shape: "rectangular",
+        width: Math.min(googleButtonRef.current.offsetWidth || 400, 400),
+        logo_alignment: "left",
+      });
     } catch (error) {
       console.error("Google button render error:", error);
 
-      setGoogleError(
-        "Unable to load Google Sign-In. Please try again.",
-      );
+      setGoogleError("Unable to load Google Sign-In. Please try again.");
     }
   }, [state.showLoginModal, googleInitializedRef.current]);
 
@@ -264,9 +240,7 @@ const handleGoogleCredential = useCallback(
   ========================================== */
 
   const handleForgotPassword = () => {
-    alert(
-      "Forgot Password flow will be connected during backend integration.",
-    );
+    alert("Forgot Password flow will be connected during backend integration.");
   };
 
   /* ==========================================
@@ -374,10 +348,7 @@ const handleGoogleCredential = useCallback(
 
             {/* FORM */}
 
-            <form
-              className="login-form"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {/* EMAIL */}
 
               <div className="form-group">
@@ -401,9 +372,7 @@ const handleGoogleCredential = useCallback(
                 </div>
 
                 {errors.email && (
-                  <span className="field-error">
-                    {errors.email.message}
-                  </span>
+                  <span className="field-error">{errors.email.message}</span>
                 )}
               </div>
 
@@ -433,9 +402,7 @@ const handleGoogleCredential = useCallback(
                 </div>
 
                 {errors.password && (
-                  <span className="field-error">
-                    {errors.password.message}
-                  </span>
+                  <span className="field-error">{errors.password.message}</span>
                 )}
               </div>
 
@@ -443,10 +410,7 @@ const handleGoogleCredential = useCallback(
 
               <div className="login-options">
                 <label className="remember-me">
-                  <input
-                    type="checkbox"
-                    {...register("rememberMe")}
-                  />
+                  <input type="checkbox" {...register("rememberMe")} />
                   Remember Me
                 </label>
 
@@ -477,10 +441,7 @@ const handleGoogleCredential = useCallback(
 
               {/* GOOGLE */}
 
-              <div
-                ref={googleButtonRef}
-                className="google-btn-container"
-              />
+              <div ref={googleButtonRef} className="google-btn-container" />
 
               {googleLoading && (
                 <span className="google-loading">
@@ -489,19 +450,14 @@ const handleGoogleCredential = useCallback(
               )}
 
               {googleError && (
-                <span className="google-error">
-                  {googleError}
-                </span>
+                <span className="google-error">{googleError}</span>
               )}
 
               {/* CREATE ACCOUNT */}
 
               <p className="signin-text">
                 Don't have an account?{" "}
-                <button
-                  type="button"
-                  onClick={switchToCreateAccount}
-                >
+                <button type="button" onClick={switchToCreateAccount}>
                   Create Account
                 </button>
               </p>
