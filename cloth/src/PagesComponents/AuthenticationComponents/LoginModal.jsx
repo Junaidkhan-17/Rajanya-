@@ -6,13 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import {
-  FaEnvelope,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
-  FaTimes,
-} from "react-icons/fa";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
 
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 
@@ -76,7 +70,7 @@ const LoginModal = () => {
         setGoogleLoading(false);
       }
     },
-    [loginWithGoogle]
+    [loginWithGoogle],
   );
 
   /*
@@ -124,7 +118,7 @@ const LoginModal = () => {
 
     if (!clientId) {
       setGoogleError(
-        "Google Sign-In is not configured. Please try again later."
+        "Google Sign-In is not configured. Please try again later.",
       );
 
       return;
@@ -159,24 +153,19 @@ const LoginModal = () => {
          */
         if (!googleInitializedRef.current) {
           window.google.accounts.id.initialize({
-            client_id: clientId,
+  client_id: clientId,
 
-            /*
-             * Use a stable wrapper so Google always reaches
-             * the latest React callback.
-             */
-            callback: (response) => {
-              googleCredentialHandlerRef.current?.(response);
-            },
+  ux_mode: "redirect",
 
-            ux_mode: "popup",
+  login_uri:
+    "https://rajanya.onrender.com/api/auth/google/redirect",
 
-            auto_select: false,
+  auto_select: false,
 
-            use_fedcm_for_button: false,
+  use_fedcm_for_button: false,
 
-            button_auto_select: false,
-          });
+  button_auto_select: false,
+});
 
           googleInitializedRef.current = true;
         }
@@ -190,27 +179,22 @@ const LoginModal = () => {
 
         const buttonWidth = Math.min(
           googleButtonRef.current.offsetWidth || 400,
-          400
+          400,
         );
 
-        window.google.accounts.id.renderButton(
-          googleButtonRef.current,
-          {
-            type: "standard",
-            theme: "outline",
-            size: "large",
-            text: "continue_with",
-            shape: "rectangular",
-            width: buttonWidth,
-            logo_alignment: "left",
-          }
-        );
+        window.google.accounts.id.renderButton(googleButtonRef.current, {
+          type: "standard",
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "rectangular",
+          width: buttonWidth,
+          logo_alignment: "left",
+        });
       } catch (error) {
         console.error("Google Sign-In setup error:", error);
 
-        setGoogleError(
-          "Unable to load Google Sign-In. Please try again."
-        );
+        setGoogleError("Unable to load Google Sign-In. Please try again.");
       }
     };
 
@@ -250,10 +234,7 @@ const LoginModal = () => {
   ========================================== */
 
   const handleOverlayClick = (e) => {
-    if (
-      modalRef.current &&
-      !modalRef.current.contains(e.target)
-    ) {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
       closeModal();
     }
   };
@@ -277,9 +258,7 @@ const LoginModal = () => {
   ========================================== */
 
   const handleForgotPassword = () => {
-    alert(
-      "Forgot Password flow will be connected during backend integration."
-    );
+    alert("Forgot Password flow will be connected during backend integration.");
   };
 
   /* ==========================================
@@ -387,10 +366,7 @@ const LoginModal = () => {
 
             {/* FORM */}
 
-            <form
-              className="login-form"
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {/* EMAIL */}
 
               <div className="form-group">
@@ -414,9 +390,7 @@ const LoginModal = () => {
                 </div>
 
                 {errors.email && (
-                  <span className="field-error">
-                    {errors.email.message}
-                  </span>
+                  <span className="field-error">{errors.email.message}</span>
                 )}
               </div>
 
@@ -439,22 +413,14 @@ const LoginModal = () => {
                   <button
                     type="button"
                     className="password-toggle"
-                    onClick={() =>
-                      setShowPassword(!showPassword)
-                    }
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? (
-                      <FaEyeSlash />
-                    ) : (
-                      <FaEye />
-                    )}
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </button>
                 </div>
 
                 {errors.password && (
-                  <span className="field-error">
-                    {errors.password.message}
-                  </span>
+                  <span className="field-error">{errors.password.message}</span>
                 )}
               </div>
 
@@ -462,10 +428,7 @@ const LoginModal = () => {
 
               <div className="login-options">
                 <label className="remember-me">
-                  <input
-                    type="checkbox"
-                    {...register("rememberMe")}
-                  />
+                  <input type="checkbox" {...register("rememberMe")} />
                   Remember Me
                 </label>
 
@@ -496,10 +459,7 @@ const LoginModal = () => {
 
               {/* GOOGLE */}
 
-              <div
-                ref={googleButtonRef}
-                className="google-btn-container"
-              />
+              <div ref={googleButtonRef} className="google-btn-container" />
 
               {googleLoading && (
                 <span className="google-loading">
@@ -508,19 +468,14 @@ const LoginModal = () => {
               )}
 
               {googleError && (
-                <span className="google-error">
-                  {googleError}
-                </span>
+                <span className="google-error">{googleError}</span>
               )}
 
               {/* CREATE ACCOUNT */}
 
               <p className="signin-text">
                 Don't have an account?{" "}
-                <button
-                  type="button"
-                  onClick={switchToCreateAccount}
-                >
+                <button type="button" onClick={switchToCreateAccount}>
                   Create Account
                 </button>
               </p>
