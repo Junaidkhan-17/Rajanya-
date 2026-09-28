@@ -173,7 +173,7 @@ const LoginModal = () => {
 
             auto_select: false,
 
-            use_fedcm_for_button: true,
+            use_fedcm_for_button: false,
 
             button_auto_select: false,
           });
