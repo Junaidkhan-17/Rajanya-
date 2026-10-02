@@ -327,8 +327,7 @@ exports.getProducts = async (req, res) => {
     */
 
     const hasPagination =
-      req.query.page !== undefined ||
-      req.query.limit !== undefined;
+      req.query.page !== undefined || req.query.limit !== undefined;
 
     let productsQuery = Product.find(query)
       .populate("category", "name slug")
@@ -347,9 +346,7 @@ exports.getProducts = async (req, res) => {
 
       const skip = (page - 1) * limit;
 
-      productsQuery = productsQuery
-        .skip(skip)
-        .limit(limit);
+      productsQuery = productsQuery.skip(skip).limit(limit);
 
       totalPages = Math.ceil(total / limit);
     }
@@ -423,8 +420,7 @@ exports.getProductStats = async (req, res) => {
       },
     ]);
 
-    const categoriesUsed =
-      categoriesUsedResult[0]?.total || 0;
+    const categoriesUsed = categoriesUsedResult[0]?.total || 0;
 
     /*
     ========================================
@@ -461,17 +457,9 @@ exports.getProductStats = async (req, res) => {
 
     const now = new Date();
 
-    const monthStart = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      1
-    );
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const nextMonthStart = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      1
-    );
+    const nextMonthStart = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
     /*
     ========================================
@@ -479,13 +467,12 @@ exports.getProductStats = async (req, res) => {
     ========================================
     */
 
-    const productsThisMonth =
-      await Product.countDocuments({
-        createdAt: {
-          $gte: monthStart,
-          $lt: nextMonthStart,
-        },
-      });
+    const productsThisMonth = await Product.countDocuments({
+      createdAt: {
+        $gte: monthStart,
+        $lt: nextMonthStart,
+      },
+    });
 
     /*
     ========================================
@@ -493,14 +480,13 @@ exports.getProductStats = async (req, res) => {
     ========================================
     */
 
-    const featuredThisMonth =
-      await Product.countDocuments({
-        isFeatured: true,
-        createdAt: {
-          $gte: monthStart,
-          $lt: nextMonthStart,
-        },
-      });
+    const featuredThisMonth = await Product.countDocuments({
+      isFeatured: true,
+      createdAt: {
+        $gte: monthStart,
+        $lt: nextMonthStart,
+      },
+    });
 
     /*
     ========================================
@@ -510,9 +496,7 @@ exports.getProductStats = async (req, res) => {
 
     const activePercentage =
       totalProducts > 0
-        ? Math.round(
-            (activeProducts / totalProducts) * 100
-          )
+        ? Math.round((activeProducts / totalProducts) * 100)
         : 0;
 
     /*
@@ -535,10 +519,7 @@ exports.getProductStats = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(
-      "Get Product Stats Error:",
-      error
-    );
+    console.error("Get Product Stats Error:", error);
 
     return res.status(500).json({
       success: false,

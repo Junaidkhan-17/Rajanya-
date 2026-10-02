@@ -57,7 +57,7 @@ const paymentInfoSchema = new mongoose.Schema(
       default: "INR",
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -93,7 +93,7 @@ const customerSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -157,12 +157,23 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
 ========================================
 Virtual Try-On Payment
+========================================
+
+Business Rule:
+
+₹50 successful payment
+        ↓
+Exactly 2 VTO tokens
+
+These values are intentionally fixed.
+Do not make them configurable from
+the frontend.
 ========================================
 */
 
@@ -172,14 +183,14 @@ const virtualTryOnSchema = new mongoose.Schema(
       type: Number,
       required: true,
       default: 50,
-      min: 50,
+      enum: [50],
     },
 
     tokensPurchased: {
       type: Number,
       required: true,
       default: 2,
-      min: 1,
+      enum: [2],
     },
 
     tokensCredited: {
@@ -192,7 +203,7 @@ const virtualTryOnSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -203,11 +214,23 @@ Payment Gateway Details
 
 const gatewaySchema = new mongoose.Schema(
   {
+    /*
+    ========================================
+    Razorpay Standard Checkout Order
+    ========================================
+    */
+
     orderId: {
       type: String,
       default: "",
       trim: true,
     },
+
+    /*
+    ========================================
+    Razorpay Payment ID
+    ========================================
+    */
 
     paymentId: {
       type: String,
@@ -215,11 +238,23 @@ const gatewaySchema = new mongoose.Schema(
       trim: true,
     },
 
+    /*
+    ========================================
+    Razorpay Transaction ID
+    ========================================
+    */
+
     transactionId: {
       type: String,
       default: "",
       trim: true,
     },
+
+    /*
+    ========================================
+    Razorpay Signature
+    ========================================
+    */
 
     paymentSignature: {
       type: String,
@@ -227,9 +262,11 @@ const gatewaySchema = new mongoose.Schema(
       trim: true,
     },
 
-    /* ========================================
-       Razorpay QR Information
-    ======================================== */
+    /*
+    ========================================
+    Razorpay QR Information
+    ========================================
+    */
 
     qrCodeId: {
       type: String,
@@ -249,12 +286,49 @@ const gatewaySchema = new mongoose.Schema(
       trim: true,
     },
 
+    /*
+    ========================================
+    QR Expiration Timestamp
+    ========================================
+
+    Razorpay close_by is stored here so
+    Rajanya can determine whether a pending
+    QR is still reusable.
+    ========================================
+    */
+
+    qrCloseBy: {
+      type: Date,
+      default: null,
+    },
+
+    /*
+    ========================================
+    Razorpay Webhook Event ID
+    ========================================
+
+    Used for webhook audit/idempotency.
+    ========================================
+    */
+
+    webhookEventId: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+
+    /*
+    ========================================
+    Complete Razorpay Response
+    ========================================
+    */
+
     gatewayResponse: {
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -282,7 +356,7 @@ const adminSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -295,7 +369,13 @@ const refundSchema = new mongoose.Schema(
   {
     refundStatus: {
       type: String,
-      enum: ["not_requested", "requested", "approved", "rejected", "processed"],
+      enum: [
+        "not_requested",
+        "requested",
+        "approved",
+        "rejected",
+        "processed",
+      ],
       default: "not_requested",
     },
 
@@ -321,7 +401,7 @@ const refundSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false },
+  { _id: false }
 );
 
 /*
@@ -369,7 +449,7 @@ const paymentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 /*
@@ -378,18 +458,66 @@ MongoDB Indexes
 ========================================
 */
 
+/*
+Payment status lookup
+*/
 paymentSchema.index({
   "payment.paymentStatus": 1,
 });
 
+/*
+Customer payment lookup
+*/
 paymentSchema.index({
   "customer.userId": 1,
 });
 
+/*
+Product payment lookup
+*/
 paymentSchema.index({
   "product.productId": 1,
 });
 
+/*
+Razorpay QR lookup
+*/
+paymentSchema.index({
+  "gateway.qrCodeId": 1,
+});
+
+/*
+Razorpay order lookup
+*/
+paymentSchema.index({
+  "gateway.orderId": 1,
+});
+
+/*
+Razorpay payment lookup
+*/
+paymentSchema.index({
+  "gateway.paymentId": 1,
+});
+
+/*
+Webhook event lookup
+
+Sparse index is important because old
+documents may not contain an event ID.
+*/
+paymentSchema.index(
+  {
+    "gateway.webhookEventId": 1,
+  },
+  {
+    sparse: true,
+  }
+);
+
+/*
+Newest payments first
+*/
 paymentSchema.index({
   createdAt: -1,
 });

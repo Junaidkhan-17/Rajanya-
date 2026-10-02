@@ -68,19 +68,19 @@ exports.createBooking = async (req, res) => {
     }
 
     /* ==========================
-       RENTAL OPTION VALIDATION
-    ========================== */
+   RENTAL OPTION VALIDATION
+========================== */
 
-    const rentalOption = existingProduct.rentalOptions.find(
-      (option) => option.days === product.rentalDuration,
-    );
+const rentalOption = existingProduct.rentalOptions.find(
+  (option) => option.days === calculatedRentalDuration,
+);
 
-    if (!rentalOption) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid rental duration",
-      });
-    }
+if (!rentalOption) {
+  return res.status(400).json({
+    success: false,
+    message: `Rental pricing for ${product.rentalDuration} days is not configured for this product.`,
+  });
+}
 
     /* ==========================
        DATE VALIDATION
@@ -134,6 +134,29 @@ exports.createBooking = async (req, res) => {
         message: "Return date cannot be before start date",
       });
     }
+
+    /* ==========================
+   RENTAL DURATION VALIDATION
+========================== */
+
+const calculatedRentalDuration = Math.ceil(
+  (selectedReturnDate.getTime() - selectedStartDate.getTime()) /
+    (1000 * 60 * 60 * 24),
+);
+
+if (calculatedRentalDuration <= 0) {
+  return res.status(400).json({
+    success: false,
+    message: "Rental duration must be at least 1 day",
+  });
+}
+
+if (calculatedRentalDuration !== Number(product.rentalDuration)) {
+  return res.status(400).json({
+    success: false,
+    message: "Rental duration does not match the selected rental dates",
+  });
+}
 
     /* ==========================
    BOOKING AVAILABILITY
@@ -231,7 +254,7 @@ exports.createBooking = async (req, res) => {
 
         selectedSize: product.selectedSize,
 
-        rentalDuration: rentalOption.days,
+        rentalDuration: calculatedRentalDuration,
 
         rentalPrice: rentalOption.price,
 

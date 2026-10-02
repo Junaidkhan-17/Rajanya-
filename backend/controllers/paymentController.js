@@ -20,6 +20,308 @@ const razorpay = new Razorpay({
 
 /*
 ========================================
+Centralized Successful VTO Payment
+Processing
+========================================
+
+Business Rule:
+
+₹50 captured payment
+        ↓
+Exactly 2 VTO tokens
+
+This function is the single trusted
+database operation responsible for
+crediting VTO tokens.
+
+It is intentionally idempotent.
+If the same payment is processed again,
+tokens are NOT credited again.
+========================================
+*/
+
+const processSuccessfulVTOPayment = async ({
+  paymentDocumentId,
+  razorpayPaymentId,
+  razorpayOrderId = "",
+  razorpaySignature = "",
+  paymentMethod = "UPI",
+  razorpayResponse = null,
+  webhookEventId = "",
+  qrCodeId = "",
+  qrStatus = "",
+}) => {
+  const session = await mongoose.startSession();
+
+  try {
+    let result = null;
+
+    await session.withTransaction(async () => {
+      /*
+      ========================================
+      Find Payment Inside Transaction
+      ========================================
+      */
+
+      const payment =
+        await Payment.findById(paymentDocumentId).session(session);
+
+      if (!payment) {
+        throw new Error("Payment record not found.");
+      }
+
+      /*
+      ========================================
+      Verify Payment Type
+      ========================================
+      */
+
+      if (payment.payment?.paymentFor !== "virtual_try_on") {
+        throw new Error("Invalid payment type.");
+      }
+
+      /*
+      ========================================
+      Enforce Exact Rajanya VTO Pricing
+      ========================================
+      */
+
+      if (Number(payment.virtualTryOn?.amountPaid) !== 50) {
+        throw new Error(
+          "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50.",
+        );
+      }
+
+      /*
+      ========================================
+      Enforce Exactly 2 Tokens
+      ========================================
+      */
+
+      if (Number(payment.virtualTryOn?.tokensPurchased) !== 2) {
+        throw new Error(
+          "Invalid VTO token configuration. Rajanya VTO payments provide exactly 2 tokens.",
+        );
+      }
+
+      /*
+      ========================================
+      Duplicate Protection
+      ========================================
+
+      This is the most important check.
+
+      Webhook + frontend verification +
+      status polling can all potentially
+      reach the backend for the same payment.
+
+      Once tokensCredited becomes true,
+      this payment can never credit tokens
+      again.
+      ========================================
+      */
+
+      if (payment.virtualTryOn?.tokensCredited === true) {
+        result = {
+          alreadyProcessed: true,
+          payment,
+        };
+
+        return;
+      }
+
+      /*
+========================================
+Enforce Exact Rajanya VTO Payment
+========================================
+*/
+
+if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
+  throw new Error(
+    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
+  );
+}
+
+if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
+  throw new Error(
+    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
+  );
+}
+
+      /*
+      ========================================
+      Find/Create VTO Account
+      ========================================
+      */
+
+      let virtualTryOn = await VirtualTryOn.findOne({
+        user: payment.customer.userId,
+      }).session(session);
+
+      /*
+========================================
+Validate Exact VTO Payment Package
+========================================
+*/
+
+if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
+  throw new Error(
+    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
+  );
+}
+
+if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
+  throw new Error(
+    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
+  );
+}
+
+
+      /*
+      ========================================
+      Create VTO Account
+      ========================================
+      */
+
+      if (!virtualTryOn) {
+        virtualTryOn = new VirtualTryOn({
+          user: payment.customer.userId,
+
+          availableTokens: 2,
+
+          totalPurchased: 2,
+
+          totalUsed: 0,
+
+          lastPurchaseAt: new Date(),
+
+          isActive: true,
+        });
+      } else {
+        /*
+        ========================================
+        Verify VTO Account Status
+        ========================================
+        */
+
+        if (virtualTryOn.isActive === false) {
+          throw new Error("Virtual Try-On account is inactive.");
+        }
+
+        /*
+        ========================================
+        Credit Exactly 2 Tokens
+        ========================================
+        */
+
+        virtualTryOn.availableTokens += 2;
+
+        virtualTryOn.totalPurchased += 2;
+
+        virtualTryOn.lastPurchaseAt = new Date();
+      }
+
+      /*
+      ========================================
+      Update Payment Status
+      ========================================
+      */
+
+      payment.payment.paymentStatus = "paid";
+
+      payment.payment.paymentMethod = paymentMethod || "UPI";
+
+      payment.payment.paymentGateway = "Razorpay";
+
+      payment.payment.paymentCompletedAt = new Date();
+
+      /*
+      ========================================
+      Update Razorpay Gateway Information
+      ========================================
+      */
+
+      if (razorpayOrderId) {
+        payment.gateway.orderId = razorpayOrderId;
+      }
+
+      if (razorpayPaymentId) {
+        payment.gateway.paymentId = razorpayPaymentId;
+
+        payment.gateway.transactionId = razorpayPaymentId;
+      }
+
+      if (razorpaySignature) {
+        payment.gateway.paymentSignature = razorpaySignature;
+      }
+
+      if (qrCodeId) {
+        payment.gateway.qrCodeId = qrCodeId;
+      }
+
+      if (qrStatus) {
+        payment.gateway.qrStatus = qrStatus;
+      }
+
+      if (webhookEventId) {
+        payment.gateway.webhookEventId = webhookEventId;
+      }
+
+      if (razorpayResponse) {
+        payment.gateway.gatewayResponse = razorpayResponse;
+      }
+
+      /*
+      ========================================
+      Mark Tokens As Credited
+      ========================================
+      */
+
+      payment.virtualTryOn.tokensCredited = true;
+
+      payment.virtualTryOn.creditedAt = new Date();
+
+      /*
+      ========================================
+      Save VTO Account
+      ========================================
+      */
+
+      await virtualTryOn.save({
+        session,
+      });
+
+      /*
+      ========================================
+      Save Payment
+      ========================================
+      */
+
+      await payment.save({
+        session,
+      });
+
+      /*
+      ========================================
+      Return Processed Result
+      ========================================
+      */
+
+      result = {
+        alreadyProcessed: false,
+        payment,
+        virtualTryOn,
+      };
+    });
+
+    return result;
+  } finally {
+    await session.endSession();
+  }
+};
+
+/*
+========================================
 Create Payment Order
 ========================================
 */
@@ -636,83 +938,79 @@ exports.verifyPayment = async (req, res) => {
     existingPayment.gateway.gatewayResponse = razorpayPayment;
 
     /*
-    ========================================
-    Find Virtual Try-On Account
-    ========================================
-    */
+========================================
+Process Successful VTO Payment
+========================================
+*/
 
-    let virtualTryOn = await VirtualTryOn.findOne({
-      user: existingPayment.customer.userId,
+    const paymentResult = await processSuccessfulVTOPayment({
+      paymentDocumentId: existingPayment._id,
+
+      razorpayPaymentId: razorpay_payment_id,
+
+      razorpayOrderId: razorpay_order_id,
+
+      razorpaySignature: razorpay_signature,
+
+      paymentMethod: razorpayPayment.method
+        ? razorpayPayment.method.toUpperCase()
+        : "Razorpay",
+
+      razorpayResponse: razorpayPayment,
     });
 
     /*
-    ========================================
-    Create Token Account
-    ========================================
-    */
+========================================
+Already Processed
+========================================
+*/
 
-    if (!virtualTryOn) {
-      virtualTryOn = await VirtualTryOn.create({
-        user: existingPayment.customer.userId,
+    if (paymentResult.alreadyProcessed) {
+      return res.status(200).json({
+        success: true,
 
-        availableTokens: existingPayment.virtualTryOn.tokensPurchased,
+        message: "Payment was already processed.",
 
-        totalPurchased: existingPayment.virtualTryOn.tokensPurchased,
+        paymentId: existingPayment._id,
 
-        totalUsed: 0,
+        razorpayOrderId: razorpay_order_id,
 
-        lastPurchaseAt: new Date(),
+        razorpayPaymentId: razorpay_payment_id,
 
-        isActive: true,
+        paymentStatus: "paid",
+
+        amount: 50,
+
+        tokensCredited: 2,
       });
-    } else {
-      /*
-      ========================================
-      Check Token Account Status
-      ========================================
-      */
-
-      if (!virtualTryOn.isActive) {
-        return res.status(403).json({
-          success: false,
-          message: "Virtual Try-On account is inactive.",
-        });
-      }
-
-      /*
-      ========================================
-      Credit Purchased Tokens
-      ========================================
-      */
-
-      virtualTryOn.availableTokens +=
-        existingPayment.virtualTryOn.tokensPurchased;
-
-      virtualTryOn.totalPurchased +=
-        existingPayment.virtualTryOn.tokensPurchased;
-
-      virtualTryOn.lastPurchaseAt = new Date();
-
-      await virtualTryOn.save();
     }
 
     /*
-    ========================================
-    Mark Tokens As Credited
-    ========================================
-    */
+========================================
+Successful Response
+========================================
+*/
 
-    existingPayment.virtualTryOn.tokensCredited = true;
+    return res.status(200).json({
+      success: true,
 
-    existingPayment.virtualTryOn.creditedAt = new Date();
+      message:
+        "Payment verified successfully. 2 Virtual Try-On tokens have been credited.",
 
-    /*
-    ========================================
-    Save Payment
-    ========================================
-    */
+      paymentId: paymentResult.payment._id,
 
-    await existingPayment.save();
+      razorpayOrderId: razorpay_order_id,
+
+      razorpayPaymentId: razorpay_payment_id,
+
+      paymentStatus: paymentResult.payment.payment.paymentStatus,
+
+      amount: 50,
+
+      tokensCredited: 2,
+
+      virtualTryOn: paymentResult.virtualTryOn,
+    });
 
     /*
     ========================================
@@ -1138,7 +1436,7 @@ const getPaymentStatus = async (req, res) => {
     */
 
     if (
-      payment.payment?.paymentStatus === "paid" ||
+      payment.payment?.paymentStatus === "paid" &&
       payment.virtualTryOn?.tokensCredited === true
     ) {
       return res.status(200).json({
@@ -1489,6 +1787,18 @@ exports.handleRazorpayWebhook = async (req, res) => {
     );
 
     /*
+========================================
+Validate Razorpay Webhook Event ID
+========================================
+*/
+
+if (!eventId) {
+  console.warn(
+    "Razorpay webhook received without an event ID."
+  );
+}
+
+    /*
     ========================================
     Ignore Events We Do Not Need
     ========================================
@@ -1702,6 +2012,31 @@ exports.handleRazorpayWebhook = async (req, res) => {
     }
 
     /*
+========================================
+Webhook Event Duplicate Protection
+========================================
+*/
+
+if (
+  eventId &&
+  existingPayment.gateway?.webhookEventId === eventId
+) {
+  console.log(
+    "Duplicate Razorpay webhook event ignored:",
+    eventId
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "Webhook event was already processed.",
+    paymentId: existingPayment._id,
+    webhookEventId: eventId,
+    tokensCredited:
+      existingPayment.virtualTryOn?.tokensCredited === true,
+  });
+}
+
+    /*
     ========================================
     Verify Expected Amount From DB
     ========================================
@@ -1802,6 +2137,28 @@ exports.handleRazorpayWebhook = async (req, res) => {
       }
 
       /*
+========================================
+Validate Exact VTO Payment Package
+========================================
+*/
+
+if (
+  Number(paymentInTransaction.virtualTryOn?.amountPaid) !== 50
+) {
+  throw new Error(
+    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
+  );
+}
+
+if (
+  Number(paymentInTransaction.virtualTryOn?.tokensPurchased) !== 2
+) {
+  throw new Error(
+    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
+  );
+}
+
+      /*
       ========================================
       Find / Create VTO Account
       ========================================
@@ -1899,6 +2256,10 @@ exports.handleRazorpayWebhook = async (req, res) => {
       paymentInTransaction.gateway.paymentId = razorpayPaymentId;
 
       paymentInTransaction.gateway.transactionId = razorpayPaymentId;
+
+      if (eventId) {
+  paymentInTransaction.gateway.webhookEventId = eventId;
+}
 
       if (razorpayQrCodeId) {
         paymentInTransaction.gateway.qrCodeId = razorpayQrCodeId;
