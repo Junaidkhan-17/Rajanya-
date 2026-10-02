@@ -10,7 +10,7 @@ const Navbar = () => {
   const navbarRef = useRef(null);
   const profileDropdownRef = useRef(null);
 
-  const { state, dispatch, getUserInitials } = useAuth();
+  const { state, dispatch} = useAuth();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -33,6 +33,22 @@ const Navbar = () => {
 
   const userEmail = user?.email || "";
 
+  const getUserInitials = () => {
+  const name =
+    user?.name ||
+    user?.fullName ||
+    user?.username ||
+    user?.email ||
+    "User";
+
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+
+  if (parts.length >= 2) {
+    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+  }
+
+  return name.slice(0, 2).toUpperCase();
+};
 
   /* ==========================================
      MOBILE MENU

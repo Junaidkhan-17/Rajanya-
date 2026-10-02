@@ -8,7 +8,7 @@ import { useAuth, AUTH_ACTIONS } from "../../../contexts/AuthContext";
 
 import { useProductLiveData } from "../../../contexts/ProductLiveDataContext";
 
-import api from "../../../services/api";
+//import api from "../../../services/api";
 
 const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
   const { state, dispatch } = useAuth();
@@ -75,23 +75,49 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
    * Virtual Try-On
    * ========================================
    */
+const handleVirtualTryOn = () => {
+  /* ========================================
+     Authentication Check
+  ======================================== */
 
+  if (!state.isAuthenticated) {
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+    });
+
+    return;
+  }
+
+  /* ========================================
+     TEMPORARY FREE VIRTUAL TRY-ON TEST
+     
+     Razorpay payment/token check is
+     temporarily bypassed for testing.
+
+     DO NOT REMOVE THE RAZORPAY INTEGRATION.
+     This will be restored before production
+     deployment on the real Hostinger domain.
+  ======================================== */
+
+  dispatch({
+    type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD,
+    payload: bookingPayload,
+  });
+
+  dispatch({
+    type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER,
+  });
+};
+
+
+/*
   const handleVirtualTryOn = async () => {
-    /*
-     * ----------------------------------------
-     * Prevent Multiple Requests
-     * ----------------------------------------
-     */
+
 
     if (isCheckingVirtualTryOn) {
       return;
     }
 
-    /*
-     * ----------------------------------------
-     * Authentication Check
-     * ----------------------------------------
-     */
 
     if (!state.isAuthenticated) {
       dispatch({
@@ -101,20 +127,11 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
       return;
     }
 
-    /*
-     * ----------------------------------------
-     * Start Token Balance Check
-     * ----------------------------------------
-     */
 
     setIsCheckingVirtualTryOn(true);
 
     try {
-      /*
-       * ========================================
-       * Get Customer VTO Token Balance
-       * ========================================
-       */
+
 
       const response = await api.get("/virtual-try-on/my-tokens");
 
@@ -126,15 +143,6 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
         availableTokens,
       );
 
-      /*
-       * ========================================
-       * Customer Has Available Tokens
-       * ========================================
-       *
-       * If the customer has at least 1 token,
-       * directly open the Virtual Try-On Studio.
-       * No payment drawer should be shown.
-       */
 
       if (
         response?.data?.success &&
@@ -153,14 +161,6 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
         return;
       }
 
-      /*
-       * ========================================
-       * Customer Has No Tokens
-       * ========================================
-       *
-       * Open the ₹50 payment/unlock drawer.
-       */
-
       dispatch({
         type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD,
         payload: bookingPayload,
@@ -170,19 +170,6 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
         type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_DRAWER,
       });
     } catch (error) {
-      /*
-       * ========================================
-       * VTO Account Does Not Exist
-       * ========================================
-       *
-       * A missing VTO account means the customer
-       * has never purchased VTO tokens.
-       *
-       * Therefore treat it as:
-       * availableTokens = 0
-       *
-       * and open the payment drawer.
-       */
 
       if (error?.response?.status === 404) {
         console.log(
@@ -201,12 +188,6 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
         return;
       }
 
-      /*
-       * ========================================
-       * Other API Errors
-       * ========================================
-       */
-
       console.error(
         "Virtual Try-On Token Check Error:",
         error,
@@ -220,7 +201,7 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
       setIsCheckingVirtualTryOn(false);
     }
   };
-
+*/
   /*
    * ========================================
    * Wishlist

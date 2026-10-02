@@ -703,7 +703,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000
         }
 
         const response = await fetch(
-          `${API_BASE_URL}/api/virtual-try-on/my-tokens`,
+          `${API_BASE_URL}/virtual-try-on/my-tokens`,
           {
             method: "GET",
 

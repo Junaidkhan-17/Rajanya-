@@ -44,7 +44,7 @@ const initialState = {
    ACTION TYPES
 ========================================================= */
 
-const AUTH_ACTIONS = {
+export const AUTH_ACTIONS = {
   REGISTER_SUCCESS: "REGISTER_SUCCESS",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   LOGOUT: "LOGOUT",
@@ -741,13 +741,36 @@ export const AuthProvider = ({
      LOGOUT
   ======================================================= */
 
-  const logout = useCallback(() => {
-    logoutUser();
+  /* =======================================================
+   LOGOUT
+======================================================= */
 
-    dispatch({
-      type: AUTH_ACTIONS.LOGOUT,
-    });
-  }, []);
+const logout = useCallback(() => {
+  /*
+   * Clear customer authentication data
+   * from browser storage.
+   *
+   * This is important because AuthContext
+   * restores the session from rajanya_token
+   * whenever the page is refreshed.
+   */
+  localStorage.removeItem("rajanya_token");
+  localStorage.removeItem("rajanya_user");
+
+  /*
+   * Clear any authentication-related
+   * session data if present.
+   */
+  sessionStorage.removeItem("rajanya_token");
+  sessionStorage.removeItem("rajanya_user");
+
+  /*
+   * Reset React authentication state.
+   */
+  dispatch({
+    type: AUTH_ACTIONS.LOGOUT,
+  });
+}, []);
 
   /* =======================================================
      MODAL HELPERS

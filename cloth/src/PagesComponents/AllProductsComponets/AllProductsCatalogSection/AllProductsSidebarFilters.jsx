@@ -89,18 +89,76 @@ const AllProductsSidebarFilters = () => {
     });
   };
 
-  /* ==================================================
-     MOST BOOKED OUTFITS
-  ================================================== */
-
   const mostBookedProducts = useMemo(() => {
-    return [...state.products]
-      .sort(
-        (a, b) =>
-          (Number(b?.bookingCount) || 0) - (Number(a?.bookingCount) || 0),
-      )
-      .slice(0, 5);
-  }, [state.products]);
+  if (!Array.isArray(state.products) || state.products.length === 0) {
+    return [];
+  }
+
+  const getDate = (product) => {
+    const date = new Date(
+      product?.createdAt || product?.updatedAt || 0,
+    ).getTime();
+
+    return Number.isFinite(date) ? date : 0;
+  };
+
+  /*
+  1. Sort products by booking count.
+  */
+  const bookedProducts = [...state.products].sort((a, b) => {
+    const bookingDifference =
+      (Number(b?.bookingCount) || 0) -
+      (Number(a?.bookingCount) || 0);
+
+    if (bookingDifference !== 0) {
+      return bookingDifference;
+    }
+
+    return getDate(b) - getDate(a);
+  });
+
+  /*
+  2. Take the top 5 booked products.
+  */
+  const topBookedProducts = bookedProducts.slice(0, 5);
+
+  /*
+  3. Find the newest uploaded product.
+  */
+  const newestProduct = [...state.products].sort(
+    (a, b) => getDate(b) - getDate(a),
+  )[0];
+
+  if (!newestProduct) {
+    return topBookedProducts;
+  }
+
+  /*
+  4. Check whether newest product is already
+     inside the top booked products.
+  */
+  const newestAlreadyIncluded = topBookedProducts.some(
+    (product) =>
+      String(product?._id) === String(newestProduct?._id),
+  );
+
+  /*
+  5. If newest product is already there,
+     keep the normal top-5 list.
+  */
+  if (newestAlreadyIncluded) {
+    return topBookedProducts;
+  }
+
+  /*
+  6. Otherwise replace the lowest-booked product
+     with the newest uploaded product.
+  */
+  return [
+    ...topBookedProducts.slice(0, 4),
+    newestProduct,
+  ];
+}, [state.products]);
 
   /* ==================================================
      IMAGE HELPER

@@ -251,7 +251,7 @@ const VirtualTryOnUnlockDrawer = ({ isOpen, onClose, bookingData }) => {
       ========================================
       */
 
-      if (currentStatus === "paid" || data.tokensCredited === true) {
+      if (currentStatus === "paid" && data.tokensCredited === true) {
         handlePaymentSuccess(currentPaymentId);
 
         return;

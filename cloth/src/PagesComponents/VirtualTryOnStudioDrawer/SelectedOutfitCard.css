@@ -160,6 +160,28 @@
 }
 
 /* =========================================================
+   IMAGE PLACEHOLDER
+   ========================================================= */
+
+.selected-outfit-image-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f8f8f8;
+
+  color: #999;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+/* =========================================================
    LARGE DESKTOP
    1440px+
    ========================================================= */

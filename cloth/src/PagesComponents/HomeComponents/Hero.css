@@ -11,6 +11,7 @@
   isolation: isolate;
 }
 
+
 /* =========================================================
    BACKGROUND VIDEO
    ========================================================= */
@@ -24,10 +25,6 @@
 
   display: block;
 
-  /*
-    Cover prevents distortion and maintains the video
-    proportions across responsive screen sizes.
-  */
   object-fit: cover;
   object-position: center center;
 
@@ -37,8 +34,12 @@
 
 /* =========================================================
    HERO OVERLAY
-   Desktop:
-   Right -> Center luxury fade
+   DESKTOP
+   Black luxury fade from left toward right
+
+   The left side receives the darker fade while the
+   right side remains comparatively lighter for the
+   black typography.
    ========================================================= */
 
 .home-hero-overlay {
@@ -51,15 +52,13 @@
 
   background:
     linear-gradient(
-      270deg,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(255, 255, 255, 0.97) 10%,
-      rgba(255, 255, 255, 0.93) 20%,
-      rgba(255, 255, 255, 0.85) 30%,
-      rgba(255, 255, 255, 0.65) 45%,
-      rgba(255, 255, 255, 0.35) 60%,
-      rgba(255, 255, 255, 0.12) 72%,
-      rgba(255, 255, 255, 0) 82%
+      90deg,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.58) 20%,
+      rgba(0, 0, 0, 0.38) 38%,
+      rgba(0, 0, 0, 0.16) 58%,
+      rgba(0, 0, 0, 0.03) 76%,
+      rgba(0, 0, 0, 0) 100%
     );
 }
 
@@ -111,17 +110,24 @@
   font-weight: 700;
   line-height: 1;
 
-  color: #ffae00;
+  color: #ffdd00;
 
   font-family: "Muthiara", cursive;
 
   margin: -250px 0 0;
 
-  -webkit-text-stroke: 2px rgb(255, 236, 125);
+  /*
+    Soft luxury gold edge instead of the previous
+    white/yellow treatment.
+  */
+  -webkit-text-stroke: 1.5px #ffae00;
 
   text-align: center;
 
   overflow: visible;
+
+  text-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
 
@@ -156,7 +162,7 @@
   font-size: 32px;
   line-height: 1.15;
 
-  color: #ffffff;
+  color: #000000;
 
   font-family: "Barlow", sans-serif;
   font-weight: 400;
@@ -205,7 +211,7 @@
 }
 
 .home-hero-book-button:focus-visible {
-  outline: 2px solid #ffffff;
+  outline: 2px solid #000000;
   outline-offset: 4px;
 }
 
@@ -257,6 +263,8 @@
   .home-hero-title {
     font-size: clamp(68px, 7vw, 92px);
     margin-top: -210px;
+
+    -webkit-text-stroke-width: 1.4px;
   }
 
   .home-hero-description {
@@ -283,6 +291,8 @@
   .home-hero-title {
     font-size: 58px;
     margin-top: -175px;
+
+    -webkit-text-stroke-width: 1.2px;
   }
 
   .home-hero-description {
@@ -311,20 +321,28 @@
 @media (max-width: 991px) {
   .home-hero-main {
     height: 560px;
+    min-height: 560px;
   }
 
   .home-hero-background-video {
     object-position: center center;
   }
 
+  /*
+    Tablet:
+    Dark black fade comes from the top and gradually
+    disappears toward the lower content area.
+  */
+
   .home-hero-overlay {
     background:
       linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(255, 255, 255, 0.15) 28%,
-        rgba(255, 255, 255, 0.72) 68%,
-        rgba(255, 255, 255, 0.96) 100%
+        180deg,
+        rgba(0, 0, 0, 0.62) 0%,
+        rgba(0, 0, 0, 0.42) 25%,
+        rgba(0, 0, 0, 0.18) 52%,
+        rgba(0, 0, 0, 0.04) 72%,
+        rgba(0, 0, 0, 0) 100%
       );
   }
 
@@ -342,6 +360,19 @@
 
   .home-hero-content {
     align-items: center;
+
+    /*
+      Slight white translucent backdrop keeps the requested
+      black typography readable over changing video frames.
+    */
+    padding: 18px 20px;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.76);
+
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
   }
 
   .home-hero-title {
@@ -351,7 +382,9 @@
 
     margin: 0;
 
-    -webkit-text-stroke-width: 1.5px;
+    line-height: 0.95;
+
+    -webkit-text-stroke-width: 1px;
   }
 
   .home-hero-divider {
@@ -367,7 +400,7 @@
     font-size: 22px;
     line-height: 1.25;
 
-    color: #1a1a1a;
+    color: #000000;
 
     font-weight: 500;
 
@@ -399,15 +432,20 @@
     object-position: center center;
   }
 
+  /*
+    Mobile black fade.
+    Darker at the top, lighter toward the content.
+  */
+
   .home-hero-overlay {
     background:
       linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.06) 24%,
-        rgba(255, 255, 255, 0.35) 48%,
-        rgba(255, 255, 255, 0.82) 72%,
-        rgba(255, 255, 255, 0.98) 100%
+        180deg,
+        rgba(0, 0, 0, 0.68) 0%,
+        rgba(0, 0, 0, 0.48) 28%,
+        rgba(0, 0, 0, 0.20) 52%,
+        rgba(0, 0, 0, 0.04) 72%,
+        rgba(0, 0, 0, 0) 100%
       );
   }
 
@@ -418,6 +456,17 @@
     max-width: 520px;
   }
 
+  .home-hero-content {
+    padding: 17px 18px;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.80);
+
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
   .home-hero-title {
     font-size: clamp(42px, 10vw, 60px);
 
@@ -425,7 +474,7 @@
 
     line-height: 0.95;
 
-    -webkit-text-stroke-width: 1.3px;
+    -webkit-text-stroke-width: 0.9px;
   }
 
   .home-hero-divider {
@@ -440,7 +489,7 @@
     font-size: 20px;
     line-height: 1.3;
 
-    color: #151515;
+    color: #000000;
 
     margin-bottom: 17px;
   }
@@ -477,12 +526,20 @@
     width: calc(100% - 32px);
   }
 
+  .home-hero-content {
+    padding: 15px 16px;
+
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.82);
+  }
+
   .home-hero-title {
     font-size: clamp(34px, 10vw, 48px);
 
     line-height: 0.95;
 
-    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-width: 0.8px;
   }
 
   .home-hero-divider {
@@ -532,6 +589,12 @@
     width: calc(100% - 28px);
   }
 
+  .home-hero-content {
+    padding: 14px 14px;
+
+    border-radius: 13px;
+  }
+
   .home-hero-title {
     font-size: clamp(31px, 10vw, 42px);
   }
@@ -579,10 +642,16 @@
     width: calc(100% - 24px);
   }
 
+  .home-hero-content {
+    padding: 12px 12px;
+
+    border-radius: 12px;
+  }
+
   .home-hero-title {
     font-size: clamp(28px, 10vw, 37px);
 
-    -webkit-text-stroke-width: 0.8px;
+    -webkit-text-stroke-width: 0.7px;
   }
 
   .home-hero-divider {
@@ -630,6 +699,10 @@
     width: calc(100% - 20px);
   }
 
+  .home-hero-content {
+    padding: 11px 10px;
+  }
+
   .home-hero-title {
     font-size: 27px;
   }
@@ -663,10 +736,6 @@
 
 @media (hover: none) and (pointer: coarse) {
   .home-hero-book-button {
-    /*
-      Keeps touch interaction subtle without causing
-      a persistent hover state.
-    */
     transition:
       transform 0.2s ease,
       box-shadow 0.2s ease;
@@ -674,7 +743,9 @@
 
   .home-hero-book-button:active {
     transform: scale(0.96);
-    box-shadow: 0 8px 20px rgba(164, 0, 0, 0.2);
+
+    box-shadow:
+      0 8px 20px rgba(164, 0, 0, 0.2);
   }
 }
 
@@ -685,11 +756,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .home-hero-background-video {
-    /*
-      Video remains available as the visual background,
-      while browser/user motion preferences are respected
-      by avoiding unnecessary CSS transitions.
-    */
     scroll-behavior: auto;
   }
 
