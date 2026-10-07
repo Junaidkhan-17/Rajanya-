@@ -8,7 +8,7 @@ import { useAuth, AUTH_ACTIONS } from "../../../contexts/AuthContext";
 
 import { useProductLiveData } from "../../../contexts/ProductLiveDataContext";
 
-//import api from "../../../services/api";
+import api from "../../../services/api";
 
 const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
   const { state, dispatch } = useAuth();
@@ -19,7 +19,7 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
 
   const isWishlisted = productState.wishlist.includes(product._id);
 
-  /*
+  /**
    * ========================================
    * Book For Rent
    * ========================================
@@ -70,54 +70,22 @@ const ProductDetailsActionsSection = ({ product, bookingPayload }) => {
     });
   };
 
-  /*
-   * ========================================
-   * Virtual Try-On
-   * ========================================
-   */
-const handleVirtualTryOn = () => {
-  /* ========================================
-     Authentication Check
-  ======================================== */
-
-  if (!state.isAuthenticated) {
-    dispatch({
-      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
-    });
-
-    return;
-  }
-
-  /* ========================================
-     TEMPORARY FREE VIRTUAL TRY-ON TEST
-     
-     Razorpay payment/token check is
-     temporarily bypassed for testing.
-
-     DO NOT REMOVE THE RAZORPAY INTEGRATION.
-     This will be restored before production
-     deployment on the real Hostinger domain.
-  ======================================== */
-
-  dispatch({
-    type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD,
-    payload: bookingPayload,
-  });
-
-  dispatch({
-    type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER,
-  });
-};
-
-
-/*
   const handleVirtualTryOn = async () => {
-
+    /**
+     * ========================================
+     * Prevent Duplicate Requests
+     * ========================================
+     */
 
     if (isCheckingVirtualTryOn) {
       return;
     }
 
+    /**
+     * ========================================
+     * Authentication Check
+     * ========================================
+     */
 
     if (!state.isAuthenticated) {
       dispatch({
@@ -127,11 +95,20 @@ const handleVirtualTryOn = () => {
       return;
     }
 
+    /**
+     * ========================================
+     * Start Token Check
+     * ========================================
+     */
 
     setIsCheckingVirtualTryOn(true);
 
     try {
-
+      /**
+       * ========================================
+       * Get Customer VTO Token Balance
+       * ========================================
+       */
 
       const response = await api.get("/virtual-try-on/my-tokens");
 
@@ -143,6 +120,18 @@ const handleVirtualTryOn = () => {
         availableTokens,
       );
 
+      /**
+       * ========================================
+       * CASE 1:
+       *
+       * Customer already has VTO tokens.
+       *
+       * Open Studio directly.
+       *
+       * No Razorpay QR.
+       * No additional payment.
+       * ========================================
+       */
 
       if (
         response?.data?.success &&
@@ -161,6 +150,26 @@ const handleVirtualTryOn = () => {
         return;
       }
 
+      /**
+       * ========================================
+       * CASE 2:
+       *
+       * Customer has ZERO VTO tokens.
+       *
+       * Open Razorpay Payment Drawer.
+       *
+       * Razorpay Drawer handles:
+       *
+       * ₹50 payment
+       *      ↓
+       * Razorpay verification
+       *      ↓
+       * 2 VTO tokens credited
+       *      ↓
+       * Studio opens
+       * ========================================
+       */
+
       dispatch({
         type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD,
         payload: bookingPayload,
@@ -170,6 +179,18 @@ const handleVirtualTryOn = () => {
         type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_DRAWER,
       });
     } catch (error) {
+      /**
+       * ========================================
+       * CASE 3:
+       *
+       * VTO account does not exist yet.
+       *
+       * Treat the customer as having
+       * zero available tokens.
+       *
+       * Open Razorpay Payment Drawer.
+       * ========================================
+       */
 
       if (error?.response?.status === 404) {
         console.log(
@@ -188,6 +209,12 @@ const handleVirtualTryOn = () => {
         return;
       }
 
+      /**
+       * ========================================
+       * Other API Errors
+       * ========================================
+       */
+
       console.error(
         "Virtual Try-On Token Check Error:",
         error,
@@ -198,11 +225,17 @@ const handleVirtualTryOn = () => {
           "Unable to check your Virtual Try-On tokens. Please try again.",
       );
     } finally {
+      /**
+       * ========================================
+       * Finish Token Check
+       * ========================================
+       */
+
       setIsCheckingVirtualTryOn(false);
     }
   };
-*/
-  /*
+
+  /**
    * ========================================
    * Wishlist
    * ========================================
@@ -220,7 +253,7 @@ const handleVirtualTryOn = () => {
     await toggleWishlist(product._id);
   };
 
-  /*
+  /**
    * ========================================
    * Render
    * ========================================
