@@ -22,6 +22,8 @@ const occasionRoutes = require("./routes/occasionRoutes");
 
 const paymentRoutes = require("./routes/paymentRoutes");
 
+const adminPaymentRoutes = require("./routes/adminPaymentRoutes");
+
 const virtualTryOnRoutes = require("./routes/virtualTryOnRoutes");
 
 const cloudinaryTestRoutes = require("./routes/cloudinaryTestRoutes");
@@ -139,6 +141,8 @@ app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/bookings", bookingRoutes);
 
 app.use("/api/payments", paymentRoutes);
+
+app.use("/api/admin", adminPaymentRoutes);
 
 app.use("/api/occasions", occasionRoutes);
 
