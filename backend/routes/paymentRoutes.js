@@ -2,9 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-const {
-  protect,
-} = require("../middleware/authMiddleware");
+const { protect } = require("../middleware/authMiddleware");
 
 const {
   createPaymentOrder,
@@ -13,32 +11,15 @@ const {
   getPaymentStatus,
 } = require("../controllers/paymentController");
 
-
-/*
-========================================
-Customer APIs
-========================================
-*/
-
-
 /*
 ========================================
 Legacy Razorpay Checkout
 ========================================
 */
 
-router.post(
-  "/create-order",
-  protect,
-  createPaymentOrder
-);
+router.post("/create-order", protect, createPaymentOrder);
 
-router.post(
-  "/verify-payment",
-  protect,
-  verifyPayment
-);
-
+router.post("/verify-payment", protect, verifyPayment);
 
 /*
 ========================================
@@ -46,12 +27,7 @@ Razorpay QR Payment
 ========================================
 */
 
-router.post(
-  "/create-qr",
-  protect,
-  createPaymentQR
-);
-
+router.post("/create-qr", protect, createPaymentQR);
 
 /*
 ========================================
@@ -59,9 +35,5 @@ Payment Status
 ========================================
 */
 
-router.get(
-  "/:paymentId/status",
-  protect,
-  getPaymentStatus
-);
+router.get("/:paymentId/status", protect, getPaymentStatus);
 module.exports = router;

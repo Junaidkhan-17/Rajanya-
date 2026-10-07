@@ -136,17 +136,17 @@ Enforce Exact Rajanya VTO Payment
 ========================================
 */
 
-if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
-  throw new Error(
-    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
-  );
-}
+      if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
+        throw new Error(
+          "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50.",
+        );
+      }
 
-if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
-  throw new Error(
-    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
-  );
-}
+      if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
+        throw new Error(
+          "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens.",
+        );
+      }
 
       /*
       ========================================
@@ -164,18 +164,17 @@ Validate Exact VTO Payment Package
 ========================================
 */
 
-if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
-  throw new Error(
-    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
-  );
-}
+      if (Number(paymentToUpdate.virtualTryOn?.amountPaid) !== 50) {
+        throw new Error(
+          "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50.",
+        );
+      }
 
-if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
-  throw new Error(
-    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
-  );
-}
-
+      if (Number(paymentToUpdate.virtualTryOn?.tokensPurchased) !== 2) {
+        throw new Error(
+          "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens.",
+        );
+      }
 
       /*
       ========================================
@@ -1792,11 +1791,9 @@ Validate Razorpay Webhook Event ID
 ========================================
 */
 
-if (!eventId) {
-  console.warn(
-    "Razorpay webhook received without an event ID."
-  );
-}
+    if (!eventId) {
+      console.warn("Razorpay webhook received without an event ID.");
+    }
 
     /*
     ========================================
@@ -2017,24 +2014,17 @@ Webhook Event Duplicate Protection
 ========================================
 */
 
-if (
-  eventId &&
-  existingPayment.gateway?.webhookEventId === eventId
-) {
-  console.log(
-    "Duplicate Razorpay webhook event ignored:",
-    eventId
-  );
+    if (eventId && existingPayment.gateway?.webhookEventId === eventId) {
+      console.log("Duplicate Razorpay webhook event ignored:", eventId);
 
-  return res.status(200).json({
-    success: true,
-    message: "Webhook event was already processed.",
-    paymentId: existingPayment._id,
-    webhookEventId: eventId,
-    tokensCredited:
-      existingPayment.virtualTryOn?.tokensCredited === true,
-  });
-}
+      return res.status(200).json({
+        success: true,
+        message: "Webhook event was already processed.",
+        paymentId: existingPayment._id,
+        webhookEventId: eventId,
+        tokensCredited: existingPayment.virtualTryOn?.tokensCredited === true,
+      });
+    }
 
     /*
     ========================================
@@ -2142,21 +2132,17 @@ Validate Exact VTO Payment Package
 ========================================
 */
 
-if (
-  Number(paymentInTransaction.virtualTryOn?.amountPaid) !== 50
-) {
-  throw new Error(
-    "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50."
-  );
-}
+      if (Number(paymentInTransaction.virtualTryOn?.amountPaid) !== 50) {
+        throw new Error(
+          "Invalid VTO payment amount. Rajanya VTO requires exactly ₹50.",
+        );
+      }
 
-if (
-  Number(paymentInTransaction.virtualTryOn?.tokensPurchased) !== 2
-) {
-  throw new Error(
-    "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens."
-  );
-}
+      if (Number(paymentInTransaction.virtualTryOn?.tokensPurchased) !== 2) {
+        throw new Error(
+          "Invalid VTO token configuration. Rajanya VTO requires exactly 2 tokens.",
+        );
+      }
 
       /*
       ========================================
@@ -2258,8 +2244,8 @@ if (
       paymentInTransaction.gateway.transactionId = razorpayPaymentId;
 
       if (eventId) {
-  paymentInTransaction.gateway.webhookEventId = eventId;
-}
+        paymentInTransaction.gateway.webhookEventId = eventId;
+      }
 
       if (razorpayQrCodeId) {
         paymentInTransaction.gateway.qrCodeId = razorpayQrCodeId;

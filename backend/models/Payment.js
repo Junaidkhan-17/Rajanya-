@@ -57,7 +57,7 @@ const paymentInfoSchema = new mongoose.Schema(
       default: "INR",
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -93,7 +93,7 @@ const customerSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -157,7 +157,7 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -203,7 +203,7 @@ const virtualTryOnSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -328,7 +328,7 @@ const gatewaySchema = new mongoose.Schema(
       default: {},
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -356,7 +356,7 @@ const adminSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -369,13 +369,7 @@ const refundSchema = new mongoose.Schema(
   {
     refundStatus: {
       type: String,
-      enum: [
-        "not_requested",
-        "requested",
-        "approved",
-        "rejected",
-        "processed",
-      ],
+      enum: ["not_requested", "requested", "approved", "rejected", "processed"],
       default: "not_requested",
     },
 
@@ -401,7 +395,7 @@ const refundSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 /*
@@ -449,7 +443,7 @@ const paymentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 /*
@@ -512,7 +506,7 @@ paymentSchema.index(
   },
   {
     sparse: true,
-  }
+  },
 );
 
 /*
