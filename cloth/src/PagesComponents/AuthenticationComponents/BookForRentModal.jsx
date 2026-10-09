@@ -352,7 +352,7 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       },
     };
 
-    const adminNumber = "918806431717";
+    const adminNumber = "9822430452";
 
     if (!matchedRentalOption) {
       alert(
