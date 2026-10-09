@@ -153,19 +153,18 @@ const LoginModal = () => {
          */
         if (!googleInitializedRef.current) {
           window.google.accounts.id.initialize({
-  client_id: clientId,
+            client_id: clientId,
 
-  ux_mode: "redirect",
+            ux_mode: "redirect",
 
-  login_uri:
-    "https://rajanya.onrender.com/api/auth/google/redirect",
+            login_uri: "https://rajanya.onrender.com/api/auth/google/redirect",
 
-  auto_select: false,
+            auto_select: false,
 
-  use_fedcm_for_button: false,
+            use_fedcm_for_button: false,
 
-  button_auto_select: false,
-});
+            button_auto_select: false,
+          });
 
           googleInitializedRef.current = true;
         }

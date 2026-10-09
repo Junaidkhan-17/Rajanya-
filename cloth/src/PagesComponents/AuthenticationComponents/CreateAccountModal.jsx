@@ -44,17 +44,17 @@ const CreateAccountModal = () => {
   ========================================== */
 
   const closeModal = () => {
-  dispatch({
-    type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
-  });
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+    });
 
-  dispatch({
-    type: AUTH_ACTIONS.SET_ERROR,
-    payload: null,
-  });
+    dispatch({
+      type: AUTH_ACTIONS.SET_ERROR,
+      payload: null,
+    });
 
-  reset();
-};
+    reset();
+  };
 
   /* ==========================================
      ESC KEY CLOSE
@@ -104,6 +104,7 @@ const CreateAccountModal = () => {
      SUBMIT
   ========================================== */
 
+  
 const onSubmit = async (data) => {
   try {
     const userData = {
@@ -114,9 +115,33 @@ const onSubmit = async (data) => {
       phone: "",
     };
 
-    await registerUser(userData);
+    // Register the user without automatically logging them in.
+    const result = await registerUser(userData);
 
+    // Handle unsuccessful registration.
+    if (!result?.success) {
+      setError("email", {
+        type: "manual",
+        message:
+          result?.message ||
+          "Registration failed. Please try again.",
+      });
+
+      return;
+    }
+
+    // Clear the form after successful registration.
     reset();
+
+    // Close the Create Account modal.
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+    });
+
+    // Open the Login modal.
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+    });
   } catch (error) {
     if (error.response?.data?.message) {
       setError("email", {
@@ -131,6 +156,7 @@ const onSubmit = async (data) => {
     }
   }
 };
+
 
   return (
     <AnimatePresence>
@@ -377,7 +403,6 @@ const onSubmit = async (data) => {
 
               <button type="button" className="google-btn">
                 <i className="bi bi-google me-2"></i>
-
                 Continue with Google
               </button>
 

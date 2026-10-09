@@ -310,6 +310,8 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
       },
 
       address: {
+        streetAddress: data.streetAddress.trim(),
+
         city: data.city,
 
         state: data.state,
@@ -376,6 +378,8 @@ Name: ${data.fullName}
 Mobile: ${data.mobileNumber}
 
 Email: ${data.email}
+
+Street Address: ${data.streetAddress.trim()}
 
 City: ${data.city}
 
@@ -637,6 +641,29 @@ ${booking.product.productUrl}
                   )}
                 </div>
 
+                {/* STREET ADDRESS */}
+                <div className="form-group full-width">
+                  <label htmlFor="streetAddress">Street Address</label>
+
+                  <input
+                    id="streetAddress"
+                    type="text"
+                    autoComplete="street-address"
+                    {...register("streetAddress", {
+                      required: "Street address is required",
+                      validate: (value) =>
+                        value.trim().length > 0 || "Street address is required",
+                    })}
+                    placeholder="Enter Street Address"
+                  />
+
+                  {errors.streetAddress && (
+                    <span className="error">
+                      {errors.streetAddress.message}
+                    </span>
+                  )}
+                </div>
+
                 {/* CITY */}
 
                 <div className="form-group">
@@ -836,13 +863,13 @@ ${booking.product.productUrl}
                 <div className="summary-total">
                   <span>Total</span>
 
-<span>
-  ₹
-  {(
-    Number(calculatedRentalPrice || 0) +
-    Number(bookingData.securityDeposit || 0)
-  ).toLocaleString("en-IN")}
-</span>
+                  <span>
+                    ₹
+                    {(
+                      Number(calculatedRentalPrice || 0) +
+                      Number(bookingData.securityDeposit || 0)
+                    ).toLocaleString("en-IN")}
+                  </span>
                 </div>
 
                 <button type="submit" className="confirm-booking-btn">

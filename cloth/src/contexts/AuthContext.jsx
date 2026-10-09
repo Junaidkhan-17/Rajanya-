@@ -24,7 +24,7 @@ const initialState = {
   isAuthenticated: false,
   loading: true,
   error: null,
-
+  successMessage: null,
   pendingAction: null,
 
   showCreateAccountModal: false,
@@ -51,48 +51,35 @@ export const AUTH_ACTIONS = {
 
   SET_LOADING: "SET_LOADING",
   SET_ERROR: "SET_ERROR",
-
+  SET_SUCCESS_MESSAGE: "SET_SUCCESS_MESSAGE",
   SET_PENDING_ACTION: "SET_PENDING_ACTION",
   CLEAR_PENDING_ACTION: "CLEAR_PENDING_ACTION",
 
-  OPEN_BOOK_FOR_RENT_MODAL:
-    "OPEN_BOOK_FOR_RENT_MODAL",
+  OPEN_BOOK_FOR_RENT_MODAL: "OPEN_BOOK_FOR_RENT_MODAL",
 
-  CLOSE_BOOK_FOR_RENT_MODAL:
-    "CLOSE_BOOK_FOR_RENT_MODAL",
+  CLOSE_BOOK_FOR_RENT_MODAL: "CLOSE_BOOK_FOR_RENT_MODAL",
 
-  SET_BOOK_FOR_RENT_PAYLOAD:
-    "SET_BOOK_FOR_RENT_PAYLOAD",
+  SET_BOOK_FOR_RENT_PAYLOAD: "SET_BOOK_FOR_RENT_PAYLOAD",
 
-  OPEN_CREATE_ACCOUNT_MODAL:
-    "OPEN_CREATE_ACCOUNT_MODAL",
+  OPEN_CREATE_ACCOUNT_MODAL: "OPEN_CREATE_ACCOUNT_MODAL",
 
-  CLOSE_CREATE_ACCOUNT_MODAL:
-    "CLOSE_CREATE_ACCOUNT_MODAL",
+  CLOSE_CREATE_ACCOUNT_MODAL: "CLOSE_CREATE_ACCOUNT_MODAL",
 
-  OPEN_LOGIN_MODAL:
-    "OPEN_LOGIN_MODAL",
+  OPEN_LOGIN_MODAL: "OPEN_LOGIN_MODAL",
 
-  CLOSE_LOGIN_MODAL:
-    "CLOSE_LOGIN_MODAL",
+  CLOSE_LOGIN_MODAL: "CLOSE_LOGIN_MODAL",
 
-  OPEN_VIRTUAL_TRY_ON_DRAWER:
-    "OPEN_VIRTUAL_TRY_ON_DRAWER",
+  OPEN_VIRTUAL_TRY_ON_DRAWER: "OPEN_VIRTUAL_TRY_ON_DRAWER",
 
-  CLOSE_VIRTUAL_TRY_ON_DRAWER:
-    "CLOSE_VIRTUAL_TRY_ON_DRAWER",
+  CLOSE_VIRTUAL_TRY_ON_DRAWER: "CLOSE_VIRTUAL_TRY_ON_DRAWER",
 
-  SET_VIRTUAL_TRY_ON_PAYLOAD:
-    "SET_VIRTUAL_TRY_ON_PAYLOAD",
+  SET_VIRTUAL_TRY_ON_PAYLOAD: "SET_VIRTUAL_TRY_ON_PAYLOAD",
 
-  OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-    "OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER",
+  OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER: "OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER",
 
-  CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER:
-    "CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER",
+  CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER: "CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER",
 
-  SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD:
-    "SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD",
+  SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD: "SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD",
 };
 
 /* =========================================================
@@ -249,6 +236,12 @@ const authReducer = (state, action) => {
         virtualTryOnStudioPayload: action.payload,
       };
 
+    case AUTH_ACTIONS.SET_SUCCESS_MESSAGE:
+  return {
+    ...state,
+    successMessage: action.payload,
+  };
+
     default:
       return state;
   }
@@ -264,338 +257,260 @@ const AuthContext = createContext(null);
    PROVIDER
 ========================================================= */
 
-export const AuthProvider = ({
-  children,
-}) => {
-  const [state, dispatch] = useReducer(
-    authReducer,
-    initialState
-  );
+export const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   /* =======================================================
      NORMAL USER LOGIN
   ======================================================= */
 
-  const login = useCallback(
-    async (credentials) => {
-      try {
+  const login = useCallback(async (credentials) => {
+    try {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: true,
+      });
+
+      const response = await loginUser(credentials);
+
+      if (response?.success && response?.token && response?.user) {
+        localStorage.setItem("rajanya_token", response.token);
+
+        localStorage.setItem("rajanya_user", JSON.stringify(response.user));
+
         dispatch({
-          type: AUTH_ACTIONS.SET_LOADING,
-          payload: true,
-        });
-
-        const response =
-          await loginUser(credentials);
-
-        if (
-          response?.success &&
-          response?.token &&
-          response?.user
-        ) {
-          localStorage.setItem(
-            "rajanya_token",
-            response.token
-          );
-
-          localStorage.setItem(
-            "rajanya_user",
-            JSON.stringify(response.user)
-          );
-
-          dispatch({
-            type: AUTH_ACTIONS.LOGIN_SUCCESS,
-            payload: {
-              user: response.user,
-            },
-          });
-
-          return {
-            success: true,
+          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          payload: {
             user: response.user,
-          };
-        }
-
-        throw new Error(
-          response?.message ||
-            "Login failed"
-        );
-      } catch (error) {
-        const message =
-          error?.response?.data?.message ||
-          error?.message ||
-          "Login failed";
-
-        dispatch({
-          type: AUTH_ACTIONS.SET_ERROR,
-          payload: message,
+          },
         });
 
         return {
-          success: false,
-          message,
+          success: true,
+          user: response.user,
         };
       }
-    },
-    []
-  );
+
+      throw new Error(response?.message || "Login failed");
+    } catch (error) {
+      const message =
+        error?.response?.data?.message || error?.message || "Login failed";
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_ERROR,
+        payload: message,
+      });
+
+      return {
+        success: false,
+        message,
+      };
+    }
+  }, []);
 
   /* =======================================================
      REGISTER
   ======================================================= */
 
-  const register = useCallback(
-    async (userData) => {
-      try {
-        dispatch({
-          type: AUTH_ACTIONS.SET_LOADING,
-          payload: true,
-        });
+  
+const register = useCallback(async (userData) => {
+  try {
+    dispatch({
+      type: AUTH_ACTIONS.SET_LOADING,
+      payload: true,
+    });
 
-        const response =
-          await registerUser(userData);
+    const response = await registerUser(userData);
 
-        if (
-          response?.success &&
-          response?.token &&
-          response?.user
-        ) {
-          localStorage.setItem(
-            "rajanya_token",
-            response.token
-          );
+    if (!response?.success) {
+      throw new Error(
+        response?.message || "Registration failed"
+      );
+    }
 
-          localStorage.setItem(
-            "rajanya_user",
-            JSON.stringify(response.user)
-          );
+    // Registration must not create an authenticated session.
+    // Do not save rajanya_token or rajanya_user here.
+    dispatch({
+      type: AUTH_ACTIONS.SET_LOADING,
+      payload: false,
+    });
 
-          dispatch({
-            type: AUTH_ACTIONS.REGISTER_SUCCESS,
-            payload: {
-              user: response.user,
-            },
-          });
+    dispatch({
+      type: AUTH_ACTIONS.SET_ERROR,
+      payload: null,
+    });
 
-          return {
-            success: true,
-            user: response.user,
-          };
-        }
+    dispatch({
+      type: AUTH_ACTIONS.SET_SUCCESS_MESSAGE,
+      payload:
+        response.message ||
+        "Account created successfully. Please log in.",
+    });
 
-        throw new Error(
-          response?.message ||
-            "Registration failed"
-        );
-      } catch (error) {
-        const message =
-          error?.response?.data?.message ||
-          error?.message ||
-          "Registration failed";
+    return {
+      success: true,
+      message:
+        response.message ||
+        "Account created successfully. Please log in.",
+    };
+  } catch (error) {
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Registration failed";
 
-        dispatch({
-          type: AUTH_ACTIONS.SET_ERROR,
-          payload: message,
-        });
+    dispatch({
+      type: AUTH_ACTIONS.SET_ERROR,
+      payload: message,
+    });
 
-        return {
-          success: false,
-          message,
-        };
-      }
-    },
-    []
-  );
+    return {
+      success: false,
+      message,
+    };
+  }
+}, []);
+
 
   /* =======================================================
      GOOGLE LOGIN - EXISTING POPUP FLOW
   ======================================================= */
 
-  const loginWithGoogle = useCallback(
-    async (credential) => {
-      try {
+  const loginWithGoogle = useCallback(async (credential) => {
+    try {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: true,
+      });
+
+      const response = await googleLoginUser(credential);
+
+      if (response?.success && response?.token && response?.user) {
+        localStorage.setItem("rajanya_token", response.token);
+
+        localStorage.setItem("rajanya_user", JSON.stringify(response.user));
+
         dispatch({
-          type: AUTH_ACTIONS.SET_LOADING,
-          payload: true,
-        });
-
-        const response =
-          await googleLoginUser(
-            credential
-          );
-
-        if (
-          response?.success &&
-          response?.token &&
-          response?.user
-        ) {
-          localStorage.setItem(
-            "rajanya_token",
-            response.token
-          );
-
-          localStorage.setItem(
-            "rajanya_user",
-            JSON.stringify(response.user)
-          );
-
-          dispatch({
-            type: AUTH_ACTIONS.LOGIN_SUCCESS,
-            payload: {
-              user: response.user,
-            },
-          });
-
-          return {
-            success: true,
+          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          payload: {
             user: response.user,
-          };
-        }
-
-        throw new Error(
-          response?.message ||
-            "Google login failed"
-        );
-      } catch (error) {
-        const message =
-          error?.response?.data?.message ||
-          error?.message ||
-          "Google login failed";
-
-        dispatch({
-          type: AUTH_ACTIONS.SET_ERROR,
-          payload: message,
+          },
         });
 
         return {
-          success: false,
-          message,
+          success: true,
+          user: response.user,
         };
       }
-    },
-    []
-  );
+
+      throw new Error(response?.message || "Google login failed");
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Google login failed";
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_ERROR,
+        payload: message,
+      });
+
+      return {
+        success: false,
+        message,
+      };
+    }
+  }, []);
 
   /* =======================================================
      GOOGLE REDIRECT HANDOFF
   ======================================================= */
 
-  const completeGoogleRedirectLogin =
-    useCallback(async () => {
-      const hash =
-        window.location.hash;
+  const completeGoogleRedirectLogin = useCallback(async () => {
+    const hash = window.location.hash;
 
-      if (
-        !hash ||
-        !hash.includes(
-          "google_handoff="
-        )
-      ) {
-        return false;
-      }
+    if (!hash || !hash.includes("google_handoff=")) {
+      return false;
+    }
 
-      const params =
-        new URLSearchParams(
-          hash.substring(1)
-        );
+    const params = new URLSearchParams(hash.substring(1));
 
-      const handoffToken =
-        params.get(
-          "google_handoff"
-        );
+    const handoffToken = params.get("google_handoff");
 
-      if (!handoffToken) {
-        return false;
-      }
+    if (!handoffToken) {
+      return false;
+    }
 
-      try {
-        dispatch({
-          type: AUTH_ACTIONS.SET_LOADING,
-          payload: true,
-        });
+    try {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: true,
+      });
 
-        /*
-         * Exchange the short-lived Google
-         * redirect handoff for the normal
-         * Rajanya authentication token.
-         */
+      /*
+       * Exchange the short-lived Google
+       * redirect handoff for the normal
+       * Rajanya authentication token.
+       */
 
-        const response =
-          await exchangeGoogleRedirectToken(
-            handoffToken
-          );
+      const response = await exchangeGoogleRedirectToken(handoffToken);
 
-        if (
-          response?.success &&
-          response?.token &&
-          response?.user
-        ) {
-          localStorage.setItem(
-            "rajanya_token",
-            response.token
-          );
+      if (response?.success && response?.token && response?.user) {
+        localStorage.setItem("rajanya_token", response.token);
 
-          localStorage.setItem(
-            "rajanya_user",
-            JSON.stringify(response.user)
-          );
-
-          /*
-           * Remove the temporary handoff
-           * token from the browser URL.
-           */
-
-          window.history.replaceState(
-            null,
-            document.title,
-            window.location.pathname +
-              window.location.search
-          );
-
-          dispatch({
-            type: AUTH_ACTIONS.LOGIN_SUCCESS,
-            payload: {
-              user: response.user,
-            },
-          });
-
-          return true;
-        }
-
-        throw new Error(
-          response?.message ||
-            "Google login could not be completed"
-        );
-      } catch (error) {
-        console.error(
-          "Google Redirect Login Error:",
-          error
-        );
+        localStorage.setItem("rajanya_user", JSON.stringify(response.user));
 
         /*
-         * Remove the failed handoff
-         * from the URL as well.
+         * Remove the temporary handoff
+         * token from the browser URL.
          */
 
         window.history.replaceState(
           null,
           document.title,
-          window.location.pathname +
-            window.location.search
+          window.location.pathname + window.location.search,
         );
 
-        const message =
-          error?.response?.data?.message ||
-          error?.message ||
-          "Google login failed";
-
         dispatch({
-          type: AUTH_ACTIONS.SET_ERROR,
-          payload: message,
+          type: AUTH_ACTIONS.LOGIN_SUCCESS,
+          payload: {
+            user: response.user,
+          },
         });
 
-        return false;
+        return true;
       }
-    }, []);
+
+      throw new Error(
+        response?.message || "Google login could not be completed",
+      );
+    } catch (error) {
+      console.error("Google Redirect Login Error:", error);
+
+      /*
+       * Remove the failed handoff
+       * from the URL as well.
+       */
+
+      window.history.replaceState(
+        null,
+        document.title,
+        window.location.pathname + window.location.search,
+      );
+
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Google login failed";
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_ERROR,
+        payload: message,
+      });
+
+      return false;
+    }
+  }, []);
 
   /* =======================================================
      LOAD EXISTING USER / GOOGLE REDIRECT
@@ -604,138 +519,98 @@ export const AuthProvider = ({
   useEffect(() => {
     let mounted = true;
 
-    const initializeAuthentication =
-      async () => {
-        /*
-         * First check whether Google has just
-         * redirected the user back to Rajanya.
-         */
+    const initializeAuthentication = async () => {
+      /*
+       * First check whether Google has just
+       * redirected the user back to Rajanya.
+       */
 
-        const hash =
-          window.location.hash;
+      const hash = window.location.hash;
 
-        if (
-          hash.includes(
-            "google_handoff="
-          )
-        ) {
-          await completeGoogleRedirectLogin();
+      if (hash.includes("google_handoff=")) {
+        await completeGoogleRedirectLogin();
 
-          return;
+        return;
+      }
+
+      /*
+       * Handle Google redirect errors.
+       */
+
+      if (hash.includes("google_error=")) {
+        const params = new URLSearchParams(hash.substring(1));
+
+        const googleError = params.get("google_error");
+
+        window.history.replaceState(
+          null,
+          document.title,
+          window.location.pathname + window.location.search,
+        );
+
+        if (mounted) {
+          dispatch({
+            type: AUTH_ACTIONS.SET_ERROR,
+            payload: googleError || "Google login failed",
+          });
         }
 
-        /*
-         * Handle Google redirect errors.
-         */
+        return;
+      }
 
-        if (
-          hash.includes(
-            "google_error="
-          )
-        ) {
-          const params =
-            new URLSearchParams(
-              hash.substring(1)
-            );
+      /*
+       * Normal existing-token flow.
+       */
 
-          const googleError =
-            params.get(
-              "google_error"
-            );
+      const token = localStorage.getItem("rajanya_token");
 
-          window.history.replaceState(
-            null,
-            document.title,
-            window.location.pathname +
-              window.location.search
-          );
+      if (!token) {
+        if (mounted) {
+          dispatch({
+            type: AUTH_ACTIONS.SET_LOADING,
+            payload: false,
+          });
+        }
+
+        return;
+      }
+
+      try {
+        const response = await getProfile();
+
+        if (response?.success && response?.user) {
+          localStorage.setItem("rajanya_user", JSON.stringify(response.user));
 
           if (mounted) {
             dispatch({
-              type: AUTH_ACTIONS.SET_ERROR,
-              payload:
-                googleError ||
-                "Google login failed",
+              type: AUTH_ACTIONS.LOGIN_SUCCESS,
+              payload: {
+                user: response.user,
+              },
             });
           }
-
-          return;
+        } else {
+          throw new Error("Invalid user session");
         }
+      } catch (error) {
+        console.error("Authentication initialization error:", error);
 
-        /*
-         * Normal existing-token flow.
-         */
+        logoutUser();
 
-        const token =
-          localStorage.getItem(
-            "rajanya_token"
-          );
-
-        if (!token) {
-          if (mounted) {
-            dispatch({
-              type: AUTH_ACTIONS.SET_LOADING,
-              payload: false,
-            });
-          }
-
-          return;
+        if (mounted) {
+          dispatch({
+            type: AUTH_ACTIONS.LOGOUT,
+          });
         }
-
-        try {
-          const response =
-            await getProfile();
-
-          if (
-            response?.success &&
-            response?.user
-          ) {
-            localStorage.setItem(
-              "rajanya_user",
-              JSON.stringify(
-                response.user
-              )
-            );
-
-            if (mounted) {
-              dispatch({
-                type:
-                  AUTH_ACTIONS.LOGIN_SUCCESS,
-                payload: {
-                  user:
-                    response.user,
-                },
-              });
-            }
-          } else {
-            throw new Error(
-              "Invalid user session"
-            );
-          }
-        } catch (error) {
-          console.error(
-            "Authentication initialization error:",
-            error
-          );
-
-          logoutUser();
-
-          if (mounted) {
-            dispatch({
-              type: AUTH_ACTIONS.LOGOUT,
-            });
-          }
-        }
-      };
+      }
+    };
 
     initializeAuthentication();
 
     return () => {
       mounted = false;
     };
-  }, [
-    completeGoogleRedirectLogin,
-  ]);
+  }, [completeGoogleRedirectLogin]);
 
   /* =======================================================
      LOGOUT
@@ -745,140 +620,117 @@ export const AuthProvider = ({
    LOGOUT
 ======================================================= */
 
-const logout = useCallback(() => {
-  /*
-   * Clear customer authentication data
-   * from browser storage.
-   *
-   * This is important because AuthContext
-   * restores the session from rajanya_token
-   * whenever the page is refreshed.
-   */
-  localStorage.removeItem("rajanya_token");
-  localStorage.removeItem("rajanya_user");
+  const logout = useCallback(() => {
+    /*
+     * Clear customer authentication data
+     * from browser storage.
+     *
+     * This is important because AuthContext
+     * restores the session from rajanya_token
+     * whenever the page is refreshed.
+     */
+    localStorage.removeItem("rajanya_token");
+    localStorage.removeItem("rajanya_user");
 
-  /*
-   * Clear any authentication-related
-   * session data if present.
-   */
-  sessionStorage.removeItem("rajanya_token");
-  sessionStorage.removeItem("rajanya_user");
+    /*
+     * Clear any authentication-related
+     * session data if present.
+     */
+    sessionStorage.removeItem("rajanya_token");
+    sessionStorage.removeItem("rajanya_user");
 
-  /*
-   * Reset React authentication state.
-   */
-  dispatch({
-    type: AUTH_ACTIONS.LOGOUT,
-  });
-}, []);
+    /*
+     * Reset React authentication state.
+     */
+    dispatch({
+      type: AUTH_ACTIONS.LOGOUT,
+    });
+  }, []);
 
   /* =======================================================
      MODAL HELPERS
   ======================================================= */
 
-  const openCreateAccountModal =
-    useCallback(() => {
+  const openCreateAccountModal = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_CREATE_ACCOUNT_MODAL,
+    });
+  }, []);
+
+  const closeCreateAccountModal = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+    });
+  }, []);
+
+  const openLoginModal = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+    });
+  }, []);
+
+  const closeLoginModal = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
+    });
+  }, []);
+
+  const openBookForRentModal = useCallback((payload = null) => {
+    if (payload) {
       dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_CREATE_ACCOUNT_MODAL,
+        type: AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
+        payload,
       });
-    }, []);
+    }
 
-  const closeCreateAccountModal =
-    useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
+    });
+  }, []);
+
+  const closeBookForRentModal = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_BOOK_FOR_RENT_MODAL,
+    });
+  }, []);
+
+  const openVirtualTryOnDrawer = useCallback((payload = null) => {
+    if (payload) {
       dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_CREATE_ACCOUNT_MODAL,
+        type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD,
+        payload,
       });
-    }, []);
+    }
 
-  const openLoginModal =
-    useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_DRAWER,
+    });
+  }, []);
+
+  const closeVirtualTryOnDrawer = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_DRAWER,
+    });
+  }, []);
+
+  const openVirtualTryOnStudioDrawer = useCallback((payload = null) => {
+    if (payload) {
       dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_LOGIN_MODAL,
+        type: AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD,
+        payload,
       });
-    }, []);
+    }
 
-  const closeLoginModal =
-    useCallback(() => {
-      dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_LOGIN_MODAL,
-      });
-    }, []);
+    dispatch({
+      type: AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER,
+    });
+  }, []);
 
-  const openBookForRentModal =
-    useCallback((payload = null) => {
-      if (payload) {
-        dispatch({
-          type:
-            AUTH_ACTIONS.SET_BOOK_FOR_RENT_PAYLOAD,
-          payload,
-        });
-      }
-
-      dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_BOOK_FOR_RENT_MODAL,
-      });
-    }, []);
-
-  const closeBookForRentModal =
-    useCallback(() => {
-      dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_BOOK_FOR_RENT_MODAL,
-      });
-    }, []);
-
-  const openVirtualTryOnDrawer =
-    useCallback((payload = null) => {
-      if (payload) {
-        dispatch({
-          type:
-            AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_PAYLOAD,
-          payload,
-        });
-      }
-
-      dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_DRAWER,
-      });
-    }, []);
-
-  const closeVirtualTryOnDrawer =
-    useCallback(() => {
-      dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_DRAWER,
-      });
-    }, []);
-
-  const openVirtualTryOnStudioDrawer =
-    useCallback((payload = null) => {
-      if (payload) {
-        dispatch({
-          type:
-            AUTH_ACTIONS.SET_VIRTUAL_TRY_ON_STUDIO_PAYLOAD,
-          payload,
-        });
-      }
-
-      dispatch({
-        type:
-          AUTH_ACTIONS.OPEN_VIRTUAL_TRY_ON_STUDIO_DRAWER,
-      });
-    }, []);
-
-  const closeVirtualTryOnStudioDrawer =
-    useCallback(() => {
-      dispatch({
-        type:
-          AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER,
-      });
-    }, []);
+  const closeVirtualTryOnStudioDrawer = useCallback(() => {
+    dispatch({
+      type: AUTH_ACTIONS.CLOSE_VIRTUAL_TRY_ON_STUDIO_DRAWER,
+    });
+  }, []);
 
   /* =======================================================
      CONTEXT VALUE
@@ -915,11 +767,7 @@ const logout = useCallback(() => {
     closeVirtualTryOnStudioDrawer,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 /* =========================================================
@@ -927,13 +775,10 @@ const logout = useCallback(() => {
 ========================================================= */
 
 export const useAuth = () => {
-  const context =
-    useContext(AuthContext);
+  const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error(
-      "useAuth must be used inside AuthProvider"
-    );
+    throw new Error("useAuth must be used inside AuthProvider");
   }
 
   return context;
