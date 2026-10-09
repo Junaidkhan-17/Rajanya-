@@ -24,15 +24,15 @@ const upload = multer({
   },
 
   fileFilter: (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|webp/;
-  const isValid = allowedTypes.test(file.mimetype);
+    const allowedTypes = /jpeg|jpg|png|webp/;
+    const isValid = allowedTypes.test(file.mimetype);
 
-  if (isValid) {
-    return cb(null, true);
-  }
+    if (isValid) {
+      return cb(null, true);
+    }
 
-  cb(new Error("Only JPG, JPEG, PNG and WEBP image files are allowed."));
-},
+    cb(new Error("Only JPG, JPEG, PNG and WEBP image files are allowed."));
+  },
 });
 
 module.exports = upload;

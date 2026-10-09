@@ -19,6 +19,17 @@ exports.createBooking = async (req, res) => {
       });
     }
 
+    if (
+      !address.streetAddress ||
+      typeof address.streetAddress !== "string" ||
+      !address.streetAddress.trim()
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Street address is required",
+      });
+    }
+
     if (!mongoose.Types.ObjectId.isValid(product.productId)) {
       return res.status(400).json({
         success: false,
@@ -47,14 +58,14 @@ exports.createBooking = async (req, res) => {
       .populate("category", "name slug")
       .populate("occasion", "name slug");
 
-    console.log("Product Occasion:", existingProduct.occasion);
-
     if (!existingProduct) {
       return res.status(404).json({
         success: false,
         message: "Product not found",
       });
     }
+
+    console.log("Product Occasion:", existingProduct.occasion);
 
     /* ==========================
        SIZE VALIDATION
@@ -67,21 +78,7 @@ exports.createBooking = async (req, res) => {
       });
     }
 
-    /* ==========================
-   RENTAL OPTION VALIDATION
-========================== */
-
-const rentalOption = existingProduct.rentalOptions.find(
-  (option) => option.days === calculatedRentalDuration,
-);
-
-if (!rentalOption) {
-  return res.status(400).json({
-    success: false,
-    message: `Rental pricing for ${product.rentalDuration} days is not configured for this product.`,
-  });
-}
-
+    
     /* ==========================
        DATE VALIDATION
     ========================== */
@@ -139,24 +136,37 @@ if (!rentalOption) {
    RENTAL DURATION VALIDATION
 ========================== */
 
-const calculatedRentalDuration = Math.ceil(
-  (selectedReturnDate.getTime() - selectedStartDate.getTime()) /
-    (1000 * 60 * 60 * 24),
+    const calculatedRentalDuration = Math.ceil(
+      (selectedReturnDate.getTime() - selectedStartDate.getTime()) /
+        (1000 * 60 * 60 * 24),
+    );
+
+    if (calculatedRentalDuration <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Rental duration must be at least 1 day",
+      });
+    }
+
+    if (calculatedRentalDuration !== Number(product.rentalDuration)) {
+      return res.status(400).json({
+        success: false,
+        message: "Rental duration does not match the selected rental dates",
+      });
+    }
+
+    
+const rentalOption = existingProduct.rentalOptions.find(
+  (option) => option.days === calculatedRentalDuration,
 );
 
-if (calculatedRentalDuration <= 0) {
+if (!rentalOption) {
   return res.status(400).json({
     success: false,
-    message: "Rental duration must be at least 1 day",
+    message: `Rental pricing for ${calculatedRentalDuration} days is not configured for this product.`,
   });
 }
 
-if (calculatedRentalDuration !== Number(product.rentalDuration)) {
-  return res.status(400).json({
-    success: false,
-    message: "Rental duration does not match the selected rental dates",
-  });
-}
 
     /* ==========================
    BOOKING AVAILABILITY

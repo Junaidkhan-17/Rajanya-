@@ -44,6 +44,12 @@ Address Snapshot
 
 const addressSchema = new mongoose.Schema(
   {
+    streetAddress: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     city: {
       type: String,
       required: true,
