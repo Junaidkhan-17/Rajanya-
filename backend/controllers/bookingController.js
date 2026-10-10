@@ -79,7 +79,6 @@ exports.createBooking = async (req, res) => {
       });
     }
 
-    
     /* ==========================
        DATE VALIDATION
     ========================== */
@@ -156,18 +155,16 @@ exports.createBooking = async (req, res) => {
       });
     }
 
-    
-const rentalOption = existingProduct.rentalOptions.find(
-  (option) => option.days === calculatedRentalDuration,
-);
+    const rentalOption = existingProduct.rentalOptions.find(
+      (option) => option.days === calculatedRentalDuration,
+    );
 
-if (!rentalOption) {
-  return res.status(400).json({
-    success: false,
-    message: `Rental pricing for ${calculatedRentalDuration} days is not configured for this product.`,
-  });
-}
-
+    if (!rentalOption) {
+      return res.status(400).json({
+        success: false,
+        message: `Rental pricing for ${calculatedRentalDuration} days is not configured for this product.`,
+      });
+    }
 
     /* ==========================
    BOOKING AVAILABILITY
@@ -281,12 +278,15 @@ if (!rentalOption) {
       },
     });
 
-    
     // ========================================
     // Create Admin Booking Notification
     // ========================================
     try {
-      await Notification.create({
+      console.log("🔔 Starting booking notification creation...");
+  console.log("Booking ID:", booking._id);
+  console.log("Booking Number:", booking.bookingId);
+
+    const notification =  await Notification.create({
         type: "booking_created",
         title: "New Rental Booking",
         description: `${booking.user.fullName} booked ${booking.product.productName}.`,
@@ -313,7 +313,12 @@ if (!rentalOption) {
         tokensCredited: 0,
         dedupeKey: `booking:${booking._id}`,
       });
+      console.log("✅ Booking notification created:", notification._id);
     } catch (notificationError) {
+      console.error(
+    "❌ Failed to create booking notification:",
+    notificationError
+  );
       // A notification failure must not fail a saved booking.
       if (notificationError.code === 11000) {
         console.warn(
@@ -327,7 +332,6 @@ if (!rentalOption) {
         );
       }
     }
-
 
     res.status(201).json({
       success: true,
