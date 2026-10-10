@@ -68,6 +68,8 @@ CORS
 */
 
 const allowedOrigins = [
+  "https://rajanyabycc.com",
+  "https://www.rajanyabycc.com",
   "https://rajanya-beryl.vercel.app",
   "http://localhost:5173",
   "http://localhost:5174",
