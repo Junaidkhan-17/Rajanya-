@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Booking = require("../models/Booking");
 const Product = require("../models/Product");
 const User = require("../models/User");
+const Notification = require("../models/Notification");
 
 exports.createBooking = async (req, res) => {
   try {
@@ -279,6 +280,54 @@ if (!rentalOption) {
         totalAmount,
       },
     });
+
+    
+    // ========================================
+    // Create Admin Booking Notification
+    // ========================================
+    try {
+      await Notification.create({
+        type: "booking_created",
+        title: "New Rental Booking",
+        description: `${booking.user.fullName} booked ${booking.product.productName}.`,
+        icon: "Package",
+        iconColor: "#2563eb",
+        lineColor: "#dbeafe",
+
+        customer: {
+          userId: booking.user.userId,
+          fullName: booking.user.fullName,
+          email: booking.user.email,
+        },
+
+        referenceType: "Booking",
+        referenceId: booking._id,
+        referenceNumber: booking.bookingId,
+
+        product: {
+          productId: booking.product.productId,
+          productName: booking.product.productName,
+        },
+
+        amount: booking.pricing.totalAmount,
+        tokensCredited: 0,
+        dedupeKey: `booking:${booking._id}`,
+      });
+    } catch (notificationError) {
+      // A notification failure must not fail a saved booking.
+      if (notificationError.code === 11000) {
+        console.warn(
+          "Duplicate booking notification ignored:",
+          booking.bookingId,
+        );
+      } else {
+        console.error(
+          "Failed to create booking notification:",
+          notificationError.message,
+        );
+      }
+    }
+
 
     res.status(201).json({
       success: true,

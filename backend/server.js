@@ -37,6 +37,8 @@ const cloudinaryTestRoutes = require("./routes/cloudinaryTestRoutes");
 
 const dashboardRoutes = require("./routes/dashboardRoutes");
 
+const notificationRoutes = require("./routes/notificationRoutes");
+
 const path = require("path");
 
 const connectDB = require("./config/db");
@@ -92,6 +94,8 @@ Razorpay webhook signature verification
 requires the original raw request body.
 ========================================
 */
+
+
 
 app.post(
   "/api/payments/webhook",
@@ -158,6 +162,8 @@ app.use("/api/virtual-try-on", virtualTryOnRoutes);
 app.use("/api/cloudinary", cloudinaryTestRoutes);
 
 app.use("/api/dashboard", dashboardRoutes);
+
+app.use("/api/notifications", notificationRoutes);
 
 /*
 ========================================

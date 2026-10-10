@@ -6,6 +6,7 @@ const Payment = require("../models/Payment");
 const Product = require("../models/Product");
 const User = require("../models/User");
 const VirtualTryOn = require("../models/VirtualTryOn");
+const Notification = require("../models/Notification");
 
 /*
 ========================================
@@ -17,6 +18,83 @@ const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
+
+
+
+/**
+ * Create one persistent admin notification for a successful VTO payment.
+ * The unique dedupeKey prevents duplicate notifications across retries.
+ * Notification errors must never reverse or fail a successful payment.
+ */
+const createVTOPaymentNotification = async (payment) => {
+  try {
+    if (
+      !payment ||
+      payment.payment?.paymentStatus !== "paid" ||
+      payment.virtualTryOn?.tokensCredited !== true
+    ) {
+      return;
+    }
+
+    const paymentId = payment._id?.toString();
+
+    if (!paymentId) {
+      return;
+    }
+
+    await Notification.updateOne(
+      {
+        dedupeKey: `vto-payment:${paymentId}`,
+      },
+      {
+        $setOnInsert: {
+          type: "vto_payment_success",
+          title: "Virtual Try-On Payment Received",
+          description: `${payment.customer?.fullName || "A customer"} paid ₹${payment.virtualTryOn.amountPaid} for Virtual Try-On and received ${payment.virtualTryOn.tokensPurchased} tokens.`,
+          icon: "CreditCard",
+          iconColor: "#16a34a",
+          lineColor: "#dcfce7",
+
+          customer: {
+            userId: payment.customer?.userId || null,
+            fullName: payment.customer?.fullName || "",
+            email: payment.customer?.email || "",
+          },
+
+          referenceType: "Payment",
+          referenceId: payment._id,
+          referenceNumber: payment.payment?.paymentNumber || "",
+
+          product: {
+            productId: payment.product?.productId || null,
+            productName: payment.product?.productName || "",
+          },
+
+          amount: payment.virtualTryOn.amountPaid,
+          tokensCredited: payment.virtualTryOn.tokensPurchased,
+          dedupeKey: `vto-payment:${paymentId}`,
+          isRead: false,
+          readAt: null,
+        },
+      },
+      {
+        upsert: true,
+        runValidators: true,
+      },
+    );
+  } catch (error) {
+    // Notification failures must not affect payment processing.
+    if (error.code === 11000) {
+      return;
+    }
+
+    console.error(
+      "Failed to create VTO payment notification:",
+      error.message,
+    );
+  }
+};
+
 
 /*
 ========================================
@@ -958,6 +1036,13 @@ Process Successful VTO Payment
       razorpayResponse: razorpayPayment,
     });
 
+
+    
+if (!paymentResult.alreadyProcessed) {
+  await createVTOPaymentNotification(paymentResult.payment);
+}
+
+
     /*
 ========================================
 Already Processed
@@ -1617,6 +1702,17 @@ const getPaymentStatus = async (req, res) => {
             } finally {
               await session.endSession();
             }
+            
+              // Create admin notification after successful token credit.
+              const processedPayment = await Payment.findById(payment._id);
+
+              if (
+                processedPayment?.payment?.paymentStatus === "paid" &&
+                processedPayment?.virtualTryOn?.tokensCredited === true
+              ) {
+                await createVTOPaymentNotification(processedPayment);
+              }
+
           }
         }
       } catch (razorpayError) {
@@ -2117,6 +2213,18 @@ Webhook Event Duplicate Protection
 
       if (paymentInTransaction.virtualTryOn.tokensCredited === true) {
         await session.commitTransaction();
+
+        // Create admin notification after successful token credit.
+const processedPayment = await Payment.findById(
+  paymentInTransaction._id
+);
+
+if (
+  processedPayment?.payment?.paymentStatus === "paid" &&
+  processedPayment?.virtualTryOn?.tokensCredited === true
+) {
+  await createVTOPaymentNotification(processedPayment);
+}
 
         return res.status(200).json({
           success: true,
