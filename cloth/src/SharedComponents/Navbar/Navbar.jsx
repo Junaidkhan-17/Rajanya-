@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 import { useProductLiveData } from "../../contexts/ProductLiveDataContext";
-import rajanyalogo from "../../assets/rajanyalogo.png";
+//import rajanyalogo from "../../assets/rajanyalogo.png";
+import rajanyalogo from "../../assets/logonew.png";
 import "./Navbar.css";
 
 const Navbar = () => {
