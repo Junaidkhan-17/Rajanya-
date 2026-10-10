@@ -1,5 +1,12 @@
 require("dotenv").config();
 
+// Local development DNS workaround for MongoDB Atlas SRV lookup.
+// Production (Render) keeps its existing DNS configuration.
+if (process.env.NODE_ENV !== "production") {
+  const dns = require("node:dns");
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+}
+
 const authRoutes = require("./routes/authRoutes");
 
 const mongoose = require("mongoose");
