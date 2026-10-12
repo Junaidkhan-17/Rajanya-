@@ -12,9 +12,12 @@ const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID
 );
 
-const FRONTEND_URL =
+
+const FRONTEND_URL = (
   process.env.FRONTEND_URL ||
-  "https://rajanya-beryl.vercel.app";
+  "https://rajanyabycc.com"
+).replace(/\/+$/, "");
+
 
 /* =========================================================
    GOOGLE AUTHENTICATION HELPER
