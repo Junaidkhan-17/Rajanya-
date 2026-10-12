@@ -68,16 +68,12 @@ const AllProductsProductCard = ({ product }) => {
      QUICK VIEW
   ====================================== */
 
+  
   const handleQuickView = (e) => {
     e.stopPropagation();
-
-    dispatch({
-      type: PRODUCT_ACTIONS.ADD_TO_RECENTLY_VIEWED,
-      payload: product._id,
-    });
-
-    console.log("Quick View Product:", product._id);
+    handleProductDetails();
   };
+
 
   /* ======================================
      SHARE

@@ -231,10 +231,7 @@ const productReducer = (state, action) => {
         filters: {
           ...state.filters,
 
-          priceRange: [
-            action.payload.min,
-            action.payload.max,
-          ],
+          priceRange: [action.payload.min, action.payload.max],
         },
       };
 
@@ -254,10 +251,7 @@ const productReducer = (state, action) => {
           /*
            * Reset to the ACTUAL backend product range.
            */
-          priceRange: [
-            state.priceRangeBounds.min,
-            state.priceRangeBounds.max,
-          ],
+          priceRange: [state.priceRangeBounds.min, state.priceRangeBounds.max],
         },
 
         currentPage: 1,
@@ -303,18 +297,14 @@ const productReducer = (state, action) => {
       return {
         ...state,
 
-        currentPage:
-          state.currentPage + 1,
+        currentPage: state.currentPage + 1,
       };
 
     case PRODUCT_ACTIONS.PREVIOUS_PAGE:
       return {
         ...state,
 
-        currentPage:
-          state.currentPage > 1
-            ? state.currentPage - 1
-            : 1,
+        currentPage: state.currentPage > 1 ? state.currentPage - 1 : 1,
       };
 
     case PRODUCT_ACTIONS.FIRST_PAGE:
@@ -337,10 +327,7 @@ const productReducer = (state, action) => {
       return {
         ...state,
 
-        reviews: [
-          action.payload,
-          ...state.reviews,
-        ],
+        reviews: [action.payload, ...state.reviews],
       };
 
     case PRODUCT_ACTIONS.UPDATE_REVIEW:
@@ -348,9 +335,7 @@ const productReducer = (state, action) => {
         ...state,
 
         reviews: state.reviews.map((review) =>
-          review.id === action.payload.id
-            ? action.payload
-            : review,
+          review.id === action.payload.id ? action.payload : review,
         ),
       };
 
@@ -358,10 +343,7 @@ const productReducer = (state, action) => {
       return {
         ...state,
 
-        reviews: state.reviews.filter(
-          (review) =>
-            review.id !== action.payload,
-        ),
+        reviews: state.reviews.filter((review) => review.id !== action.payload),
       };
 
     case PRODUCT_ACTIONS.SET_REVIEWS:
@@ -386,25 +368,16 @@ const productReducer = (state, action) => {
       return {
         ...state,
 
-        wishlist: state.wishlist.includes(
-          action.payload,
-        )
-          ? state.wishlist.filter(
-              (id) => id !== action.payload,
-            )
-          : [
-              ...state.wishlist,
-              action.payload,
-            ],
+        wishlist: state.wishlist.includes(action.payload)
+          ? state.wishlist.filter((id) => id !== action.payload)
+          : [...state.wishlist, action.payload],
       };
 
     case PRODUCT_ACTIONS.REMOVE_FROM_WISHLIST:
       return {
         ...state,
 
-        wishlist: state.wishlist.filter(
-          (item) => item !== action.payload,
-        ),
+        wishlist: state.wishlist.filter((item) => item !== action.payload),
       };
 
     /* ==========================================
@@ -415,19 +388,14 @@ const productReducer = (state, action) => {
       return {
         ...state,
 
-        compare: [
-          ...state.compare,
-          action.payload,
-        ],
+        compare: [...state.compare, action.payload],
       };
 
     case PRODUCT_ACTIONS.REMOVE_FROM_COMPARE:
       return {
         ...state,
 
-        compare: state.compare.filter(
-          (item) => item !== action.payload,
-        ),
+        compare: state.compare.filter((item) => item !== action.payload),
       };
 
     /* ==========================================
@@ -441,9 +409,7 @@ const productReducer = (state, action) => {
         recentlyViewed: [
           action.payload,
 
-          ...state.recentlyViewed.filter(
-            (item) => item !== action.payload,
-          ),
+          ...state.recentlyViewed.filter((item) => item !== action.payload),
         ].slice(0, 10),
       };
 
@@ -478,17 +444,10 @@ const productReducer = (state, action) => {
    PROVIDER
 ================================================== */
 
-export const ProductLiveDataProvider = ({
-  children,
-}) => {
-  console.log(
-    "✅ ProductLiveDataProvider Mounted",
-  );
+export const ProductLiveDataProvider = ({ children }) => {
+  console.log("✅ ProductLiveDataProvider Mounted");
 
-  const [state, dispatch] = useReducer(
-    productReducer,
-    initialState,
-  );
+  const [state, dispatch] = useReducer(productReducer, initialState);
 
   /* ==========================================
      LOAD PRODUCTS FROM BACKEND
@@ -512,125 +471,77 @@ export const ProductLiveDataProvider = ({
          * After our backend change this returns
          * ALL MongoDB products.
          */
-        const response =
-          await getAllProducts();
+        const response = await getAllProducts();
 
-        const categoryResponse =
-          await getAllCategories();
+        const categoryResponse = await getAllCategories();
 
-        const backendProducts =
-          Array.isArray(response?.products)
-            ? response.products
-            : [];
+        const backendProducts = Array.isArray(response?.products)
+          ? response.products
+          : [];
 
-        console.log(
-          "📦 Backend Product Count:",
-          backendProducts.length,
-        );
+        console.log("📦 Backend Product Count:", backendProducts.length);
 
-        console.log(
-          "📦 Backend Product Response:",
-          response,
-        );
+        console.log("📦 Backend Product Response:", response);
 
         /* ==========================================
            MAP BACKEND PRODUCTS
         ========================================== */
 
-        const mappedProducts =
-          backendProducts.map((product) => ({
-            ...product,
+        const mappedProducts = backendProducts.map((product) => ({
+          ...product,
 
-            /* ===========================
+          /* ===========================
                CATEGORY
             =========================== */
 
-            category:
-              product.category?.name || "",
+          category: product.category?.name || "",
 
-            categoryData:
-              product.category || null,
+          categoryData: product.category || null,
 
-            /* ===========================
+          /* ===========================
                OCCASION
             =========================== */
 
-            occasion:
-              Array.isArray(product.occasion)
-                ? product.occasion
-                    .map(
-                      (item) =>
-                        item?.name || item,
-                    )
-                    .filter(Boolean)
-                : [],
+          occasion: Array.isArray(product.occasion)
+            ? product.occasion.map((item) => item?.name || item).filter(Boolean)
+            : [],
 
-            occasionData:
-              product.occasion || [],
+          occasionData: product.occasion || [],
 
-            /* ===========================
+          /* ===========================
                MATERIAL
             =========================== */
 
-            material:
-              Array.isArray(
-                product.materials,
-              )
-                ? product.materials[0] || ""
-                : product.materials || "",
+          material: Array.isArray(product.materials)
+            ? product.materials[0] || ""
+            : product.materials || "",
 
-            /* ===========================
+          /* ===========================
                FLAGS
             =========================== */
 
-            featured:
-              Boolean(product.isFeatured),
+          featured: Boolean(product.isFeatured),
 
-            trending:
-              Boolean(product.isTrending),
+          trending: Boolean(product.isTrending),
 
-            recommended:
-              Boolean(product.isRecommended),
-          }));
+          recommended: Boolean(product.isRecommended),
+        }));
 
-        console.log(
-          "📦 Mapped Products Count:",
-          mappedProducts.length,
-        );
+        console.log("📦 Mapped Products Count:", mappedProducts.length);
 
-        console.log(
-          "📦 Mapped Products:",
-          mappedProducts,
-        );
+        console.log("📦 Mapped Products:", mappedProducts);
 
         /* ==========================================
            CALCULATE REAL PRICE RANGE
         ========================================== */
 
-        const rentalPrices =
-          mappedProducts
-            .map(
-              (product) =>
-                Number(
-                  product.rentalOptions?.[0]
-                    ?.price,
-                ) || 0,
-            )
-            .filter(
-              (price) => price >= 0,
-            );
+        const rentalPrices = mappedProducts
+          .map((product) => Number(product.rentalOptions?.[0]?.price) || 0)
+          .filter((price) => price >= 0);
 
-        const originalPrices =
-          mappedProducts
-            .map(
-              (product) =>
-                Number(
-                  product.originalPrice,
-                ) || 0,
-            )
-            .filter(
-              (price) => price >= 0,
-            );
+        const originalPrices = mappedProducts
+          .map((product) => Number(product.originalPrice) || 0)
+          .filter((price) => price >= 0);
 
         /*
          * Use rental price as the primary
@@ -641,30 +552,18 @@ export const ProductLiveDataProvider = ({
          * to originalPrice.
          */
 
-        const priceSource =
-          rentalPrices.some(
-            (price) => price > 0,
-          )
-            ? rentalPrices
-            : originalPrices;
+        const priceSource = rentalPrices.some((price) => price > 0)
+          ? rentalPrices
+          : originalPrices;
 
-        const minPrice =
-          priceSource.length > 0
-            ? Math.min(...priceSource)
-            : 0;
+        const minPrice = priceSource.length > 0 ? Math.min(...priceSource) : 0;
 
-        const maxPrice =
-          priceSource.length > 0
-            ? Math.max(...priceSource)
-            : 0;
+        const maxPrice = priceSource.length > 0 ? Math.max(...priceSource) : 0;
 
-        console.log(
-          "💰 Dynamic Price Range:",
-          {
-            minPrice,
-            maxPrice,
-          },
-        );
+        console.log("💰 Dynamic Price Range:", {
+          minPrice,
+          maxPrice,
+        });
 
         /* ==========================================
            UPDATE PRODUCTS
@@ -680,8 +579,7 @@ export const ProductLiveDataProvider = ({
         ========================================== */
 
         dispatch({
-          type:
-            PRODUCT_ACTIONS.SET_PRICE_RANGE_BOUNDS,
+          type: PRODUCT_ACTIONS.SET_PRICE_RANGE_BOUNDS,
           payload: {
             min: minPrice,
             max: maxPrice,
@@ -694,28 +592,18 @@ export const ProductLiveDataProvider = ({
 
         dispatch({
           type: PRODUCT_ACTIONS.SET_CATEGORIES,
-          payload:
-            Array.isArray(
-              categoryResponse?.categories,
-            )
-              ? categoryResponse.categories
-              : [],
+          payload: Array.isArray(categoryResponse?.categories)
+            ? categoryResponse.categories
+            : [],
         });
 
-        console.log(
-          "📂 Categories:",
-          categoryResponse?.categories,
-        );
+        console.log("📂 Categories:", categoryResponse?.categories);
       } catch (error) {
-        console.error(
-          "❌ Failed to load products:",
-          error,
-        );
+        console.error("❌ Failed to load products:", error);
 
         dispatch({
           type: PRODUCT_ACTIONS.SET_ERROR,
-          payload:
-            "Unable to load products.",
+          payload: "Unable to load products.",
         });
       } finally {
         dispatch({
@@ -733,39 +621,25 @@ export const ProductLiveDataProvider = ({
   ========================================== */
 
   useEffect(() => {
-    console.log(
-      "🔥 Wishlist useEffect triggered",
-    );
+    console.log("🔥 Wishlist useEffect triggered");
 
     const loadWishlist = async () => {
       try {
-        const token =
-          localStorage.getItem(
-            "rajanya_token",
-          );
+        const token = localStorage.getItem("rajanya_token");
 
         if (!token) {
           return;
         }
 
-        const response =
-          await getWishlist();
+        const response = await getWishlist();
 
         dispatch({
-          type:
-            PRODUCT_ACTIONS.SET_WISHLIST,
+          type: PRODUCT_ACTIONS.SET_WISHLIST,
 
-          payload:
-            response?.wishlist?.map(
-              (item) =>
-                item.product._id,
-            ) || [],
+          payload: response?.wishlist?.map((item) => item.product._id) || [],
         });
       } catch (error) {
-        console.error(
-          "Failed to load wishlist:",
-          error,
-        );
+        console.error("Failed to load wishlist:", error);
       }
     };
 
@@ -777,29 +651,22 @@ export const ProductLiveDataProvider = ({
   ========================================== */
 
   useEffect(() => {
-    localStorage.setItem(
-      "rajanya_wishlist",
-      JSON.stringify(state.wishlist),
-    );
+    localStorage.setItem("rajanya_wishlist", JSON.stringify(state.wishlist));
   }, [state.wishlist]);
 
   /* ==========================================
      TOGGLE WISHLIST
   ========================================== */
 
-  const toggleWishlist = async (
-    productId,
-  ) => {
+  const toggleWishlist = async (productId) => {
     try {
-      const isWishlisted =
-        state.wishlist.includes(productId);
+      const isWishlisted = state.wishlist.includes(productId);
 
       if (isWishlisted) {
         await removeFromWishlist(productId);
 
         dispatch({
-          type:
-            PRODUCT_ACTIONS.REMOVE_FROM_WISHLIST,
+          type: PRODUCT_ACTIONS.REMOVE_FROM_WISHLIST,
 
           payload: productId,
         });
@@ -807,17 +674,13 @@ export const ProductLiveDataProvider = ({
         await addToWishlist(productId);
 
         dispatch({
-          type:
-            PRODUCT_ACTIONS.ADD_TO_WISHLIST,
+          type: PRODUCT_ACTIONS.ADD_TO_WISHLIST,
 
           payload: productId,
         });
       }
     } catch (error) {
-      console.error(
-        "Wishlist update failed:",
-        error,
-      );
+      console.error("Wishlist update failed:", error);
     }
   };
 
@@ -826,206 +689,153 @@ export const ProductLiveDataProvider = ({
   ========================================== */
 
   const searchedProducts = useMemo(() => {
-    const searchTerm =
-      state.search
-        ?.trim()
-        .toLowerCase() || "";
+    const searchTerm = state.search?.trim().toLowerCase() || "";
 
     if (!searchTerm) {
       return state.products;
     }
 
-    return state.products.filter(
-      (product) =>
-        product.name
-          ?.toLowerCase()
-          .includes(searchTerm),
+    return state.products.filter((product) =>
+      product.name?.toLowerCase().includes(searchTerm),
     );
-  }, [
-    state.products,
-    state.search,
-  ]);
+  }, [state.products, state.search]);
 
   /* ==========================================
      FILTERS
   ========================================== */
 
   const filteredProducts = useMemo(() => {
-    return searchedProducts.filter(
-      (product) => {
-        /* ===========================
+    return searchedProducts.filter((product) => {
+      /* ===========================
            COLLECTION TYPE
         =========================== */
 
-        const collectionMatch =
-          state.collectionType === "all"
-            ? true
-            : state.collectionType ===
-                "women"
-              ? product.gender === "Women"
-              : state.collectionType ===
-                  "men"
-                ? product.gender ===
-                  "Men"
-                : true;
+      const collectionMatch =
+        state.collectionType === "all"
+          ? true
+          : state.collectionType === "women"
+            ? product.gender === "Women"
+            : state.collectionType === "men"
+              ? product.gender === "Men"
+              : true;
 
-        /* ===========================
+      /* ===========================
            MATERIAL
         =========================== */
 
-        const materialMatch =
-          state.filters.materials.length ===
-            0 ||
-          state.filters.materials.includes(
-            product.material,
-          );
+      const materialMatch =
+        state.filters.materials.length === 0 ||
+        state.filters.materials.includes(product.material);
 
-        /* ===========================
+      /* ===========================
            CATEGORY
         =========================== */
 
-        /*
-         * Keep the existing behavior:
-         * activeCategory currently matches
-         * the mapped occasion value.
-         */
+      /*
+       * Keep the existing behavior:
+       * activeCategory currently matches
+       * the mapped occasion value.
+       */
 
-        const categoryMatch =
-          !state.filters.activeCategory ||
-          product.occasion?.includes(
-            state.filters.activeCategory,
-          );
+      const activeCategory = String(state.filters.activeCategory || "")
+        .trim()
+        .toLowerCase();
 
-        /* ===========================
+      const productCategory = String(
+        product.category?.name || product.category || "",
+      )
+        .trim()
+        .toLowerCase();
+
+      const productOccasions = Array.isArray(product.occasion)
+        ? product.occasion.map((occasion) =>
+            String(
+              typeof occasion === "object"
+                ? occasion?.name ||
+                    occasion?.categoryName ||
+                    occasion?.title ||
+                    ""
+                : occasion || "",
+            )
+              .trim()
+              .toLowerCase(),
+          )
+        : [];
+
+      const categoryMatch =
+        !activeCategory ||
+        productCategory === activeCategory ||
+        productOccasions.includes(activeCategory);
+
+      /* ===========================
            PRICE
         =========================== */
 
-        const displayPrice =
-          Number(
-            product.rentalOptions?.[0]
-              ?.price,
-          ) || 0;
+      const displayPrice = Number(product.rentalOptions?.[0]?.price) || 0;
 
-        const priceMatch =
-          displayPrice >=
-            state.filters.priceRange[0] &&
-          displayPrice <=
-            state.filters.priceRange[1];
+      const priceMatch =
+        displayPrice >= state.filters.priceRange[0] &&
+        displayPrice <= state.filters.priceRange[1];
 
-        return (
-          collectionMatch &&
-          materialMatch &&
-          categoryMatch &&
-          priceMatch
-        );
-      },
-    );
-  }, [
-    searchedProducts,
-    state.filters,
-    state.collectionType,
-  ]);
+      return collectionMatch && materialMatch && categoryMatch && priceMatch;
+    });
+  }, [searchedProducts, state.filters, state.collectionType]);
 
   /* ==========================================
      SORTING
   ========================================== */
 
   const sortedProducts = useMemo(() => {
-    const products = [
-      ...filteredProducts,
-    ];
+    const products = [...filteredProducts];
 
     switch (state.sortBy) {
       case "newest":
-        return [
-          ...products,
-        ].sort(
-          (a, b) =>
-            new Date(
-              b.createdAt || 0,
-            ) -
-            new Date(
-              a.createdAt || 0,
-            ),
+        return [...products].sort(
+          (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0),
         );
 
       case "oldest":
-        return [
-          ...products,
-        ].sort(
-          (a, b) =>
-            new Date(
-              a.createdAt || 0,
-            ) -
-            new Date(
-              b.createdAt || 0,
-            ),
+        return [...products].sort(
+          (a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0),
         );
 
       case "popular":
         return products.sort(
-          (a, b) =>
-            (b.bookingCount || 0) -
-            (a.bookingCount || 0),
+          (a, b) => (b.bookingCount || 0) - (a.bookingCount || 0),
         );
 
       case "featured":
-        return products.sort(
-          (a, b) =>
-            Number(b.featured) -
-            Number(a.featured),
-        );
+        return products.sort((a, b) => Number(b.featured) - Number(a.featured));
 
       case "priceLowToHigh":
         return products.sort(
           (a, b) =>
-            (Number(
-              a.rentalOptions?.[0]
-                ?.price,
-            ) || 0) -
-            (Number(
-              b.rentalOptions?.[0]
-                ?.price,
-            ) || 0),
+            (Number(a.rentalOptions?.[0]?.price) || 0) -
+            (Number(b.rentalOptions?.[0]?.price) || 0),
         );
 
       case "priceHighToLow":
         return products.sort(
           (a, b) =>
-            (Number(
-              b.rentalOptions?.[0]
-                ?.price,
-            ) || 0) -
-            (Number(
-              a.rentalOptions?.[0]
-                ?.price,
-            ) || 0),
+            (Number(b.rentalOptions?.[0]?.price) || 0) -
+            (Number(a.rentalOptions?.[0]?.price) || 0),
         );
 
       case "highestRated":
         return products.sort(
-          (a, b) =>
-            (Number(b.rating) || 0) -
-            (Number(a.rating) || 0),
+          (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0),
         );
 
       default:
         return products;
     }
-  }, [
-    filteredProducts,
-    state.sortBy,
-  ]);
+  }, [filteredProducts, state.sortBy]);
 
   /* ==========================================
      PAGINATION
   ========================================== */
 
-  const totalPages =
-    Math.ceil(
-      sortedProducts.length /
-        state.itemsPerPage,
-    ) || 1;
+  const totalPages = Math.ceil(sortedProducts.length / state.itemsPerPage) || 1;
 
   /*
    * Protect current page if filters reduce
@@ -1033,99 +843,58 @@ export const ProductLiveDataProvider = ({
    */
 
   useEffect(() => {
-    if (
-      state.currentPage >
-        totalPages
-    ) {
+    if (state.currentPage > totalPages) {
       dispatch({
-        type:
-          PRODUCT_ACTIONS.SET_PAGE,
+        type: PRODUCT_ACTIONS.SET_PAGE,
         payload: totalPages,
       });
     }
-  }, [
-    state.currentPage,
-    totalPages,
-  ]);
+  }, [state.currentPage, totalPages]);
 
-  const paginatedProducts =
-    useMemo(() => {
-      const start =
-        (state.currentPage - 1) *
-        state.itemsPerPage;
+  const paginatedProducts = useMemo(() => {
+    const start = (state.currentPage - 1) * state.itemsPerPage;
 
-      const end =
-        start +
-        state.itemsPerPage;
+    const end = start + state.itemsPerPage;
 
-      return sortedProducts.slice(
-        start,
-        end,
-      );
-    }, [
-      sortedProducts,
-      state.currentPage,
-      state.itemsPerPage,
-    ]);
+    return sortedProducts.slice(start, end);
+  }, [sortedProducts, state.currentPage, state.itemsPerPage]);
 
   /* ==========================================
      CATEGORY COUNTS
   ========================================== */
 
   const categoryCounts = useMemo(() => {
-    return state.products.reduce(
-      (acc, product) => {
-        const occasions =
-          Array.isArray(
-            product.occasion,
-          )
-            ? product.occasion
-            : [];
+    return state.products.reduce((acc, product) => {
+      const occasions = Array.isArray(product.occasion) ? product.occasion : [];
 
-        occasions.forEach(
-          (occasion) => {
-            if (!acc[occasion]) {
-              acc[occasion] = 0;
-            }
+      occasions.forEach((occasion) => {
+        if (!acc[occasion]) {
+          acc[occasion] = 0;
+        }
 
-            acc[occasion] += 1;
-          },
-        );
+        acc[occasion] += 1;
+      });
 
-        return acc;
-      },
-      {},
-    );
+      return acc;
+    }, {});
   }, [state.products]);
 
   /* ==========================================
      WISHLIST PRODUCTS
   ========================================== */
 
-  const wishlistProducts =
-    useMemo(() => {
-      return state.products.filter(
-        (product) =>
-          state.wishlist.includes(
-            product._id,
-          ),
-      );
-    }, [
-      state.products,
-      state.wishlist,
-    ]);
+  const wishlistProducts = useMemo(() => {
+    return state.products.filter((product) =>
+      state.wishlist.includes(product._id),
+    );
+  }, [state.products, state.wishlist]);
 
   /* ==========================================
      PRODUCT DETAILS HELPER
   ========================================== */
 
-  const getProductBySlug = (
-    slug,
-  ) => {
-    return state.products.find(
-      (product) =>
-        product.slug === slug,
-    );
+  const getProductBySlug = (slug) => {
+    return state.products.find((product) => product.slug === slug);
   };
 
   /* ==========================================
@@ -1156,17 +925,13 @@ export const ProductLiveDataProvider = ({
     /*
      * Convenient access for filter UI.
      */
-    priceRangeBounds:
-      state.priceRangeBounds,
+    priceRangeBounds: state.priceRangeBounds,
 
-    maxRentalPrice:
-      state.priceRangeBounds.max,
+    maxRentalPrice: state.priceRangeBounds.max,
   };
 
   return (
-    <ProductLiveDataContext.Provider
-      value={value}
-    >
+    <ProductLiveDataContext.Provider value={value}>
       {children}
     </ProductLiveDataContext.Provider>
   );
@@ -1176,18 +941,14 @@ export const ProductLiveDataProvider = ({
    CUSTOM HOOK
 ================================================== */
 
-export const useProductLiveData =
-  () => {
-    const context =
-      useContext(
-        ProductLiveDataContext,
-      );
+export const useProductLiveData = () => {
+  const context = useContext(ProductLiveDataContext);
 
-    if (!context) {
-      throw new Error(
-        "useProductLiveData must be used inside ProductLiveDataProvider",
-      );
-    }
+  if (!context) {
+    throw new Error(
+      "useProductLiveData must be used inside ProductLiveDataProvider",
+    );
+  }
 
-    return context;
-  };
+  return context;
+};

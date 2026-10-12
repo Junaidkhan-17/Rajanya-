@@ -11,7 +11,7 @@ const Navbar = () => {
   const navbarRef = useRef(null);
   const profileDropdownRef = useRef(null);
 
-  const { state, dispatch} = useAuth();
+  const { state, dispatch, logout } = useAuth();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
@@ -144,14 +144,15 @@ const Navbar = () => {
      LOGOUT
   ========================================== */
 
-  const handleLogout = () => {
-    setIsProfileDropdownOpen(false);
-    setIsMobileMenuOpen(false);
 
-    dispatch({
-      type: AUTH_ACTIONS.LOGOUT,
-    });
-  };
+const handleLogout = () => {
+  setIsProfileDropdownOpen(false);
+  setIsMobileMenuOpen(false);
+
+  // Clear saved authentication and reset AuthContext.
+  logout();
+};
+
 
 
   /* ==========================================

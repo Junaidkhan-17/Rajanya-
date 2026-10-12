@@ -12,7 +12,8 @@ import {
 const Wishlist = () => {
   const navigate = useNavigate();
 
-  const { dispatch, wishlistProducts } = useProductLiveData();
+const { dispatch, wishlistProducts, toggleWishlist } = useProductLiveData();
+  console.log("WISHLIST PRODUCTS:", wishlistProducts);
 
   const [sortBy, setSortBy] = useState("default");
 
@@ -20,14 +21,17 @@ const Wishlist = () => {
       REMOVE FROM WISHLIST
   =========================== */
 
-  const handleRemove = (e, productId) => {
-    e.stopPropagation();
+  
+const handleRemove = async (e, productId) => {
+  e.stopPropagation();
 
-    dispatch({
-      type: PRODUCT_ACTIONS.REMOVE_FROM_WISHLIST,
-      payload: productId,
-    });
-  };
+  try {
+    await toggleWishlist(productId);
+  } catch (error) {
+    console.error("Failed to remove product from wishlist:", error);
+  }
+};
+
 
   /* ===========================
       PRODUCT DETAILS
@@ -137,7 +141,20 @@ const Wishlist = () => {
                   className="wishlist-card-image"
                   onClick={() => handleProductDetails(product)}
                 >
-                  <img src={product.images?.[0]} alt={product.name} />
+                  <img
+                    src={
+                      product.mainImage ||
+                      product.thumbnailImage ||
+                      product.galleryImages?.[0] ||
+                      product.images?.[0] ||
+                      ""
+                    }
+                    alt={product.name || "Wishlist product"}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.currentTarget.style.visibility = "hidden";
+                    }}
+                  />
 
                   <button
                     className="wishlist-heart-btn"

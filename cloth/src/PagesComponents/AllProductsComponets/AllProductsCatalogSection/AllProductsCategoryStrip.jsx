@@ -96,9 +96,7 @@ const AllProductsCategoryStrip = () => {
     return products.filter((product) => {
       const productGender = normalizeValue(product?.gender);
 
-      return (
-        productGender === currentGender || productGender === "unisex"
-      );
+      return productGender === currentGender || productGender === "unisex";
     });
   }, [state.products, currentGender]);
 
@@ -153,10 +151,7 @@ const AllProductsCategoryStrip = () => {
        * Men + Unisex.
        */
       if (currentGender === "men") {
-        return (
-          categoryGender === "men" ||
-          categoryGender === "unisex"
-        );
+        return categoryGender === "men" || categoryGender === "unisex";
       }
 
       /*
@@ -165,10 +160,7 @@ const AllProductsCategoryStrip = () => {
        * Women + Unisex.
        */
       if (currentGender === "women") {
-        return (
-          categoryGender === "women" ||
-          categoryGender === "unisex"
-        );
+        return categoryGender === "women" || categoryGender === "unisex";
       }
 
       return true;
@@ -186,8 +178,7 @@ const AllProductsCategoryStrip = () => {
           return null;
         }
 
-        const normalizedCategoryName =
-          normalizeValue(categoryName);
+        const normalizedCategoryName = normalizeValue(categoryName);
 
         /*
          * ------------------------------------------------
@@ -203,38 +194,31 @@ const AllProductsCategoryStrip = () => {
          * actual category count
          */
 
-        const matchingProducts = genderFilteredProducts.filter(
-          (product) => {
-            /*
-             * Primary category.
-             */
-            const productCategoryName = getCategoryName(
-              product?.category,
-            );
+        const matchingProducts = genderFilteredProducts.filter((product) => {
+          /*
+           * Primary category.
+           */
+          const productCategoryName = getCategoryName(product?.category);
 
-            /*
-             * Occasion is also populated from the
-             * category in your backend.
-             */
-            const productOccasions = Array.isArray(
-              product?.occasion,
-            )
-              ? product.occasion
-              : [];
+          /*
+           * Occasion is also populated from the
+           * category in your backend.
+           */
+          const productOccasions = Array.isArray(product?.occasion)
+            ? product.occasion
+            : [];
 
-            const categoryMatches =
-              normalizeValue(productCategoryName) ===
-              normalizedCategoryName;
+          const categoryMatches =
+            normalizeValue(productCategoryName) === normalizedCategoryName;
 
-            const occasionMatches = productOccasions.some(
-              (occasion) =>
-                normalizeValue(getCategoryName(occasion)) ===
-                normalizedCategoryName,
-            );
+          const occasionMatches = productOccasions.some(
+            (occasion) =>
+              normalizeValue(getCategoryName(occasion)) ===
+              normalizedCategoryName,
+          );
 
-            return categoryMatches || occasionMatches;
-          },
-        );
+          return categoryMatches || occasionMatches;
+        });
 
         /*
          * IMPORTANT:
@@ -247,14 +231,16 @@ const AllProductsCategoryStrip = () => {
           return null;
         }
 
-        /* ==========================================
-             FIND REAL PRODUCT IMAGE
-           ========================================== */
+        // Sort products from newest to oldest.
+        // If a product has no image, use the next newest product with an image.
+        const representativeProduct = [...matchingProducts]
+          .sort((a, b) => {
+            const dateA = new Date(a.createdAt || 0).getTime();
+            const dateB = new Date(b.createdAt || 0).getTime();
 
-        const representativeProduct = matchingProducts.find(
-          (product) => Boolean(getProductImage(product)),
-        );
-
+            return dateB - dateA;
+          })
+          .find((product) => Boolean(getProductImage(product)));
         /*
          * IMPORTANT:
          *
@@ -267,21 +253,15 @@ const AllProductsCategoryStrip = () => {
          */
 
         const categoryImage =
-          category?.image ||
-          getProductImage(representativeProduct) ||
-          "";
+          getProductImage(representativeProduct) || category?.image || "";
 
         return {
-          id:
-            category?._id ||
-            category?.id ||
-            categoryName,
+          id: category?._id || category?.id || categoryName,
 
           name: categoryName,
 
           slug:
-            category?.slug ||
-            normalizeValue(categoryName).replace(/\s+/g, "-"),
+            category?.slug || normalizeValue(categoryName).replace(/\s+/g, "-"),
 
           image: categoryImage,
 
@@ -292,8 +272,7 @@ const AllProductsCategoryStrip = () => {
 
           gender: category?.gender || "",
 
-          displayOrder:
-            Number(category?.displayOrder) || 0,
+          displayOrder: Number(category?.displayOrder) || 0,
         };
       })
       .filter(Boolean);
@@ -314,11 +293,7 @@ const AllProductsCategoryStrip = () => {
 
       return a.name.localeCompare(b.name);
     });
-  }, [
-    state.categories,
-    genderFilteredProducts,
-    currentGender,
-  ]);
+  }, [state.categories, genderFilteredProducts, currentGender]);
 
   /* ==================================================
      SLIDER SCROLL STATE
@@ -329,14 +304,11 @@ const AllProductsCategoryStrip = () => {
 
     if (!slider) return;
 
-    const maxScroll =
-      slider.scrollWidth - slider.clientWidth;
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
 
     setCanScrollLeft(slider.scrollLeft > 5);
 
-    setCanScrollRight(
-      slider.scrollLeft < maxScroll - 5,
-    );
+    setCanScrollRight(slider.scrollLeft < maxScroll - 5);
   };
 
   /* ==================================================
@@ -365,15 +337,9 @@ const AllProductsCategoryStrip = () => {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      slider.removeEventListener(
-        "scroll",
-        handleScroll,
-      );
+      slider.removeEventListener("scroll", handleScroll);
 
-      window.removeEventListener(
-        "resize",
-        handleResize,
-      );
+      window.removeEventListener("resize", handleResize);
     };
   }, [categoryItems]);
 
@@ -386,16 +352,10 @@ const AllProductsCategoryStrip = () => {
 
     if (!slider) return;
 
-    const scrollAmount = Math.max(
-      slider.clientWidth * 0.72,
-      260,
-    );
+    const scrollAmount = Math.max(slider.clientWidth * 0.72, 260);
 
     slider.scrollBy({
-      left:
-        direction === "left"
-          ? -scrollAmount
-          : scrollAmount,
+      left: direction === "left" ? -scrollAmount : scrollAmount,
 
       behavior: "smooth",
     });
@@ -406,12 +366,13 @@ const AllProductsCategoryStrip = () => {
   ================================================== */
 
   const handleCategoryClick = (categoryName) => {
-    /*
-     * Empty string means All Categories.
-     */
+    const isSameCategory =
+      normalizeValue(state.filters.activeCategory) ===
+      normalizeValue(categoryName);
+
     dispatch({
       type: PRODUCT_ACTIONS.SET_ACTIVE_CATEGORY,
-      payload: categoryName,
+      payload: isSameCategory ? "" : categoryName,
     });
   };
 
@@ -472,27 +433,19 @@ const AllProductsCategoryStrip = () => {
             }}
           >
             {categoryItems.map((category) => {
-              const isActive =
-                state.filters.activeCategory ===
-                category.name;
+              const isActive = state.filters.activeCategory === category.name;
 
               const productLabel =
-                category.count === 1
-                  ? "product"
-                  : "products";
+                category.count === 1 ? "product" : "products";
 
               return (
                 <motion.button
                   key={category.id}
                   type="button"
                   className={`all-products-category-item ${
-                    isActive
-                      ? "all-products-category-active"
-                      : ""
+                    isActive ? "all-products-category-active" : ""
                   }`}
-                  onClick={() =>
-                    handleCategoryClick(category.name)
-                  }
+                  onClick={() => handleCategoryClick(category.name)}
                   variants={{
                     hidden: {
                       opacity: 0,
@@ -524,11 +477,7 @@ const AllProductsCategoryStrip = () => {
                       />
                     ) : (
                       <div className="all-products-category-image-placeholder">
-                        <span>
-                          {category.name
-                            .charAt(0)
-                            .toUpperCase()}
-                        </span>
+                        <span>{category.name.charAt(0).toUpperCase()}</span>
                       </div>
                     )}
                   </div>

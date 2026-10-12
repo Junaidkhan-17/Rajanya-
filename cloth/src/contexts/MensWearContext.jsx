@@ -216,6 +216,22 @@ const productReducer = (state, action) => {
   }
 };
 
+const normalizeValue = (value) =>
+  String(value ?? "").trim().toLowerCase();
+
+const getCategoryName = (category) => {
+  if (typeof category === "object" && category !== null) {
+    return String(
+      category.name ||
+        category.categoryName ||
+        category.title ||
+        "",
+    ).trim();
+  }
+
+  return String(category ?? "").trim();
+};
+
 export const MensWearProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
 
@@ -294,36 +310,37 @@ export const MensWearProvider = ({ children }) => {
 
   const filteredProducts = useMemo(() => {
     return searchedProducts.filter((product) => {
-      const genderMatch = product?.gender?.toLowerCase() === "men";
 
-      const productMaterials = Array.isArray(product?.materials)
-        ? product.materials
-        : [];
+      const genderMatch =
+  normalizeValue(product?.gender) === "men";
 
-      const materialMatch =
-        state.filters.materials.length === 0 ||
-        productMaterials.some((material) =>
-          state.filters.materials.includes(material),
-        );
+const productMaterials = Array.isArray(product?.materials)
+  ? product.materials
+  : [];
 
-      const categoryName =
-        typeof product?.category === "object"
-          ? product.category?.name
-          : product?.category;
+const materialMatch =
+  state.filters.materials.length === 0 ||
+  productMaterials.some((material) =>
+    state.filters.materials.includes(material),
+  );
 
-      const categoryMatch =
-        !state.filters.activeCategory ||
-        categoryName === state.filters.activeCategory;
+const categoryName = getCategoryName(product?.category);
 
-      const displayPrice = Number(product?.rentalOptions?.[0]?.price) || 0;
+const categoryMatch =
+  !state.filters.activeCategory ||
+  normalizeValue(categoryName) ===
+    normalizeValue(state.filters.activeCategory);
 
-      const minPrice = Number(state.filters.priceRange?.[0]) || 0;
+const displayPrice =
+  Number(product?.rentalOptions?.[0]?.price) || 0;
 
-      const maxPrice = Number(state.filters.priceRange?.[1]) || 10000;
+const minPrice = Number(state.filters.priceRange?.[0]) || 0;
+const maxPrice = Number(state.filters.priceRange?.[1]) || 10000;
 
-      const priceMatch = displayPrice >= minPrice && displayPrice <= maxPrice;
+const priceMatch =
+  displayPrice >= minPrice && displayPrice <= maxPrice;
 
-      return genderMatch && materialMatch && categoryMatch && priceMatch;
+return genderMatch && materialMatch && categoryMatch && priceMatch;
     });
   }, [searchedProducts, state.filters]);
 
@@ -384,27 +401,22 @@ export const MensWearProvider = ({ children }) => {
   }, [sortedProducts, state.currentPage, state.itemsPerPage]);
 
   const categoryCounts = useMemo(() => {
-    return filteredProducts.reduce((acc, product) => {
-      const category =
-        typeof product?.category === "object"
-          ? product.category?.name
-          : product?.category;
-
-      if (!category) {
-        return acc;
-      }
-
-      if (!acc[category]) {
-        acc[category] = 0;
-      }
-
-      acc[category]++;
-
+  return state.products.reduce((acc, product) => {
+    if (normalizeValue(product?.gender) !== "men") {
       return acc;
-    }, {});
-  }, [filteredProducts]);
+    }
 
-  const categories = Object.keys(categoryCounts);
+    const category = getCategoryName(product?.category);
+
+    if (!category) return acc;
+
+    acc[category] = (acc[category] || 0) + 1;
+
+    return acc;
+  }, {});
+}, [state.products]);
+
+const categories = Object.keys(categoryCounts);
 
   const getProductBySlug = (slug) => {
     return state.products.find((product) => product.slug === slug);

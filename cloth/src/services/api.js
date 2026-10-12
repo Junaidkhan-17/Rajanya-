@@ -1,19 +1,27 @@
 import axios from "axios";
 
-/* ==========================================
-   AXIOS INSTANCE
-========================================== */
+// ==========================================
+// AXIOS INSTANCE
+// ==========================================
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) {
+  throw new Error(
+    "VITE_API_BASE_URL is missing. Please configure your environment variables.",
+  );
+}
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api",
+  baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-/* ==========================================
-   REQUEST INTERCEPTOR
-========================================== */
+// ==========================================
+// REQUEST INTERCEPTOR
+// ==========================================
 
 api.interceptors.request.use(
   (config) => {
@@ -28,9 +36,9 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
-/* ==========================================
-   RESPONSE INTERCEPTOR
-========================================== */
+// ==========================================
+// RESPONSE INTERCEPTOR
+// ==========================================
 
 api.interceptors.response.use(
   (response) => response,
