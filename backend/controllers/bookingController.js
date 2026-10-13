@@ -174,20 +174,16 @@ exports.createBooking = async (req, res) => {
       "product.productId": existingProduct._id,
 
       bookingStatus: {
-        $nin: ["cancelled", "rejected"],
+        $nin: ["cancelled", "rejected", "returned", "completed"],
       },
 
-      $or: [
-        {
-          "rental.startDate": {
-            $lte: returnDate,
-          },
+      "rental.startDate": {
+        $lte: returnDate,
+      },
 
-          "rental.returnDate": {
-            $gte: startDate,
-          },
-        },
-      ],
+      "rental.returnDate": {
+        $gte: startDate,
+      },
     });
 
     if (overlappingBooking) {
@@ -283,10 +279,10 @@ exports.createBooking = async (req, res) => {
     // ========================================
     try {
       console.log("🔔 Starting booking notification creation...");
-  console.log("Booking ID:", booking._id);
-  console.log("Booking Number:", booking.bookingId);
+      console.log("Booking ID:", booking._id);
+      console.log("Booking Number:", booking.bookingId);
 
-    const notification =  await Notification.create({
+      const notification = await Notification.create({
         type: "booking_created",
         title: "New Rental Booking",
         description: `${booking.user.fullName} booked ${booking.product.productName}.`,
@@ -316,9 +312,9 @@ exports.createBooking = async (req, res) => {
       console.log("✅ Booking notification created:", notification._id);
     } catch (notificationError) {
       console.error(
-    "❌ Failed to create booking notification:",
-    notificationError
-  );
+        "❌ Failed to create booking notification:",
+        notificationError,
+      );
       // A notification failure must not fail a saved booking.
       if (notificationError.code === 11000) {
         console.warn(
@@ -611,8 +607,9 @@ exports.getBookingAvailability = async (req, res) => {
 
     const bookings = await Booking.find({
       "product.productId": productId,
+
       bookingStatus: {
-        $nin: ["cancelled", "rejected"],
+        $nin: ["cancelled", "rejected", "returned", "completed"],
       },
     })
       .select("rental.startDate rental.returnDate bookingStatus")
