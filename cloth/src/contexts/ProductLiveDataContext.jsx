@@ -6,6 +6,7 @@ import {
   useEffect,
 } from "react";
 
+import { useAuth } from "../contexts/AuthContext";
 import { getAllCategories } from "../services/categoryService";
 import { getAllProducts } from "../services/productService";
 
@@ -70,13 +71,7 @@ const initialState = {
 
   itemsPerPage: 6,
 
-  wishlist: (() => {
-    try {
-      return JSON.parse(localStorage.getItem("rajanya_wishlist")) || [];
-    } catch {
-      return [];
-    }
-  })(),
+  wishlist: [],
 
   compare: [],
 
@@ -449,6 +444,11 @@ export const ProductLiveDataProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(productReducer, initialState);
 
+  const { state: authState } = useAuth();
+
+  const userId = authState.user?._id || authState.user?.id;
+  const authLoading = authState.loading;
+
   /* ==========================================
      LOAD PRODUCTS FROM BACKEND
   ========================================== */
@@ -621,38 +621,49 @@ export const ProductLiveDataProvider = ({ children }) => {
   ========================================== */
 
   useEffect(() => {
-    console.log("🔥 Wishlist useEffect triggered");
+    if (authLoading) return;
+
+    let cancelled = false;
+
+    dispatch({
+      type: PRODUCT_ACTIONS.SET_WISHLIST,
+      payload: [],
+    });
+
+    if (!userId) {
+      return () => {
+        cancelled = true;
+      };
+    }
 
     const loadWishlist = async () => {
       try {
-        const token = localStorage.getItem("rajanya_token");
-
-        if (!token) {
-          return;
-        }
-
         const response = await getWishlist();
+
+        if (cancelled) return;
+
+        const wishlistIds = (response?.wishlist || [])
+          .map((item) => item.product?._id || item.product)
+          .filter(Boolean)
+          .map(String);
 
         dispatch({
           type: PRODUCT_ACTIONS.SET_WISHLIST,
-
-          payload: response?.wishlist?.map((item) => item.product._id) || [],
+          payload: wishlistIds,
         });
       } catch (error) {
-        console.error("Failed to load wishlist:", error);
+        if (!cancelled) {
+          console.error("Failed to load wishlist:", error);
+        }
       }
     };
 
     loadWishlist();
-  }, []);
 
-  /* ==========================================
-     SAVE WISHLIST
-  ========================================== */
-
-  useEffect(() => {
-    localStorage.setItem("rajanya_wishlist", JSON.stringify(state.wishlist));
-  }, [state.wishlist]);
+    return () => {
+      cancelled = true;
+    };
+  }, [userId, authLoading]);
 
   /* ==========================================
      TOGGLE WISHLIST

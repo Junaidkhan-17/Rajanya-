@@ -237,10 +237,10 @@ const authReducer = (state, action) => {
       };
 
     case AUTH_ACTIONS.SET_SUCCESS_MESSAGE:
-  return {
-    ...state,
-    successMessage: action.payload,
-  };
+      return {
+        ...state,
+        successMessage: action.payload,
+      };
 
     default:
       return state;
@@ -312,65 +312,59 @@ export const AuthProvider = ({ children }) => {
      REGISTER
   ======================================================= */
 
-  
-const register = useCallback(async (userData) => {
-  try {
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: true,
-    });
+  const register = useCallback(async (userData) => {
+    try {
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: true,
+      });
 
-    const response = await registerUser(userData);
+      const response = await registerUser(userData);
 
-    if (!response?.success) {
-      throw new Error(
-        response?.message || "Registration failed"
-      );
+      if (!response?.success) {
+        throw new Error(response?.message || "Registration failed");
+      }
+
+      // Registration must not create an authenticated session.
+      // Do not save rajanya_token or rajanya_user here.
+      dispatch({
+        type: AUTH_ACTIONS.SET_LOADING,
+        payload: false,
+      });
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_ERROR,
+        payload: null,
+      });
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_SUCCESS_MESSAGE,
+        payload:
+          response.message || "Account created successfully. Please log in.",
+      });
+
+      return {
+        success: true,
+        message:
+          response.message || "Account created successfully. Please log in.",
+      };
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Registration failed";
+
+      dispatch({
+        type: AUTH_ACTIONS.SET_ERROR,
+        payload: message,
+      });
+
+      return {
+        success: false,
+        message,
+      };
     }
-
-    // Registration must not create an authenticated session.
-    // Do not save rajanya_token or rajanya_user here.
-    dispatch({
-      type: AUTH_ACTIONS.SET_LOADING,
-      payload: false,
-    });
-
-    dispatch({
-      type: AUTH_ACTIONS.SET_ERROR,
-      payload: null,
-    });
-
-    dispatch({
-      type: AUTH_ACTIONS.SET_SUCCESS_MESSAGE,
-      payload:
-        response.message ||
-        "Account created successfully. Please log in.",
-    });
-
-    return {
-      success: true,
-      message:
-        response.message ||
-        "Account created successfully. Please log in.",
-    };
-  } catch (error) {
-    const message =
-      error?.response?.data?.message ||
-      error?.message ||
-      "Registration failed";
-
-    dispatch({
-      type: AUTH_ACTIONS.SET_ERROR,
-      payload: message,
-    });
-
-    return {
-      success: false,
-      message,
-    };
-  }
-}, []);
-
+  }, []);
 
   /* =======================================================
      GOOGLE LOGIN - EXISTING POPUP FLOW

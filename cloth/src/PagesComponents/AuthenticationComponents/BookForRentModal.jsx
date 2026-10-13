@@ -54,6 +54,38 @@ const formatLocalDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
+// =========================================================
+// CHECK WHETHER A RENTAL RANGE CONTAINS BLOCKED DATES
+// =========================================================
+
+const hasBlockedDateInRange = (start, end, excludedDates) => {
+  if (!start || !end) {
+    return false;
+  }
+
+  const startTime = new Date(
+    start.getFullYear(),
+    start.getMonth(),
+    start.getDate(),
+  ).getTime();
+
+  const endTime = new Date(
+    end.getFullYear(),
+    end.getMonth(),
+    end.getDate(),
+  ).getTime();
+
+  return excludedDates.some((excludedDate) => {
+    const blockedTime = new Date(
+      excludedDate.getFullYear(),
+      excludedDate.getMonth(),
+      excludedDate.getDate(),
+    ).getTime();
+
+    return blockedTime >= startTime && blockedTime <= endTime;
+  });
+};
+
 /* =========================================================
    BOOK FOR RENT MODAL
 ========================================================= */
@@ -95,6 +127,9 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   const [returnDate, setReturnDate] = useState(null);
 
   const [excludedDates, setExcludedDates] = useState([]);
+
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+const [availabilityError, setAvailabilityError] = useState("");
 
   /* =========================================================
      PREFILL DATA
@@ -182,49 +217,127 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
      FETCH BOOKING AVAILABILITY
   ========================================================= */
 
-  useEffect(() => {
-    const fetchAvailability = async () => {
-      if (!bookingData?.product?._id) {
-        setExcludedDates([]);
+  // =========================================================
+// FETCH BOOKING AVAILABILITY
+// Refresh whenever the modal opens or the product changes
+// =========================================================
 
-        return;
+useEffect(() => {
+  let isActive = true;
+
+  const fetchAvailability = async () => {
+    if (!isOpen) {
+      return;
+    }
+
+    const productId = bookingData?.product?._id;
+
+    if (!productId) {
+      setExcludedDates([]);
+      setAvailabilityError("Unable to identify this product.");
+      setIsAvailabilityLoading(false);
+      return;
+    }
+
+    setIsAvailabilityLoading(true);
+    setAvailabilityError("");
+
+    try {
+      const response =
+        await bookingService.getBookingAvailability(productId);
+
+      if (!isActive) return;
+
+      if (
+        response?.success !== true ||
+        !Array.isArray(response?.bookedDates)
+      ) {
+        throw new Error("Invalid booking availability response.");
       }
 
-      try {
-        const response = await bookingService.getBookingAvailability(
-          bookingData.product._id,
+      const blockedDates = [];
+
+      // Convert a date into a local calendar date.
+      // ISO timestamps are reduced to YYYY-MM-DD first,
+      // avoiding UTC/local-time shifts.
+      const toLocalDate = (value) => {
+        if (!value) return null;
+
+        const dateString =
+          typeof value === "string"
+            ? value.slice(0, 10)
+            : "";
+
+        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(
+          dateString,
         );
 
-        console.log("BOOKING AVAILABILITY RESPONSE:", response);
+        if (match) {
+          const [, year, month, day] = match;
 
-        const bookings = response?.bookedDates || [];
+          return new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day),
+          );
+        }
 
-        const blockedDates = [];
+        const parsedDate = new Date(value);
 
-        bookings.forEach((booking) => {
-          const start = new Date(booking.startDate);
+        if (Number.isNaN(parsedDate.getTime())) {
+          return null;
+        }
 
-          const end = new Date(booking.returnDate);
+        return new Date(
+          parsedDate.getFullYear(),
+          parsedDate.getMonth(),
+          parsedDate.getDate(),
+        );
+      };
 
-          const current = new Date(start);
+      response.bookedDates.forEach((booking) => {
+        const start = toLocalDate(booking.startDate);
+        const end = toLocalDate(booking.returnDate);
 
-          while (current <= end) {
-            blockedDates.push(new Date(current));
+        if (!start || !end || start > end) {
+          return;
+        }
 
-            current.setDate(current.getDate() + 1);
-          }
-        });
+        const current = new Date(start);
 
-        setExcludedDates(blockedDates);
-      } catch (error) {
-        console.error("Failed to fetch booking availability:", error);
+        while (current <= end) {
+          blockedDates.push(new Date(current));
 
+          current.setDate(current.getDate() + 1);
+        }
+      });
+
+      setExcludedDates(blockedDates);
+    } catch (error) {
+      console.error(
+        "Failed to fetch booking availability:",
+        error,
+      );
+
+      if (isActive) {
         setExcludedDates([]);
+        setAvailabilityError(
+          "Unable to check availability. Please close and reopen the booking form to try again.",
+        );
       }
-    };
+    } finally {
+      if (isActive) {
+        setIsAvailabilityLoading(false);
+      }
+    }
+  };
 
-    fetchAvailability();
-  }, [bookingData]);
+  fetchAvailability();
+
+  return () => {
+    isActive = false;
+  };
+}, [isOpen, bookingData?.product?._id]);
 
   /* =========================================================
      ESC CLOSE
@@ -287,6 +400,17 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   ========================================================= */
 
   const onSubmit = async (data) => {
+
+    if (isAvailabilityLoading) {
+  alert("Please wait while we check product availability.");
+  return;
+}
+
+if (availabilityError) {
+  alert(availabilityError);
+  return;
+}
+
     if (!selectedSize) {
       alert("Please select a size");
 
@@ -444,12 +568,41 @@ ${booking.product.productUrl}
 
       window.open(whatsappUrl, "_blank");
     } catch (error) {
-      console.error("BOOKING ERROR", error);
+  console.error("Booking error:", error);
 
-      alert("Failed to create booking.");
+  const statusCode = error?.response?.status;
+  const errorMessage = error?.response?.data?.message;
 
-      return;
+  if (statusCode === 409) {
+    const bookedFrom = error?.response?.data?.bookedFrom;
+    const bookedTill = error?.response?.data?.bookedTill;
+
+    let message =
+      errorMessage ||
+      "This product is already booked for the selected dates.";
+
+    if (bookedFrom && bookedTill) {
+      const formatDate = (value) =>
+        new Date(value).toLocaleDateString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        });
+
+      message += `\nUnavailable period: ${formatDate(
+        bookedFrom,
+      )} to ${formatDate(bookedTill)}.`;
     }
+
+    alert(message);
+    return;
+  }
+
+  alert(
+    errorMessage ||
+      "Failed to create booking. Please try again.",
+  );
+}
 
     /*
       Future Payment Integration
@@ -757,16 +910,37 @@ ${booking.product.productUrl}
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => {
-                        setStartDate(date);
+  if (
+    date &&
+    excludedDates.some(
+      (excludedDate) =>
+        formatLocalDate(excludedDate) === formatLocalDate(date),
+    )
+  ) {
+    alert("This date is already booked. Please select another date.");
+    return;
+  }
 
-                        setValue("startDate", formatLocalDate(date));
+  setStartDate(date);
+  setValue("startDate", formatLocalDate(date));
 
-                        if (returnDate && date && returnDate < date) {
-                          setReturnDate(null);
+  if (returnDate && date && returnDate < date) {
+    setReturnDate(null);
+    setValue("returnDate", "");
+  }
 
-                          setValue("returnDate", "");
-                        }
-                      }}
+  if (
+    date &&
+    returnDate &&
+    hasBlockedDateInRange(date, returnDate, excludedDates)
+  ) {
+    setReturnDate(null);
+    setValue("returnDate", "");
+    alert(
+      "Your selected rental period includes unavailable dates. Please select a new return date.",
+    );
+  }
+}}
                       minDate={new Date()}
                       excludeDates={excludedDates}
                       dateFormat="dd/MM/yyyy"
@@ -789,10 +963,24 @@ ${booking.product.productUrl}
                     <DatePicker
                       selected={returnDate}
                       onChange={(date) => {
-                        setReturnDate(date);
+  if (!date) {
+    setReturnDate(null);
+    setValue("returnDate", "");
+    return;
+  }
 
-                        setValue("returnDate", formatLocalDate(date));
-                      }}
+  if (
+    hasBlockedDateInRange(startDate, date, excludedDates)
+  ) {
+    alert(
+      "Your selected rental period includes unavailable dates. Please choose another return date.",
+    );
+    return;
+  }
+
+  setReturnDate(date);
+  setValue("returnDate", formatLocalDate(date));
+}}
                       minDate={startDate || new Date()}
                       excludeDates={excludedDates}
                       placeholderText="Select Return Date"

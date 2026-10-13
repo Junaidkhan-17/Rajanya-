@@ -155,14 +155,15 @@ const LoginModal = () => {
           window.google.accounts.id.initialize({
             client_id: clientId,
 
-            ux_mode: "redirect",
+            // Return the Google credential to the frontend callback.
+            ux_mode: "popup",
 
-            login_uri: "https://rajanya.onrender.com/api/auth/google/redirect",
+            callback: (response) => {
+              googleCredentialHandlerRef.current?.(response);
+            },
 
             auto_select: false,
-
             use_fedcm_for_button: false,
-
             button_auto_select: false,
           });
 
