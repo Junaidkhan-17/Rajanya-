@@ -11,6 +11,7 @@ import ProductDetails from "./Pages/ProductDetails/ProductDetails";
 import CreateAccountModal from "./PagesComponents/AuthenticationComponents/CreateAccountModal";
 import LoginModal from "./PagesComponents/AuthenticationComponents/LoginModal";
 import BookForRentModal from "./PagesComponents/AuthenticationComponents/BookForRentModal";
+import MyBookings from "./Pages/MyBookings/MyBookings";
 import MensWear from "./Pages/MensWear/MensWear";
 import ContactUs from "./Pages/ContactUs/ContactUs";
 import VirtualTryOnUnlockDrawer from "./PagesComponents/VirtualTryOnUnlockComponents/VirtualTryOnUnlockDrawer";
@@ -119,6 +120,7 @@ function App() {
         <Route path="/womens-wear" element={<WomensWear />} />
         <Route path="/Contact-Us" element={<ContactUs />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
 
         {/* 
         <Route path="/collection" element={<Collection />} />

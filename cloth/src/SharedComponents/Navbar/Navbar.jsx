@@ -228,18 +228,18 @@ const Navbar = () => {
               onChange={(event) => setSearchQuery(event.target.value)}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => {
-  setTimeout(() => setIsSearchFocused(false), 150);
-}}
-onKeyDown={(event) => {
-  if (event.key === "Escape") {
-    setIsSearchFocused(false);
-  }
+                setTimeout(() => setIsSearchFocused(false), 150);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  setIsSearchFocused(false);
+                }
 
-  if (event.key === "Enter" && searchResults.length > 0) {
-    event.preventDefault();
-    handleProductSelect(searchResults[0]);
-  }
-}}
+                if (event.key === "Enter" && searchResults.length > 0) {
+                  event.preventDefault();
+                  handleProductSelect(searchResults[0]);
+                }
+              }}
             />
 
             <button type="button" aria-label="Search">
@@ -396,12 +396,18 @@ onKeyDown={(event) => {
 
                         <NavLink
                           to="/my-bookings"
-                          className="mobile-profile-booking"
-                          onClick={handleMobileNavClick}
+                          className="profile-dropdown-booking"
+                          onClick={closeProfileDropdown}
                         >
-                          <i className="bi bi-calendar2-check"></i>
-
-                          <span>My Booking</span>
+                          <i
+                            className="bi bi-calendar2-check"
+                            aria-hidden="true"
+                          ></i>
+                          <span>My Bookings</span>
+                          <i
+                            className="bi bi-chevron-right profile-booking-arrow"
+                            aria-hidden="true"
+                          ></i>
                         </NavLink>
 
                         {/* DIVIDER */}
@@ -580,6 +586,66 @@ onKeyDown={(event) => {
             </button>
           </div>
         </div>
+        {/* MOBILE SEARCH */}
+<div className="mobile-navbar-search">
+  <div className="mobile-navbar-search-box">
+    <i className="bi bi-search" aria-hidden="true"></i>
+
+    <input
+      type="text"
+      placeholder="Search luxury outfits..."
+      aria-label="Search products"
+      value={searchQuery}
+      onChange={(event) => setSearchQuery(event.target.value)}
+      onFocus={() => setIsSearchFocused(true)}
+      onBlur={() => {
+        setTimeout(() => setIsSearchFocused(false), 150);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          setIsSearchFocused(false);
+        }
+
+        if (event.key === "Enter" && searchResults.length > 0) {
+          event.preventDefault();
+          handleProductSelect(searchResults[0]);
+        }
+      }}
+    />
+
+    {searchQuery.trim() && (
+      <button
+        type="button"
+        aria-label="Clear search"
+        onClick={() => setSearchQuery("")}
+      >
+        <i className="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+    )}
+
+    {isSearchFocused && searchQuery.trim() && (
+      <div className="navbar-search-dropdown">
+        {searchResults.length > 0 ? (
+          searchResults.map((product) => (
+            <button
+              type="button"
+              key={product._id || product.slug}
+              className="navbar-search-result"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => handleProductSelect(product)}
+            >
+              {product.name}
+            </button>
+          ))
+        ) : (
+          <div className="navbar-search-empty">
+            No products found.
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</div>
       </div>
     </motion.nav>
   );

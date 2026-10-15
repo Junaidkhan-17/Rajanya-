@@ -731,35 +731,38 @@ export const AuthProvider = ({ children }) => {
   ======================================================= */
 
   const value = {
-    state,
+  // Keep the complete existing state available.
+  ...state,
 
-    dispatch,
+  // Preserve access to the original state and reducer.
+  state,
+  dispatch,
 
-    register,
+  // Authentication functions.
+  register,
+  login,
+  loginWithGoogle,
+  completeGoogleRedirectLogin,
+  logout,
 
-    login,
+  // Account modals.
+  openCreateAccountModal,
+  closeCreateAccountModal,
+  openLoginModal,
+  closeLoginModal,
 
-    loginWithGoogle,
+  // Rental booking modal.
+  openBookForRentModal,
+  closeBookForRentModal,
 
-    completeGoogleRedirectLogin,
+  // Virtual try-on payment drawer.
+  openVirtualTryOnDrawer,
+  closeVirtualTryOnDrawer,
 
-    logout,
-
-    openCreateAccountModal,
-    closeCreateAccountModal,
-
-    openLoginModal,
-    closeLoginModal,
-
-    openBookForRentModal,
-    closeBookForRentModal,
-
-    openVirtualTryOnDrawer,
-    closeVirtualTryOnDrawer,
-
-    openVirtualTryOnStudioDrawer,
-    closeVirtualTryOnStudioDrawer,
-  };
+  // Virtual try-on studio drawer.
+  openVirtualTryOnStudioDrawer,
+  closeVirtualTryOnStudioDrawer,
+};
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

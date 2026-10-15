@@ -111,7 +111,7 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   /* =========================================================
@@ -129,7 +129,7 @@ const BookForRentModal = ({ isOpen, onClose, bookingData, currentUser }) => {
   const [excludedDates, setExcludedDates] = useState([]);
 
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
-const [availabilityError, setAvailabilityError] = useState("");
+  const [availabilityError, setAvailabilityError] = useState("");
 
   /* =========================================================
      PREFILL DATA
@@ -218,126 +218,114 @@ const [availabilityError, setAvailabilityError] = useState("");
   ========================================================= */
 
   // =========================================================
-// FETCH BOOKING AVAILABILITY
-// Refresh whenever the modal opens or the product changes
-// =========================================================
+  // FETCH BOOKING AVAILABILITY
+  // Refresh whenever the modal opens or the product changes
+  // =========================================================
 
-useEffect(() => {
-  let isActive = true;
+  useEffect(() => {
+    let isActive = true;
 
-  const fetchAvailability = async () => {
-    if (!isOpen) {
-      return;
-    }
-
-    const productId = bookingData?.product?._id;
-
-    if (!productId) {
-      setExcludedDates([]);
-      setAvailabilityError("Unable to identify this product.");
-      setIsAvailabilityLoading(false);
-      return;
-    }
-
-    setIsAvailabilityLoading(true);
-    setAvailabilityError("");
-
-    try {
-      const response =
-        await bookingService.getBookingAvailability(productId);
-
-      if (!isActive) return;
-
-      if (
-        response?.success !== true ||
-        !Array.isArray(response?.bookedDates)
-      ) {
-        throw new Error("Invalid booking availability response.");
+    const fetchAvailability = async () => {
+      if (!isOpen) {
+        return;
       }
 
-      const blockedDates = [];
+      const productId = bookingData?.product?._id;
 
-      // Convert a date into a local calendar date.
-      // ISO timestamps are reduced to YYYY-MM-DD first,
-      // avoiding UTC/local-time shifts.
-      const toLocalDate = (value) => {
-        if (!value) return null;
+      if (!productId) {
+        setExcludedDates([]);
+        setAvailabilityError("Unable to identify this product.");
+        setIsAvailabilityLoading(false);
+        return;
+      }
 
-        const dateString =
-          typeof value === "string"
-            ? value.slice(0, 10)
-            : "";
+      setIsAvailabilityLoading(true);
+      setAvailabilityError("");
 
-        const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(
-          dateString,
-        );
+      try {
+        const response = await bookingService.getBookingAvailability(productId);
 
-        if (match) {
-          const [, year, month, day] = match;
+        if (!isActive) return;
+
+        if (
+          response?.success !== true ||
+          !Array.isArray(response?.bookedDates)
+        ) {
+          throw new Error("Invalid booking availability response.");
+        }
+
+        const blockedDates = [];
+
+        // Convert a date into a local calendar date.
+        // ISO timestamps are reduced to YYYY-MM-DD first,
+        // avoiding UTC/local-time shifts.
+        const toLocalDate = (value) => {
+          if (!value) return null;
+
+          const dateString =
+            typeof value === "string" ? value.slice(0, 10) : "";
+
+          const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+
+          if (match) {
+            const [, year, month, day] = match;
+
+            return new Date(Number(year), Number(month) - 1, Number(day));
+          }
+
+          const parsedDate = new Date(value);
+
+          if (Number.isNaN(parsedDate.getTime())) {
+            return null;
+          }
 
           return new Date(
-            Number(year),
-            Number(month) - 1,
-            Number(day),
+            parsedDate.getFullYear(),
+            parsedDate.getMonth(),
+            parsedDate.getDate(),
+          );
+        };
+
+        response.bookedDates.forEach((booking) => {
+          const start = toLocalDate(booking.startDate);
+          const end = toLocalDate(booking.returnDate);
+
+          if (!start || !end || start > end) {
+            return;
+          }
+
+          const current = new Date(start);
+
+          while (current <= end) {
+            blockedDates.push(new Date(current));
+
+            current.setDate(current.getDate() + 1);
+          }
+        });
+
+        setExcludedDates(blockedDates);
+      } catch (error) {
+        console.error("Failed to fetch booking availability:", error);
+
+        if (isActive) {
+          setExcludedDates([]);
+          setAvailabilityError(
+            "Unable to check availability. Please close and reopen the booking form to try again.",
           );
         }
-
-        const parsedDate = new Date(value);
-
-        if (Number.isNaN(parsedDate.getTime())) {
-          return null;
+      } finally {
+        if (isActive) {
+          setIsAvailabilityLoading(false);
         }
-
-        return new Date(
-          parsedDate.getFullYear(),
-          parsedDate.getMonth(),
-          parsedDate.getDate(),
-        );
-      };
-
-      response.bookedDates.forEach((booking) => {
-        const start = toLocalDate(booking.startDate);
-        const end = toLocalDate(booking.returnDate);
-
-        if (!start || !end || start > end) {
-          return;
-        }
-
-        const current = new Date(start);
-
-        while (current <= end) {
-          blockedDates.push(new Date(current));
-
-          current.setDate(current.getDate() + 1);
-        }
-      });
-
-      setExcludedDates(blockedDates);
-    } catch (error) {
-      console.error(
-        "Failed to fetch booking availability:",
-        error,
-      );
-
-      if (isActive) {
-        setExcludedDates([]);
-        setAvailabilityError(
-          "Unable to check availability. Please close and reopen the booking form to try again.",
-        );
       }
-    } finally {
-      if (isActive) {
-        setIsAvailabilityLoading(false);
-      }
-    }
-  };
+    };
 
-  fetchAvailability();
+    fetchAvailability();
 
-  return () => {
-    isActive = false;
-  };
-}, [isOpen, bookingData?.product?._id]);
+    return () => {
+      isActive = false;
+    };
+  }, [isOpen, bookingData?.product?._id]);
 
   /* =========================================================
      ESC CLOSE
@@ -400,83 +388,27 @@ useEffect(() => {
   ========================================================= */
 
   const onSubmit = async (data) => {
+    if (isSubmitting) return;
 
     if (isAvailabilityLoading) {
-  alert("Please wait while we check product availability.");
-  return;
-}
+      alert("Please wait while we check product availability.");
+      return;
+    }
 
-if (availabilityError) {
-  alert(availabilityError);
-  return;
-}
+    if (availabilityError) {
+      alert(availabilityError);
+      return;
+    }
 
     if (!selectedSize) {
-      alert("Please select a size");
-
+      alert("Please select a size.");
       return;
     }
 
-    if (!calculatedRentalDays) {
-      alert("Please select valid rental dates");
+    if (!startDate || !returnDate || !calculatedRentalDays) {
+      alert("Please select valid rental dates.");
       return;
     }
-
-    const booking = {
-      user: {
-        userId: currentUser?.id || null,
-
-        fullName: data.fullName,
-
-        mobileNumber: data.mobileNumber,
-
-        email: data.email,
-      },
-
-      address: {
-        streetAddress: data.streetAddress.trim(),
-
-        city: data.city,
-
-        state: data.state,
-
-        pinCode: data.pinCode,
-      },
-
-      rental: {
-        startDate: data.startDate,
-
-        returnDate: data.returnDate,
-      },
-
-      product: {
-        productId: bookingData.productId || bookingData.product?._id,
-
-        productName: bookingData.productName || bookingData.product?.name,
-
-        productSlug: bookingData.product?.slug || "",
-
-        productCategory: bookingData.product?.category || "",
-
-        productBrand: bookingData.product?.brand || "",
-
-        productImage: productImage || "",
-
-        productUrl: bookingData.product?.slug
-          ? `${window.location.origin}/products/${bookingData.product.slug}`
-          : "",
-
-        selectedSize,
-
-        rentalDuration: calculatedRentalDays,
-
-        rentalPrice: calculatedRentalPrice,
-
-        securityDeposit: bookingData.securityDeposit || 0,
-      },
-    };
-
-    const adminNumber = "9822430452";
 
     if (!matchedRentalOption) {
       alert(
@@ -485,141 +417,185 @@ if (availabilityError) {
       return;
     }
 
-    try {
-      await bookingService.createBooking(booking);
+    const product = bookingData?.product || {};
+    const productId = bookingData.productId || product._id;
+    const productName = bookingData.productName || product.name || "";
+    const securityDeposit = Number(bookingData.securityDeposit || 0);
 
-      console.log("BOOKING CREATED", booking);
+    if (!productId) {
+      alert("Unable to identify this product. Please try again.");
+      return;
+    }
+
+    const booking = {
+      user: {
+        userId: currentUser?.id || currentUser?._id || null,
+        fullName: data.fullName.trim(),
+        mobileNumber: data.mobileNumber.trim(),
+        email: data.email.trim(),
+      },
+
+      address: {
+        streetAddress: data.streetAddress.trim(),
+        city: data.city.trim(),
+        state: data.state.trim(),
+        pinCode: data.pinCode.trim(),
+      },
+
+      rental: {
+        startDate: formatLocalDate(startDate),
+        returnDate: formatLocalDate(returnDate),
+      },
+
+      product: {
+        productId,
+        productName,
+        productSlug: product.slug || "",
+        productCategory: product.category || "",
+        productBrand: product.brand || "",
+        productImage,
+        productUrl: product.slug
+          ? `${window.location.origin}/products/${product.slug}`
+          : "",
+        selectedSize,
+        rentalDuration: calculatedRentalDays,
+        rentalPrice: Number(calculatedRentalPrice),
+        securityDeposit,
+      },
+    };
+
+    const adminNumber = "9822430452";
+
+    // Open a temporary tab during the user's click so browsers
+    // are less likely to block WhatsApp after the API request.
+    let whatsappWindow = null;
+
+    try {
+      whatsappWindow = window.open("about:blank", "_blank");
+
+      const response = await bookingService.createBooking(booking);
+
+      alert("Booking submitted successfully!");
+      // Do not continue if the API explicitly reports failure.
+      if (response?.success === false) {
+        throw new Error(response.message || "The booking could not be saved.");
+      }
+
+      // Use the server response when available.
+      const savedBooking =
+        response?.booking || response?.data?.booking || response?.data || {};
+
+      const bookingReference =
+        savedBooking.bookingId || savedBooking._id || "Pending reference";
 
       const message = `
-*🌟 NEW RENTAL ENQUIRY 🌟*
+*🌟 NEW RENTAL ENQUIRY - RAJANYA 🌟*
+
+━━━━━━━━━━━━━━━━━━
+📋 BOOKING REFERENCE
+━━━━━━━━━━━━━━━━━━
+
+Booking ID: ${bookingReference}
 
 ━━━━━━━━━━━━━━━━━━
 👤 CUSTOMER DETAILS
 ━━━━━━━━━━━━━━━━━━
 
-Name: ${data.fullName}
+Name: ${booking.user.fullName}
+Mobile: ${booking.user.mobileNumber}
+Email: ${booking.user.email}
 
-Mobile: ${data.mobileNumber}
-
-Email: ${data.email}
-
-Street Address: ${data.streetAddress.trim()}
-
-City: ${data.city}
-
-State: ${data.state}
-
-Pincode: ${data.pinCode}
+Street Address: ${booking.address.streetAddress}
+City: ${booking.address.city}
+State: ${booking.address.state}
+Pincode: ${booking.address.pinCode}
 
 ━━━━━━━━━━━━━━━━━━
 👗 PRODUCT DETAILS
 ━━━━━━━━━━━━━━━━━━
 
-Product Name:
-${booking.product.productName}
+Product Name: ${booking.product.productName}
+Product ID: ${booking.product.productId}
+Category: ${booking.product.productCategory}
+Brand: ${booking.product.productBrand}
+Size: ${booking.product.selectedSize}
 
-Product ID:
-${booking.product.productId}
-
-Category:
-${booking.product.productCategory}
-
-Brand:
-${booking.product.productBrand}
-
-Size:
-${booking.product.selectedSize}
-
-Rental Duration:
-${booking.product.rentalDuration} Days
-
-Rental Price:
-₹${booking.product.rentalPrice}
-
-Security Deposit:
-₹${booking.product.securityDeposit}
+Rental Duration: ${booking.product.rentalDuration} days
+Rental Price: ₹${booking.product.rentalPrice.toLocaleString("en-IN")}
+Security Deposit: ₹${booking.product.securityDeposit.toLocaleString("en-IN")}
+Total Amount: ₹${(
+        booking.product.rentalPrice + booking.product.securityDeposit
+      ).toLocaleString("en-IN")}
 
 ━━━━━━━━━━━━━━━━━━
-📅 BOOKING DETAILS
+📅 RENTAL DATES
 ━━━━━━━━━━━━━━━━━━
 
-Rent Date:
-${data.startDate}
-
-Return Date:
-${data.returnDate}
+Rent Date: ${booking.rental.startDate}
+Return Date: ${booking.rental.returnDate}
 
 ━━━━━━━━━━━━━━━━━━
-🖼 PRODUCT IMAGE
+🔗 PRODUCT DETAILS
 ━━━━━━━━━━━━━━━━━━
 
-${booking.product.productImage}
+Product Image: ${booking.product.productImage || "Not available"}
+Product Link: ${booking.product.productUrl || "Not available"}
 
-━━━━━━━━━━━━━━━━━━
-🔗 PRODUCT LINK
-━━━━━━━━━━━━━━━━━━
-
-${booking.product.productUrl}
+Please confirm the availability and booking details.
 `;
 
-      const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(
-        message,
-      )}`;
+      const whatsappUrl = `https://wa.me/${adminNumber}?text=${encodeURIComponent(message)}`;
 
-      window.open(whatsappUrl, "_blank");
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.location.href = whatsappUrl;
+      } else {
+        // Fallback if the browser blocked the new tab.
+        window.location.assign(whatsappUrl);
+      }
+
+      // Only runs after the booking API succeeds.
+      onClose();
     } catch (error) {
-  console.error("Booking error:", error);
+      console.error("Booking creation failed:", error);
 
-  const statusCode = error?.response?.status;
-  const errorMessage = error?.response?.data?.message;
+      // Close the temporary blank tab on failure.
+      if (whatsappWindow && !whatsappWindow.closed) {
+        whatsappWindow.close();
+      }
 
-  if (statusCode === 409) {
-    const bookedFrom = error?.response?.data?.bookedFrom;
-    const bookedTill = error?.response?.data?.bookedTill;
+      const statusCode = error?.response?.status;
+      const errorMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Failed to create booking. Please try again.";
 
-    let message =
-      errorMessage ||
-      "This product is already booked for the selected dates.";
+      if (statusCode === 409) {
+        const bookedFrom = error?.response?.data?.bookedFrom;
+        const bookedTill = error?.response?.data?.bookedTill;
 
-    if (bookedFrom && bookedTill) {
-      const formatDate = (value) =>
-        new Date(value).toLocaleDateString("en-IN", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        });
+        let message =
+          errorMessage ||
+          "This product is already booked for the selected dates.";
 
-      message += `\nUnavailable period: ${formatDate(
-        bookedFrom,
-      )} to ${formatDate(bookedTill)}.`;
+        if (bookedFrom && bookedTill) {
+          const formatDate = (value) =>
+            new Date(value).toLocaleDateString("en-IN", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+            });
+
+          message += `\nUnavailable period: ${formatDate(
+            bookedFrom,
+          )} to ${formatDate(bookedTill)}.`;
+        }
+
+        alert(message);
+        return;
+      }
+
+      alert(errorMessage);
     }
-
-    alert(message);
-    return;
-  }
-
-  alert(
-    errorMessage ||
-      "Failed to create booking. Please try again.",
-  );
-}
-
-    /*
-      Future Payment Integration
-
-      Step 1:
-      Create Booking API
-
-      Step 2:
-      Open Razorpay
-
-      Step 3:
-      Update paymentStatus
-    */
-
-    alert("Booking submitted successfully.");
-
-    onClose();
   };
 
   /* =========================================================
@@ -910,37 +886,40 @@ ${booking.product.productUrl}
                     <DatePicker
                       selected={startDate}
                       onChange={(date) => {
-  if (
-    date &&
-    excludedDates.some(
-      (excludedDate) =>
-        formatLocalDate(excludedDate) === formatLocalDate(date),
-    )
-  ) {
-    alert("This date is already booked. Please select another date.");
-    return;
-  }
+                        if (
+                          date &&
+                          excludedDates.some(
+                            (excludedDate) =>
+                              formatLocalDate(excludedDate) ===
+                              formatLocalDate(date),
+                          )
+                        ) {
+                          alert(
+                            "This date is already booked. Please select another date.",
+                          );
+                          return;
+                        }
 
-  setStartDate(date);
-  setValue("startDate", formatLocalDate(date));
+                        setStartDate(date);
+                        setValue("startDate", formatLocalDate(date));
 
-  if (returnDate && date && returnDate < date) {
-    setReturnDate(null);
-    setValue("returnDate", "");
-  }
+                        if (returnDate && date && returnDate < date) {
+                          setReturnDate(null);
+                          setValue("returnDate", "");
+                        }
 
-  if (
-    date &&
-    returnDate &&
-    hasBlockedDateInRange(date, returnDate, excludedDates)
-  ) {
-    setReturnDate(null);
-    setValue("returnDate", "");
-    alert(
-      "Your selected rental period includes unavailable dates. Please select a new return date.",
-    );
-  }
-}}
+                        if (
+                          date &&
+                          returnDate &&
+                          hasBlockedDateInRange(date, returnDate, excludedDates)
+                        ) {
+                          setReturnDate(null);
+                          setValue("returnDate", "");
+                          alert(
+                            "Your selected rental period includes unavailable dates. Please select a new return date.",
+                          );
+                        }
+                      }}
                       minDate={new Date()}
                       excludeDates={excludedDates}
                       dateFormat="dd/MM/yyyy"
@@ -963,24 +942,24 @@ ${booking.product.productUrl}
                     <DatePicker
                       selected={returnDate}
                       onChange={(date) => {
-  if (!date) {
-    setReturnDate(null);
-    setValue("returnDate", "");
-    return;
-  }
+                        if (!date) {
+                          setReturnDate(null);
+                          setValue("returnDate", "");
+                          return;
+                        }
 
-  if (
-    hasBlockedDateInRange(startDate, date, excludedDates)
-  ) {
-    alert(
-      "Your selected rental period includes unavailable dates. Please choose another return date.",
-    );
-    return;
-  }
+                        if (
+                          hasBlockedDateInRange(startDate, date, excludedDates)
+                        ) {
+                          alert(
+                            "Your selected rental period includes unavailable dates. Please choose another return date.",
+                          );
+                          return;
+                        }
 
-  setReturnDate(date);
-  setValue("returnDate", formatLocalDate(date));
-}}
+                        setReturnDate(date);
+                        setValue("returnDate", formatLocalDate(date));
+                      }}
                       minDate={startDate || new Date()}
                       excludeDates={excludedDates}
                       placeholderText="Select Return Date"
@@ -1060,8 +1039,15 @@ ${booking.product.productUrl}
                   </span>
                 </div>
 
-                <button type="submit" className="confirm-booking-btn">
-                  ENQUIRE NOW ON WHATSAPP
+                <button
+                  type="submit"
+                  className="confirm-booking-btn"
+                  disabled={isSubmitting || isAvailabilityLoading}
+                  aria-busy={isSubmitting}
+                >
+                  {isSubmitting
+                    ? "SAVING YOUR BOOKING..."
+                    : "ENQUIRE NOW ON WHATSAPP"}
                 </button>
               </div>
             </div>

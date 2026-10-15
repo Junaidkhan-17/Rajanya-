@@ -922,6 +922,58 @@
 }
 
 /* ==========================================
+   PROFILE DROPDOWN - MY BOOKINGS
+========================================== */
+
+.profile-dropdown-booking {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 24px;
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none !important;
+  color: #222222 !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+  box-sizing: border-box;
+}
+
+.profile-dropdown-booking > i:first-child {
+  font-size: 19px;
+  color: #0f766e;
+}
+
+.profile-dropdown-booking .profile-booking-arrow {
+  margin-left: auto;
+  font-size: 14px;
+  color: #777777;
+}
+
+.profile-dropdown-booking::after {
+  display: none !important;
+}
+
+.profile-dropdown-booking:hover,
+.profile-dropdown-booking:focus-visible {
+  background-color: #f8f5ef;
+  color: #0f766e !important;
+  outline: none;
+}
+
+.profile-dropdown-booking:hover .profile-booking-arrow {
+  color: #0f766e;
+}
+
+.mobile-profile-booking:focus-visible {
+  outline: 2px solid #0f766e;
+  outline-offset: -3px;
+}
+
+/* ==========================================
    SMALL MOBILE
 ========================================== */
 
@@ -1258,5 +1310,72 @@
 @media (max-width: 767px) {
   .main-navbar-search {
     display: none;
+  }
+}
+
+/* =========================================
+   MOBILE NAVBAR — SEARCH BESIDE LOGO
+========================================= */
+
+@media (max-width: 767px) {
+  .main-navbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* Logo stays on the left */
+  .main-navbar-logo {
+    flex: 0 0 auto;
+    min-width: 0;
+  }
+
+  /* Search bar appears on the right of the logo */
+  .main-navbar-search {
+    display: flex !important;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto;
+    max-width: none;
+    margin-left: 6px;
+  }
+
+  .main-navbar-search input {
+    width: 100%;
+    min-width: 0;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+
+  /* Keep the search within the navbar */
+  .main-navbar-search form,
+  .main-navbar-search .search-form,
+  .main-navbar-search .search-input-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Hide any additional search row if previously added */
+  .mobile-navbar-search {
+    display: none !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .main-navbar-content {
+    gap: 7px;
+  }
+
+  .main-navbar-search {
+    margin-left: 3px;
+  }
+
+  .main-navbar-search input {
+    height: 33px;
+    padding: 0 8px;
+    font-size: 11px;
   }
 }

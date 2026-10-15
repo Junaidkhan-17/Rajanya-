@@ -733,6 +733,22 @@
   outline-offset: 3px;
 }
 
+
+/* Booking submission state */
+
+.confirm-booking-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.confirm-booking-btn:disabled:hover {
+  background: #000000;
+  transform: none;
+  box-shadow: none;
+}
+
 /* =========================================================
    TABLET / LAPTOP
    992px – 1199px
