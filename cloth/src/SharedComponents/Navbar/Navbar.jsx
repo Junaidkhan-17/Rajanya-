@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
@@ -8,6 +8,11 @@ import rajanyalogo from "../../assets/logonew.png";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
   const navbarRef = useRef(null);
   const profileDropdownRef = useRef(null);
 
@@ -18,38 +23,48 @@ const Navbar = () => {
 
   const { state: productState } = useProductLiveData();
 
+  const handleProductSelect = (product) => {
+    if (!product?.slug) {
+      return;
+    }
+
+    setSearchQuery("");
+    setIsSearchFocused(false);
+    setIsMobileMenuOpen(false);
+
+    navigate(`/products/${product.slug}`);
+  };
+
   const wishlistCount = productState.wishlist.length;
 
   const user = state.user;
+
+  const searchResults = searchQuery.trim()
+    ? (productState.products || []).filter((product) =>
+        product.name?.toLowerCase().includes(searchQuery.trim().toLowerCase()),
+      )
+    : [];
 
   /* ==========================================
      DYNAMIC USER INFORMATION
   ========================================== */
 
-  const userName =
-    user?.name ||
-    user?.fullName ||
-    user?.username ||
-    "User";
+  const userName = user?.name || user?.fullName || user?.username || "User";
 
   const userEmail = user?.email || "";
 
   const getUserInitials = () => {
-  const name =
-    user?.name ||
-    user?.fullName ||
-    user?.username ||
-    user?.email ||
-    "User";
+    const name =
+      user?.name || user?.fullName || user?.username || user?.email || "User";
 
-  const parts = name.trim().split(/\s+/).filter(Boolean);
+    const parts = name.trim().split(/\s+/).filter(Boolean);
 
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
-  }
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    }
 
-  return name.slice(0, 2).toUpperCase();
-};
+    return name.slice(0, 2).toUpperCase();
+  };
 
   /* ==========================================
      MOBILE MENU
@@ -59,7 +74,6 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-
   /* ==========================================
      PROFILE DROPDOWN
   ========================================== */
@@ -67,7 +81,6 @@ const Navbar = () => {
   const closeProfileDropdown = () => {
     setIsProfileDropdownOpen(false);
   };
-
 
   /* ==========================================
      OUTSIDE CLICK
@@ -92,7 +105,6 @@ const Navbar = () => {
     };
   }, [isProfileDropdownOpen]);
 
-
   /* ==========================================
      ESC KEY
   ========================================== */
@@ -111,7 +123,6 @@ const Navbar = () => {
     };
   }, []);
 
-
   /* ==========================================
      LOGIN
   ========================================== */
@@ -124,7 +135,6 @@ const Navbar = () => {
       type: AUTH_ACTIONS.OPEN_LOGIN_MODAL,
     });
   };
-
 
   /* ==========================================
      DESKTOP PROFILE CLICK
@@ -139,21 +149,17 @@ const Navbar = () => {
     setIsProfileDropdownOpen((prev) => !prev);
   };
 
-
   /* ==========================================
      LOGOUT
   ========================================== */
 
+  const handleLogout = () => {
+    setIsProfileDropdownOpen(false);
+    setIsMobileMenuOpen(false);
 
-const handleLogout = () => {
-  setIsProfileDropdownOpen(false);
-  setIsMobileMenuOpen(false);
-
-  // Clear saved authentication and reset AuthContext.
-  logout();
-};
-
-
+    // Clear saved authentication and reset AuthContext.
+    logout();
+  };
 
   /* ==========================================
      MOBILE PROFILE CLICK
@@ -168,7 +174,6 @@ const handleLogout = () => {
     setIsProfileDropdownOpen((prev) => !prev);
   };
 
-
   /* ==========================================
      MOBILE NAVIGATION CLICK
   ========================================== */
@@ -177,7 +182,6 @@ const handleLogout = () => {
     setIsMobileMenuOpen(false);
     setIsProfileDropdownOpen(false);
   };
-
 
   return (
     <motion.nav
@@ -197,7 +201,6 @@ const handleLogout = () => {
     >
       <div className="container">
         <div className="main-navbar-content">
-
           {/* ==========================================
               LOGO
           ========================================== */}
@@ -208,14 +211,9 @@ const handleLogout = () => {
               onClick={handleMobileNavClick}
               className="navbar-logo-link"
             >
-              <img
-                src={rajanyalogo}
-                className="logo"
-                alt="Rajanya"
-              />
+              <img src={rajanyalogo} className="logo" alt="Rajanya" />
             </NavLink>
           </div>
-
 
           {/* ==========================================
               SEARCH
@@ -226,17 +224,48 @@ const handleLogout = () => {
               type="text"
               placeholder="Search"
               aria-label="Search products"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => {
+  setTimeout(() => setIsSearchFocused(false), 150);
+}}
+onKeyDown={(event) => {
+  if (event.key === "Escape") {
+    setIsSearchFocused(false);
+  }
+
+  if (event.key === "Enter" && searchResults.length > 0) {
+    event.preventDefault();
+    handleProductSelect(searchResults[0]);
+  }
+}}
             />
 
-            <button
-              type="button"
-              aria-label="Search"
-            >
+            <button type="button" aria-label="Search">
               <i className="bi bi-search"></i>
             </button>
+
+            {isSearchFocused && searchQuery.trim() && (
+              <div className="navbar-search-dropdown">
+                {searchResults.length > 0 ? (
+                  searchResults.map((product) => (
+                    <button
+                      type="button"
+                      key={product._id || product.slug}
+                      className="navbar-search-result"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => handleProductSelect(product)}
+                    >
+                      {product.name}
+                    </button>
+                  ))
+                ) : (
+                  <div className="navbar-search-empty">No products found.</div>
+                )}
+              </div>
+            )}
           </div>
-
-
           {/* ==========================================
               NAVIGATION
           ========================================== */}
@@ -247,57 +276,40 @@ const handleLogout = () => {
             }`}
           >
             <li>
-              <NavLink
-                to="/"
-                onClick={handleMobileNavClick}
-              >
+              <NavLink to="/" onClick={handleMobileNavClick}>
                 Home
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/collection"
-                onClick={handleMobileNavClick}
-              >
+              <NavLink to="/collection" onClick={handleMobileNavClick}>
                 All Product
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/womens-wear"
-                onClick={handleMobileNavClick}
-              >
+              <NavLink to="/womens-wear" onClick={handleMobileNavClick}>
                 Women's Wear
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/mens-wear"
-                onClick={handleMobileNavClick}
-              >
+              <NavLink to="/mens-wear" onClick={handleMobileNavClick}>
                 Men's Wear
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/Contact-Us"
-                onClick={handleMobileNavClick}
-              >
+              <NavLink to="/Contact-Us" onClick={handleMobileNavClick}>
                 Contact Us
               </NavLink>
             </li>
-
 
             {/* ==========================================
                 MOBILE AUTHENTICATION
             ========================================== */}
 
             <li className="mobile-auth-item">
-
               {!state.isAuthenticated ? (
                 <button
                   type="button"
@@ -306,19 +318,14 @@ const handleLogout = () => {
                 >
                   <i className="bi bi-person-circle"></i>
 
-                  <span>
-                    Login / Sign Up
-                  </span>
+                  <span>Login / Sign Up</span>
                 </button>
               ) : (
                 <div className="mobile-profile-container">
-
                   <button
                     type="button"
                     className={`mobile-navbar-profile-button ${
-                      isProfileDropdownOpen
-                        ? "mobile-profile-active"
-                        : ""
+                      isProfileDropdownOpen ? "mobile-profile-active" : ""
                     }`}
                     onClick={handleMobileProfileClick}
                     aria-expanded={isProfileDropdownOpen}
@@ -339,7 +346,6 @@ const handleLogout = () => {
                       }`}
                     ></i>
                   </button>
-
 
                   {/* ==========================================
                       MOBILE PROFILE DROPDOWN
@@ -368,32 +374,23 @@ const handleLogout = () => {
                           duration: 0.22,
                         }}
                       >
-
                         {/* USER INFORMATION */}
 
                         <div className="mobile-profile-user">
-
                           <div className="mobile-profile-avatar">
                             {getUserInitials()}
                           </div>
 
                           <div className="mobile-profile-user-info">
-                            <h5>
-                              {userName}
-                            </h5>
+                            <h5>{userName}</h5>
 
-                            <p>
-                              {userEmail}
-                            </p>
+                            <p>{userEmail}</p>
                           </div>
-
                         </div>
-
 
                         {/* DIVIDER */}
 
                         <div className="mobile-profile-divider"></div>
-
 
                         {/* MY BOOKING */}
 
@@ -404,16 +401,12 @@ const handleLogout = () => {
                         >
                           <i className="bi bi-calendar2-check"></i>
 
-                          <span>
-                            My Booking
-                          </span>
+                          <span>My Booking</span>
                         </NavLink>
-
 
                         {/* DIVIDER */}
 
                         <div className="mobile-profile-divider"></div>
-
 
                         {/* LOGOUT */}
 
@@ -425,38 +418,27 @@ const handleLogout = () => {
                           >
                             <i className="bi bi-box-arrow-right"></i>
 
-                            <span>
-                              Logout
-                            </span>
+                            <span>Logout</span>
                           </button>
                         </div>
-
                       </motion.div>
                     )}
                   </AnimatePresence>
-
                 </div>
               )}
-
             </li>
           </ul>
-
 
           {/* ==========================================
               ACTION ICONS
           ========================================== */}
 
           <div className="main-navbar-actions">
-
             {/* ==========================================
                 DESKTOP PROFILE / LOGIN
             ========================================== */}
 
-            <div
-              className="navbar-profile-wrapper"
-              ref={profileDropdownRef}
-            >
-
+            <div className="navbar-profile-wrapper" ref={profileDropdownRef}>
               {!state.isAuthenticated ? (
                 <button
                   type="button"
@@ -465,17 +447,13 @@ const handleLogout = () => {
                 >
                   <i className="bi bi-person-circle"></i>
 
-                  <span>
-                    Login
-                  </span>
+                  <span>Login</span>
                 </button>
               ) : (
                 <button
                   type="button"
                   className={`navbar-profile-button ${
-                    isProfileDropdownOpen
-                      ? "profile-active"
-                      : ""
+                    isProfileDropdownOpen ? "profile-active" : ""
                   }`}
                   onClick={handleProfileClick}
                   aria-label="Open profile menu"
@@ -487,102 +465,82 @@ const handleLogout = () => {
                 </button>
               )}
 
-
               {/* ==========================================
                   DESKTOP PROFILE DROPDOWN
               ========================================== */}
 
               <AnimatePresence>
-                {state.isAuthenticated &&
-                  isProfileDropdownOpen && (
-                    <motion.div
-                      className="navbar-profile-dropdown"
-                      initial={{
-                        opacity: 0,
-                        y: -10,
-                        scale: 0.98,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                      }}
-                      exit={{
-                        opacity: 0,
-                        y: -8,
-                        scale: 0.98,
-                      }}
-                      transition={{
-                        duration: 0.2,
-                      }}
+                {state.isAuthenticated && isProfileDropdownOpen && (
+                  <motion.div
+                    className="navbar-profile-dropdown"
+                    initial={{
+                      opacity: 0,
+                      y: -10,
+                      scale: 0.98,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -8,
+                      scale: 0.98,
+                    }}
+                    transition={{
+                      duration: 0.2,
+                    }}
+                  >
+                    {/* USER INFORMATION */}
+
+                    <div className="profile-dropdown-user">
+                      <div className="profile-dropdown-avatar">
+                        {getUserInitials()}
+                      </div>
+
+                      <div className="profile-dropdown-user-info">
+                        <h5>{userName}</h5>
+
+                        <p>{userEmail}</p>
+                      </div>
+                    </div>
+
+                    {/* DIVIDER */}
+
+                    <div className="profile-dropdown-divider"></div>
+
+                    {/* MY BOOKING */}
+
+                    <NavLink
+                      to="/my-bookings"
+                      className="profile-dropdown-booking"
+                      onClick={closeProfileDropdown}
                     >
+                      My Booking
+                    </NavLink>
 
-                      {/* USER INFORMATION */}
+                    {/* DIVIDER */}
 
-                      <div className="profile-dropdown-user">
+                    <div className="profile-dropdown-divider"></div>
 
-                        <div className="profile-dropdown-avatar">
-                          {getUserInitials()}
-                        </div>
+                    {/* LOGOUT */}
 
-                        <div className="profile-dropdown-user-info">
-
-                          <h5>
-                            {userName}
-                          </h5>
-
-                          <p>
-                            {userEmail}
-                          </p>
-
-                        </div>
-
-                      </div>
-
-
-                      {/* DIVIDER */}
-
-                      <div className="profile-dropdown-divider"></div>
-
-
-                      {/* MY BOOKING */}
-
-                      <NavLink
-                        to="/my-bookings"
-                        className="profile-dropdown-booking"
-                        onClick={closeProfileDropdown}
+                    <div className="profile-dropdown-logout-wrapper">
+                      <button
+                        type="button"
+                        className="profile-dropdown-logout"
+                        onClick={handleLogout}
                       >
-                        My Booking
-                      </NavLink>
+                        <i className="bi bi-box-arrow-right"></i>
 
-
-                      {/* DIVIDER */}
-
-                      <div className="profile-dropdown-divider"></div>
-
-
-                      {/* LOGOUT */}
-
-                      <div className="profile-dropdown-logout-wrapper">
-                        <button
-                          type="button"
-                          className="profile-dropdown-logout"
-                          onClick={handleLogout}
-                        >
-                          <i className="bi bi-box-arrow-right"></i>
-
-                          <span>
-                            Logout
-                          </span>
-                        </button>
-                      </div>
-
-                    </motion.div>
-                  )}
+                        <span>Logout</span>
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </AnimatePresence>
-
             </div>
-
 
             {/* ==========================================
                 WISHLIST
@@ -600,12 +558,9 @@ const handleLogout = () => {
               <i className="bi bi-heart"></i>
 
               {wishlistCount > 0 && (
-                <span className="navbar-wishlist-badge">
-                  {wishlistCount}
-                </span>
+                <span className="navbar-wishlist-badge">{wishlistCount}</span>
               )}
             </NavLink>
-
 
             {/* ==========================================
                 MOBILE HAMBURGER
@@ -621,17 +576,9 @@ const handleLogout = () => {
               aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
             >
-              <i
-                className={
-                  isMobileMenuOpen
-                    ? "bi bi-x-lg"
-                    : "bi bi-list"
-                }
-              ></i>
+              <i className={isMobileMenuOpen ? "bi bi-x-lg" : "bi bi-list"}></i>
             </button>
-
           </div>
-
         </div>
       </div>
     </motion.nav>

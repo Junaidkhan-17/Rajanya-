@@ -25,10 +25,7 @@
   min-width: 0;
 }
 
-
-/* ==========================================
-   LOGO
-========================================== */
+/* LOGO */
 
 .main-navbar-logo {
   display: flex;
@@ -50,19 +47,72 @@
   display: block;
 }
 
-
 /* ==========================================
-   SEARCH
+   NAVBAR PRODUCT SEARCH DROPDOWN
 ========================================== */
 
 .main-navbar-search {
+  position: relative;
+  overflow: visible;
+}
+
+.navbar-search-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  z-index: 1500;
+}
+
+.navbar-search-result {
+  display: block;
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+  background: #ffffff;
+  color: #1f2937;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.navbar-search-result:last-child {
+  border-bottom: none;
+}
+
+.navbar-search-result:hover,
+.navbar-search-result:focus-visible {
+  background: #f8f5ef;
+  color: #0f766e;
+  outline: none;
+}
+
+.navbar-search-empty {
+  padding: 15px 16px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* SEARCH BAR */
+
+.main-navbar-search {
+  position: relative;
   width: 260px;
   height: 46px;
   border: 1px solid #dbe4e6;
   border-radius: 40px;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.3s ease;
   margin-left: -40px;
   flex: 0 1 260px;
@@ -82,6 +132,7 @@
   flex: 1;
   min-width: 0;
   width: 100%;
+  height: 100%;
   border: none;
   outline: none;
   background: #ffffff;
@@ -89,6 +140,7 @@
   padding: 0 18px;
   font-size: 14px;
   color-scheme: light;
+  border-radius: 40px 0 0 40px;
 }
 
 .main-navbar-search input::placeholder {
@@ -107,12 +159,10 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border-radius: 0 40px 40px 0;
 }
 
-
-/* ==========================================
-   NAVIGATION LINKS
-========================================== */
+/* NAVIGATION LINKS */
 
 .main-navbar-links {
   display: flex;
@@ -167,10 +217,7 @@
   width: 100%;
 }
 
-
-/* ==========================================
-   NAVBAR ACTIONS
-========================================== */
+/* NAVBAR ACTIONS */
 
 .main-navbar-actions {
   display: flex;
@@ -192,10 +239,7 @@
   color: #0f766e;
 }
 
-
-/* ==========================================
-   PROFILE WRAPPER
-========================================== */
+/* PROFILE WRAPPER */
 
 .navbar-profile-wrapper {
   position: relative;
@@ -203,10 +247,7 @@
   align-items: center;
 }
 
-
-/* ==========================================
-   LOGIN BUTTON
-========================================== */
+/* LOGIN BUTTON */
 
 .navbar-login-button {
   min-width: 96px;
@@ -236,10 +277,7 @@
   font-size: 17px;
 }
 
-
-/* ==========================================
-   PROFILE BUTTON
-========================================== */
+/* PROFILE BUTTON */
 
 .navbar-profile-button {
   width: 45px;
@@ -264,9 +302,7 @@
   justify-content: center;
   font-size: 18px;
   font-weight: 700;
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar-profile-button:hover .navbar-user-initials,
@@ -275,10 +311,7 @@
   box-shadow: 0 5px 15px rgba(196, 154, 74, 0.25);
 }
 
-
-/* ==========================================
-   DESKTOP PROFILE DROPDOWN
-========================================== */
+/* DESKTOP PROFILE DROPDOWN */
 
 .navbar-profile-dropdown {
   position: absolute;
@@ -288,17 +321,13 @@
   background: #ffffff;
   border-radius: 18px;
   overflow: hidden;
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.15),
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15),
     0 5px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid #eeeeee;
   z-index: 1200;
 }
 
-
-/* ==========================================
-   DROPDOWN USER SECTION
-========================================== */
+/* DROPDOWN USER SECTION */
 
 .profile-dropdown-user {
   min-height: 98px;
@@ -350,10 +379,7 @@
   text-overflow: ellipsis;
 }
 
-
-/* ==========================================
-   DROPDOWN DIVIDER
-========================================== */
+/* DROPDOWN DIVIDER */
 
 .profile-dropdown-divider {
   width: 100%;
@@ -361,10 +387,7 @@
   background: #e5e5e5;
 }
 
-
-/* ==========================================
-   MY BOOKING
-========================================== */
+/* MY BOOKING */
 
 .profile-dropdown-booking {
   width: 100%;
@@ -376,9 +399,7 @@
   color: #111111 !important;
   font-size: 22px !important;
   font-weight: 700 !important;
-  transition:
-    background 0.25s ease,
-    color 0.25s ease;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .profile-dropdown-booking::after {
@@ -390,19 +411,13 @@
   color: #111111 !important;
 }
 
-
-/* ==========================================
-   LOGOUT WRAPPER
-========================================== */
+/* LOGOUT WRAPPER */
 
 .profile-dropdown-logout-wrapper {
   padding: 16px 28px 20px;
 }
 
-
-/* ==========================================
-   LOGOUT BUTTON
-========================================== */
+/* LOGOUT BUTTON */
 
 .profile-dropdown-logout {
   width: 100%;
@@ -418,8 +433,7 @@
   cursor: pointer;
   font-size: 20px !important;
   font-weight: 700;
-  transition:
-    all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .profile-dropdown-logout i {
@@ -432,10 +446,7 @@
   transform: translateY(-1px);
 }
 
-
-/* ==========================================
-   WISHLIST
-========================================== */
+/* WISHLIST */
 
 .navbar-wishlist-btn {
   position: relative;
@@ -448,9 +459,7 @@
   color: #252525;
   border-radius: 50%;
   font-size: 20px;
-  transition:
-    color 0.25s ease,
-    background 0.25s ease,
+  transition: color 0.25s ease, background 0.25s ease,
     transform 0.25s ease;
 }
 
@@ -481,10 +490,7 @@
   color: #c59d5f;
 }
 
-
-/* ==========================================
-   MOBILE AUTH
-========================================== */
+/* MOBILE AUTH */
 
 .mobile-auth-item {
   display: none !important;
@@ -499,25 +505,17 @@
   width: 100%;
 }
 
-
-/* ==========================================
-   MOBILE PROFILE DROPDOWN
-========================================== */
+/* MOBILE PROFILE DROPDOWN */
 
 .mobile-profile-dropdown {
-  width: min(
-    calc(100% - 24px),
-    455px
-  );
+  width: min(calc(100% - 24px), 455px);
   margin: 0 auto 12px;
   background: #ffffff;
   border: 1px solid #eeeeee;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
-
 
 /* MOBILE PROFILE USER */
 
@@ -569,7 +567,6 @@
   text-overflow: ellipsis;
 }
 
-
 /* MOBILE DIVIDER */
 
 .mobile-profile-divider {
@@ -577,7 +574,6 @@
   height: 1px;
   background: #e5e5e5;
 }
-
 
 /* MOBILE BOOKING */
 
@@ -601,7 +597,6 @@
 .mobile-profile-booking i {
   font-size: 17px;
 }
-
 
 /* MOBILE LOGOUT */
 
@@ -632,22 +627,17 @@
   color: #ffffff !important;
 }
 
-
-/* ==========================================
-   MOBILE MENU TOGGLE
-========================================== */
+/* MOBILE MENU TOGGLE */
 
 .navbar-mobile-menu-toggle {
   display: none;
 }
-
 
 /* ==========================================
    TABLET / LAPTOP
 ========================================== */
 
 @media (max-width: 1199px) {
-
   .main-navbar-content {
     gap: 18px;
   }
@@ -669,16 +659,11 @@
   .main-navbar-actions {
     gap: 12px;
   }
-
 }
 
-
-/* ==========================================
-   SMALL LAPTOP / TABLET
-========================================== */
+/* SMALL LAPTOP / TABLET */
 
 @media (max-width: 991px) {
-
   .main-navbar-wrapper {
     height: 70px;
   }
@@ -711,16 +696,13 @@
     height: 42px;
     font-size: 17px;
   }
-
 }
-
 
 /* ==========================================
    MOBILE NAVBAR
 ========================================== */
 
 @media (max-width: 767px) {
-
   .main-navbar-wrapper {
     height: 72px;
     padding: 8px 0;
@@ -734,10 +716,7 @@
     gap: 10px;
   }
 
-
-  /* ==========================================
-     LOGO
-  ========================================== */
+  /* LOGO */
 
   .main-navbar-logo {
     width: auto;
@@ -754,19 +733,13 @@
     object-fit: contain;
   }
 
-
-  /* ==========================================
-     SEARCH HIDDEN
-  ========================================== */
+  /* SEARCH HIDDEN ON MOBILE */
 
   .main-navbar-search {
     display: none;
   }
 
-
-  /* ==========================================
-     MOBILE NAVIGATION MENU
-  ========================================== */
+  /* MOBILE NAVIGATION MENU */
 
   .main-navbar-links {
     display: none !important;
@@ -815,10 +788,7 @@
     display: none;
   }
 
-
-  /* ==========================================
-     MOBILE AUTH ITEM
-  ========================================== */
+  /* MOBILE AUTH ITEM */
 
   .mobile-auth-item {
     display: block !important;
@@ -868,10 +838,7 @@
     white-space: nowrap;
   }
 
-
-  /* ==========================================
-     ACTIONS
-  ========================================== */
+  /* ACTIONS */
 
   .main-navbar-actions {
     margin-left: auto;
@@ -882,19 +849,13 @@
     flex: 0 0 auto;
   }
 
-
-  /* ==========================================
-     DESKTOP PROFILE HIDDEN
-  ========================================== */
+  /* DESKTOP PROFILE HIDDEN */
 
   .navbar-profile-wrapper {
     display: none;
   }
 
-
-  /* ==========================================
-     WISHLIST
-  ========================================== */
+  /* WISHLIST */
 
   .navbar-wishlist-btn {
     width: 42px;
@@ -912,10 +873,7 @@
     background: #f6f8f8;
   }
 
-
-  /* ==========================================
-     WISHLIST BADGE
-  ========================================== */
+  /* WISHLIST BADGE */
 
   .navbar-wishlist-badge {
     top: -1px;
@@ -925,10 +883,7 @@
     font-size: 9px;
   }
 
-
-  /* ==========================================
-     HAMBURGER
-  ========================================== */
+  /* HAMBURGER */
 
   .navbar-mobile-menu-toggle {
     width: 42px;
@@ -942,9 +897,7 @@
     color: #222222;
     cursor: pointer;
     font-size: 23px;
-    transition:
-      background 0.25s ease,
-      color 0.25s ease,
+    transition: background 0.25s ease, color 0.25s ease,
       transform 0.25s ease;
   }
 
@@ -960,25 +913,19 @@
     pointer-events: none;
   }
 
-
-  /* ==========================================
-     HAMBURGER OPEN STATE
-  ========================================== */
+  /* HAMBURGER OPEN STATE */
 
   .navbar-mobile-menu-toggle[aria-expanded="true"] {
     background: #111111;
     color: #ffffff;
   }
-
 }
-
 
 /* ==========================================
    SMALL MOBILE
 ========================================== */
 
 @media (max-width: 575px) {
-
   .main-navbar-wrapper {
     height: 68px;
     padding: 7px 0;
@@ -1018,16 +965,13 @@
   .mobile-profile-dropdown {
     width: calc(100% - 20px);
   }
-
 }
-
 
 /* ==========================================
    VERY SMALL MOBILE
 ========================================== */
 
 @media (max-width: 430px) {
-
   .main-navbar-content {
     gap: 6px;
   }
@@ -1074,16 +1018,13 @@
   .mobile-profile-logout {
     font-size: 16px !important;
   }
-
 }
-
 
 /* ==========================================
    SMALL PHONES
 ========================================== */
 
 @media (max-width: 375px) {
-
   .main-navbar-wrapper {
     height: 64px;
   }
@@ -1132,16 +1073,13 @@
     flex-basis: 34px;
     font-size: 12px;
   }
-
 }
-
 
 /* ==========================================
    EXTRA SMALL DEVICES
 ========================================== */
 
 @media (max-width: 340px) {
-
   .main-navbar-content {
     gap: 3px;
   }
@@ -1172,5 +1110,153 @@
   .mobile-profile-dropdown {
     width: calc(100% - 14px);
   }
+}
 
+/* ==========================================
+   RAJANYA NAVBAR SEARCH - FINAL FIX
+========================================== */
+
+/* Search container */
+.main-navbar-search {
+  position: relative;
+  overflow: visible !important;
+  isolation: isolate;
+}
+
+/* Product suggestions dropdown */
+.main-navbar-search .navbar-search-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: auto;
+  width: 100%;
+  min-width: 100%;
+  max-height: 280px;
+  padding: 4px 0;
+  margin: 0;
+
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.14);
+
+  z-index: 2000;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+}
+
+/* Individual product name */
+.main-navbar-search .navbar-search-result {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  height: auto;
+
+  margin: 0;
+  padding: 11px 14px;
+
+  border: 0;
+  border-bottom: 1px solid #f1f1f1;
+  border-radius: 0;
+
+  background-color: #ffffff;
+  color: #263238;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+
+  /* Keep each product name on a single line */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  cursor: pointer;
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Remove border from the last result */
+.main-navbar-search .navbar-search-result:last-child {
+  border-bottom: none;
+}
+
+/* Hover and keyboard focus */
+.main-navbar-search .navbar-search-result:hover,
+.main-navbar-search .navbar-search-result:focus-visible {
+  background-color: #f8f5ef;
+  color: #0f766e;
+  outline: none;
+}
+
+/* No matching products */
+.main-navbar-search .navbar-search-empty {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 0;
+
+  background-color: #ffffff;
+  color: #6b7280;
+
+  font-size: 13px;
+  line-height: 20px;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* Clean, slim scrollbar */
+.main-navbar-search .navbar-search-dropdown::-webkit-scrollbar {
+  width: 5px;
+}
+
+.main-navbar-search .navbar-search-dropdown::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.main-navbar-search .navbar-search-dropdown::-webkit-scrollbar-thumb {
+  background-color: #c5c5c5;
+  border-radius: 10px;
+}
+
+.main-navbar-search .navbar-search-dropdown::-webkit-scrollbar-thumb:hover {
+  background-color: #999999;
+}
+
+/* Firefox scrollbar */
+.main-navbar-search .navbar-search-dropdown {
+  scrollbar-width: thin;
+  scrollbar-color: #c5c5c5 #f5f5f5;
+}
+
+/* Keep the search input and icon above the dropdown's background */
+.main-navbar-search input,
+.main-navbar-search > button {
+  position: relative;
+  z-index: 1;
+}
+
+/* Tablet */
+@media (max-width: 1199px) {
+  .main-navbar-search .navbar-search-dropdown {
+    max-height: 260px;
+  }
+}
+
+/* Mobile: preserve your existing hidden-search behavior */
+@media (max-width: 767px) {
+  .main-navbar-search {
+    display: none;
+  }
 }
