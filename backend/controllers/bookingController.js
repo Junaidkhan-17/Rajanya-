@@ -346,21 +346,34 @@ exports.createBooking = async (req, res) => {
 
 exports.getMyBookings = async (req, res) => {
   try {
+    const authenticatedUserId = req.user?.id;
+
+    console.log("========== MY BOOKINGS DEBUG ==========");
+    console.log("Authenticated User ID:", authenticatedUserId);
+    console.log("Authenticated User:", req.user);
+
     const bookings = await Booking.find({
-      "user.userId": req.user.id,
+      "user.userId": authenticatedUserId,
     }).sort({
       createdAt: -1,
     });
 
-    res.status(200).json({
+    console.log("Bookings Found:", bookings.length);
+    console.log(
+      "Booking Numbers:",
+      bookings.map((booking) => booking.bookingId)
+    );
+    console.log("=======================================");
+
+    return res.status(200).json({
       success: true,
       count: bookings.length,
       bookings,
     });
   } catch (error) {
-    console.log(error);
+    console.error("Get My Bookings Error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: error.message,
     });
