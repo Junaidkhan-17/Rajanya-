@@ -346,24 +346,22 @@ exports.createBooking = async (req, res) => {
 
 exports.getMyBookings = async (req, res) => {
   try {
-    const authenticatedUserId = req.user?.id;
+    const userId = req.user?.id;
 
-    console.log("========== MY BOOKINGS DEBUG ==========");
-    console.log("Authenticated User ID:", authenticatedUserId);
-    console.log("Authenticated User:", req.user);
+    console.log("MY BOOKINGS ENDPOINT CALLED");
+    console.log("Authenticated user ID:", userId);
+
+    const allBookings = await Booking.find({})
+      .select("bookingId user.userId")
+      .lean();
+
+    console.log("SAVED BOOKING USER REFERENCES:", allBookings);
 
     const bookings = await Booking.find({
-      "user.userId": authenticatedUserId,
-    }).sort({
-      createdAt: -1,
-    });
+      "user.userId": userId,
+    }).sort({ createdAt: -1 });
 
-    console.log("Bookings Found:", bookings.length);
-    console.log(
-      "Booking Numbers:",
-      bookings.map((booking) => booking.bookingId)
-    );
-    console.log("=======================================");
+    console.log("MATCHING BOOKINGS:", bookings.length);
 
     return res.status(200).json({
       success: true,
@@ -371,7 +369,7 @@ exports.getMyBookings = async (req, res) => {
       bookings,
     });
   } catch (error) {
-    console.error("Get My Bookings Error:", error);
+    console.error("GET MY BOOKINGS ERROR:", error);
 
     return res.status(500).json({
       success: false,
