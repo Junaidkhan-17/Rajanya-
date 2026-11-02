@@ -5,7 +5,8 @@ import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 import { useProductLiveData } from "../../contexts/ProductLiveDataContext";
 //import rajanyalogo from "../../assets/rajanyalogo.png";
 //import rajanyalogo from "../../assets/logonew.png";
-import rajanyanewlogo from "../../assets/rajanyanewlogo.png";
+//import rajanyanewlogo from "../../assets/rajanyanewlogo.png";
+import rajanyacirclelogo from "../../assets/rajanyacirclelogo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -212,7 +213,7 @@ const Navbar = () => {
               onClick={handleMobileNavClick}
               className="navbar-logo-link"
             >
-              <img src={rajanyanewlogo} className="logo" alt="Rajanya" />
+              <img src={rajanyacirclelogo} className="logo" alt="Rajanya" />
             </NavLink>
           </div>
 
