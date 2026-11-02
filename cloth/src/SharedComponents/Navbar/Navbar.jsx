@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth, AUTH_ACTIONS } from "../../contexts/AuthContext";
 import { useProductLiveData } from "../../contexts/ProductLiveDataContext";
 //import rajanyalogo from "../../assets/rajanyalogo.png";
-import rajanyalogo from "../../assets/logonew.png";
+//import rajanyalogo from "../../assets/logonew.png";
+import rajanyanewlogo from "../../assets/rajanyanewlogo.png";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -211,7 +212,7 @@ const Navbar = () => {
               onClick={handleMobileNavClick}
               className="navbar-logo-link"
             >
-              <img src={rajanyalogo} className="logo" alt="Rajanya" />
+              <img src={rajanyanewlogo} className="logo" alt="Rajanya" />
             </NavLink>
           </div>
 
@@ -586,66 +587,6 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        {/* MOBILE SEARCH */}
-<div className="mobile-navbar-search">
-  <div className="mobile-navbar-search-box">
-    <i className="bi bi-search" aria-hidden="true"></i>
-
-    <input
-      type="text"
-      placeholder="Search luxury outfits..."
-      aria-label="Search products"
-      value={searchQuery}
-      onChange={(event) => setSearchQuery(event.target.value)}
-      onFocus={() => setIsSearchFocused(true)}
-      onBlur={() => {
-        setTimeout(() => setIsSearchFocused(false), 150);
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Escape") {
-          setIsSearchFocused(false);
-        }
-
-        if (event.key === "Enter" && searchResults.length > 0) {
-          event.preventDefault();
-          handleProductSelect(searchResults[0]);
-        }
-      }}
-    />
-
-    {searchQuery.trim() && (
-      <button
-        type="button"
-        aria-label="Clear search"
-        onClick={() => setSearchQuery("")}
-      >
-        <i className="bi bi-x-lg" aria-hidden="true"></i>
-      </button>
-    )}
-
-    {isSearchFocused && searchQuery.trim() && (
-      <div className="navbar-search-dropdown">
-        {searchResults.length > 0 ? (
-          searchResults.map((product) => (
-            <button
-              type="button"
-              key={product._id || product.slug}
-              className="navbar-search-result"
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => handleProductSelect(product)}
-            >
-              {product.name}
-            </button>
-          ))
-        ) : (
-          <div className="navbar-search-empty">
-            No products found.
-          </div>
-        )}
-      </div>
-    )}
-  </div>
-</div>
       </div>
     </motion.nav>
   );
