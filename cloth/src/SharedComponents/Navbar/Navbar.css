@@ -1379,3 +1379,94 @@
     font-size: 11px;
   }
 }
+
+
+/* ==========================================
+   RAJANYA LOGO - RESPONSIVE FIX
+   Only affects logo sizing and positioning
+========================================== */
+
+.main-navbar-logo {
+  flex: 0 0 auto;
+  min-width: 0;
+}
+
+.navbar-logo-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo {
+  display: block;
+  width: 70px;
+  height: auto;
+  max-height: 64px;
+  margin-left: -80px;
+  object-fit: contain;
+  object-position: center;
+  flex-shrink: 0;
+}
+
+/* Tablet and mobile */
+
+@media (max-width: 767px) {
+  .main-navbar-logo {
+    width: auto;
+    flex: 0 0 auto;
+  }
+
+  .navbar-logo-link {
+    width: auto;
+    max-width: 100%;
+  }
+
+  .logo {
+    width: clamp(78px, 15vw, 105px);
+    height: auto;
+    max-height: 58px;
+    margin-left: 0;
+    object-fit: contain;
+  }
+}
+
+/* Small mobile */
+
+@media (max-width: 575px) {
+  .logo {
+    width: clamp(76px, 18vw, 95px);
+    max-height: 54px;
+    margin-left: 0;
+  }
+}
+
+/* Very small mobile */
+
+@media (max-width: 430px) {
+  .logo {
+    width: clamp(72px, 20vw, 91px);
+    max-height: 50px;
+    margin-left: 0;
+  }
+}
+
+/* Small phones */
+
+@media (max-width: 375px) {
+  .logo {
+    width: clamp(68px, 21vw, 84px);
+    max-height: 46px;
+    margin-left: 0;
+  }
+}
+
+/* Extra small devices */
+
+@media (max-width: 340px) {
+  .logo {
+    width: 74px;
+    max-height: 42px;
+    margin-left: 0;
+  }
+}

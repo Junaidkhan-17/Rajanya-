@@ -1,22 +1,34 @@
+
 /* =========================================================
    HOME HERO SECTION
-   Premium Responsive Hero
-   ========================================================= */
+   PREMIUM RESPONSIVE IMAGE SLIDESHOW
+========================================================= */
 
 .home-hero-main {
   position: relative;
   width: 100%;
-  height: 620px;
+  height: 820px;
+  min-height: 820px;
   overflow: hidden;
   isolation: isolate;
+  background: #171412;
 }
 
-
 /* =========================================================
-   BACKGROUND VIDEO
-   ========================================================= */
+   BACKGROUND IMAGE SLIDESHOW
+========================================================= */
 
-.home-hero-background-video {
+.home-hero-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  background: #171412;
+}
+
+.home-hero-slide {
   position: absolute;
   inset: 0;
 
@@ -28,44 +40,48 @@
   object-fit: cover;
   object-position: center center;
 
-  z-index: 0;
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 2.8s ease-in-out,
+    visibility 1.8s ease-in-out;
+
+  pointer-events: none;
+  user-select: none;
+  will-change: opacity;
 }
 
+.home-hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+}
 
 /* =========================================================
-   HERO OVERLAY
-   DESKTOP
-   Black luxury fade from left toward right
-
-   The left side receives the darker fade while the
-   right side remains comparatively lighter for the
-   black typography.
-   ========================================================= */
+   HERO OVERLAY - DESKTOP
+========================================================= */
 
 .home-hero-overlay {
   position: absolute;
   inset: 0;
-
   z-index: 1;
-
   pointer-events: none;
 
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.72) 0%,
-      rgba(0, 0, 0, 0.58) 20%,
-      rgba(0, 0, 0, 0.38) 38%,
-      rgba(0, 0, 0, 0.16) 58%,
-      rgba(0, 0, 0, 0.03) 76%,
-      rgba(0, 0, 0, 0) 100%
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 38%,
+      rgba(0, 0, 0, 0) 58%,
+      rgba(0, 0, 0, 0) 76%,
+      rgba(0, 0, 0, 0.296) 100%
     );
 }
 
-
 /* =========================================================
    CONTENT WRAPPER
-   ========================================================= */
+========================================================= */
 
 .home-hero-content-wrapper {
   position: absolute;
@@ -83,10 +99,9 @@
   justify-content: center;
 }
 
-
 /* =========================================================
-   CONTENT
-   ========================================================= */
+   HERO CONTENT
+========================================================= */
 
 .home-hero-content {
   width: 100%;
@@ -98,10 +113,9 @@
   align-items: center;
 }
 
-
 /* =========================================================
    HERO TITLE
-   ========================================================= */
+========================================================= */
 
 .home-hero-title {
   width: 100%;
@@ -114,12 +128,9 @@
 
   font-family: "Muthiara", cursive;
 
-  margin: -250px 0 0;
+  /* Removed negative margin to prevent clipping */
+  margin: 0;
 
-  /*
-    Soft luxury gold edge instead of the previous
-    white/yellow treatment.
-  */
   -webkit-text-stroke: 1.5px #ffae00;
 
   text-align: center;
@@ -130,10 +141,9 @@
     0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
-
 /* =========================================================
    DIVIDER
-   ========================================================= */
+========================================================= */
 
 .home-hero-divider {
   width: 180px;
@@ -150,10 +160,9 @@
     opacity 0.35s ease;
 }
 
-
 /* =========================================================
    DESCRIPTION
-   ========================================================= */
+========================================================= */
 
 .home-hero-description {
   width: 100%;
@@ -172,10 +181,9 @@
   text-align: center;
 }
 
-
 /* =========================================================
    BOOK BUTTON
-   ========================================================= */
+========================================================= */
 
 .home-hero-book-button {
   min-width: 150px;
@@ -211,7 +219,7 @@
 }
 
 .home-hero-book-button:focus-visible {
-  outline: 2px solid #000000;
+  outline: 2px solid #ffffff;
   outline-offset: 4px;
 }
 
@@ -219,15 +227,15 @@
   transform: translateY(0) scale(0.97);
 }
 
-
 /* =========================================================
-   LARGE DESKTOP
-   1440px+
-   ========================================================= */
+   LARGE DESKTOP - 1440px+
+   HEIGHT: 820px
+========================================================= */
 
 @media (min-width: 1440px) {
   .home-hero-main {
-    height: 620px;
+    height: 820px;
+    min-height: 820px;
   }
 
   .home-hero-content-wrapper {
@@ -244,15 +252,15 @@
   }
 }
 
-
 /* =========================================================
-   DESKTOP
-   1200px - 1439px
-   ========================================================= */
+   DESKTOP - 1200px TO 1439px
+   HEIGHT: 780px
+========================================================= */
 
 @media (max-width: 1439px) {
   .home-hero-main {
-    height: 600px;
+    height: 780px;
+    min-height: 780px;
   }
 
   .home-hero-content-wrapper {
@@ -262,7 +270,7 @@
 
   .home-hero-title {
     font-size: clamp(68px, 7vw, 92px);
-    margin-top: -210px;
+    margin: 0;
 
     -webkit-text-stroke-width: 1.4px;
   }
@@ -272,15 +280,15 @@
   }
 }
 
-
 /* =========================================================
-   LAPTOP
-   992px - 1199px
-   ========================================================= */
+   LAPTOP - 992px TO 1199px
+   HEIGHT: 700px
+========================================================= */
 
 @media (max-width: 1199px) {
   .home-hero-main {
-    height: 570px;
+    height: 700px;
+    min-height: 700px;
   }
 
   .home-hero-content-wrapper {
@@ -290,7 +298,7 @@
 
   .home-hero-title {
     font-size: 58px;
-    margin-top: -175px;
+    margin: 0;
 
     -webkit-text-stroke-width: 1.2px;
   }
@@ -312,34 +320,27 @@
   }
 }
 
-
 /* =========================================================
-   TABLET
-   768px - 991px
-   ========================================================= */
+   TABLET - 768px TO 991px
+   HEIGHT: 650px
+========================================================= */
 
 @media (max-width: 991px) {
   .home-hero-main {
-    height: 560px;
-    min-height: 560px;
+    height: 650px;
+    min-height: 650px;
   }
 
-  .home-hero-background-video {
+  .home-hero-slide {
     object-position: center center;
   }
-
-  /*
-    Tablet:
-    Dark black fade comes from the top and gradually
-    disappears toward the lower content area.
-  */
 
   .home-hero-overlay {
     background:
       linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.62) 0%,
-        rgba(0, 0, 0, 0.42) 25%,
+        rgba(0, 0, 0, 0.179) 0%,
+        rgba(0, 0, 0, 0.211) 25%,
         rgba(0, 0, 0, 0.18) 52%,
         rgba(0, 0, 0, 0.04) 72%,
         rgba(0, 0, 0, 0) 100%
@@ -361,10 +362,6 @@
   .home-hero-content {
     align-items: center;
 
-    /*
-      Slight white translucent backdrop keeps the requested
-      black typography readable over changing video frames.
-    */
     padding: 18px 20px;
 
     border-radius: 18px;
@@ -416,34 +413,28 @@
   }
 }
 
-
 /* =========================================================
-   MOBILE
-   576px - 767px
-   ========================================================= */
+   MOBILE - 576px TO 767px
+   HEIGHT: 620px
+========================================================= */
 
 @media (max-width: 767px) {
   .home-hero-main {
-    height: 560px;
-    min-height: 560px;
+    height: 620px;
+    min-height: 620px;
   }
 
-  .home-hero-background-video {
+  .home-hero-slide {
     object-position: center center;
   }
-
-  /*
-    Mobile black fade.
-    Darker at the top, lighter toward the content.
-  */
 
   .home-hero-overlay {
     background:
       linear-gradient(
         180deg,
-        rgba(0, 0, 0, 0.68) 0%,
-        rgba(0, 0, 0, 0.48) 28%,
-        rgba(0, 0, 0, 0.20) 52%,
+        rgba(0, 0, 0, 0.207) 0%,
+        rgba(0, 0, 0, 0.195) 28%,
+        rgba(0, 0, 0, 0) 52%,
         rgba(0, 0, 0, 0.04) 72%,
         rgba(0, 0, 0, 0) 100%
       );
@@ -504,20 +495,15 @@
   }
 }
 
-
 /* =========================================================
-   SMALL MOBILE
-   430px - 575px
-   ========================================================= */
+   SMALL MOBILE - 430px TO 575px
+   HEIGHT: 580px
+========================================================= */
 
 @media (max-width: 575px) {
   .home-hero-main {
-    height: 520px;
-    min-height: 520px;
-  }
-
-  .home-hero-background-video {
-    object-position: center center;
+    height: 580px;
+    min-height: 580px;
   }
 
   .home-hero-content-wrapper {
@@ -571,16 +557,15 @@
   }
 }
 
-
 /* =========================================================
-   SMALL MOBILE
-   375px - 429px
-   ========================================================= */
+   SMALL MOBILE - 375px TO 429px
+   HEIGHT: 560px
+========================================================= */
 
 @media (max-width: 429px) {
   .home-hero-main {
-    height: 500px;
-    min-height: 500px;
+    height: 560px;
+    min-height: 560px;
   }
 
   .home-hero-content-wrapper {
@@ -624,16 +609,15 @@
   }
 }
 
-
 /* =========================================================
-   VERY SMALL MOBILE
-   320px - 374px
-   ========================================================= */
+   VERY SMALL MOBILE - 320px TO 374px
+   HEIGHT: 540px
+========================================================= */
 
 @media (max-width: 374px) {
   .home-hero-main {
-    height: 470px;
-    min-height: 470px;
+    height: 540px;
+    min-height: 540px;
   }
 
   .home-hero-content-wrapper {
@@ -681,16 +665,15 @@
   }
 }
 
-
 /* =========================================================
-   EXTRA SMALL DEVICES
-   <= 340px
-   ========================================================= */
+   EXTRA SMALL DEVICES - <= 340px
+   HEIGHT: 520px
+========================================================= */
 
 @media (max-width: 340px) {
   .home-hero-main {
-    height: 450px;
-    min-height: 450px;
+    height: 520px;
+    min-height: 520px;
   }
 
   .home-hero-content-wrapper {
@@ -729,10 +712,9 @@
   }
 }
 
-
 /* =========================================================
    TOUCH DEVICES
-   ========================================================= */
+========================================================= */
 
 @media (hover: none) and (pointer: coarse) {
   .home-hero-book-button {
@@ -749,14 +731,13 @@
   }
 }
 
-
 /* =========================================================
    REDUCED MOTION
-   ========================================================= */
+========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .home-hero-background-video {
-    scroll-behavior: auto;
+  .home-hero-slide {
+    transition: none;
   }
 
   .home-hero-book-button {
