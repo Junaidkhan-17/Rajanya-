@@ -17,65 +17,6 @@ import ContactUs from "./Pages/ContactUs/ContactUs";
 import VirtualTryOnUnlockDrawer from "./PagesComponents/VirtualTryOnUnlockComponents/VirtualTryOnUnlockDrawer";
 import Wishlist from "./Pages/Wishlist/Wishlist";
 import VirtualTryOnStudioDrawer from "./PagesComponents/VirtualTryOnStudioDrawer/VirtualTryOnStudioDrawer";
-//import About from "./pages/public/About/About";
-//import Categories from "./pages/public/Categories/Categories";
-//import Collection from "./pages/public/Collection/Collection";
-//import ProductDetails from "./pages/public/ProductDetails/ProductDetails";
-//import VirtualTryOn from "./pages/public/VirtualTryOn/VirtualTryOn";
-//import AIStylist from "./pages/public/AIStylist/AIStylist";
-//import Pricing from "./pages/public/Pricing/Pricing";
-//import Blog from "./pages/public/Blog/Blog";
-//import BlogDetails from "./pages/public/BlogDetails/BlogDetails";
-//import FAQ from "./pages/public/FAQ/FAQ";
-//import Contact from "./pages/public/Contact/Contact";
-//import TermsConditions from "./pages/public/TermsConditions/TermsConditions";
-//import PrivacyPolicy from "./pages/public/PrivacyPolicy/PrivacyPolicy";
-//
-/* Auth Pages */
-//import Login from "./pages/auth/Login/Login";
-//import Register from "./pages/auth/Register/Register";
-//import ForgotPassword from "./pages/auth/ForgotPassword/ForgotPassword";
-//import ResetPassword from "./pages/auth/ResetPassword/ResetPassword";
-//import VerifyOTP from "./pages/auth/VerifyOTP/VerifyOTP";
-//
-/* Customer Pages */
-//import CustomerDashboard from "./pages/customer/Dashboard/Dashboard";
-//import Profile from "./pages/customer/Profile/Profile";
-//import Wishlist from "./pages/customer/Wishlist/Wishlist";
-//import Cart from "./pages/customer/Cart/Cart";
-//import Orders from "./pages/customer/Orders/Orders";
-//import OrderDetails from "./pages/customer/OrderDetails/OrderDetails";
-//import Rentals from "./pages/customer/Rentals/Rentals";
-//import SavedLooks from "./pages/customer/SavedLooks/SavedLooks";
-//import Notifications from "./pages/customer/Notifications/Notifications";
-//import Settings from "./pages/customer/Settings/Settings";
-//
-/* Vendor Pages */
-//import VendorDashboard from "./pages/vendor/Dashboard/Dashboard";
-//import Products from "./pages/vendor/Products/Products";
-//import AddProduct from "./pages/vendor/AddProduct/AddProduct";
-//import EditProduct from "./pages/vendor/EditProduct/EditProduct";
-//import Inventory from "./pages/vendor/Inventory/Inventory";
-//import VendorOrders from "./pages/vendor/Orders/Orders";
-//import Customers from "./pages/vendor/Customers/Customers";
-//import VendorAnalytics from "./pages/vendor/Analytics/Analytics";
-//import VendorNotifications from "./pages/vendor/Notifications/Notifications";
-//import VendorSettings from "./pages/vendor/Settings/Settings";
-//
-/* Admin Pages */
-//import AdminDashboard from "./pages/admin/Dashboard/Dashboard";
-//import Users from "./pages/admin/Users/Users";
-//import Vendors from "./pages/admin/Vendors/Vendors";
-//import AdminProducts from "./pages/admin/Products/Products";
-//import AdminCategories from "./pages/admin/Categories/Categories";
-//import AdminOrders from "./pages/admin/Orders/Orders";
-//import Payments from "./pages/admin/Payments/Payments";
-//import Coupons from "./pages/admin/Coupons/Coupons";
-//import Reviews from "./pages/admin/Reviews/Reviews";
-//import AdminNotifications from "./pages/admin/Notifications/Notifications";
-//import CMS from "./pages/admin/CMS/CMS";
-//import AdminAnalytics from "./pages/admin/Analytics/Analytics";
-//import AdminSettings from "./pages/admin/Settings/Settings";
 import { useAuth, AUTH_ACTIONS } from "./contexts/AuthContext";
 import "./App.css";
 import WomensWear from "./Pages/WomensWear/WomensWear";

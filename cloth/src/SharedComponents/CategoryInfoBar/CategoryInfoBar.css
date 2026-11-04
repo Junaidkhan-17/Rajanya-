@@ -6,7 +6,7 @@
 .category-info-bar-main {
   position: fixed;
 
-  top: 70px;
+  top: 68px;
   left: 0;
 
   z-index: 998;
@@ -543,7 +543,7 @@
 @media (max-width: 768px) {
   .category-info-bar-main {
     top: 70px;
-
+  
     height: 52px;
   }
 
