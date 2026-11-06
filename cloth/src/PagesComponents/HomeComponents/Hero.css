@@ -70,12 +70,12 @@
   background:
     linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0) 0%,
+      rgb(0, 0, 0) 0%,
       rgba(0, 0, 0, 0) 0%,
       rgba(0, 0, 0, 0) 38%,
-      rgba(0, 0, 0, 0) 58%,
-      rgba(0, 0, 0, 0) 76%,
-      rgba(0, 0, 0, 0.296) 100%
+      rgba(0, 0, 0, 0.401) 68%,
+      rgba(0, 0, 0, 0.57) 76%,
+      rgba(0, 0, 0, 0.592) 100%
     );
 }
 
@@ -171,7 +171,7 @@
   font-size: 32px;
   line-height: 1.15;
 
-  color: #000000;
+  color: #ffffff;
 
   font-family: "Barlow", sans-serif;
   font-weight: 400;
